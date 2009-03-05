@@ -8,7 +8,7 @@ public class MiniPie {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		// just a test :-)
-		System.out.println("I am just trying figure out how to use this");
+		System.out.println("I am just trying to figure out how to use this");
 	}
 
 }
