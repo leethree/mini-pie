@@ -40,6 +40,7 @@ public class Tag2User {
 		}
 	}
 	@EmbeddedId
+	@Column(name = "ID")
 	private Id id = new Id();
 	@Column(name = "CREATED_DATE")
 	private Date date = new Date();

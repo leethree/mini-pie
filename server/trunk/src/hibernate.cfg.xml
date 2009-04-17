@@ -44,6 +44,7 @@
 	<mapping class="org.net9.minipie.server.db.entity.UserIM" />
 	<mapping class="org.net9.minipie.server.db.entity.UserPhoneNo" />
 	<mapping class="org.net9.minipie.server.db.entity.UserURL" />
+	<mapping class="org.net9.minipie.server.db.entity.Notification" />
 
 </session-factory>
 

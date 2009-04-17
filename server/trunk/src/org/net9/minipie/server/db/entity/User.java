@@ -21,29 +21,51 @@ public class User{
 	@GeneratedValue
 	@Column(name = "USER_ID")
 	private Long id;
+	@Column(name = "USERNAME")
 	private String userName;
+	@Column(name = "PASSWORD")
 	private String password;
+	@Column(name = "REG_EMAIL")
 	private String registerEmail;
+	@Column(name = "PERMISSION")
 	private Permission perm;
+	@Column(name = "NAME_TO_DISPLAY")
 	private String displayName;
+	@Column(name = "NICKNAME")
 	private String nickName;
+	@Column(name = "IMAGE_URL")
 	private String imageURL;
+	@Column(name = "GENDER")
 	private Gender gender;
+	@Column(name = "VIEW_GENDER_PERMISSION")
 	private Permission genderPermission;
+	@Column(name = "BIRTHDAY")
 	private Date birthday;
+	@Column(name = "VIEW_BIRTHYEAR_PERMISSION")
 	private Permission birthyearPermission;
+	@Column(name = "VIEW_BIRTHDAYDAY_PERMISSION")
 	private Permission birthdayPermission;
+	@Column(name = "NOTES")
 	private String notes;
 	
 	@OneToMany(mappedBy = "user")
 	private Collection<Tag2User> ownTags = new ArrayList<Tag2User>();
 	@OneToMany(mappedBy = "member")
 	private Collection<Group2User> groups = new ArrayList<Group2User>();
+	@OneToMany(mappedBy = "owner")
+	private Collection<Contact> contacts = new ArrayList<Contact>();
+	@OneToMany(mappedBy = "shadowOf")
+	private Collection<Contact> shadows = new ArrayList<Contact>();
 	
 	@OneToMany(mappedBy = "user1")
 	private Collection<User2User> users1 = new ArrayList<User2User>();
 	@OneToMany(mappedBy = "user2")
 	private Collection<User2User> users2 = new ArrayList<User2User>();
+	
+	@OneToMany(mappedBy = "sender")
+	private Collection<Notification> sentNotification = new ArrayList<Notification>();
+	@OneToMany(mappedBy = "receiver")
+	private Collection<Notification> receivedNotification = new ArrayList<Notification>();
 	
 	@org.hibernate.annotations.CollectionOfElements(
 			targetElement = org.net9.minipie.server.db.entity.UserAddress.class)
@@ -213,5 +235,30 @@ public class User{
 	}
 	public void setOwnTags(Collection<Tag2User> ownTags) {
 		this.ownTags = ownTags;
+	}
+	public Collection<Contact> getContacts() {
+		return contacts;
+	}
+	public void setContacts(Collection<Contact> contacts) {
+		this.contacts = contacts;
+	}
+	public Collection<Contact> getShadows() {
+		return shadows;
+	}
+	public void setShadows(Collection<Contact> shadows) {
+		this.shadows = shadows;
+	}
+	public Collection<Notification> getReceivedNotification() {
+		return receivedNotification;
+	}
+	public void setReceivedNotification(
+			Collection<Notification> receivedNotification) {
+		this.receivedNotification = receivedNotification;
+	}
+	public Collection<Notification> getSentNotification() {
+		return sentNotification;
+	}
+	public void setSentNotification(Collection<Notification> sentNotification) {
+		this.sentNotification = sentNotification;
 	}
 }

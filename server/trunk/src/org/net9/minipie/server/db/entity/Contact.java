@@ -3,7 +3,7 @@ package org.net9.minipie.server.db.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-
+import javax.persistence.ManyToOne;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,16 +22,21 @@ public class Contact {
 	@GeneratedValue
 	@Column(name = "CONTACT_ID")
 	private Long id;
-	private Long ownerId;
-	private Long groupOf;
-	private Long shadowOf;
+	@Column(name = "PERMISSION")
 	private Permission permission;
+	@Column(name = "NAME")
 	private String name;
+	@Column(name = "IMAGE")
 	private String image;
+	@Column(name = "NICKNAME")
 	private String nickName;
+	@Column(name = "GENDER")
 	private Gender gender;
+	@Column(name = "BIRTHDAY")
 	private Date birthday;
+	@Column(name = "NOTES")
 	private String notes;
+	@Column(name = "RELATIONSHIP")
 	private String relationship;
 	@OneToMany(mappedBy = "contact")
 	private Collection<Tag2Contact> ownTags = new ArrayList<Tag2Contact>();
@@ -65,23 +70,24 @@ public class Contact {
 			name = "CONTACT_URL",
 			joinColumns = @JoinColumn(name = "CONTACT_ID"))
 	private Collection<ContactURL> urls = new ArrayList<ContactURL>();
+	
+	@ManyToOne
+	@JoinColumn(name = "OWNER_ID")
+	private User owner;
+	
+	@ManyToOne
+	@JoinColumn(name = "SHADOW_ID")
+	private User shadowOf;
+	
+	@ManyToOne
+	@JoinColumn(name = "GROUP_ID")
+	private Group group;
+	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public Long getOwnerId() {
-		return ownerId;
-	}
-	public void setOwnerId(Long ownerId) {
-		this.ownerId = ownerId;
-	}
-	public Long getShadowOf() {
-		return shadowOf;
-	}
-	public void setShadowOf(Long shadowOf) {
-		this.shadowOf = shadowOf;
 	}
 	public Date getBirthday() {
 		return birthday;
@@ -94,12 +100,6 @@ public class Contact {
 	}
 	public void setGender(Gender gender) {
 		this.gender = gender;
-	}
-	public Long getGroupOf() {
-		return groupOf;
-	}
-	public void setGroupOf(Long groupOf) {
-		this.groupOf = groupOf;
 	}
 	public String getImage() {
 		return image;
@@ -172,5 +172,23 @@ public class Contact {
 	}
 	public void setOwnTags(Collection<Tag2Contact> ownTags) {
 		this.ownTags = ownTags;
+	}
+	public User getOwner() {
+		return owner;
+	}
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+	public User getShadowOf() {
+		return shadowOf;
+	}
+	public void setShadowOf(User shadowOf) {
+		this.shadowOf = shadowOf;
+	}
+	public Group getGroup() {
+		return group;
+	}
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 }

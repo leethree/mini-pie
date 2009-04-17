@@ -20,12 +20,22 @@ public class Group {
 	@GeneratedValue
 	@Column(name = "GROUP_ID")
 	private Long id;
+	@Column(name = "GROUP_NAME")
 	private String groupName;
+	@Column(name = "CREATOR_NAME")
 	private String creatorName;
+	@Column(name = "CREATED_DATE")
 	private Date createdDate = new Date();
+	@Column(name = "PERMISSION")
 	private Permission perm;
 	@OneToMany(mappedBy = "group")
 	private Collection<Group2User> members = new ArrayList<Group2User>();
+	
+	@OneToMany(mappedBy = "group")
+	private Collection<Contact> groupContacts = new ArrayList<Contact>();
+	
+	@OneToMany(mappedBy = "group")
+	private Collection<Notification> groupNotification = new ArrayList<Notification>();
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -61,5 +71,17 @@ public class Group {
 	}
 	public void setMembers(Collection<Group2User> members) {
 		this.members = members;
+	}
+	public Collection<Contact> getGroupContacts() {
+		return groupContacts;
+	}
+	public void setGroupContacts(Collection<Contact> groupContacts) {
+		this.groupContacts = groupContacts;
+	}
+	public Collection<Notification> getGroupNotification() {
+		return groupNotification;
+	}
+	public void setGroupNotification(Collection<Notification> groupNotification) {
+		this.groupNotification = groupNotification;
 	}
 }

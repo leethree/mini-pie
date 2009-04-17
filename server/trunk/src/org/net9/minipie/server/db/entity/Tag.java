@@ -3,6 +3,7 @@ package org.net9.minipie.server.db.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,8 +14,11 @@ import javax.persistence.OneToMany;
 public class Tag {
 	@Id
 	@GeneratedValue
+	@Column(name = "TAG_ID")
 	private Long id;
+	@Column(name = "OWNER_ID")
 	private Long ownerId;
+	@Column(name = "TAG_NAME")
 	private String tagName;
 	@OneToMany(mappedBy = "tag")
 	private Collection<Tag2Contact> taggedContacts = new ArrayList<Tag2Contact>();
