@@ -5,8 +5,10 @@ import javax.persistence.Column;
 
 import org.net9.minipie.server.db.entity.constant.Bool;
 import org.net9.minipie.server.db.entity.constant.Permission;
+import javax.persistence.Table;
 
 @Embeddable
+@Table(name = "USER_IMAGE")
 public class UserIM {
 	@org.hibernate.annotations.Parent
 	private User user;

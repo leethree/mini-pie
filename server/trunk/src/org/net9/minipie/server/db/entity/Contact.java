@@ -10,13 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import javax.persistence.Table;
 
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.GenericGenerator;
 import org.net9.minipie.server.db.entity.constant.Gender;
 import org.net9.minipie.server.db.entity.constant.Permission;
 
 import javax.persistence.OneToMany;
 
 @Entity
+@Table(name = "UNREGISTERED_CONTACT")
 public class Contact {
 	@Id
 	@GeneratedValue
@@ -45,30 +49,60 @@ public class Contact {
 	@JoinTable(
 			name = "CONTACT_ADDRESS",
 			joinColumns = @JoinColumn(name = "CONTACT_ID"))
+	@GenericGenerator(name = "gg1",strategy = "increment") 
+	@CollectionId(
+			columns = @Column(name = "CONTACT_ADDRESS_ID"),
+			type = @org.hibernate.annotations.Type(type = "long"),
+			generator = "gg1"
+	)
 	private Collection<ContactAddress> address = new ArrayList<ContactAddress>();
 	@org.hibernate.annotations.CollectionOfElements(
 			targetElement = org.net9.minipie.server.db.entity.ContactEmail.class)
 	@JoinTable(
 			name = "CONTACT_EMAIL",
 			joinColumns = @JoinColumn(name = "CONTACT_ID"))
+	@GenericGenerator(name = "gg1",strategy = "increment") 
+	@CollectionId(
+			columns = @Column(name = "CONTACT_EMAIL_ID"),
+			type = @org.hibernate.annotations.Type(type = "long"),
+			generator = "gg1"
+	)
 	private Collection<ContactEmail> emails = new ArrayList<ContactEmail>();
 	@org.hibernate.annotations.CollectionOfElements(
 			targetElement = org.net9.minipie.server.db.entity.ContactIM.class)
 	@JoinTable(
 			name = "CONTACT_IM",
 			joinColumns = @JoinColumn(name = "CONTACT_ID"))
+	@GenericGenerator(name = "gg1",strategy = "increment") 
+	@CollectionId(
+			columns = @Column(name = "CONTACT_IM_ID"),
+			type = @org.hibernate.annotations.Type(type = "long"),
+			generator = "gg1"
+	)
 	private Collection<ContactIM> ims = new ArrayList<ContactIM>();
 	@org.hibernate.annotations.CollectionOfElements(
 			targetElement = org.net9.minipie.server.db.entity.ContactPhoneNo.class)
 	@JoinTable(
 			name = "CONTACT_PHONE",
 			joinColumns = @JoinColumn(name = "CONTACT_ID"))
+	@GenericGenerator(name = "gg1",strategy = "increment") 
+	@CollectionId(
+			columns = @Column(name = "CONTACT_PHONE_ID"),
+			type = @org.hibernate.annotations.Type(type = "long"),
+			generator = "gg1"
+	)
 	private Collection<ContactPhoneNo> phones = new ArrayList<ContactPhoneNo>();
 	@org.hibernate.annotations.CollectionOfElements(
 			targetElement = org.net9.minipie.server.db.entity.ContactURL.class)
 	@JoinTable(
 			name = "CONTACT_URL",
 			joinColumns = @JoinColumn(name = "CONTACT_ID"))
+	@GenericGenerator(name = "gg1",strategy = "increment") 
+	@CollectionId(
+			columns = @Column(name = "CONTACT_URL_ID"),
+			type = @org.hibernate.annotations.Type(type = "long"),
+			generator = "gg1"
+	)
 	private Collection<ContactURL> urls = new ArrayList<ContactURL>();
 	
 	@ManyToOne

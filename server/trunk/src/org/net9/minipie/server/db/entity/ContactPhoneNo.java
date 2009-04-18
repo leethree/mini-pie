@@ -1,11 +1,13 @@
 package org.net9.minipie.server.db.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Table;
 import javax.persistence.Embeddable;
 
 import org.net9.minipie.server.db.entity.constant.Bool;
 
 @Embeddable
+@Table(name = "CONTACT_PHONE_NUMBER")
 public class ContactPhoneNo {
 	@org.hibernate.annotations.Parent
 	private Contact contact;

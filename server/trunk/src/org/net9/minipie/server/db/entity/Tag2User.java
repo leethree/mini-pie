@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Table;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 
 
 @Entity
+@Table(name = "TAG_USER")
 public class Tag2User {
 	@Embeddable
 	public static class Id implements Serializable{

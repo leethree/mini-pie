@@ -3,6 +3,7 @@ package org.net9.minipie.server.db.entity;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Table;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 import org.net9.minipie.server.db.entity.constant.Bool;
 
 @Entity
+@Table(name = "GROUP_USER")
 public class Group2User {
 	@Embeddable
 	public static class Id implements Serializable{

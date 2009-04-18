@@ -4,8 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import org.net9.minipie.server.db.entity.constant.Bool;
-
+import javax.persistence.Table;
 @Embeddable
+@Table(name = "CONTACT_ADDRESS")
 public class ContactAddress {
 	@org.hibernate.annotations.Parent
 	private Contact contact;
@@ -14,18 +15,18 @@ public class ContactAddress {
 	@Column(name = "ADDRESS_TYPE")
 	private String type;
 	@Column(name = "IS_PRIMARY")
-	private Bool isPrimary;
+	private Bool primary;
 	public String getType() {
 		return type;
 	}
 	public void setType(String type) {
 		this.type = type;
 	}
-	public Bool getIsPrimary() {
-		return isPrimary;
+	public Bool getPrimary() {
+		return primary;
 	}
-	public void setIsPrimary(Bool isPrimary) {
-		this.isPrimary = isPrimary;
+	public void setPrimary(Bool primary) {
+		this.primary = primary;
 	}
 	public String getValue() {
 		return value;

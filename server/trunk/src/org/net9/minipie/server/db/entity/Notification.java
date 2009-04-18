@@ -1,18 +1,24 @@
 package org.net9.minipie.server.db.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.net9.minipie.server.db.entity.constant.NotificationType;
+
 @Entity
+@Table(name = "NOTIFICATION")
 public class Notification {
 	@Id
 	@GeneratedValue
 	@Column(name = "NOTIFICATION_ID")
 	private Long id;
+	@Column(name = "NOTIFICATION_TYPE")
+	private NotificationType type;
 	@Column(name = "NOTIFICATION_CONTENT")
 	private String content;
 	@ManyToOne
@@ -55,8 +61,10 @@ public class Notification {
 	public void setSender(User sender) {
 		this.sender = sender;
 	}
-	
-	
-	
-	
+	public NotificationType getType() {
+		return type;
+	}
+	public void setType(NotificationType type) {
+		this.type = type;
+	}
 }

@@ -4,8 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import org.net9.minipie.server.db.entity.constant.Bool;
+import javax.persistence.Table;
 
 @Embeddable
+@Table(name = "CONTACT_URL")
 public class ContactURL {
 	@org.hibernate.annotations.Parent
 	private Contact contact;

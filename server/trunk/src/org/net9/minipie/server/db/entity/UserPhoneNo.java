@@ -1,12 +1,14 @@
 package org.net9.minipie.server.db.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Table;
 import javax.persistence.Embeddable;
 
 import org.net9.minipie.server.db.entity.constant.Bool;
 import org.net9.minipie.server.db.entity.constant.Permission;
 
 @Embeddable
+@Table(name = "USER_PHONE_NUMBER")
 public class UserPhoneNo {
 	@org.hibernate.annotations.Parent
 	private User user;

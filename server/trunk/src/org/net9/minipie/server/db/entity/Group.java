@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import org.net9.minipie.server.db.entity.constant.Permission;
 
 @Entity
-@Table(name = "Groups")
+@Table(name = "GROUPS") //group cannot be assigned to name a table or exception
 public class Group {
 	@Id
 	@GeneratedValue

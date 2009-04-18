@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
+import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,6 +12,7 @@ import javax.persistence.OneToMany;
 
 
 @Entity
+@Table(name = "TAG")
 public class Tag {
 	@Id
 	@GeneratedValue

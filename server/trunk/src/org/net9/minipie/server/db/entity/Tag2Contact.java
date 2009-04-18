@@ -7,11 +7,13 @@ import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Column;
+import javax.persistence.Table;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 
 
 @Entity
+@Table(name = "TAG_CONTACT")
 public class Tag2Contact {
 	@Embeddable
 	public static class Id implements Serializable{

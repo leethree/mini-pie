@@ -2,11 +2,13 @@ package org.net9.minipie.server.db.entity;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Column;
+import javax.persistence.Table;
 
 import org.net9.minipie.server.db.entity.constant.Bool;
 import org.net9.minipie.server.db.entity.constant.Permission;
 
 @Embeddable
+@Table(name = "USER_ADDRESS")
 public class UserAddress {
 	@org.hibernate.annotations.Parent
 	private User user;

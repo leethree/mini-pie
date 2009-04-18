@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,10 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.GenericGenerator;
 import org.net9.minipie.server.db.entity.constant.Gender;
 import org.net9.minipie.server.db.entity.constant.Permission;
 
 @Entity
+@Table(name = "REGISTERED_USER")
 public class User{
 	@Id
 	@GeneratedValue
@@ -72,30 +76,60 @@ public class User{
 	@JoinTable(
 			name = "USER_ADDRESS",
 			joinColumns = @JoinColumn(name = "USER_ID"))
+	@GenericGenerator(name = "gg1",strategy = "increment") 
+	@CollectionId(
+			columns = @Column(name = "USER_ADDRESS_ID"),
+			type = @org.hibernate.annotations.Type(type = "long"),
+			generator = "gg1"
+	)
 	private Collection<UserAddress> addresses = new ArrayList<UserAddress>();
 	@org.hibernate.annotations.CollectionOfElements(
 			targetElement = org.net9.minipie.server.db.entity.UserEmail.class)
 	@JoinTable(
 			name = "USER_EMAIL",
 			joinColumns = @JoinColumn(name = "USER_ID"))
+	@GenericGenerator(name = "gg1",strategy = "increment") 
+	@CollectionId(
+			columns = @Column(name = "USER_EMAIL_ID"),
+			type = @org.hibernate.annotations.Type(type = "long"),
+			generator = "gg1"
+	)
 	private Collection<UserEmail> emails = new ArrayList<UserEmail>();
 	@org.hibernate.annotations.CollectionOfElements(
 			targetElement = org.net9.minipie.server.db.entity.UserIM.class)
 	@JoinTable(
 			name = "USER_IM",
 			joinColumns = @JoinColumn(name = "USER_ID"))
+	@GenericGenerator(name = "gg1",strategy = "increment") 
+	@CollectionId(
+			columns = @Column(name = "USER_IM_ID"),
+			type = @org.hibernate.annotations.Type(type = "long"),
+			generator = "gg1"
+	)
 	private Collection<UserIM> ims = new ArrayList<UserIM>();
 	@org.hibernate.annotations.CollectionOfElements(
 			targetElement = org.net9.minipie.server.db.entity.UserPhoneNo.class)
 	@JoinTable(
 			name = "USER_PHONENO",
 			joinColumns = @JoinColumn(name = "USER_ID"))
+	@GenericGenerator(name = "gg1",strategy = "increment") 
+	@CollectionId(
+			columns = @Column(name = "USER_PHONE_ID"),
+			type = @org.hibernate.annotations.Type(type = "long"),
+			generator = "gg1"
+	)
 	private Collection<UserPhoneNo> phono = new ArrayList<UserPhoneNo>();
 	@org.hibernate.annotations.CollectionOfElements(
 			targetElement = org.net9.minipie.server.db.entity.UserURL.class)
 	@JoinTable(
 			name = "USER_URL",
 			joinColumns = @JoinColumn(name = "USER_ID"))
+	@GenericGenerator(name = "gg1",strategy = "increment") 
+	@CollectionId(
+			columns = @Column(name = "USER_URL_ID"),
+			type = @org.hibernate.annotations.Type(type = "long"),
+			generator = "gg1"
+	)
 	private Collection<UserURL> url = new ArrayList<UserURL>();
 	
 	public Date getBirthday() {
