@@ -4,17 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-import org.hibernate.annotations.CollectionId;
-import org.hibernate.annotations.GenericGenerator;
 import org.net9.minipie.server.db.entity.constant.Gender;
 import org.net9.minipie.server.db.entity.constant.Permission;
 
@@ -52,83 +49,87 @@ public class User{
 	@Column(name = "NOTES")
 	private String notes;
 	
-	@OneToMany(mappedBy = "user")
-	private Collection<Tag2User> ownTags = new ArrayList<Tag2User>();
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+	)
+	private Collection<Tag2User> tags = new ArrayList<Tag2User>();
+	
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+	)
+	private Collection<Tag> ownedTags = new ArrayList<Tag>();
+	
+	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+	)
 	private Collection<Group2User> groups = new ArrayList<Group2User>();
-	@OneToMany(mappedBy = "owner")
+	
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+	)
 	private Collection<Contact> contacts = new ArrayList<Contact>();
-	@OneToMany(mappedBy = "shadowOf")
+	
+	@OneToMany(mappedBy = "shadowOf", cascade = CascadeType.ALL)
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+	)
 	private Collection<Contact> shadows = new ArrayList<Contact>();
 	
-	@OneToMany(mappedBy = "user1")
+	@OneToMany(mappedBy = "user1", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+	)
 	private Collection<User2User> users1 = new ArrayList<User2User>();
-	@OneToMany(mappedBy = "user2")
+	
+	@OneToMany(mappedBy = "user2", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+	)
 	private Collection<User2User> users2 = new ArrayList<User2User>();
 	
-	@OneToMany(mappedBy = "sender")
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+	)
 	private Collection<Notification> sentNotification = new ArrayList<Notification>();
-	@OneToMany(mappedBy = "receiver")
+	
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+	)
 	private Collection<Notification> receivedNotification = new ArrayList<Notification>();
 	
-	@org.hibernate.annotations.CollectionOfElements(
-			targetElement = org.net9.minipie.server.db.entity.UserAddress.class)
-	@JoinTable(
-			name = "USER_ADDRESS",
-			joinColumns = @JoinColumn(name = "USER_ID"))
-	@GenericGenerator(name = "gg1",strategy = "increment") 
-	@CollectionId(
-			columns = @Column(name = "USER_ADDRESS_ID"),
-			type = @org.hibernate.annotations.Type(type = "long"),
-			generator = "gg1"
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<UserAddress> addresses = new ArrayList<UserAddress>();
-	@org.hibernate.annotations.CollectionOfElements(
-			targetElement = org.net9.minipie.server.db.entity.UserEmail.class)
-	@JoinTable(
-			name = "USER_EMAIL",
-			joinColumns = @JoinColumn(name = "USER_ID"))
-	@GenericGenerator(name = "gg1",strategy = "increment") 
-	@CollectionId(
-			columns = @Column(name = "USER_EMAIL_ID"),
-			type = @org.hibernate.annotations.Type(type = "long"),
-			generator = "gg1"
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<UserEmail> emails = new ArrayList<UserEmail>();
-	@org.hibernate.annotations.CollectionOfElements(
-			targetElement = org.net9.minipie.server.db.entity.UserIM.class)
-	@JoinTable(
-			name = "USER_IM",
-			joinColumns = @JoinColumn(name = "USER_ID"))
-	@GenericGenerator(name = "gg1",strategy = "increment") 
-	@CollectionId(
-			columns = @Column(name = "USER_IM_ID"),
-			type = @org.hibernate.annotations.Type(type = "long"),
-			generator = "gg1"
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<UserIM> ims = new ArrayList<UserIM>();
-	@org.hibernate.annotations.CollectionOfElements(
-			targetElement = org.net9.minipie.server.db.entity.UserPhoneNo.class)
-	@JoinTable(
-			name = "USER_PHONENO",
-			joinColumns = @JoinColumn(name = "USER_ID"))
-	@GenericGenerator(name = "gg1",strategy = "increment") 
-	@CollectionId(
-			columns = @Column(name = "USER_PHONE_ID"),
-			type = @org.hibernate.annotations.Type(type = "long"),
-			generator = "gg1"
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<UserPhoneNo> phono = new ArrayList<UserPhoneNo>();
-	@org.hibernate.annotations.CollectionOfElements(
-			targetElement = org.net9.minipie.server.db.entity.UserURL.class)
-	@JoinTable(
-			name = "USER_URL",
-			joinColumns = @JoinColumn(name = "USER_ID"))
-	@GenericGenerator(name = "gg1",strategy = "increment") 
-	@CollectionId(
-			columns = @Column(name = "USER_URL_ID"),
-			type = @org.hibernate.annotations.Type(type = "long"),
-			generator = "gg1"
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<UserURL> url = new ArrayList<UserURL>();
 	
@@ -264,11 +265,11 @@ public class User{
 	public void setGroups(Collection<Group2User> groups) {
 		this.groups = groups;
 	}
-	public Collection<Tag2User> getOwnTags() {
-		return ownTags;
+	public Collection<Tag2User> getTags() {
+		return tags;
 	}
-	public void setOwnTags(Collection<Tag2User> ownTags) {
-		this.ownTags = ownTags;
+	public void setTags(Collection<Tag2User> tags) {
+		this.tags = tags;
 	}
 	public Collection<Contact> getContacts() {
 		return contacts;
@@ -294,5 +295,11 @@ public class User{
 	}
 	public void setSentNotification(Collection<Notification> sentNotification) {
 		this.sentNotification = sentNotification;
+	}
+	public Collection<Tag> getOwnedTags() {
+		return ownedTags;
+	}
+	public void setOwnedTags(Collection<Tag> ownedTags) {
+		this.ownedTags = ownedTags;
 	}
 }

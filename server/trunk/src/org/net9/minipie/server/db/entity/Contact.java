@@ -3,21 +3,19 @@ package org.net9.minipie.server.db.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CollectionId;
-import org.hibernate.annotations.GenericGenerator;
 import org.net9.minipie.server.db.entity.constant.Gender;
 import org.net9.minipie.server.db.entity.constant.Permission;
-
-import javax.persistence.OneToMany;
 
 @Entity
 @Table(name = "UNREGISTERED_CONTACT")
@@ -42,66 +40,39 @@ public class Contact {
 	private String notes;
 	@Column(name = "RELATIONSHIP")
 	private String relationship;
-	@OneToMany(mappedBy = "contact")
+	@OneToMany(mappedBy = "contact", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+	)
 	private Collection<Tag2Contact> ownTags = new ArrayList<Tag2Contact>();
-	@org.hibernate.annotations.CollectionOfElements(
-			targetElement = org.net9.minipie.server.db.entity.ContactAddress.class)
-	@JoinTable(
-			name = "CONTACT_ADDRESS",
-			joinColumns = @JoinColumn(name = "CONTACT_ID"))
-	@GenericGenerator(name = "gg1",strategy = "increment") 
-	@CollectionId(
-			columns = @Column(name = "CONTACT_ADDRESS_ID"),
-			type = @org.hibernate.annotations.Type(type = "long"),
-			generator = "gg1"
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "contact")
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<ContactAddress> address = new ArrayList<ContactAddress>();
-	@org.hibernate.annotations.CollectionOfElements(
-			targetElement = org.net9.minipie.server.db.entity.ContactEmail.class)
-	@JoinTable(
-			name = "CONTACT_EMAIL",
-			joinColumns = @JoinColumn(name = "CONTACT_ID"))
-	@GenericGenerator(name = "gg1",strategy = "increment") 
-	@CollectionId(
-			columns = @Column(name = "CONTACT_EMAIL_ID"),
-			type = @org.hibernate.annotations.Type(type = "long"),
-			generator = "gg1"
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "contact")
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<ContactEmail> emails = new ArrayList<ContactEmail>();
-	@org.hibernate.annotations.CollectionOfElements(
-			targetElement = org.net9.minipie.server.db.entity.ContactIM.class)
-	@JoinTable(
-			name = "CONTACT_IM",
-			joinColumns = @JoinColumn(name = "CONTACT_ID"))
-	@GenericGenerator(name = "gg1",strategy = "increment") 
-	@CollectionId(
-			columns = @Column(name = "CONTACT_IM_ID"),
-			type = @org.hibernate.annotations.Type(type = "long"),
-			generator = "gg1"
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "contact")
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<ContactIM> ims = new ArrayList<ContactIM>();
-	@org.hibernate.annotations.CollectionOfElements(
-			targetElement = org.net9.minipie.server.db.entity.ContactPhoneNo.class)
-	@JoinTable(
-			name = "CONTACT_PHONE",
-			joinColumns = @JoinColumn(name = "CONTACT_ID"))
-	@GenericGenerator(name = "gg1",strategy = "increment") 
-	@CollectionId(
-			columns = @Column(name = "CONTACT_PHONE_ID"),
-			type = @org.hibernate.annotations.Type(type = "long"),
-			generator = "gg1"
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "contact")
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<ContactPhoneNo> phones = new ArrayList<ContactPhoneNo>();
-	@org.hibernate.annotations.CollectionOfElements(
-			targetElement = org.net9.minipie.server.db.entity.ContactURL.class)
-	@JoinTable(
-			name = "CONTACT_URL",
-			joinColumns = @JoinColumn(name = "CONTACT_ID"))
-	@GenericGenerator(name = "gg1",strategy = "increment") 
-	@CollectionId(
-			columns = @Column(name = "CONTACT_URL_ID"),
-			type = @org.hibernate.annotations.Type(type = "long"),
-			generator = "gg1"
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "contact")
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<ContactURL> urls = new ArrayList<ContactURL>();
 	

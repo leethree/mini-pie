@@ -1,15 +1,25 @@
 package org.net9.minipie.server.db.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
-import org.net9.minipie.server.db.entity.constant.Bool;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Embeddable
+import org.net9.minipie.server.db.entity.constant.Bool;
+
+@Entity
 @Table(name = "CONTACT_URL")
 public class ContactURL {
-	@org.hibernate.annotations.Parent
+	@Id
+	@GeneratedValue
+	@Column(name = "CONTACT_URL_ID")
+	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name = "CONTACT_ID")
 	private Contact contact;
 	@Column(name = "URL")
 	private String value;
@@ -17,6 +27,12 @@ public class ContactURL {
 	private String type;
 	@Column(name = "IS_PRIMARY")
 	private Bool primary;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getType() {
 		return type;
 	}

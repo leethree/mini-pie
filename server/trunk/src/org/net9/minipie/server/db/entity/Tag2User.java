@@ -62,7 +62,7 @@ public class Tag2User {
 		this.id.userId = user.getId();
 		this.tag = tag;
 		this.user = user;
-		this.user.getOwnTags().add(this);
+		this.user.getTags().add(this);
 		this.tag.getTaggedUsers().add(this);
 	}
 	public User getUser() {

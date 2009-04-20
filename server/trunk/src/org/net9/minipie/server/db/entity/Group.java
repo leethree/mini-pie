@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,13 +29,17 @@ public class Group {
 	private Date createdDate = new Date();
 	@Column(name = "PERMISSION")
 	private Permission perm;
-	@OneToMany(mappedBy = "group")
+	
+	@OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+	)
 	private Collection<Group2User> members = new ArrayList<Group2User>();
 	
-	@OneToMany(mappedBy = "group")
+	@OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
 	private Collection<Contact> groupContacts = new ArrayList<Contact>();
 	
-	@OneToMany(mappedBy = "group")
+	@OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE)
 	private Collection<Notification> groupNotification = new ArrayList<Notification>();
 	public Date getCreatedDate() {
 		return createdDate;

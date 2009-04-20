@@ -1,16 +1,25 @@
 package org.net9.minipie.server.db.entity;
 
-import javax.persistence.Embeddable;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.net9.minipie.server.db.entity.constant.Bool;
 import org.net9.minipie.server.db.entity.constant.Permission;
 
-@Embeddable
+@Entity
 @Table(name = "USER_ADDRESS")
 public class UserAddress {
-	@org.hibernate.annotations.Parent
+	@Id
+	@GeneratedValue
+	@Column(name = "USER_ADDRESS_ID")
+	private Long id;
+	@ManyToOne
+	@JoinColumn(name = "USER_ID")
 	private User user;
 	@Column(name = "ADDRESS_TYPE")
 	private String type;
@@ -22,6 +31,13 @@ public class UserAddress {
 	private Bool primary;
 	@Column(name = "PERM")
 	private Permission perm;
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public User getUser() {
 		return user;
 	}

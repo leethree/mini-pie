@@ -1,16 +1,25 @@
 package org.net9.minipie.server.db.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Embeddable;
 
 import org.net9.minipie.server.db.entity.constant.Bool;
 import org.net9.minipie.server.db.entity.constant.Permission;
 
-@Embeddable
+@Entity
 @Table(name = "USER_PHONE_NUMBER")
 public class UserPhoneNo {
-	@org.hibernate.annotations.Parent
+	@Id
+	@GeneratedValue
+	@Column(name = "USER_PHONENO_ID")
+	private Long id;
+	@ManyToOne
+	@JoinColumn(name = "USER_ID")
 	private User user;
 	@Column(name = "PHONE_NO")
 	private String value;
@@ -20,6 +29,12 @@ public class UserPhoneNo {
 	private Bool primary;
 	@Column(name = "PERM")
 	private Permission perm;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public Permission getPerm() {
 		return perm;
 	}

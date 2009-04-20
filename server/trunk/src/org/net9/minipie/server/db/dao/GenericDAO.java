@@ -6,7 +6,7 @@ import java.util.List;
 public interface GenericDAO <T, Id extends Serializable>{
 	T findById(Id id);
 	List<T> findAll();
-	List<T> findByExample(T exampleInstance);
+	List<T> findByExample(T exampleInstance, String...excludeProperties);
 	T makePersistent(T entity);
 	void makeTransient(T entity);
 	void flush();

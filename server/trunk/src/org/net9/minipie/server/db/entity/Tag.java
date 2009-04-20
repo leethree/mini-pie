@@ -3,7 +3,10 @@ package org.net9.minipie.server.db.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,25 +21,37 @@ public class Tag {
 	@GeneratedValue
 	@Column(name = "TAG_ID")
 	private Long id;
-	@Column(name = "OWNER_ID")
-	private Long ownerId;
+	
+	@ManyToOne
+	@JoinColumn(name = "OWNER_ID")
+	private User owner;
+	
 	@Column(name = "TAG_NAME")
 	private String tagName;
-	@OneToMany(mappedBy = "tag")
+	
+	@OneToMany(mappedBy = "tag", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+	)
 	private Collection<Tag2Contact> taggedContacts = new ArrayList<Tag2Contact>();
-	@OneToMany(mappedBy = "tag")
+	
+	@OneToMany(mappedBy = "tag", cascade = CascadeType.REMOVE)
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+	)
 	private Collection<Tag2User> taggedUsers = new ArrayList<Tag2User>();
+	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getOwnerId() {
-		return ownerId;
+	public User getOwner() {
+		return owner;
 	}
-	public void setOwnerId(Long ownerId) {
-		this.ownerId = ownerId;
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 	public String getTagName() {
 		return tagName;

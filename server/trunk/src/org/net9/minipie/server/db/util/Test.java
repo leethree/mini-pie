@@ -1,4 +1,8 @@
 package org.net9.minipie.server.db.util;
+import java.util.Iterator;
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.net9.minipie.server.db.entity.Contact;
 import org.net9.minipie.server.db.entity.ContactAddress;
@@ -30,135 +34,98 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		/* some code to test basic insert/delete */
+		Contact contact1 = new Contact();
+		Contact contact2 = new Contact();
+		Contact contact3 = new Contact();
 		User user1 = new User();
-		UserAddress addr1 = new UserAddress(), addr2 = new UserAddress();
 		User user2 = new User();
-		user2.setUserName("Her");
+		UserAddress uAd1 = new UserAddress();
+		UserAddress uAd2 = new UserAddress();
+		ContactAddress uAd3 = new ContactAddress();
+		user1.setUserName("jinyq06");
+		user2.setUserName("her");
+		contact1.setName("Mm");
+		contact2.setName("ppmm");
+		contact3.setName("pp");
+		uAd1.setFormatted("tsighua");
+		uAd2.setFormatted("peking");
+		uAd3.setValue("lanzhou");
 		Session session = HibernateSessionFactory.getSession();
-		addr1.setZipcode("730070");
-		addr2.setZipcode("100084");
-		addr1.setFormatted("Tsinghua University");
-		addr2.setFormatted("Peking University");
-		user1.setUserName("Jinyq06");
-		user1.getAddresses().add(addr1);
-		user1.getAddresses().add(addr2);
-		UserEmail email2 = new UserEmail();
-		email2.setValue("jinyq06@gmail.com");
-		UserIM usrIm = new UserIM();
-		usrIm.setValue("here and there is everywhere");
-		user2.getEmails().add(email2);
-		user2.getIms().add(usrIm);
-		UserPhoneNo tel = new UserPhoneNo();
-		tel.setValue("7670191");
-		user2.getPhono().add(tel);
-		UserURL url = new UserURL();
-		url.setValue("http://localhost:3306");
-		user2.getUrl().add(url);
 		session.beginTransaction();
+		user1.getContacts().add(contact1);
+		contact1.setOwner(user1);
+		user1.getContacts().add(contact3);
+		contact3.setOwner(user1);
+		user2.getContacts().add(contact2);
+		contact2.setOwner(user2);
+		user1.getAddresses().add(uAd2);
+		uAd2.setUser(user1);
+		user2.getAddresses().add(uAd1);
+		uAd1.setUser(user2);
+		contact1.getAddress().add(uAd3);
+		uAd3.setContact(contact1);
 		session.save(user1);
 		session.save(user2);
+		session.save(contact1);
+		session.save(contact2);
+		session.save(contact3);
+		session.save(uAd1);
+		session.save(uAd2);
 		session.getTransaction().commit();
+		
+		Group group1 = new Group();
+		group1.setGroupName("bbs");
 		session.beginTransaction();
-		User2User friendship = new User2User(user1, user2, Permission.TOCONTACT, Permission.TOSELF);
-		Contact person = new Contact();
-		ContactAddress contactAddress = new  ContactAddress();
-		contactAddress.setValue("Bernand St");
-		contactAddress.setPrimary(Bool.TRUE);
-		contactAddress.setType("home");
-		person.getAddress().add(contactAddress);
-		person.setOwner(user1);
-		person.setGender(Gender.MALE);
-		ContactEmail email = new ContactEmail();
-		email.setValue("her07@gmail.com");
-		person.getEmails().add(email);
-		ContactIM imc = new ContactIM();
-		imc.setValue("127.0.0.1");
-		person.getIms().add(imc);
-		ContactPhoneNo phoneNo = new ContactPhoneNo();
-		phoneNo.setValue("7670210");
-		person.getPhones().add(phoneNo);
-		ContactURL curl = new ContactURL();
-		curl.setValue("localhost");
-		person.getUrls().add(curl);
-		session.save(person);
-		session.save(friendship);
+		session.save(group1);
 		session.getTransaction().commit();
-		user1.getContacts().add(person);
-		Group group = new Group();
-		group.setGroupName("MiniPie");
+		
+		Tag tag1 = new Tag();
+		tag1.setTagName("good");
+		user1.getOwnedTags().add(tag1);
+		tag1.setOwner(user1);
 		session.beginTransaction();
-		session.save(group);
+		session.save(tag1);
 		session.getTransaction().commit();
-		Group2User membership = new Group2User(group, user2, Bool.TRUE);
+		
+		User2User friendship1 = new User2User(user1, user2, Permission.TOCONTACT,
+				 Permission.TOALL);
+		session.beginTransaction();
+		session.save(friendship1);
+		session.getTransaction().commit();
+		
+		Group2User membership = new Group2User(group1, user1, Bool.TRUE);
 		session.beginTransaction();
 		session.save(membership);
 		session.getTransaction().commit();
-		Group2User membership2 = new Group2User(group, user1, Bool.FALSE);
+		
+		Tag2User tagship1 = new Tag2User(tag1, user2);
+		Tag2Contact tagship2 = new Tag2Contact(tag1, contact1);
 		session.beginTransaction();
-		session.save(membership2);
-		session.getTransaction().commit();
-		System.out.println(membership.getIsAdmin());
-		System.out.println(membership2.getIsAdmin());
-		Tag tag = new Tag();
-		tag.setOwnerId(user1.getId());
-		tag.setTagName("pet");
-		session.beginTransaction();
-		session.save(tag);
-		session.getTransaction().commit();
-		Tag2User tagged = new Tag2User(tag, user2);
-		session.beginTransaction();
-		session.save(tagged);
-		session.getTransaction().commit();
-		Tag2Contact taggedContact = new Tag2Contact(tag, person);
-		session.beginTransaction();
-		session.save(taggedContact);
+		session.save(tagship1);
+		session.save(tagship2);
 		session.getTransaction().commit();
 		
-//		User user1 = new User();
-//		user1.setNickName("jinyq");
-//		Contact contact1 = new Contact();
-//		contact1.setName("her");
-//		User user2 = new User();
-//		user2.setUserName("Leethree");
-//		Contact contact2 = new Contact();
-//		Session session2 = HibernateSessionFactory.getSession();
-//		session2.beginTransaction();
-//		session2.save(user2);
-//		session2.save(contact2);
-//		session2.getTransaction().commit();
-//		user1.getShadows().add(contact2);
-//		user2.getContacts().add(contact2);
-//		contact2.setOwner(user2);
-//		contact2.setShadowOf(user1);
-//		Session session = HibernateSessionFactory.getSession();
-//		session.beginTransaction();
-//		session.save(user1);
-//		session.save(contact1);
-//		session.getTransaction().commit();
-//		session.beginTransaction();
-//		user1.getContacts().add(contact1);
-//		contact1.setOwner(user1);
-//		session.getTransaction().commit();
-//		session.beginTransaction();
-//		Group group1= new Group();
-//		group1.setGroupName("Minipie");
-//		group1.getGroupContacts().add(contact2);
-//		contact2.setGroup(group1);
-//		session.save(group1);
-//		session.getTransaction().commit();
-//		Notification notification = new Notification();
-//		notification.setSender(user1);
-//		notification.setReceiver(user2);
-//		notification.setGroup(group1);
-//		user1.getSentNotification().add(notification);
-//		user2.getReceivedNotification().add(notification);
-//		group1.getGroupNotification().add(notification);
-//		session.beginTransaction();
-//		session.save(notification);
-//		session.getTransaction().commit();
+		Notification notification1 = new Notification();
+		notification1.setSender(user2);
+		user2.getSentNotification().add(notification1);
+		notification1.setReceiver(user1);
+		user1.getReceivedNotification().add(notification1);
+		session.beginTransaction();
+		session.save(notification1);
+		session.getTransaction().commit();
 		
-		
-		
+		session.beginTransaction();
+		String hql = "from User where id = 1";
+		Query query = session.createQuery(hql);
+		User retrievedUser = (User) query.uniqueResult();
+		System.out.println(retrievedUser.getId());
+		Iterator<UserAddress> iter = retrievedUser.getAddresses().iterator();
+		while(iter.hasNext()){
+			UserAddress ua1 =  iter.next();
+			System.out.println(ua1.getFormatted());
+		}
+		session.getTransaction().commit();
 	}
 
 }
