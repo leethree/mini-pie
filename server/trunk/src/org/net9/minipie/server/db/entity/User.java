@@ -49,85 +49,85 @@ public class User{
 	@Column(name = "NOTES")
 	private String notes;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<Tag2User> tags = new ArrayList<Tag2User>();
 	
-	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "owner", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<Tag> ownedTags = new ArrayList<Tag>();
 	
-	@OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "member", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<Group2User> groups = new ArrayList<Group2User>();
 	
-	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "owner", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<Contact> contacts = new ArrayList<Contact>();
 	
-	@OneToMany(mappedBy = "shadowOf", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "shadowOf", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<Contact> shadows = new ArrayList<Contact>();
 	
-	@OneToMany(mappedBy = "user1", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "user1", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<User2User> users1 = new ArrayList<User2User>();
 	
-	@OneToMany(mappedBy = "user2", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "user2", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<User2User> users2 = new ArrayList<User2User>();
 	
-	@OneToMany(mappedBy = "sender", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "sender", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<Notification> sentNotification = new ArrayList<Notification>();
 	
-	@OneToMany(mappedBy = "receiver", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "receiver", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<Notification> receivedNotification = new ArrayList<Notification>();
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "user")
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<UserAddress> addresses = new ArrayList<UserAddress>();
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "user")
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<UserEmail> emails = new ArrayList<UserEmail>();
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "user")
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<UserIM> ims = new ArrayList<UserIM>();
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "user")
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<UserPhoneNo> phono = new ArrayList<UserPhoneNo>();
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "user")
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)

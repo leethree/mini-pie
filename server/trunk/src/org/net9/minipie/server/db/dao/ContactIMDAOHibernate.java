@@ -9,37 +9,37 @@ public class ContactIMDAOHibernate extends GenericHibernateDAO<ContactIM, Long> 
 
 	public void clear() {
 		// TODO Auto-generated method stub
-
+		super.clear();
 	}
 
 	public List<ContactIM> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return super.findAll();
 	}
 
-	public List<ContactIM> findByExample(ContactIM exampleInstance) {
+	public List<ContactIM> findByExample(ContactIM exampleInstance, String...excludeProperty) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.findByExample(exampleInstance, excludeProperty);
 	}
 
 	public ContactIM findById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.findById(id, false);
 	}
 
 	public void flush() {
 		// TODO Auto-generated method stub
-
+		super.flush();
 	}
 
 	public ContactIM makePersistent(ContactIM entity) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.makePersistent(entity);
 	}
 
 	public void makeTransient(ContactIM entity) {
 		// TODO Auto-generated method stub
-
+		super.makePersistent(entity);
 	}
 
 }

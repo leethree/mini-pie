@@ -11,4 +11,6 @@ public interface GenericDAO <T, Id extends Serializable>{
 	void makeTransient(T entity);
 	void flush();
 	void clear();
+	void begin();
+	void commit();
 }

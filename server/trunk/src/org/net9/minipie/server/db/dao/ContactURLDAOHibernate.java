@@ -13,17 +13,17 @@ public class ContactURLDAOHibernate extends GenericHibernateDAO<ContactURL, Long
 
 	public List<ContactURL> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return super.findAll();
 	}
 
-	public List<ContactURL> findByExample(ContactURL exampleInstance) {
+	public List<ContactURL> findByExample(ContactURL exampleInstance, String...excludeProperty) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.findByExample(exampleInstance, excludeProperty);
 	}
 
 	public ContactURL findById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.findById(id, false);
 	}
 
 	public void flush() {
@@ -33,12 +33,12 @@ public class ContactURLDAOHibernate extends GenericHibernateDAO<ContactURL, Long
 
 	public ContactURL makePersistent(ContactURL entity) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.makePersistent(entity);
 	}
 
 	public void makeTransient(ContactURL entity) {
 		// TODO Auto-generated method stub
-
+		super.makeTransient(entity);
 	}
 
 }

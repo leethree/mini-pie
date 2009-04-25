@@ -9,37 +9,37 @@ public class ContactEmailDAOHibernate extends GenericHibernateDAO<ContactEmail, 
 
 	public void clear() {
 		// TODO Auto-generated method stub
-
+		super.clear();
 	}
 
 	public List<ContactEmail> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return super.findAll();
 	}
 
-	public List<ContactEmail> findByExample(ContactEmail exampleInstance) {
+	public List<ContactEmail> findByExample(ContactEmail exampleInstance, String...excludeProperty) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.findByExample(exampleInstance, excludeProperty);
 	}
 
 	public ContactEmail findById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.findById(id, false);
 	}
 
 	public void flush() {
 		// TODO Auto-generated method stub
-
+		super.flush();
 	}
 
 	public ContactEmail makePersistent(ContactEmail entity) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.makePersistent(entity);
 	}
 
 	public void makeTransient(ContactEmail entity) {
 		// TODO Auto-generated method stub
-
+		super.makeTransient(entity);
 	}
 
 }

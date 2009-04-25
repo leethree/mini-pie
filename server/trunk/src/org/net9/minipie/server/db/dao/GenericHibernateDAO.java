@@ -11,7 +11,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.net9.minipie.server.db.util.HibernateSessionFactory;
 
-public abstract class GenericHibernateDAO <T, ID extends Serializable> implements GenericDAO<T, ID>{
+public abstract class GenericHibernateDAO <T, Id extends Serializable> implements GenericDAO<T, Id>{
 	private Class<T> persistentClass;
 	private Session session;
 	
@@ -37,7 +37,7 @@ public abstract class GenericHibernateDAO <T, ID extends Serializable> implement
 	}
 
 	@SuppressWarnings("unchecked")
-	public T findById(ID id, boolean lock) {
+	public T findById(Id id, boolean lock) {
 		T entity;
 		if (lock)
 			entity = (T) getSession().load(getPersistentClass(), id, LockMode.UPGRADE);
@@ -70,6 +70,12 @@ public abstract class GenericHibernateDAO <T, ID extends Serializable> implement
 	}
 	public void clear() {
 		getSession().clear();
+	}
+	public void begin(){
+		getSession().beginTransaction();
+	}
+	public void commit(){
+		getSession().getTransaction().commit();
 	}
 	/**
 	* Use this inside subclasses as a convenience method.

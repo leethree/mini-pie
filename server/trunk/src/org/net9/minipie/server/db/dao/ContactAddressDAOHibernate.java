@@ -8,15 +8,15 @@ public class ContactAddressDAOHibernate extends GenericHibernateDAO<ContactAddre
 		implements ContactAddressDAO {
 
 	public void clear() {
-		getSession().clear();
+		super.clear();
 	}
 
 	public List<ContactAddress> findAll() {
 		return super.findAll();
 	}
 
-	public List<ContactAddress> findByExample(ContactAddress exampleInstance, String...excludeProperty) {
-		return super.findByExample(exampleInstance, excludeProperty);
+	public List<ContactAddress> findByExample(ContactAddress exampleInstance, String...excludeProperties) {
+		return super.findByExample(exampleInstance, excludeProperties);
 	}
 
 	public ContactAddress findById(Long id) {
@@ -24,8 +24,7 @@ public class ContactAddressDAOHibernate extends GenericHibernateDAO<ContactAddre
 	}
 
 	public void flush() {
-		getSession().flush();
-
+		super.flush();
 	}
 
 	public ContactAddress makePersistent(ContactAddress entity) {
@@ -33,7 +32,6 @@ public class ContactAddressDAOHibernate extends GenericHibernateDAO<ContactAddre
 	}
 
 	public void makeTransient(ContactAddress entity) {
-		
 		super.makeTransient(entity);
 	}
 

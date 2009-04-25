@@ -9,37 +9,37 @@ public class ContactPhoneDAOHibernate extends GenericHibernateDAO<ContactPhoneNo
 
 	public void clear() {
 		// TODO Auto-generated method stub
-
+		super.clear();
 	}
 
 	public List<ContactPhoneNo> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return super.findAll();
 	}
 
-	public List<ContactPhoneNo> findByExample(ContactPhoneNo exampleInstance) {
+	public List<ContactPhoneNo> findByExample(ContactPhoneNo exampleInstance, String...excludeProperty) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.findByExample(exampleInstance, excludeProperty);
 	}
 
 	public ContactPhoneNo findById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.findById(id, false);
 	}
 
 	public void flush() {
 		// TODO Auto-generated method stub
-
+		super.flush();
 	}
 
 	public ContactPhoneNo makePersistent(ContactPhoneNo entity) {
 		// TODO Auto-generated method stub
-		return null;
+		return super.makePersistent(entity);
 	}
 
 	public void makeTransient(ContactPhoneNo entity) {
 		// TODO Auto-generated method stub
-
+		super.makeTransient(entity);
 	}
 
 }

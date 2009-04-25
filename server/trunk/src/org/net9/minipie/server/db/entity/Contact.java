@@ -40,37 +40,37 @@ public class Contact {
 	private String notes;
 	@Column(name = "RELATIONSHIP")
 	private String relationship;
-	@OneToMany(mappedBy = "contact", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "contact", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<Tag2Contact> ownTags = new ArrayList<Tag2Contact>();
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "contact")
+	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "contact")
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<ContactAddress> address = new ArrayList<ContactAddress>();
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "contact")
+	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "contact")
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<ContactEmail> emails = new ArrayList<ContactEmail>();
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "contact")
+	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "contact")
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<ContactIM> ims = new ArrayList<ContactIM>();
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "contact")
+	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "contact")
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
 	private Collection<ContactPhoneNo> phones = new ArrayList<ContactPhoneNo>();
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "contact")
+	@OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "contact")
 	@org.hibernate.annotations.Cascade(
 			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
 	)
