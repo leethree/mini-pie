@@ -2,10 +2,6 @@
 <classpath>
 	<classpathentry excluding="**/.svn/*" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_5_CONTAINER"/>
-	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.ws.MYECLIPSE_JERSEY_CORE"/>
-	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.ws.MYECLIPSE_JERSEY_JAXB"/>
-	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.ws.MYECLIPSE_JERSEY_JSON"/>
 	<classpathentry kind="lib" path="lib/Hibernate 3.3 Annotations/ejb3-persistence.jar"/>
 	<classpathentry kind="lib" path="lib/Hibernate 3.3 Annotations/hibernate-annotations.jar"/>
 	<classpathentry kind="lib" path="lib/Hibernate 3.3 Annotations/hibernate-commons-annotations.jar"/>
@@ -21,5 +17,14 @@
 	<classpathentry kind="lib" path="lib/Hibernate 3.3 Core/jta-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/Hibernate 3.3 Core/log4j.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.7-bin.jar"/>
+	<classpathentry kind="lib" path="lib/JAXB with Json/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/JAXB with Json/jackson-lgpl-0.9.4.jar"/>
+	<classpathentry kind="lib" path="lib/JAXB with Json/jaxb-api-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/JAXB with Json/jaxb-impl-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/JAXB with Json/jettison-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/JAXB with Json/stax-api-1.0-2.jar"/>
+	<classpathentry kind="lib" path="lib/Jersey 1.0.3 Bundle/asm-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/Jersey 1.0.3 Bundle/jersey-bundle-1.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/Jersey 1.0.3 Bundle/jsr311-api-1.0.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
