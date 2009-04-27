@@ -3,35 +3,13 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.net9.minipie.server.db.dao.ContactAddressDAOHibernate;
 import org.net9.minipie.server.db.dao.ContactDAOHibernate;
 import org.net9.minipie.server.db.dao.UserDAOHibernate;
-import org.net9.minipie.server.db.entity.Contact;
-import org.net9.minipie.server.db.entity.ContactAddress;
-import org.net9.minipie.server.db.entity.ContactEmail;
-import org.net9.minipie.server.db.entity.ContactIM;
-import org.net9.minipie.server.db.entity.ContactPhoneNo;
-import org.net9.minipie.server.db.entity.ContactURL;
-import org.net9.minipie.server.db.entity.Group;
-import org.net9.minipie.server.db.entity.Group2User;
-import org.net9.minipie.server.db.entity.Notification;
-import org.net9.minipie.server.db.entity.Tag;
-import org.net9.minipie.server.db.entity.Tag2Contact;
-import org.net9.minipie.server.db.entity.Tag2User;
-import org.net9.minipie.server.db.entity.User;
-import org.net9.minipie.server.db.entity.User2User;
-import org.net9.minipie.server.db.entity.UserAddress;
-import org.net9.minipie.server.db.entity.UserEmail;
-import org.net9.minipie.server.db.entity.UserIM;
-import org.net9.minipie.server.db.entity.UserPhoneNo;
-import org.net9.minipie.server.db.entity.UserURL;
 import org.net9.minipie.server.db.entity.constant.Bool;
 import org.net9.minipie.server.db.entity.constant.Gender;
 import org.net9.minipie.server.db.entity.constant.Permission;
 
-
+@SuppressWarnings("unused")
 public class Test {
 
 	/**
@@ -142,8 +120,8 @@ public class Test {
 		Long contact1IMId = cdh.addIM(contact1Id, "601524835", null, Bool.FALSE);
 		Long contact1PhoneId = cdh.addTel(contact1Id, "110", "home", null);
 		Long contact1URLId = cdh.addURL(contact1Id, null, "url", Bool.TRUE);
-		List result = cdh.selectOwnerContact(l);
-		Iterator iter = result.iterator();
+		List<Object[]> result = cdh.selectOwnerContact(l);
+		Iterator<Object[]> iter = result.iterator();
 		while(iter.hasNext()){
 			Object[] objs = (Object[]) iter.next();
 			for(int i=0; i<7; i++){
