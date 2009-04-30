@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.net9.minipie.server.db.entity.constant.Bool;
+import org.net9.minipie.server.data.constant.Bool;
 
 @Entity
 @Table(name = "GROUP_USER")

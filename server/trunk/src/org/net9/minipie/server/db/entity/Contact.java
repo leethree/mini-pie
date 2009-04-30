@@ -14,8 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.net9.minipie.server.db.entity.constant.Gender;
-import org.net9.minipie.server.db.entity.constant.Permission;
+import org.net9.minipie.server.data.constant.Gender;
+import org.net9.minipie.server.data.constant.Permission;
 
 @Entity
 @Table(name = "UNREGISTERED_CONTACT")

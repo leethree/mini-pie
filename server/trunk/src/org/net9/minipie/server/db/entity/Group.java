@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.net9.minipie.server.db.entity.constant.Permission;
+import org.net9.minipie.server.data.constant.Permission;
 
 @Entity
 @Table(name = "GROUPS") //group cannot be assigned to name a table or exception

@@ -1,6 +1,8 @@
 package org.net9.minipie.server.db.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -14,41 +16,25 @@ import org.net9.minipie.server.db.entity.ContactIM;
 import org.net9.minipie.server.db.entity.ContactPhoneNo;
 import org.net9.minipie.server.db.entity.ContactURL;
 import org.net9.minipie.server.db.entity.User;
-import org.net9.minipie.server.db.entity.constant.Bool;
-import org.net9.minipie.server.db.entity.constant.Gender;
-import org.net9.minipie.server.db.entity.constant.Permission;
+import org.net9.minipie.server.data.AddressData;
+import org.net9.minipie.server.data.BasicContact;
+import org.net9.minipie.server.data.EmailData;
+import org.net9.minipie.server.data.IMData;
+import org.net9.minipie.server.data.PhoneNoData;
+import org.net9.minipie.server.data.URLData;
+import org.net9.minipie.server.data.constant.Bool;
+import org.net9.minipie.server.data.constant.Gender;
+import org.net9.minipie.server.data.constant.Permission;
 
 public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> implements
 		ContactDAO {
 		
-	public Long addAddr(Long contactId, Object...value) {
+	public Long addAddr(Long contactId, AddressData addressData) {
 		Contact contact = findById(contactId);
 		ContactAddress contactAddr = new ContactAddress();
-		int k = 0;
-		for(Object obj: value){
-			switch(k){
-			case 0:
-				if(obj!=null){
-					String addr = (String) obj;
-					contactAddr.setValue(addr);
-				}
-				break;
-			case 1:
-				if(obj!=null){
-					String type = (String) obj;
-					contactAddr.setType(type);
-				}
-				break;
-			case 2:
-				if(obj!=null){
-					Bool primary = (Bool) obj;
-					contactAddr.setPrimary(primary);
-				}
-				break;
-			default:break;
-			}
-			k++;
-		}
+		contactAddr.setValue(addressData.getValue());
+		contactAddr.setType(addressData.getType());
+		contactAddr.setPrimary(addressData.getPrimary());
 		contactAddr.setContact(contact);
 		ContactAddressDAOHibernate cadh = new ContactAddressDAOHibernate();
 		cadh.begin();
@@ -66,34 +52,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 		return null;
 	}
 
-	public Long addEmail(Long contactId, Object... value) {
+	public Long addEmail(Long contactId, EmailData emailData) {
 		Contact contact = findById(contactId);
 		ContactEmail contactEmail = new ContactEmail();
-		int k = 0;
-		for(Object obj: value){
-			switch(k){
-			case 0:
-				if(obj!=null){
-					String email = (String) obj;
-					contactEmail.setValue(email);
-				}
-				break;
-			case 1:
-				if(obj!=null){
-					String type = (String) obj;
-					contactEmail.setType(type);
-				}
-				break;
-			case 2:
-				if(obj!=null){
-					Bool primary = (Bool) obj;
-					contactEmail.setPrimary(primary);
-				}
-				break;
-			default:break;
-			}
-			k++;
-		}
+		contactEmail.setValue(emailData.getValue());
+		contactEmail.setType(emailData.getType());
+		contactEmail.setPrimary(emailData.getPrimary());
 		contactEmail.setContact(contact);
 		ContactEmailDAOHibernate cedh = new ContactEmailDAOHibernate();
 		cedh.begin();
@@ -111,34 +75,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 		return null;
 	}
 
-	public Long addIM(Long contactId, Object... value) {
+	public Long addIM(Long contactId, IMData imData) {
 		Contact contact = findById(contactId);
 		ContactIM contactIM = new ContactIM();
-		int k = 0;
-		for(Object obj: value){
-			switch(k){
-			case 0:
-				if(obj!=null){
-					String im = (String) obj;
-					contactIM.setValue(im);
-				}
-				break;
-			case 1:
-				if(obj!=null){
-					String type = (String) obj;
-					contactIM.setType(type);
-				}
-				break;
-			case 2:
-				if(obj!=null){
-					Bool primary = (Bool) obj;
-					contactIM.setPrimary(primary);
-				}
-				break;
-			default:break;
-			}
-			k++;
-		}
+		contactIM.setValue(imData.getValue());
+		contactIM.setType(imData.getType());
+		contactIM.setPrimary(imData.getPrimary());
 		contactIM.setContact(contact);
 		ContactIMDAOHibernate cidh = new ContactIMDAOHibernate();
 		cidh.begin();
@@ -151,34 +93,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 		return id;
 	}
 
-	public Long addTel(Long contactId, Object... value) {
+	public Long addTel(Long contactId, PhoneNoData phoneNoData) {
 		Contact contact = findById(contactId);
 		ContactPhoneNo contactPhone = new ContactPhoneNo();
-		int k = 0;
-		for(Object obj: value){
-			switch(k){
-			case 0:
-				if(obj!=null){
-					String tel = (String) obj;
-					contactPhone.setValue(tel);
-				}
-				break;
-			case 1:
-				if(obj!=null){
-					String type = (String) obj;
-					contactPhone.setType(type);
-				}
-				break;
-			case 2:
-				if(obj!=null){
-					Bool primary = (Bool) obj;
-					contactPhone.setPrimary(primary);
-				}
-				break;
-			default:break;
-			}
-			k++;
-		}
+		contactPhone.setValue(phoneNoData.getValue());
+		contactPhone.setType(phoneNoData.getType());
+		contactPhone.setPrimary(phoneNoData.getPrimary());
 		contactPhone.setContact(contact);
 		ContactPhoneDAOHibernate cpdh = new ContactPhoneDAOHibernate();
 		cpdh.begin();
@@ -191,34 +111,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 		return id;
 	}
 
-	public Long addURL(Long contactId, Object... value) {
+	public Long addURL(Long contactId, URLData urlData) {
 		Contact contact = findById(contactId);
 		ContactURL contactURL = new ContactURL();
-		int k = 0;
-		for(Object obj: value){
-			switch(k){
-			case 0:
-				if(obj!=null){
-					String url = (String) obj;
-					contactURL.setValue(url);
-				}
-				break;
-			case 1:
-				if(obj!=null){
-					String type = (String) obj;
-					contactURL.setType(type);
-				}
-				break;
-			case 2:
-				if(obj!=null){
-					Bool primary = (Bool) obj;
-					contactURL.setPrimary(primary);
-				}
-				break;
-			default:break;
-			}
-			k++;
-		}
+		contactURL.setValue(urlData.getValue());
+		contactURL.setType(urlData.getType());
+		contactURL.setPrimary(urlData.getPrimary());
 		contactURL.setContact(contact);
 		ContactURLDAOHibernate cudh = new ContactURLDAOHibernate();
 		cudh.begin();
@@ -434,7 +332,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Object[]> selectAddr(Long contactId) {
+	public List<AddressData> selectAddr(Long contactId) {
 		ContactAddressDAOHibernate cadh = new ContactAddressDAOHibernate();
 		Criteria crit = cadh.getSession().createCriteria(ContactAddress.class);
 		crit.add(Restrictions.eq("id", contactId));
@@ -443,8 +341,18 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 		projList.add(Projections.property("type"));
 		projList.add(Projections.property("primary"));
 		crit.setProjection(projList);
-		List result = crit.list();
-		return result;
+		List<Object[]> result = crit.list();
+		List<AddressData> selectedResult = new ArrayList<AddressData>();
+		Iterator<Object[]> iter = result.iterator();
+		while(iter.hasNext()){
+			Object[] objs = (Object[]) iter.next();
+			AddressData addressData = new AddressData();
+			addressData.setValue((String)objs[0]);
+			addressData.setType((String)objs[1]);
+			addressData.setPrimary((Bool)objs[2]);
+			selectedResult.add(addressData);
+		}
+		return selectedResult;
 	}
 
 	public List<Object[]> selectAddtional(Long contactId) {
@@ -453,7 +361,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Object[]> selectBasicInfo(Long contactId) {
+	public List<BasicContact> selectBasicInfo(Long contactId) {
 		ContactDAOHibernate cdh = new ContactDAOHibernate();
 		Criteria crit = cdh.getSession().createCriteria(Contact.class);
 		crit.add(Restrictions.eq("id", contactId));
@@ -467,11 +375,25 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 		projList.add(Projections.property("relationship"));
 		crit.setProjection(projList);
 		List result = crit.list();
-		return result;
+		List<BasicContact> selectedResult = new ArrayList<BasicContact>();
+		Iterator<Object[]> iter = result.iterator();
+		while(iter.hasNext()){
+			Object[] objs = (Object[]) iter.next();
+			BasicContact basicContact = new BasicContact();
+			basicContact.setName((String)objs[0]);
+			basicContact.setImage((String)objs[1]);
+			basicContact.setNickName((String)objs[2]);
+			basicContact.setGender((Gender)objs[3]);
+			basicContact.setBirthday((String)objs[4]);
+			basicContact.setNotes((String)objs[5]);
+			basicContact.setRelationship((String)objs[6]);
+			selectedResult.add(basicContact);
+		}
+		return selectedResult;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Object[]> selectEmail(Long contactId) {
+	public List<EmailData> selectEmail(Long contactId) {
 		ContactEmailDAOHibernate cedh = new ContactEmailDAOHibernate();
 		Criteria crit = cedh.getSession().createCriteria(ContactEmail.class);
 		crit.add(Restrictions.eq("id", contactId));
@@ -481,7 +403,17 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 		projList.add(Projections.property("primary"));
 		crit.setProjection(projList);
 		List result = crit.list();
-		return result;
+		List<EmailData> selectedResult = new ArrayList<EmailData>();
+		Iterator<Object[]> iter = result.iterator();
+		while(iter.hasNext()){
+			Object[] objs = (Object[]) iter.next();
+			EmailData emailData = new EmailData();
+			emailData.setValue((String)objs[0]);
+			emailData.setType((String)objs[1]);
+			emailData.setPrimary((Bool)objs[2]);
+			selectedResult.add(emailData);
+		}
+		return selectedResult;
 	}
 
 	public List<Object[]> selectGroupContact(Long groupId) {
@@ -490,7 +422,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Object[]> selectIM(Long contactId) {
+	public List<IMData> selectIM(Long contactId) {
 		ContactIMDAOHibernate cidh = new ContactIMDAOHibernate();
 		Criteria crit = cidh.getSession().createCriteria(ContactIM.class);
 		crit.add(Restrictions.eq("id", contactId));
@@ -500,7 +432,17 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 		projList.add(Projections.property("primary"));
 		crit.setProjection(projList);
 		List result = crit.list();
-		return result;
+		List<IMData> selectedResult = new ArrayList<IMData>();
+		Iterator<Object[]> iter = result.iterator();
+		while(iter.hasNext()){
+			Object[] objs = (Object[]) iter.next();
+			IMData imData = new IMData();
+			imData.setValue((String)objs[0]);
+			imData.setType((String)objs[1]);
+			imData.setPrimary((Bool)objs[2]);
+			selectedResult.add(imData);
+		}
+		return selectedResult;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -532,7 +474,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Object[]> selectTel(Long contactId) {
+	public List<PhoneNoData> selectTel(Long contactId) {
 		ContactPhoneDAOHibernate cpdh = new ContactPhoneDAOHibernate();
 		Criteria crit = cpdh.getSession().createCriteria(ContactPhoneNo.class);
 		crit.add(Restrictions.eq("id", contactId));
@@ -542,11 +484,21 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 		projList.add(Projections.property("primary"));
 		crit.setProjection(projList);
 		List result = crit.list();
-		return result;
+		List<PhoneNoData> selectedResult = new ArrayList<PhoneNoData>();
+		Iterator<Object[]> iter = result.iterator();
+		while(iter.hasNext()){
+			Object[] objs = (Object[]) iter.next();
+			PhoneNoData phoneNoData = new PhoneNoData();
+			phoneNoData.setValue((String)objs[0]);
+			phoneNoData.setType((String)objs[1]);
+			phoneNoData.setPrimary((Bool)objs[2]);
+			selectedResult.add(phoneNoData);
+		}
+		return selectedResult;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Object[]> selectURL(Long contactId) {
+	public List<URLData> selectURL(Long contactId) {
 		ContactURLDAOHibernate cudh = new ContactURLDAOHibernate();
 		Criteria crit = cudh.getSession().createCriteria(ContactURL.class);
 		crit.add(Restrictions.eq("id", contactId));
@@ -556,7 +508,17 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 		projList.add(Projections.property("primary"));
 		crit.setProjection(projList);
 		List result = crit.list();
-		return result;
+		List<URLData> selectedResult = new ArrayList<URLData>();
+		Iterator<Object[]> iter = result.iterator();
+		while(iter.hasNext()){
+			Object[] objs = (Object[]) iter.next();
+			URLData urlData = new URLData();
+			urlData.setValue((String)objs[0]);
+			urlData.setType((String)objs[1]);
+			urlData.setPrimary((Bool)objs[2]);
+			selectedResult.add(urlData);
+		}
+		return selectedResult;
 	}
 
 	public void clear() {

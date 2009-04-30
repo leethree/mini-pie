@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.db.entity.UserAddress;
-import org.net9.minipie.server.db.entity.constant.Bool;
-import org.net9.minipie.server.db.entity.constant.Permission;
+import org.net9.minipie.server.data.constant.Bool;
+import org.net9.minipie.server.data.constant.Permission;
 
 public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		UserDAO {
