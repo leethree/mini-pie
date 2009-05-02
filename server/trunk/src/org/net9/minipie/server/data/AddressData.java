@@ -7,12 +7,12 @@ package org.net9.minipie.server.data;
 
 import org.net9.minipie.server.data.constant.Bool;
 import org.net9.minipie.server.data.constant.Permission;
-
+import org.net9.minipie.server.data.constant.InfoType;
 /**
  * @author Riversand
  *
  */
-public class AddressData {
+public class AddressData extends Info{
 	private Long id;
 	private String value;
 	private String type;
@@ -25,9 +25,11 @@ public class AddressData {
 	 * Constructor
 	 */
 	public AddressData() {
+		setInfoType(InfoType.ADDRESS);
 	}
 	public AddressData(Long id, String value, String type, Bool primary, 
 			String formatted, String zipcode, Permission perm){
+		setInfoType(InfoType.ADDRESS);
 		setId(id);
 		setValue(value);
 		setType(type);
@@ -134,4 +136,17 @@ public class AddressData {
 	public Permission getPerm() {
 		return perm;
 	}
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.data.Info#createInfo()
+	 */
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.data.Info#getInfo()
+	 */
+	@Override
+	public Info getInfo() {
+		// TODO Auto-generated method stub
+		return this;
+	}
+	
+	
 }

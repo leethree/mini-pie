@@ -6,13 +6,14 @@
 package org.net9.minipie.server.data;
 
 import org.net9.minipie.server.data.constant.Bool;
+import org.net9.minipie.server.data.constant.InfoType;
 import org.net9.minipie.server.data.constant.Permission;
 
 /**
  * @author Riversand
  *
  */
-public class IMData {
+public class IMData extends Info{
 	private Long id;
 	private String value;
 	private String type;
@@ -23,8 +24,10 @@ public class IMData {
 	 * Constructor
 	 */
 	public IMData() {
+		setInfoType(InfoType.IM);
 	}
 	public IMData(Long id, String value, String type, Bool primary, Permission perm){
+		setInfoType(InfoType.IM);
 		setId(id);
 		setValue(value);
 		setType(type);
@@ -66,5 +69,13 @@ public class IMData {
 	 */
 	public Permission getPerm() {
 		return perm;
+	}
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.data.Info#createInfo()
+	 */
+	@Override
+	public Info getInfo() {
+		// TODO Auto-generated method stub
+		return this;
 	}
 }

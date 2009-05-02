@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="Mini-Pie"
+  name="pro"
   id="myeclipse.1239793395937"
   context-root="/Mini-Pie"
   j2ee-spec="5.0"
-  archive="Mini-Pie.war">
+  archive="pro.war">
   <attributes>
     <attribute name="webrootdir" value="/WebRoot" />
   </attributes>

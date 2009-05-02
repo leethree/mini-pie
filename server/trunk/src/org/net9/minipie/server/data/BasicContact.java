@@ -12,18 +12,20 @@ import java.text.ParsePosition;
 
 
 import org.net9.minipie.server.data.constant.Gender;
+import org.net9.minipie.server.data.constant.InfoType;
 import org.net9.minipie.server.data.constant.Permission;
 
 /**
  * @author Riversand
  *
  */
-public class BasicContact {
-	private Long id;
+public class BasicContact extends Info{
+	//private Long id;
 	private Permission permission;
 	private String name;
-	private String image;
-	private String nickName;
+	//private String image;
+	private MinimalContact minimalContact;
+	//private String nickName;
 	private Gender gender;
 	private Date birthday;
 	private String notes;
@@ -32,15 +34,18 @@ public class BasicContact {
 	 * Constructor
 	 */
 	public BasicContact() {
+		setInfoType(InfoType.BASIC);
 		// TODO Auto-generated constructor stub
 	}
 	public BasicContact(Long id, Permission permission, String name, String image, 
 			String nickName, Gender gender, String birthday, String notes, String relationship){
-		setId(id);
+		setInfoType(InfoType.BASIC);
+		//setId(id);
 		setPermission(permission);
-		setName(nickName);
-		setImage(image);
-		setNickName(nickName);
+		setName(name);
+		//setImage(image);
+		minimalContact=new MinimalContact(id,nickName,image);
+		//setNickName(nickName);
 		setGender(gender);
 		setBirthday(birthday);
 		setNotes(notes);
@@ -79,29 +84,26 @@ public class BasicContact {
 	 * @return the id
 	 */
 	public Long getId() {
-		return id;
+		return minimalContact.getId();
 	}
 	/**
 	 * @param id the id to set
 	 */
 	public void setId(Long id) {
-		this.id = id;
+		minimalContact.setId(id);
 	}
 	/**
 	 * @return the image
 	 */
 	public String getImage() {
-		return image;
+		return minimalContact.getImage();
 	}
 	/**
 	 * @param image the image to set
 	 */
 	public void setImage(String image) {
-		if(image==null){
-			return;
-		}
-		image = image.trim().toLowerCase();
-		this.image = image;
+		
+		minimalContact.setImage(image);
 	}
 	/**
 	 * @param permission the permission to set
@@ -120,29 +122,25 @@ public class BasicContact {
 	 */
 	public void setName(String name) {
 		name = name.trim();
-		this.name = name;
+		this.name=name;
 	}
 	/**
 	 * @return the name
 	 */
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	/**
 	 * @param nickName the nickName to set
 	 */
 	public void setNickName(String nickName) {
-		if(nickName==null){
-			return;
-		}
-		nickName = nickName.trim();
-		this.nickName = nickName;
+		this.minimalContact.setNickName(nickName);
 	}
 	/**
 	 * @return the nickName
 	 */
 	public String getNickName() {
-		return nickName;
+		return minimalContact.getNickName();
 	}
 	/**
 	 * @param notes the notes to set
@@ -176,4 +174,14 @@ public class BasicContact {
 	public String getRelationship() {
 		return relationship;
 	}
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.data.Info#getInfo()
+	 */
+	@Override
+	public Info getInfo() {
+		// TODO Auto-generated method stub
+		return this;
+	}
+	
+	
 }
