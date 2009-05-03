@@ -1,5 +1,5 @@
 /**
- * InvalidRequestException.java
+ * InvalidRequestMapper.java
  *     in package: * org.net9.minipie.server.api.exception
  * by Mini-Pie Project
  */

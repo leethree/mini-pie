@@ -1,3 +1,8 @@
+/**
+ * ContactXML.java
+ *     in package: * org.net9.minipie.server.api.xml
+ * by Mini-Pie Project
+ */
 package org.net9.minipie.server.api.xml;
 
 import java.net.URI;
@@ -6,43 +11,69 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.net9.minipie.server.data.Contact;
+
+/**
+ * @author LeeThree
+ * 
+ */
 @XmlRootElement(name = "contact")
 public class ContactXML {
-	@XmlElement
-	private String name;
 
-	@XmlElement
-	private int id;
-
-	@XmlAttribute
+	private Contact entity;
 	private URI uri;
 
 	public ContactXML() {
+		entity = new Contact();
 	}
 
-	public ContactXML(int id, String name, URI uri) {
-		this.name = name;
-		this.id = id;
-		this.uri = uri;
+	/**
+	 * Constructor
+	 * 
+	 * @param contact
+	 * @param absolutePath
+	 */
+	public ContactXML(Contact contact, URI absolutePath) {
+		this.entity = contact;
+		this.uri = absolutePath;
 	}
 
+	@XmlElement(required = true)
 	public String getName() {
-		return name;
+		return entity.getName();
 	}
 
-	public int getId() {
-		return id;
+	public void setName(String name) {
+		entity.setName(name);
+	}
+
+	@XmlAttribute
+	public Long getId() {
+		return entity.getId();
+	}
+
+	public void setId(Long id) {
+		entity.setId(id);
 	}
 
 	/**
 	 * @return the uri
 	 */
+	@XmlAttribute
 	public URI getUri() {
 		return uri;
 	}
 
+	/**
+	 * @param uri
+	 *            the uri to set
+	 */
+	public void setUri(URI uri) {
+		this.uri = uri;
+	}
+
 	@Override
 	public String toString() {
-		return "Contact:" + id + "," + name;
+		return "Contact:" + getId() + "," + getName() + "," + getUri();
 	}
 }
