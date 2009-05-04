@@ -61,7 +61,7 @@ public class EmailData extends Info{
 		}
 		value = value.trim();
 		value = value.toLowerCase();
-		if(value.contains("@")==false){
+		if(value.contains("@")==false){ //TODO check only one '@' using regular exp
 			//TODO exception handling
 		}
 		this.value = value;

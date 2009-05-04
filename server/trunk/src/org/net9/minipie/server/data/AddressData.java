@@ -95,6 +95,7 @@ public class AddressData extends Info{
 	 */
 	public void setFormatted(String formatted) {
 		if(formatted==null){
+			this.formatted  = null;
 			return;
 		}
 		formatted = formatted.trim();
@@ -111,6 +112,7 @@ public class AddressData extends Info{
 	 */
 	public void setZipcode(String zipcode) {
 		if(zipcode==null){
+			this.zipcode = null;
 			return;
 		}
 		zipcode = zipcode.trim();

@@ -57,6 +57,7 @@ public class PhoneNoData extends Info{
 	}
 	public void setValue(String value) {
 		if(value==null){
+			this.value = null;
 			return;
 		}
 		value = value.trim();
