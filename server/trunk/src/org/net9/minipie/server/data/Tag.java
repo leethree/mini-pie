@@ -10,7 +10,7 @@ package org.net9.minipie.server.data;
  *
  */
 public class Tag {
-	private Long id;
+	private long id;
 	private String name;
 	/**
 	 * Constructor
@@ -18,14 +18,14 @@ public class Tag {
 	public Tag() {
 		// TODO Auto-generated constructor stub
 	}
-	public Tag(Long id,String name){
+	public Tag(long id,String name){
 		setId(id);
 		setName(name);
 	}
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 	/**
@@ -37,7 +37,7 @@ public class Tag {
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(long id) {
 		if(id<0){
 			//TODO:Exception
 		}

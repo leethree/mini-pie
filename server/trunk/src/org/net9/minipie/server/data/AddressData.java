@@ -5,18 +5,17 @@
  */
 package org.net9.minipie.server.data;
 
-import org.net9.minipie.server.data.constant.Bool;
-import org.net9.minipie.server.data.constant.Permission;
 import org.net9.minipie.server.data.constant.InfoType;
+import org.net9.minipie.server.data.constant.Permission;
 /**
  * @author Riversand
  *
  */
 public class AddressData extends Info{
-	private Long id;
+	private long id;
 	private String value;
 	private String type;
-	private Bool primary;
+	private boolean primary;
 	/* the following fields are only referenced by user */
 	private String formatted;                  
 	private String zipcode;         
@@ -27,7 +26,7 @@ public class AddressData extends Info{
 	public AddressData() {
 		setInfoType(InfoType.ADDRESS);
 	}
-	public AddressData(Long id, String value, String type, Bool primary, 
+	public AddressData(long id, String value, String type, boolean primary, 
 			String formatted, String zipcode, Permission perm){
 		setInfoType(InfoType.ADDRESS);
 		setId(id);
@@ -41,13 +40,13 @@ public class AddressData extends Info{
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 	/**
@@ -81,13 +80,13 @@ public class AddressData extends Info{
 	/**
 	 * @param primary the primary to set
 	 */
-	public void setPrimary(Bool primary) {
+	public void setPrimary(boolean primary) {
 		this.primary = primary;
 	}
 	/**
 	 * @return the primary
 	 */
-	public Bool getPrimary() {
+	public boolean getPrimary() {
 		return primary;
 	}
 	/**

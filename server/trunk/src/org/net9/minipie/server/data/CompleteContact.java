@@ -43,7 +43,7 @@ public class CompleteContact {
 	/**
 	 * @return the id
 	 */
-	public Long getId(){
+	public long getId(){
 		return basicContact.getId();
 	}
 	public String getNickName(){

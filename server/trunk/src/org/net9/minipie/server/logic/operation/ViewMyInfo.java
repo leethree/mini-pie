@@ -9,17 +9,17 @@ import org.net9.minipie.server.data.MyCompleteInfo;
 
 /**
  * @author Seastar
- *
+ * 
  */
-public class ViewMyInfo extends Command<MyCompleteInfo> {
+public class ViewMyInfo implements Command<MyCompleteInfo> {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	@Override
-	public void excute() {
+	public MyCompleteInfo excute() {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
-
 }

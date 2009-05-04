@@ -7,17 +7,18 @@ package org.net9.minipie.server.logic.operation;
 
 /**
  * @author Seastar
- *
+ * 
  */
-public class SignUp extends Command<Long> {
+public class SignUp implements Command<Long> {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	@Override
-	public void excute() {
+	public Long excute() {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 }

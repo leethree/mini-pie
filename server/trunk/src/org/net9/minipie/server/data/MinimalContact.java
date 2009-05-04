@@ -10,7 +10,7 @@ package org.net9.minipie.server.data;
  *
  */
 public class MinimalContact {
-	private Long id;
+	private long id;
 	private String nickName;
 	private String image;
 	
@@ -26,7 +26,7 @@ public class MinimalContact {
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 	/**
@@ -44,7 +44,7 @@ public class MinimalContact {
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(long id) {
 		if(id<0){
 			//TODO:Exception
 		}

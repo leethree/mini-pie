@@ -12,7 +12,7 @@ import org.net9.minipie.server.logic.operation.Command;
  *
  */
 public class Handler<T> {
-	private Command<T> aCommand;
+	private Command<T> command;
 	/**
 	 * Constructor
 	 */
@@ -28,11 +28,10 @@ public class Handler<T> {
 	 * @param command the aCommand to set
 	 */
 	public void setCommand(Command<T> command) {
-		aCommand = command;
+		this.command = command;
 	}
 	public T excute(){
-		aCommand.excute();
-		return aCommand.getReturn();
+		return command.excute();
 	}
 }
 

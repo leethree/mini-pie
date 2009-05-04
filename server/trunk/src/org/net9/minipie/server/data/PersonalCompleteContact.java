@@ -6,6 +6,7 @@
 package org.net9.minipie.server.data;
 
 import java.util.Collection;
+
 import org.net9.minipie.server.data.constant.Permission;
 
 /**

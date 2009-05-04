@@ -7,17 +7,18 @@ package org.net9.minipie.server.logic.operation;
 
 /**
  * @author Seastar
- *
+ * 
  */
-public class UpdateMyInfo extends Command<Void> {
+public class UpdateMyInfo implements Command<Void> {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	@Override
-	public void excute() {
+	public Void excute() {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 }

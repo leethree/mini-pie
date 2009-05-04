@@ -5,7 +5,6 @@
  */
 package org.net9.minipie.server.data;
 
-import org.net9.minipie.server.data.constant.Bool;
 import org.net9.minipie.server.data.constant.InfoType;
 import org.net9.minipie.server.data.constant.Permission;
 
@@ -14,10 +13,10 @@ import org.net9.minipie.server.data.constant.Permission;
  *
  */
 public class PhoneNoData extends Info{
-	private Long id;
+	private long id;
 	private String value;
 	private String type;
-	private Bool primary;
+	private boolean primary;
 	/* the following field is only referenced by user */
 	private Permission perm;
 	/**
@@ -26,7 +25,7 @@ public class PhoneNoData extends Info{
 	public PhoneNoData() {
 		setInfoType(InfoType.PHONE);
 	}
-	public PhoneNoData(Long id, String value, String type, Bool primary, Permission perm){
+	public PhoneNoData(long id, String value, String type, boolean primary, Permission perm){
 		setInfoType(InfoType.PHONE);
 		setId(id);
 		setValue(value);
@@ -34,10 +33,10 @@ public class PhoneNoData extends Info{
 		setPrimary(primary);
 		setPerm(perm);
 	}
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getType() {
@@ -46,10 +45,10 @@ public class PhoneNoData extends Info{
 	public void setType(String type) {
 		this.type = type;
 	}
-	public Bool getPrimary() {
+	public boolean getPrimary() {
 		return primary;
 	}
-	public void setPrimary(Bool primary) {
+	public void setPrimary(boolean primary) {
 		this.primary = primary;
 	}
 	public String getValue() {

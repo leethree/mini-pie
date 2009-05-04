@@ -9,17 +9,18 @@ import org.net9.minipie.server.data.PersonalCompleteContact;
 
 /**
  * @author Seastar
- *
+ * 
  */
-public class ViewMyContact extends Command<PersonalCompleteContact>{
+public class ViewMyContact implements Command<PersonalCompleteContact> {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	@Override
-	public void excute() {
+	public PersonalCompleteContact excute() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
-	
+
 }

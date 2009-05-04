@@ -5,11 +5,9 @@
  */
 package org.net9.minipie.server.data;
 
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.text.ParsePosition;
-
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.net9.minipie.server.data.constant.Gender;
 import org.net9.minipie.server.data.constant.InfoType;
@@ -20,7 +18,7 @@ import org.net9.minipie.server.data.constant.Permission;
  *
  */
 public class BasicContact extends Info{
-	//private Long id;
+	//private long id;
 	private Permission permission;
 	private String name;
 	//private String image;
@@ -37,7 +35,7 @@ public class BasicContact extends Info{
 		setInfoType(InfoType.BASIC);
 		// TODO Auto-generated constructor stub
 	}
-	public BasicContact(Long id, Permission permission, String name, String image, 
+	public BasicContact(long id, Permission permission, String name, String image, 
 			String nickName, Gender gender, String birthday, String notes, String relationship){
 		setInfoType(InfoType.BASIC);
 		//setId(id);
@@ -83,13 +81,13 @@ public class BasicContact extends Info{
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public long getId() {
 		return minimalContact.getId();
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(long id) {
 		minimalContact.setId(id);
 	}
 	/**

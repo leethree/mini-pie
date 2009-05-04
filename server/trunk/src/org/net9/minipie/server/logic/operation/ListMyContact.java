@@ -11,17 +11,17 @@ import org.net9.minipie.server.data.MinimalContact;
 
 /**
  * @author Seastar
- *
+ * 
  */
-public class ListMyContact extends Command<Collection<MinimalContact>> {
+public class ListMyContact implements Command<Collection<MinimalContact>> {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	@Override
-	public void excute() {
+	public Collection<MinimalContact> excute() {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
-
 }
