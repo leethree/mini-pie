@@ -5,8 +5,6 @@
  */
 package org.net9.minipie.server.data;
 
-import org.net9.minipie.server.data.constant.InfoType;
-
 /**
  * @author Seastar
  *

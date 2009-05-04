@@ -5,14 +5,13 @@
  */
 package org.net9.minipie.server.data;
 
-import org.net9.minipie.server.data.constant.InfoType;
 import org.net9.minipie.server.data.constant.Permission;
 
 /**
  * @author Riversand
  *
  */
-public class PhoneNoData extends Info{
+public class PhoneNoData implements Info {
 	private long id;
 	private String value;
 	private String type;
@@ -23,10 +22,10 @@ public class PhoneNoData extends Info{
 	 * Constructor
 	 */
 	public PhoneNoData() {
-		setInfoType(InfoType.PHONE);
+		//setInfoType(InfoType.PHONE);
 	}
 	public PhoneNoData(long id, String value, String type, boolean primary, Permission perm){
-		setInfoType(InfoType.PHONE);
+		//setInfoType(InfoType.PHONE);
 		setId(id);
 		setValue(value);
 		setType(type);
@@ -95,11 +94,5 @@ public class PhoneNoData extends Info{
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.data.Info#getInfo()
 	 */
-	@Override
-	public Info getInfo() {
-		// TODO Auto-generated method stub
-		return this;
-	}
-
 	
 }

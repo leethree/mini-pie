@@ -5,14 +5,13 @@
  */
 package org.net9.minipie.server.data;
 
-import org.net9.minipie.server.data.constant.InfoType;
 import org.net9.minipie.server.data.constant.Permission;
 
 /**
  * @author Riversand
  *
  */
-public class IMData extends Info{
+public class IMData implements Info{
 	private long id;
 	private String value;
 	private String type;
@@ -23,10 +22,10 @@ public class IMData extends Info{
 	 * Constructor
 	 */
 	public IMData() {
-		setInfoType(InfoType.IM);
+		//setInfoType(InfoType.IM);
 	}
 	public IMData(long id, String value, String type, boolean primary, Permission perm){
-		setInfoType(InfoType.IM);
+		//setInfoType(InfoType.IM);
 		setId(id);
 		setValue(value);
 		setType(type);
@@ -72,9 +71,5 @@ public class IMData extends Info{
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.data.Info#createInfo()
 	 */
-	@Override
-	public Info getInfo() {
-		// TODO Auto-generated method stub
-		return this;
-	}
+	
 }

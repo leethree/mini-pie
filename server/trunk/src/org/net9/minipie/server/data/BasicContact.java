@@ -10,14 +10,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.net9.minipie.server.data.constant.Gender;
-import org.net9.minipie.server.data.constant.InfoType;
 import org.net9.minipie.server.data.constant.Permission;
 
 /**
  * @author Riversand
  *
  */
-public class BasicContact extends Info{
+public class BasicContact{
 	//private long id;
 	private Permission permission;
 	private String name;
@@ -32,12 +31,12 @@ public class BasicContact extends Info{
 	 * Constructor
 	 */
 	public BasicContact() {
-		setInfoType(InfoType.BASIC);
+		//setInfoType(InfoType.BASIC);
 		// TODO Auto-generated constructor stub
 	}
 	public BasicContact(long id, Permission permission, String name, String image, 
 			String nickName, Gender gender, String birthday, String notes, String relationship){
-		setInfoType(InfoType.BASIC);
+		//setInfoType(InfoType.BASIC);
 		//setId(id);
 		setPermission(permission);
 		setName(name);
@@ -175,11 +174,6 @@ public class BasicContact extends Info{
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.data.Info#getInfo()
 	 */
-	@Override
-	public Info getInfo() {
-		// TODO Auto-generated method stub
-		return this;
-	}
-	
+
 	
 }

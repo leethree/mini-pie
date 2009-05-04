@@ -5,14 +5,13 @@
  */
 package org.net9.minipie.server.data;
 
-import org.net9.minipie.server.data.constant.InfoType;
 import org.net9.minipie.server.data.constant.Permission;
 
 /**
  * @author Riversand
  *
  */
-public class EmailData extends Info{
+public class EmailData  implements Info{
 	private long id;
 	private String value;
 	private String type;
@@ -23,10 +22,10 @@ public class EmailData extends Info{
 	 * Constructor
 	 */
 	public EmailData() {
-		setInfoType(InfoType.EMAIL);
+		//setInfoType(InfoType.EMAIL);
 	}
 	public EmailData(long id, String value, String type, boolean primary, Permission perm){
-		setInfoType(InfoType.EMAIL);
+		//setInfoType(InfoType.EMAIL);
 		setId(id);
 		setValue(value);
 		setType(type);
@@ -80,9 +79,5 @@ public class EmailData extends Info{
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.data.Info#createInfo()
 	 */
-	@Override
-	public Info getInfo() {
-		// TODO Auto-generated method stub
-		return this;
-	}
+	
 }

@@ -5,14 +5,13 @@
  */
 package org.net9.minipie.server.data;
 
-import org.net9.minipie.server.data.constant.InfoType;
 import org.net9.minipie.server.data.constant.Permission;
 
 /**
  * @author Riversand
  * 
  */
-public class URLData extends Info {
+public class URLData implements Info{
 
 	private long id;
 	private String value;
@@ -25,12 +24,12 @@ public class URLData extends Info {
 	 * Constructor
 	 */
 	public URLData() {
-		setInfoType(InfoType.URL);
+		//setInfoType(InfoType.URL);
 	}
 
 	public URLData(long id, String value, String type, boolean primary,
 			Permission perm) {
-		setInfoType(InfoType.URL);
+		//setInfoType(InfoType.URL);
 		setId(id);
 		setValue(value);
 		setType(type);
@@ -98,9 +97,5 @@ public class URLData extends Info {
 	 * 
 	 * @see org.net9.minipie.server.data.Info#createInfo()
 	 */
-	@Override
-	public Info getInfo() {
-		// TODO Auto-generated method stub
-		return this;
-	}
+
 }
