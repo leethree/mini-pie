@@ -10,5 +10,5 @@ package org.net9.minipie.server.data;
  *
  */
 public class MyCompleteInfo {
-
+	// TODO complete
 }

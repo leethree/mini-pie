@@ -14,166 +14,184 @@ import org.net9.minipie.server.data.constant.Permission;
 
 /**
  * @author Riversand
- *
+ * 
  */
-public class BasicContact{
-	//private long id;
+public class BasicContact {
+	private MinimalContact minimalContact;
 	private Permission permission;
 	private String name;
-	//private String image;
-	private MinimalContact minimalContact;
-	//private String nickName;
 	private Gender gender;
 	private Date birthday;
 	private String notes;
 	private String relationship;
+
 	/**
 	 * Constructor
 	 */
 	public BasicContact() {
-		//setInfoType(InfoType.BASIC);
 		// TODO Auto-generated constructor stub
 	}
-	public BasicContact(long id, Permission permission, String name, String image, 
-			String nickName, Gender gender, String birthday, String notes, String relationship){
-		//setInfoType(InfoType.BASIC);
-		//setId(id);
+
+	public BasicContact(long id, Permission permission, String name,
+			String image, String nickName, Gender gender, String birthday,
+			String notes, String relationship) {
 		setPermission(permission);
 		setName(name);
-		//setImage(image);
-		minimalContact=new MinimalContact(id,nickName,image);
-		//setNickName(nickName);
+		minimalContact = new MinimalContact(id, nickName, image);
 		setGender(gender);
 		setBirthday(birthday);
 		setNotes(notes);
 		setRelationship(relationship);
 	}
+
 	/**
 	 * @return the birthday
 	 */
 	public Date getBirthday() {
 		return birthday;
 	}
+
 	/**
-	 * @param birthday the birthday to set
+	 * @param birthday
+	 *            the birthday to set
 	 */
 	public void setBirthday(String birthday) {
-		if(birthday==null){
+		if (birthday == null) {
 			return;
 		}
 		SimpleDateFormat dateFormat = new SimpleDateFormat();
 		ParsePosition parsePos = new ParsePosition(0);
 		this.birthday = dateFormat.parse(birthday, parsePos);
 	}
+
 	/**
 	 * @return the gender
 	 */
 	public Gender getGender() {
 		return gender;
 	}
+
 	/**
-	 * @param gender the gender to set
+	 * @param gender
+	 *            the gender to set
 	 */
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
+
 	/**
 	 * @return the id
 	 */
 	public long getId() {
 		return minimalContact.getId();
 	}
+
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(long id) {
 		minimalContact.setId(id);
 	}
+
 	/**
 	 * @return the image
 	 */
 	public String getImage() {
 		return minimalContact.getImage();
 	}
+
 	/**
-	 * @param image the image to set
+	 * @param image
+	 *            the image to set
 	 */
 	public void setImage(String image) {
-		
+
 		minimalContact.setImage(image);
 	}
+
 	/**
-	 * @param permission the permission to set
+	 * @param permission
+	 *            the permission to set
 	 */
 	public void setPermission(Permission permission) {
 		this.permission = permission;
 	}
+
 	/**
 	 * @return the permission
 	 */
 	public Permission getPermission() {
 		return permission;
 	}
+
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		name = name.trim();
-		this.name=name;
+		this.name = name;
 	}
+
 	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return this.name;
 	}
+
 	/**
-	 * @param nickName the nickName to set
+	 * @param nickName
+	 *            the nickName to set
 	 */
 	public void setNickName(String nickName) {
 		this.minimalContact.setNickName(nickName);
 	}
+
 	/**
 	 * @return the nickName
 	 */
 	public String getNickName() {
 		return minimalContact.getNickName();
 	}
+
 	/**
-	 * @param notes the notes to set
+	 * @param notes
+	 *            the notes to set
 	 */
 	public void setNotes(String notes) {
-		if(notes==null){
+		if (notes == null) {
 			return;
 		}
 		notes = notes.trim();
 		this.notes = notes;
 	}
+
 	/**
 	 * @return the notes
 	 */
 	public String getNotes() {
 		return notes;
 	}
+
 	/**
-	 * @param relationship the relationship to set
+	 * @param relationship
+	 *            the relationship to set
 	 */
 	public void setRelationship(String relationship) {
-		if(relationship==null){
+		if (relationship == null) {
 			return;
 		}
 		relationship = relationship.trim();
 		this.relationship = relationship;
 	}
+
 	/**
 	 * @return the relationship
 	 */
 	public String getRelationship() {
 		return relationship;
 	}
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.data.Info#getInfo()
-	 */
 
-	
 }

@@ -1,5 +1,5 @@
 /**
- * ContactURLData.java
+ * URLData.java
  *     in package: * org.net9.minipie.server.data
  * by Mini-Pie Project
  */
@@ -11,7 +11,7 @@ import org.net9.minipie.server.data.constant.Permission;
  * @author Riversand
  * 
  */
-public class URLData implements Info{
+public class URLData implements Info {
 
 	private long id;
 	private String value;
@@ -24,12 +24,10 @@ public class URLData implements Info{
 	 * Constructor
 	 */
 	public URLData() {
-		//setInfoType(InfoType.URL);
 	}
 
 	public URLData(long id, String value, String type, boolean primary,
 			Permission perm) {
-		//setInfoType(InfoType.URL);
 		setId(id);
 		setValue(value);
 		setType(type);
@@ -91,11 +89,5 @@ public class URLData implements Info{
 	public Permission getPerm() {
 		return perm;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.net9.minipie.server.data.Info#createInfo()
-	 */
 
 }

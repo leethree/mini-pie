@@ -7,38 +7,40 @@ package org.net9.minipie.server.data;
 
 /**
  * @author Seastar
- *
+ * 
  */
 public class Delete extends Update {
-	private Long id;
-	/**
-	 * Constructor
-	 * @param id
-	 */
-	public Delete(Long id) {
-		super();
-		setId(id);
-	}
+	private long id;
 
 	/**
 	 * Constructor
 	 */
 	public Delete() {
-		// TODO Auto-generated constructor stub
 	}
-	
+
+	/**
+	 * Constructor
+	 * 
+	 * @param id
+	 */
+	public Delete(long id) {
+		setId(id);
+	}
+
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
+
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
-	public void setId(Long id) {
-		if(id<0){
-			//TODO Exception
+	public void setId(long id) {
+		if (id < 0) {
+			// TODO Exception
 		}
 		this.id = id;
 	}

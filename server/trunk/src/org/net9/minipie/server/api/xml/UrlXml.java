@@ -1,5 +1,5 @@
 /**
- * AddressXml.java
+ * UrlXml.java
  *     in package: * org.net9.minipie.server.api.xml
  * by Mini-Pie Project
  */
@@ -8,25 +8,25 @@ package org.net9.minipie.server.api.xml;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.net9.minipie.server.data.AddressData;
+import org.net9.minipie.server.data.URLData;
 import org.net9.minipie.server.data.constant.Permission;
 
 /**
  * @author LeeThree
  * 
  */
-@XmlRootElement(name = "address")
-public class AddressXml implements DetailedInfoXml{
-	private AddressData entity;
+@XmlRootElement(name = "url")
+public class UrlXml implements DetailedInfoXml{
+	private URLData entity;
 
 	/**
 	 * Constructor
 	 */
-	public AddressXml() {
-		entity = new AddressData();
+	public UrlXml() {
+		entity = new URLData();
 	}
 
-	public AddressXml(AddressData entity) {
+	public UrlXml(URLData entity) {
 		this.entity = entity;
 	}
 
@@ -82,36 +82,6 @@ public class AddressXml implements DetailedInfoXml{
 	 */
 	public boolean getPrimary() {
 		return entity.getPrimary();
-	}
-
-	/**
-	 * @param formatted
-	 *            the formatted to set
-	 */
-	public void setFormatted(String formatted) {
-		entity.setFormatted(formatted);
-	}
-
-	/**
-	 * @return the formatted
-	 */
-	public String getFormatted() {
-		return entity.getFormatted();
-	}
-
-	/**
-	 * @param zipcode
-	 *            the zipcode to set
-	 */
-	public void setZipcode(String zipcode) {
-		entity.setZipcode(zipcode);
-	}
-
-	/**
-	 * @return the zipcode
-	 */
-	public String getZipcode() {
-		return entity.getZipcode();
 	}
 
 	/**

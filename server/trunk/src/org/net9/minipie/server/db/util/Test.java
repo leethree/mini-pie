@@ -26,7 +26,7 @@ public class Test {
 		UserDAOHibernate dao = new UserDAOHibernate();
 		Long l = dao.add("jinyq06", "123", "jinyq06@gmail.com");
 		Long adId = dao.addAddr(l, "home", null, "100084", Bool.FALSE,
-				Permission.TOCONTACT);
+				Permission.TO_CONTACTS);
 		ContactDAOHibernate cdh = new ContactDAOHibernate();
 		Long contact1Id = cdh.addUserContact(l, "her");
 		cdh.editBasicInfo(contact1Id, "nickName", "mama");
@@ -35,16 +35,16 @@ public class Test {
 		cdh.editBasicInfo(contact1Id, "image", "http://server2.net9");
 		cdh.editBasicInfo(contact1Id, "notes", "this is my best friend");
 		cdh.editBasicInfo(contact1Id, "relationship", "friends");
-		Long contact1AddrId = cdh.addAddr(contact1Id, new AddressData(null,
+		Long contact1AddrId = cdh.addAddr(contact1Id, new AddressData(0,
 				"Tsinghua", "University", false, null, null, null));
 		cdh.editAddr(contact1AddrId, "value", "zijing building");
-		Long contact1EmailId = cdh.addEmail(contact1Id, new EmailData(null,
+		Long contact1EmailId = cdh.addEmail(contact1Id, new EmailData(0,
 				"jinyq06@gmail", "gmail", true, null));
-		Long contact1IMId = cdh.addIM(contact1Id, new IMData(null, "601524835",
+		Long contact1IMId = cdh.addIM(contact1Id, new IMData(0, "601524835",
 				null, false, null));
-		Long contact1PhoneId = cdh.addTel(contact1Id, new PhoneNoData(null,
+		Long contact1PhoneId = cdh.addTel(contact1Id, new PhoneNoData(0,
 				"110", "home", false, null));
-		Long contact1URLId = cdh.addURL(contact1Id, new URLData(null, null,
+		Long contact1URLId = cdh.addURL(contact1Id, new URLData(0, null,
 				"url", true, null));
 		List<BasicContact> result = cdh.selectBasicInfo(contact1Id);
 		Iterator<BasicContact> iter = result.iterator();

@@ -13,24 +13,24 @@ import org.net9.minipie.server.data.constant.InfoField;
  */
 public class Edit extends Update {
 	private InfoField field;
-	private Long id;
+	private long id;
 	private String value;
 
-	
+	/**
+	 * Constructor
+	 */
 	public Edit() {
 		// TODO Auto-generated constructor stub
 	}
+
 	/**
 	 * Constructor
+	 * 
 	 * @param field
 	 * @param id
 	 * @param value
 	 */
-	/**
-	 * Constructor
-	 */
-	public Edit(InfoField field, Long id, String value) {
-		super();
+	public Edit(InfoField field, long id, String value) {
 		setField(field);
 		setId(id);
 		setValue(value);
@@ -54,7 +54,7 @@ public class Edit extends Update {
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -62,7 +62,7 @@ public class Edit extends Update {
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

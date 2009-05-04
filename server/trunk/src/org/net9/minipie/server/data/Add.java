@@ -5,6 +5,8 @@
  */
 package org.net9.minipie.server.data;
 
+import org.net9.minipie.server.data.constant.InfoType;
+
 /**
  * @author Seastar
  *
@@ -17,7 +19,8 @@ public class Add extends Update {
 	public Add() {
 		// TODO Auto-generated constructor stub
 	}
-	public Add(Info info){
+	public Add(InfoType type, Info info){
+		super(type);
 		setInfo(info);
 	}
 	/**
