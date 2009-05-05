@@ -5,15 +5,14 @@
  */
 package org.net9.minipie.server.logic.operation;
 
+
 /**
  * @author Seastar
  * 
  */
 public class DeleteContact implements Command<Void> {
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
 	public Void excute() {
@@ -21,4 +20,5 @@ public class DeleteContact implements Command<Void> {
 		return null;
 	}
 
+	
 }

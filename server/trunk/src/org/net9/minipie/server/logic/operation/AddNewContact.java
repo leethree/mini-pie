@@ -51,6 +51,7 @@ public class AddNewContact implements Command<Long> {
 	 */
 	public Long excute() {
 		// TODO Auto-generated method stub
+		
 		System.out.print(name + userId);
 		return null;
 	}

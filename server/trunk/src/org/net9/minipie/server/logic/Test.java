@@ -5,7 +5,7 @@
  */
 package org.net9.minipie.server.logic;
 
-import org.net9.minipie.server.logic.operation.AddNewContact;
+import org.net9.minipie.server.logic.operation.AddMyContact;
 
 /**
  * @author Seastar
@@ -13,7 +13,7 @@ import org.net9.minipie.server.logic.operation.AddNewContact;
  */
 public class Test {
 	void test() {
-		long i = new Handler<Long>(new AddNewContact("oo", 111111L)).excute();
+		long i = new Handler<Long>(new AddMyContact("oo", 111111L)).excute();
 		System.out.print(i);
 	}
 }

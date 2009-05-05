@@ -1,33 +1,22 @@
 /**
- * ViewMyContact.java
+ * DeleteContact.java
  *     in package: * org.net9.minipie.server.logic.operation
  * by Mini-Pie Project
  */
 package org.net9.minipie.server.logic.operation;
 
-import java.util.Collection;
-
-import org.net9.minipie.server.data.AddressData;
 import org.net9.minipie.server.data.BasicContact;
-import org.net9.minipie.server.data.CompleteContact;
-import org.net9.minipie.server.data.EmailData;
-import org.net9.minipie.server.data.IMData;
-import org.net9.minipie.server.data.PersonalCompleteContact;
-import org.net9.minipie.server.data.PhoneNoData;
-import org.net9.minipie.server.data.URLData;
 import org.net9.minipie.server.db.HibernateDAOFactory;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.PermissionDeniedException;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
-
-
 /**
  * @author Seastar
  * 
  */
-public class ViewMyContact implements Command<PersonalCompleteContact> {
+public class DeleteMyContact implements Command<Void> {
 	private Long contactId;
 	private Long userId;
 	
@@ -36,7 +25,7 @@ public class ViewMyContact implements Command<PersonalCompleteContact> {
 	 * @param contactid
 	 * @param userId
 	 */
-	public ViewMyContact(Long contactId, Long userId) {
+	public DeleteMyContact(Long contactId, Long userId) {
 		super();
 		setContactId(contactId);
 		setUserId(userId);
@@ -59,13 +48,13 @@ public class ViewMyContact implements Command<PersonalCompleteContact> {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	public PersonalCompleteContact excute() {
-		CompleteContact compContact;
+	public Void excute() {
 		ContactStorage executor=new HibernateDAOFactory().getContactStorage();
 		BasicContact contact=executor.selectBasicInfo(contactId);
 		if(contact.getOwnerId()!=userId){
@@ -75,14 +64,9 @@ public class ViewMyContact implements Command<PersonalCompleteContact> {
 			throw new NotFoundException("No contact found");
 		}
 		else {
-			Collection<EmailData> emails=executor.selectEmail(contactId);
-			Collection<AddressData> addrs=executor.selectAddr(contactId);
-			Collection<IMData> ims=executor.selectIM(contactId);
-			Collection<PhoneNoData> tels=executor.selectTel(contactId);
-			Collection<URLData> urls=executor.selectURL(contactId);		
-			compContact=new CompleteContact(contact,addrs,emails,ims,tels,urls);
+			executor.del(contactId);
 		}
-		return new PersonalCompleteContact(compContact,null);
+		return null;
 	}
 
 }

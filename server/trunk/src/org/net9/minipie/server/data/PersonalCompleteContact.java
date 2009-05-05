@@ -19,13 +19,28 @@ public class PersonalCompleteContact {
 	private CompleteContact completeContact;
 	/**
 	 * Constructor
+	 * @param tags
+	 * @param perm
+	 * @param completeContact
+	 */
+	public PersonalCompleteContact(CompleteContact completeContact,Collection<Tag> tags) {
+		this.tags = null;
+		setCompleteContact(completeContact);
+		setPerm(completeContact.getBasicContact().getPermission());
+	}
+	/**
+	 * Constructor
 	 */
 	public PersonalCompleteContact() {
-		// TODO Auto-generated constructor stub
+		this.completeContact=new CompleteContact();
+		this.tags=null;
+		setPerm(completeContact.getBasicContact().getPermission());
+		
 	}
 	/**
 	 * @return the completeContact
 	 */
+	
 	public CompleteContact getCompleteContact() {
 		return completeContact;
 	}

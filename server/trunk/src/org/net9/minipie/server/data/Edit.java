@@ -7,6 +7,7 @@ package org.net9.minipie.server.data;
 
 import org.net9.minipie.server.data.constant.InfoField;
 import org.net9.minipie.server.data.constant.InfoType;
+import org.net9.minipie.server.exception.InvalidRequestException;
 
 /**
  * @author Seastar
@@ -65,6 +66,9 @@ public class Edit extends Update {
 	 *            the id to set
 	 */
 	public void setId(long id) {
+		if(id<0){
+			throw new InvalidRequestException("id is illegal");
+		}
 		this.id = id;
 	}
 
