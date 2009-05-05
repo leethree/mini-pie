@@ -7,6 +7,7 @@ package org.net9.minipie.server.api.xml;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.net9.minipie.server.data.EmailData;
 import org.net9.minipie.server.data.constant.Permission;
@@ -98,5 +99,14 @@ public class EmailXml implements DetailedInfoXml{
 	 */
 	public Permission getPerm() {
 		return entity.getPerm();
+	}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.net9.minipie.server.api.xml.DetailedInfoXml#getInfo()
+	 */
+	@XmlTransient
+	public EmailData getInfo() {
+		return entity;
 	}
 }

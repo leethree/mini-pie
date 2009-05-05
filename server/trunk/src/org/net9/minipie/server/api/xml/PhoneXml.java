@@ -7,6 +7,7 @@ package org.net9.minipie.server.api.xml;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.net9.minipie.server.data.PhoneNoData;
 import org.net9.minipie.server.data.constant.Permission;
@@ -16,7 +17,7 @@ import org.net9.minipie.server.data.constant.Permission;
  * 
  */
 @XmlRootElement(name = "phone")
-public class PhoneXml implements DetailedInfoXml{
+public class PhoneXml implements DetailedInfoXml {
 	private PhoneNoData entity;
 
 	/**
@@ -85,18 +86,28 @@ public class PhoneXml implements DetailedInfoXml{
 	}
 
 	/**
+	 * @return the perm
+	 */
+	@XmlAttribute(name = "permission")
+	public String getPerm() {
+		return entity.getPerm().toString();
+	}
+
+	/**
 	 * @param perm
 	 *            the perm to set
 	 */
-	@XmlAttribute(name = "permission")
 	public void setPerm(Permission perm) {
 		entity.setPerm(perm);
 	}
 
-	/**
-	 * @return the perm
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.net9.minipie.server.api.xml.DetailedInfoXml#getInfo()
 	 */
-	public Permission getPerm() {
-		return entity.getPerm();
+	@XmlTransient
+	public PhoneNoData getInfo() {
+		return entity;
 	}
 }

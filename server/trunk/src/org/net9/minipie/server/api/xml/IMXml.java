@@ -7,6 +7,7 @@ package org.net9.minipie.server.api.xml;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.net9.minipie.server.data.IMData;
 import org.net9.minipie.server.data.constant.Permission;
@@ -16,7 +17,7 @@ import org.net9.minipie.server.data.constant.Permission;
  * 
  */
 @XmlRootElement(name = "im")
-public class IMXml implements DetailedInfoXml{
+public class IMXml implements DetailedInfoXml {
 	private IMData entity;
 
 	/**
@@ -98,5 +99,15 @@ public class IMXml implements DetailedInfoXml{
 	 */
 	public Permission getPerm() {
 		return entity.getPerm();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.net9.minipie.server.api.xml.DetailedInfoXml#getInfo()
+	 */
+	@XmlTransient
+	public IMData getInfo() {
+		return entity;
 	}
 }

@@ -6,6 +6,7 @@
 package org.net9.minipie.server.data;
 
 import org.net9.minipie.server.data.constant.InfoField;
+import org.net9.minipie.server.data.constant.InfoType;
 
 /**
  * @author Seastar
@@ -30,7 +31,8 @@ public class Edit extends Update {
 	 * @param id
 	 * @param value
 	 */
-	public Edit(InfoField field, long id, String value) {
+	public Edit(InfoType type, InfoField field, long id, String value) {
+		super(type);
 		setField(field);
 		setId(id);
 		setValue(value);

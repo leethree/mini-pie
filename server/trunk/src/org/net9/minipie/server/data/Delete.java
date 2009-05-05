@@ -5,6 +5,8 @@
  */
 package org.net9.minipie.server.data;
 
+import org.net9.minipie.server.data.constant.InfoType;
+
 /**
  * @author Seastar
  * 
@@ -23,7 +25,8 @@ public class Delete extends Update {
 	 * 
 	 * @param id
 	 */
-	public Delete(long id) {
+	public Delete(InfoType type, long id) {
+		super(type);
 		setId(id);
 	}
 

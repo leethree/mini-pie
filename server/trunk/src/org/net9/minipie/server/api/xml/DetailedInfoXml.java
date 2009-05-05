@@ -5,10 +5,12 @@
  */
 package org.net9.minipie.server.api.xml;
 
+import org.net9.minipie.server.data.Info;
+
 /**
  * @author LeeThree
- *
+ * 
  */
 public interface DetailedInfoXml {
-
+	public Info getInfo();
 }

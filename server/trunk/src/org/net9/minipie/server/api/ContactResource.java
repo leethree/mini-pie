@@ -18,9 +18,14 @@ import javax.ws.rs.core.UriInfo;
 
 import org.net9.minipie.server.api.xml.AddXml;
 import org.net9.minipie.server.api.xml.AddressXml;
+import org.net9.minipie.server.api.xml.DeleteXml;
+import org.net9.minipie.server.api.xml.EditXml;
 import org.net9.minipie.server.data.Add;
 import org.net9.minipie.server.data.AddressData;
+import org.net9.minipie.server.data.Delete;
+import org.net9.minipie.server.data.Edit;
 import org.net9.minipie.server.data.PhoneNoData;
+import org.net9.minipie.server.data.constant.InfoField;
 import org.net9.minipie.server.data.constant.InfoType;
 import org.net9.minipie.server.data.constant.Permission;
 
@@ -46,7 +51,8 @@ public class ContactResource {
 		AddressData test = new AddressData(20, "sdaf", "siou", false, "dfg",
 				"02145", Permission.TO_EVERYONE);
 		Add add = new Add(InfoType.ADDRESS, test);
-		PhoneNoData test2 = new PhoneNoData(20,"sad","home",false,Permission.TO_SELF);
+		PhoneNoData test2 = new PhoneNoData(23, "+8615901029944", "home", true,
+				Permission.TO_SELF);
 		Add add2 = new Add(InfoType.PHONE, test2);
 		Collection<AddXml> col = new ArrayList<AddXml>();
 		col.add(new AddXml(add));
@@ -56,8 +62,10 @@ public class ContactResource {
 
 	@POST
 	@Consumes( { "application/xml", "application/json" })
-	public void post(AddressXml contact) {
-		System.out.println(contact);
+	public void post(AddXml add) {
+		System.out.println(add.getType());
+		System.out.println(add.getEntity().getInfo());
+		// System.out.println(edit.getValue());
 	}
 
 }

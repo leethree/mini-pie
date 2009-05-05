@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.net9.minipie.server.data.Add;
 import org.net9.minipie.server.data.AddressData;
@@ -17,6 +18,7 @@ import org.net9.minipie.server.data.IMData;
 import org.net9.minipie.server.data.PhoneNoData;
 import org.net9.minipie.server.data.URLData;
 import org.net9.minipie.server.data.constant.InfoType;
+import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.UnknownServerException;
 
 /**
@@ -38,13 +40,17 @@ public class AddXml {
 		this.entity = entity;
 	}
 
-	@XmlAttribute
-	public InfoType getType() {
-		return entity.getType();
+	@XmlAttribute(required = true)
+	public String getType() {
+		return entity.getType().toString();
 	}
 
-	public void setType(InfoType type) {
-		entity.setType(type);
+	public void setType(String type) {
+		try {
+			entity.setType(InfoType.valueOf(type.toUpperCase()));
+		} catch (IllegalArgumentException e) {
+			throw new InvalidRequestException("Invalid information type.");
+		}
 	}
 
 	@XmlElements( { @XmlElement(name = "address", type = AddressXml.class),
@@ -52,8 +58,8 @@ public class AddXml {
 			@XmlElement(name = "im", type = IMXml.class),
 			@XmlElement(name = "phone", type = PhoneXml.class),
 			@XmlElement(name = "url", type = UrlXml.class) })
-	public DetailedInfoXml getInfo() {
-		InfoType type = getType();
+	public DetailedInfoXml getDetail() {
+		InfoType type = entity.getType();
 		if (type == InfoType.ADDRESS)
 			return new AddressXml((AddressData) entity.getInfo());
 		else if (type == InfoType.EMAIL)
@@ -68,7 +74,12 @@ public class AddXml {
 			throw new UnknownServerException("InfoType mismatch");
 	}
 
-	public void setInfo(DetailedInfoXml infoXml) {
-		// TODO
+	public void setDetail(DetailedInfoXml infoXml) {
+		entity.setInfo(infoXml.getInfo());
+	}
+
+	@XmlTransient
+	public Add getEntity() {
+		return entity;
 	}
 }
