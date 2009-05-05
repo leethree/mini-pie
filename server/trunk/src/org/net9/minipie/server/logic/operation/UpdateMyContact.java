@@ -123,19 +123,111 @@ public class UpdateMyContact implements Command<Void> {
 					try{
 						switch(newData.getType()){
 							case ADDRESS:
-								
+								switch(newData.getField()){
+									case VALUE:
+										executor.editAddr(newData.getId(),"value", newData.getValue());
+										break;
+									case PRIMARY:
+										executor.editAddr(newData.getId(), "primary", Boolean.valueOf(newData.getValue()));
+										break;
+									case ZIPCODE:
+										executor.editAddr(newData.getId(), "zipcode", newData.getValue());
+										break;
+									case TYPE:
+										executor.editAddr(newData.getId(), "type", newData.getValue());
+										break;
+									
+									default:
+										//TODO:what should I do?
+								}
 								break;
 							case EMAIL:
-								
+								switch(newData.getField()){
+									case VALUE:
+										executor.editEmail(newData.getId(),"value", newData.getValue());
+										break;
+									case PRIMARY:
+										executor.editEmail(newData.getId(), "primary", Boolean.valueOf(newData.getValue()));
+										break;
+									case TYPE:
+										executor.editEmail(newData.getId(), "type", newData.getValue());
+										break;
+									
+									default:
+										//TODO:what should I do?
+								}
 								break;
 							case IM:
-								
+								switch(newData.getField()){
+									case VALUE:
+										executor.editIM(newData.getId(),"value", newData.getValue());
+										break;
+									case PRIMARY:
+										executor.editIM(newData.getId(), "primary", Boolean.valueOf(newData.getValue()));
+										break;
+									case TYPE:
+										executor.editIM(newData.getId(), "type", newData.getValue());
+										break;
+									
+									default:
+										//TODO:what should I do?
+								}
 								break;
 							case PHONE:
-								
+								switch(newData.getField()){
+									case VALUE:
+										executor.editTel(newData.getId(),"value", newData.getValue());
+										break;
+									case PRIMARY:
+										executor.editTel(newData.getId(), "primary", Boolean.valueOf(newData.getValue()));
+										break;
+									case TYPE:
+										executor.editTel(newData.getId(), "type", newData.getValue());
+										break;
+									
+									default:
+										//TODO:what should I do?
+								}
 								break;
 							case URL:
-								
+								switch(newData.getField()){
+									case VALUE:
+										executor.editURL(newData.getId(),"value", newData.getValue());
+										break;
+									case PRIMARY:
+										executor.editURL(newData.getId(), "primary", Boolean.valueOf(newData.getValue()));
+										break;
+									case TYPE:
+										executor.editURL(newData.getId(), "type", newData.getValue());
+										break;
+									
+									default:
+										//TODO:what should I do?
+								}
+								break;
+							case BASIC:
+								switch(newData.getField()){
+									case NAME:
+										executor.editBasicInfo(newData.getId(), "name", newData.getValue());
+										break;
+									case NICKNAME:
+										executor.editBasicInfo(newData.getId(), "nickName", newData.getValue());
+										break;									
+									case BIRTHDAY:
+										executor.editBasicInfo(newData.getId(), "birthday", newData.getValue());
+										break;
+									case GENDER:
+										executor.editBasicInfo(newData.getId(), "birthday", newData.getValue());
+										break;
+									case NOTE:
+										executor.editBasicInfo(newData.getId(), "notes", newData.getValue());
+										break;
+									case RELATIONSHIP:
+										executor.editBasicInfo(newData.getId(), "relationship", newData.getValue());
+										break;
+									default:
+										//TODO:what should I do?
+								}
 								break;
 							default:
 								//TODO:what should I do?

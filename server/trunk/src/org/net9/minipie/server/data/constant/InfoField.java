@@ -12,7 +12,7 @@ package org.net9.minipie.server.data.constant;
 public enum InfoField {
 	NAME("name"), NICKNAME("nickname"), BIRTHDAY("birthday"), GENDER("gender"), NOTE(
 			"note"), RELATIONSHIP("relationship"), VALUE("value"), PRIMARY(
-			"primary"), ZIPCODE("zipcode"), PERMISSION("permission");
+			"primary"), ZIPCODE("zipcode"), TYPE("type"),PERMISSION("permission");
 	private String field;
 
 	/**
