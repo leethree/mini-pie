@@ -17,15 +17,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 import org.net9.minipie.server.api.xml.AddXml;
-import org.net9.minipie.server.api.xml.AddressXml;
-import org.net9.minipie.server.api.xml.DeleteXml;
-import org.net9.minipie.server.api.xml.EditXml;
 import org.net9.minipie.server.data.Add;
 import org.net9.minipie.server.data.AddressData;
-import org.net9.minipie.server.data.Delete;
-import org.net9.minipie.server.data.Edit;
 import org.net9.minipie.server.data.PhoneNoData;
-import org.net9.minipie.server.data.constant.InfoField;
 import org.net9.minipie.server.data.constant.InfoType;
 import org.net9.minipie.server.data.constant.Permission;
 
