@@ -42,6 +42,7 @@ public class ContactResource {
 	@GET
 	@Produces( { "application/xml", "application/json" })
 	public Collection<AddXml> get() {
+		uriInfo.getAbsolutePath();
 		AddressData test = new AddressData(20, "sdaf", "siou", false, "dfg",
 				"02145", Permission.TO_EVERYONE);
 		Add add = new Add(InfoType.ADDRESS, test);

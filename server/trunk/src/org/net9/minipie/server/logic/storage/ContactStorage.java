@@ -10,6 +10,7 @@ import org.net9.minipie.server.data.AddressData;
 import org.net9.minipie.server.data.BasicContact;
 import org.net9.minipie.server.data.EmailData;
 import org.net9.minipie.server.data.IMData;
+import org.net9.minipie.server.data.MinimalContact;
 import org.net9.minipie.server.data.PhoneNoData;
 import org.net9.minipie.server.data.URLData;
 
@@ -40,11 +41,11 @@ public interface ContactStorage {
 	void editURL(Long id, String attribute, Object value);
 	Collection<AddressData> selectAddr(Long contactId);
 	//Collection<Object[]> selectAddtional(Long contactId);
-	Collection<BasicContact> selectBasicInfo(Long contactId);
+	BasicContact selectBasicInfo(Long contactId);
 	Collection<EmailData> selectEmail(Long contactId);
 	Collection<IMData> selectIM(Long contactId);
 	Collection<PhoneNoData> selectTel(Long contactId);
 	Collection<URLData> selectURL(Long contactId);
-	Collection<BasicContact> selectOwnerContact(Long ownerId);
+	Collection<MinimalContact> selectOwnerContact(Long ownerId);
 	void del(Long contactId);
 }

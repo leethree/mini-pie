@@ -6,12 +6,12 @@
 package org.net9.minipie.server.data;
 
 /**
- * @author Seastar
+ * @author Seastar, Riversand
  * 
  */
 public class MinimalContact {
 	private long id;
-	private String nickName;
+	private String name;
 	private String image;
 
 	public MinimalContact() {
@@ -19,7 +19,7 @@ public class MinimalContact {
 
 	public MinimalContact(long id, String name, String image) {
 		setId(id);
-		setNickName(name);
+		setName(name);
 		setImage(image);
 	}
 
@@ -40,8 +40,8 @@ public class MinimalContact {
 	/**
 	 * @return the name
 	 */
-	public String getNickName() {
-		return nickName;
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -71,12 +71,12 @@ public class MinimalContact {
 	 * @param name
 	 *            the name to set
 	 */
-	public void setNickName(String name) {
-		if (nickName == null) {
+	public void setName(String name) {
+		if(name==null){
 			return;
 		}
-		nickName = nickName.trim();
-		this.nickName = name;
+		name = name.trim();
+		this.name = name;
 	}
 
 }

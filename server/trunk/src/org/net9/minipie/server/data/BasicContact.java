@@ -19,7 +19,7 @@ import org.net9.minipie.server.data.constant.Permission;
 public class BasicContact {
 	private MinimalContact minimalContact;
 	private Permission permission;
-	private String name;
+	private String nickName;
 	private Gender gender;
 	private Date birthday;
 	private String notes;
@@ -29,7 +29,7 @@ public class BasicContact {
 	 * Constructor
 	 */
 	public BasicContact() {
-		// TODO Auto-generated constructor stub
+		minimalContact = new MinimalContact();
 	}
 
 	public BasicContact(long id, Permission permission, String name,
@@ -129,31 +129,31 @@ public class BasicContact {
 	 * @param name
 	 *            the name to set
 	 */
-	public void setName(String name) {
-		name = name.trim();
-		this.name = name;
+	public void setNickName(String nickName) {
+		nickName = nickName.trim();
+		this.nickName=nickName;
 	}
 
 	/**
 	 * @return the name
 	 */
-	public String getName() {
-		return this.name;
+	public String getNickName() {
+		return this.nickName;
 	}
 
 	/**
 	 * @param nickName
 	 *            the nickName to set
 	 */
-	public void setNickName(String nickName) {
-		this.minimalContact.setNickName(nickName);
+	public void setName(String name) {
+		this.minimalContact.setName(name);
 	}
 
 	/**
 	 * @return the nickName
 	 */
-	public String getNickName() {
-		return minimalContact.getNickName();
+	public String getName() {
+		return minimalContact.getName();
 	}
 
 	/**

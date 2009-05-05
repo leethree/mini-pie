@@ -2,7 +2,6 @@ package org.net9.minipie.server.db.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,7 +34,7 @@ public class Contact {
 	@Column(name = "GENDER")
 	private Gender gender;
 	@Column(name = "BIRTHDAY")
-	private Date birthday;
+	private String birthday;
 	@Column(name = "NOTES")
 	private String notes;
 	@Column(name = "RELATIONSHIP")
@@ -94,10 +93,10 @@ public class Contact {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 	public Gender getGender() {

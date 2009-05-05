@@ -46,17 +46,8 @@ public class Test {
 				"110", "home", false, null));
 		Long contact1URLId = cdh.addURL(contact1Id, new URLData(0, null,
 				"url", true, null));
-		List<BasicContact> result = cdh.selectBasicInfo(contact1Id);
-		Iterator<BasicContact> iter = result.iterator();
-		while (iter.hasNext()) {
-			BasicContact bc = iter.next();
-			System.out.println(bc.getName());
-			System.out.println(bc.getNickName());
-			System.out.println(bc.getImage());
-			System.out.println(bc.getNotes());
-			System.out.println(bc.getRelationship());
-			System.out.println(bc.getGender());
-		}
+		BasicContact result = cdh.selectBasicInfo(contact1Id);
+		System.out.println(result.getId());
 		List<AddressData> addresses = cdh.selectAddr(contact1Id);
 		Iterator<AddressData> iter1 = addresses.iterator();
 		while (iter1.hasNext()) {
