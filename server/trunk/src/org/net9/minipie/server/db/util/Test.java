@@ -47,7 +47,19 @@ public class Test {
 		Long contact1URLId = cdh.addURL(contact1Id, new URLData(0, null,
 				"url", true, null));
 		BasicContact result = cdh.selectBasicInfo(contact1Id);
+		System.out.println("**************************************************");
 		System.out.println(result.getId());
+		System.out.println(result.getPermission());
+		System.out.println(result.getGender());
+		System.out.println(result.getImage());
+		System.out.println(result.getName());
+		System.out.println(result.getNickName());
+		System.out.println(result.getNotes());
+		System.out.println(result.getOwnerId());
+		System.out.println(result.getRelationship());
+		System.out.println(result.getShadowOf());
+		System.out.println(result.getBirthday());
+		System.out.println("**************************************************");
 		List<AddressData> addresses = cdh.selectAddr(contact1Id);
 		Iterator<AddressData> iter1 = addresses.iterator();
 		while (iter1.hasNext()) {
@@ -56,7 +68,7 @@ public class Test {
 			System.out.println(addr.getType());
 			System.out.println(addr.getPrimary());
 		}
-
+		System.out.println("**************************************************");
 		List<EmailData> emails = cdh.selectEmail(contact1Id);
 		Iterator<EmailData> emailIter = emails.iterator();
 		while (emailIter.hasNext()) {
@@ -65,7 +77,7 @@ public class Test {
 			System.out.println(email.getType());
 			System.out.println(email.getPrimary());
 		}
-
+		System.out.println("**************************************************");
 		List<IMData> ims = cdh.selectIM(contact1Id);
 		Iterator<IMData> imIter = ims.iterator();
 		while (imIter.hasNext()) {
@@ -74,7 +86,7 @@ public class Test {
 			System.out.println(im.getType());
 			System.out.println(im.getPrimary());
 		}
-
+		System.out.println("**************************************************");
 		List<PhoneNoData> tels = cdh.selectTel(contact1Id);
 		Iterator<PhoneNoData> telIter = tels.iterator();
 		while (telIter.hasNext()) {
@@ -83,7 +95,7 @@ public class Test {
 			System.out.println(tel.getType());
 			System.out.println(tel.getPrimary());
 		}
-
+		System.out.println("**************************************************");
 		List<URLData> urls = cdh.selectURL(contact1Id);
 		Iterator<URLData> urlIter = urls.iterator();
 		while (urlIter.hasNext()) {

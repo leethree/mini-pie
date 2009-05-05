@@ -364,6 +364,9 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 		basicContact.setBirthday(contact.getBirthday());
 		basicContact.setNotes(contact.getNotes());
 		basicContact.setRelationship(contact.getRelationship());
+		basicContact.setOwnerId(contact.getOwner().getId());
+		if(contact.getShadowOf()!=null)
+			basicContact.setShadowOf(contact.getShadowOf().getId());
 		return basicContact;
 	}
 
@@ -418,7 +421,8 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long> impl
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<MinimalContact> selectMinimalInfo(Long contactId) {
+	public List<MinimalContact> selectMinimalInfo(Long contactId) {// this method will not 
+		                                                          // be used.
 		ContactDAOHibernate cdh = new ContactDAOHibernate();
 		Criteria crit = cdh.getSession().createCriteria(Contact.class);
 		crit.add(Restrictions.eq("contact.id", contactId));

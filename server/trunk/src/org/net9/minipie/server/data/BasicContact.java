@@ -24,6 +24,8 @@ public class BasicContact {
 	private Date birthday;
 	private String notes;
 	private String relationship;
+	private long ownerId;
+	private long shadowOf;
 
 	/**
 	 * Constructor
@@ -34,7 +36,7 @@ public class BasicContact {
 
 	public BasicContact(long id, Permission permission, String name,
 			String image, String nickName, Gender gender, String birthday,
-			String notes, String relationship) {
+			String notes, String relationship, long ownerId, long shadowOf) {
 		setPermission(permission);
 		setName(name);
 		minimalContact = new MinimalContact(id, nickName, image);
@@ -42,6 +44,8 @@ public class BasicContact {
 		setBirthday(birthday);
 		setNotes(notes);
 		setRelationship(relationship);
+		setOwnerId(ownerId);
+		setShadowOf(shadowOf);
 	}
 
 	/**
@@ -192,6 +196,34 @@ public class BasicContact {
 	 */
 	public String getRelationship() {
 		return relationship;
+	}
+
+	/**
+	 * @param ownerId the ownerId to set
+	 */
+	public void setOwnerId(long ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	/**
+	 * @return the ownerId
+	 */
+	public long getOwnerId() {
+		return ownerId;
+	}
+
+	/**
+	 * @param shadowOf the shadowOf to set
+	 */
+	public void setShadowOf(long shadowOf) {
+		this.shadowOf = shadowOf;
+	}
+
+	/**
+	 * @return the shadowOf
+	 */
+	public long getShadowOf() {
+		return shadowOf;
 	}
 
 }
