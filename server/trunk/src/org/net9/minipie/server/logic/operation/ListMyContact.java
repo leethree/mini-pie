@@ -36,7 +36,7 @@ public class ListMyContact implements Command<Collection<MinimalContact>> {
 	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	public Collection<MinimalContact> excute() {
+	public Collection<MinimalContact> execute() {
 		ContactStorage executor=new HibernateDAOFactory().getContactStorage();
 		return executor.selectOwnerContact(userId);
 	}

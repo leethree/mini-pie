@@ -19,31 +19,33 @@ import org.net9.minipie.server.logic.storage.ContactStorage;
 public class DeleteMyContact implements Command<Void> {
 	private Long contactId;
 	private Long userId;
-	
+
 	/**
 	 * Constructor
+	 * 
 	 * @param contactid
 	 * @param userId
 	 */
-	public DeleteMyContact(Long contactId, Long userId) {
+	public DeleteMyContact(Long userId, Long contactId) {
 		super();
 		setContactId(contactId);
 		setUserId(userId);
 	}
 
-	
 	/**
-	 * @param contactid the contactId to set
+	 * @param contactid
+	 *            the contactId to set
 	 */
 	public void setContactId(Long contactId) {
-		if(contactId<0){
+		if (contactId < 0) {
 			throw new InvalidRequestException("id is illegal");
 		}
 		this.contactId = contactId;
 	}
 
 	/**
-	 * @param userId the userId to set
+	 * @param userId
+	 *            the userId to set
 	 */
 	public void setUserId(Long userId) {
 		this.userId = userId;
@@ -54,16 +56,15 @@ public class DeleteMyContact implements Command<Void> {
 	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	public Void excute() {
-		ContactStorage executor=new HibernateDAOFactory().getContactStorage();
-		BasicContact contact=executor.selectBasicInfo(contactId);
-		if(contact.getOwnerId()!=userId){
-			throw new PermissionDeniedException("This contact doesn't belong to the user");
-		}
-		else if(contact.getShadowOf()==0){
+	public Void execute() {
+		ContactStorage executor = new HibernateDAOFactory().getContactStorage();
+		BasicContact contact = executor.selectBasicInfo(contactId);
+		if (contact.getOwnerId() != userId) {
+			throw new PermissionDeniedException(
+					"This contact doesn't belong to the user");
+		} else if (contact.getShadowOf() != 0) {
 			throw new NotFoundException("No contact found");
-		}
-		else {
+		} else {
 			executor.del(contactId);
 		}
 		return null;

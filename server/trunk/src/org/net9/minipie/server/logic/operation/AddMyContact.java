@@ -20,7 +20,7 @@ public class AddMyContact implements Command<Long> {
 	/**
 	 * Constructor
 	 */
-	public AddMyContact(String name, Long id) {
+	public AddMyContact(Long id, String name) {
 		super();
 		setName(name);
 		setUserId(id);
@@ -49,22 +49,19 @@ public class AddMyContact implements Command<Long> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.net9.minipie.server.logic.Command#excute()
+	 * @see org.net9.minipie.server.logic.Command#execute()
 	 */
-	public Long excute() {
-		// TODO Auto-generated method stub
-		//long returnValue;
-		ContactStorage executor=new HibernateDAOFactory().getContactStorage();
-		
-		//System.out.print(name + userId);
-		//try{
-			return executor.addUserContact(userId, name);
-		}
-//		catch(Exception e){
-//			throw new UnknownServerException("Database can't complete the mission");
-//		}
-//		return returnValue;
-	
+	public Long execute() {
+		// long returnValue;
+		ContactStorage executor = new HibernateDAOFactory().getContactStorage();
+
+		// System.out.print(name + userId);
+		// try{
+		return executor.addUserContact(userId, name);
+	}
+	// catch(Exception e){
+	// throw new UnknownServerException("Database can't complete the mission");
+	// }
+	// return returnValue;
+
 }
-
-

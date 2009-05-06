@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.net9.minipie.server.data.PhoneNoData;
-import org.net9.minipie.server.data.constant.Permission;
 
 /**
  * @author LeeThree
@@ -59,7 +58,7 @@ public class PhoneXml implements DetailedInfoXml {
 	 *            the type to set
 	 */
 	public void setType(String type) {
-		entity.setValue(type);
+		entity.setType(type);
 	}
 
 	/**
@@ -90,15 +89,10 @@ public class PhoneXml implements DetailedInfoXml {
 	 */
 	@XmlAttribute(name = "permission")
 	public String getPerm() {
-		return entity.getPerm().toString();
-	}
-
-	/**
-	 * @param perm
-	 *            the perm to set
-	 */
-	public void setPerm(Permission perm) {
-		entity.setPerm(perm);
+		if (entity.getPerm() == null)
+			return null;
+		else
+			return entity.getPerm().toString();
 	}
 
 	/*

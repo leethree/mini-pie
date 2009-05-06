@@ -18,7 +18,7 @@ public class ViewMyInfo implements Command<MyCompleteInfo> {
 	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	public MyCompleteInfo excute() {
+	public MyCompleteInfo execute() {
 		// TODO Auto-generated method stub
 		return null;
 	}

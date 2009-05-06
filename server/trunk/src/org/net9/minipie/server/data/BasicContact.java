@@ -134,8 +134,8 @@ public class BasicContact {
 	 *            the name to set
 	 */
 	public void setNickName(String nickName) {
-		nickName = nickName.trim();
-		this.nickName=nickName;
+		if (nickName != null)
+			this.nickName = nickName.trim();
 	}
 
 	/**
@@ -199,7 +199,8 @@ public class BasicContact {
 	}
 
 	/**
-	 * @param ownerId the ownerId to set
+	 * @param ownerId
+	 *            the ownerId to set
 	 */
 	public void setOwnerId(long ownerId) {
 		this.ownerId = ownerId;
@@ -213,7 +214,8 @@ public class BasicContact {
 	}
 
 	/**
-	 * @param shadowOf the shadowOf to set
+	 * @param shadowOf
+	 *            the shadowOf to set
 	 */
 	public void setShadowOf(long shadowOf) {
 		this.shadowOf = shadowOf;

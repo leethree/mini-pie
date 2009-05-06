@@ -13,7 +13,7 @@ import org.net9.minipie.server.logic.operation.AddMyContact;
  */
 public class Test {
 	void test() {
-		long i = new Handler<Long>(new AddMyContact("oo", 111111L)).excute();
+		long i = new Handler<Long>(new AddMyContact(111111L, "oo")).excute();
 		System.out.print(i);
 	}
 }

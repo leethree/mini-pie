@@ -8,8 +8,10 @@ package org.net9.minipie.server.api.xml;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.net9.minipie.server.data.Delete;
+import org.net9.minipie.server.data.Update;
 import org.net9.minipie.server.data.constant.InfoType;
 import org.net9.minipie.server.exception.InvalidRequestException;
 
@@ -18,7 +20,7 @@ import org.net9.minipie.server.exception.InvalidRequestException;
  * 
  */
 @XmlRootElement(name = "delete")
-public class DeleteXml {
+public class DeleteXml implements UpdateXml{
 	private Delete entity;
 
 	/**
@@ -59,5 +61,10 @@ public class DeleteXml {
 	 */
 	public void setId(long id) {
 		entity.setId(id);
+	}
+	
+	@XmlTransient
+	public Update getUpdate() {
+		return entity;
 	}
 }

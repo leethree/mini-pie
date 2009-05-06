@@ -16,7 +16,7 @@ public class UpdateContact implements Command<Void> {
 	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	public Void excute() {
+	public Void execute() {
 		// TODO Auto-generated method stub
 		return null;
 	}

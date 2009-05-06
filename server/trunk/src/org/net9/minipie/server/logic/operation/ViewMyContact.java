@@ -21,8 +21,6 @@ import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.PermissionDeniedException;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
-
-
 /**
  * @author Seastar
  * 
@@ -30,59 +28,62 @@ import org.net9.minipie.server.logic.storage.ContactStorage;
 public class ViewMyContact implements Command<PersonalCompleteContact> {
 	private Long contactId;
 	private Long userId;
-	
+
 	/**
 	 * Constructor
+	 * 
 	 * @param contactid
 	 * @param userId
 	 */
-	public ViewMyContact(Long contactId, Long userId) {
+	public ViewMyContact(Long userId, Long contactId) {
 		super();
 		setContactId(contactId);
 		setUserId(userId);
 	}
 
-	
 	/**
-	 * @param contactid the contactId to set
+	 * @param contactid
+	 *            the contactId to set
 	 */
 	public void setContactId(Long contactId) {
-		if(contactId<0){
+		if (contactId < 0) {
 			throw new InvalidRequestException("id is illegal");
 		}
 		this.contactId = contactId;
 	}
 
 	/**
-	 * @param userId the userId to set
+	 * @param userId
+	 *            the userId to set
 	 */
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	public PersonalCompleteContact excute() {
+	public PersonalCompleteContact execute() {
 		CompleteContact compContact;
-		ContactStorage executor=new HibernateDAOFactory().getContactStorage();
-		BasicContact contact=executor.selectBasicInfo(contactId);
-		if(contact.getOwnerId()!=userId){
-			throw new PermissionDeniedException("This contact doesn't belong to the user");
-		}
-		else if(contact.getShadowOf()==0){
+		ContactStorage executor = new HibernateDAOFactory().getContactStorage();
+		BasicContact contact = executor.selectBasicInfo(contactId);
+		if (contact.getOwnerId() != userId) {
+			throw new PermissionDeniedException(
+					"This contact doesn't belong to the user");
+		} else if (contact.getShadowOf() != 0) {
 			throw new NotFoundException("No contact found");
+		} else {
+			Collection<EmailData> emails = executor.selectEmail(contactId);
+			Collection<AddressData> addrs = executor.selectAddr(contactId);
+			Collection<IMData> ims = executor.selectIM(contactId);
+			Collection<PhoneNoData> tels = executor.selectTel(contactId);
+			Collection<URLData> urls = executor.selectURL(contactId);
+			compContact = new CompleteContact(contact, addrs, emails, ims,
+					tels, urls);
 		}
-		else {
-			Collection<EmailData> emails=executor.selectEmail(contactId);
-			Collection<AddressData> addrs=executor.selectAddr(contactId);
-			Collection<IMData> ims=executor.selectIM(contactId);
-			Collection<PhoneNoData> tels=executor.selectTel(contactId);
-			Collection<URLData> urls=executor.selectURL(contactId);		
-			compContact=new CompleteContact(contact,addrs,emails,ims,tels,urls);
-		}
-		return new PersonalCompleteContact(compContact,null);
+		return new PersonalCompleteContact(compContact, null);
 	}
 
 }

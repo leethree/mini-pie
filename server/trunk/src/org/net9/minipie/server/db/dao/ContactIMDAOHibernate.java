@@ -39,7 +39,7 @@ public class ContactIMDAOHibernate extends GenericHibernateDAO<ContactIM, Long> 
 
 	public void makeTransient(ContactIM entity) {
 		// TODO Auto-generated method stub
-		super.makePersistent(entity);
+		super.makeTransient(entity);
 	}
 
 }

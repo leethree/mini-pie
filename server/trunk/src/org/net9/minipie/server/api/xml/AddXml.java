@@ -17,6 +17,7 @@ import org.net9.minipie.server.data.EmailData;
 import org.net9.minipie.server.data.IMData;
 import org.net9.minipie.server.data.PhoneNoData;
 import org.net9.minipie.server.data.URLData;
+import org.net9.minipie.server.data.Update;
 import org.net9.minipie.server.data.constant.InfoType;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.UnknownServerException;
@@ -26,7 +27,7 @@ import org.net9.minipie.server.exception.UnknownServerException;
  * 
  */
 @XmlRootElement(name = "add")
-public class AddXml {
+public class AddXml implements UpdateXml {
 	private Add entity;
 
 	/**
@@ -79,7 +80,7 @@ public class AddXml {
 	}
 
 	@XmlTransient
-	public Add getEntity() {
+	public Update getUpdate() {
 		return entity;
 	}
 }

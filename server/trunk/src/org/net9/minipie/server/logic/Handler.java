@@ -34,6 +34,6 @@ public class Handler<R> {
 		if(command==null){
 			throw new UnknownServerException("Server error");
 		}
-		return command.excute();
+		return command.execute();
 	}
 }

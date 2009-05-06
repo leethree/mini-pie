@@ -15,7 +15,7 @@ public class DeleteContact implements Command<Void> {
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	public Void excute() {
+	public Void execute() {
 		// TODO Auto-generated method stub
 		return null;
 	}

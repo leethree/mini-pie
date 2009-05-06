@@ -16,7 +16,7 @@ public class SignUp implements Command<Long> {
 	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	public Long excute() {
+	public Long execute() {
 		// TODO Auto-generated method stub
 		return null;
 	}

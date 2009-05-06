@@ -8,8 +8,10 @@ package org.net9.minipie.server.api.xml;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.net9.minipie.server.data.Edit;
+import org.net9.minipie.server.data.Update;
 import org.net9.minipie.server.data.constant.InfoField;
 import org.net9.minipie.server.data.constant.InfoType;
 import org.net9.minipie.server.exception.InvalidRequestException;
@@ -19,7 +21,7 @@ import org.net9.minipie.server.exception.InvalidRequestException;
  * 
  */
 @XmlRootElement(name = "edit")
-public class EditXml {
+public class EditXml implements UpdateXml{
 	private Edit entity;
 
 	/**
@@ -96,5 +98,10 @@ public class EditXml {
 	 */
 	public void setValue(String value) {
 		entity.setValue(value);
+	}
+	
+	@XmlTransient
+	public Update getUpdate() {
+		return entity;
 	}
 }

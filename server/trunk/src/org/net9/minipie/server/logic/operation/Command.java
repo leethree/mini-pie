@@ -10,5 +10,5 @@ package org.net9.minipie.server.logic.operation;
  * 
  */
 public interface Command<R> {
-	public R excute();
+	public R execute();
 }
