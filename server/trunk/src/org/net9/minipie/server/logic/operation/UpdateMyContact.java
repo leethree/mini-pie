@@ -7,16 +7,16 @@ package org.net9.minipie.server.logic.operation;
 
 import java.util.Collection;
 
-import org.net9.minipie.server.data.Add;
-import org.net9.minipie.server.data.AddressData;
-import org.net9.minipie.server.data.BasicContact;
-import org.net9.minipie.server.data.Delete;
-import org.net9.minipie.server.data.Edit;
-import org.net9.minipie.server.data.EmailData;
-import org.net9.minipie.server.data.IMData;
-import org.net9.minipie.server.data.PhoneNoData;
-import org.net9.minipie.server.data.URLData;
-import org.net9.minipie.server.data.Update;
+import org.net9.minipie.server.data2.api.Add;
+import org.net9.minipie.server.data2.api.Delete;
+import org.net9.minipie.server.data2.api.Edit;
+import org.net9.minipie.server.data2.api.Update;
+import org.net9.minipie.server.data2.entity.AddressData;
+import org.net9.minipie.server.data2.entity.EmailData;
+import org.net9.minipie.server.data2.entity.IMData;
+import org.net9.minipie.server.data2.entity.PhoneNoData;
+import org.net9.minipie.server.data2.entity.URLData;
+import org.net9.minipie.server.data2.entity.ContactEntity;
 import org.net9.minipie.server.db.HibernateDAOFactory;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
@@ -82,7 +82,7 @@ public class UpdateMyContact implements Command<Void> {
 	 */
 	public Void execute() {
 		ContactStorage executor = new HibernateDAOFactory().getContactStorage();
-		BasicContact contact = executor.selectBasicInfo(contactId);
+		ContactEntity contact = executor.selectBasicInfo(contactId).getEntity();
 		if (contact.getOwnerId() != userId) {
 			throw new PermissionDeniedException(
 					"This contact doesn't belong to the user");

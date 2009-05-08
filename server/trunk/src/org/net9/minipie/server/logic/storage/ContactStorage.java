@@ -6,13 +6,13 @@
 package org.net9.minipie.server.logic.storage;
 
 import java.util.Collection;
-import org.net9.minipie.server.data.AddressData;
-import org.net9.minipie.server.data.BasicContact;
-import org.net9.minipie.server.data.EmailData;
-import org.net9.minipie.server.data.IMData;
-import org.net9.minipie.server.data.MinimalContact;
-import org.net9.minipie.server.data.PhoneNoData;
-import org.net9.minipie.server.data.URLData;
+import org.net9.minipie.server.data2.storage.BasicContact;
+import org.net9.minipie.server.data2.storage.ContactListEntry;
+import org.net9.minipie.server.data2.entity.AddressData;
+import org.net9.minipie.server.data2.entity.EmailData;
+import org.net9.minipie.server.data2.entity.IMData;
+import org.net9.minipie.server.data2.entity.PhoneNoData;
+import org.net9.minipie.server.data2.entity.URLData;
 
 /**
  * @author Seastar
@@ -46,6 +46,6 @@ public interface ContactStorage {
 	Collection<IMData> selectIM(Long contactId);
 	Collection<PhoneNoData> selectTel(Long contactId);
 	Collection<URLData> selectURL(Long contactId);
-	Collection<MinimalContact> selectOwnerContact(Long ownerId);
+	Collection<ContactListEntry> selectOwnerContact(Long ownerId);
 	void del(Long contactId);
 }

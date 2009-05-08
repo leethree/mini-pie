@@ -5,7 +5,8 @@
  */
 package org.net9.minipie.server.logic.operation;
 
-import org.net9.minipie.server.data.BasicContact;
+import org.net9.minipie.server.data2.entity.ContactEntity;
+import org.net9.minipie.server.data2.storage.BasicContact;
 import org.net9.minipie.server.db.HibernateDAOFactory;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
@@ -58,7 +59,8 @@ public class DeleteMyContact implements Command<Void> {
 	 */
 	public Void execute() {
 		ContactStorage executor = new HibernateDAOFactory().getContactStorage();
-		BasicContact contact = executor.selectBasicInfo(contactId);
+		BasicContact bContact = executor.selectBasicInfo(contactId);
+		ContactEntity contact = bContact.getEntity();
 		if (contact.getOwnerId() != userId) {
 			throw new PermissionDeniedException(
 					"This contact doesn't belong to the user");

@@ -5,20 +5,20 @@
  */
 package org.net9.minipie.server.logic.operation;
 
-import org.net9.minipie.server.data.MyCompleteInfo;
+import org.net9.minipie.server.data2.api.PersonalProfile;
 
 /**
  * @author Seastar
  * 
  */
-public class ViewMyInfo implements Command<MyCompleteInfo> {
+public class ViewMyInfo implements Command<PersonalProfile> {
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	public MyCompleteInfo execute() {
+	public PersonalProfile execute() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -7,7 +7,7 @@ package org.net9.minipie.server.logic.operation;
 
 import java.util.Collection;
 
-import org.net9.minipie.server.data.MinimalContact;
+import org.net9.minipie.server.data2.storage.ContactListEntry;
 import org.net9.minipie.server.db.HibernateDAOFactory;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
@@ -15,7 +15,7 @@ import org.net9.minipie.server.logic.storage.ContactStorage;
  * @author Seastar
  * 
  */
-public class ListMyContact implements Command<Collection<MinimalContact>> {
+public class ListMyContact implements Command<Collection<ContactListEntry>> {
 	private Long userId;
 	/**
 	 * Constructor
@@ -36,7 +36,7 @@ public class ListMyContact implements Command<Collection<MinimalContact>> {
 	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	public Collection<MinimalContact> execute() {
+	public Collection<ContactListEntry> execute() {
 		ContactStorage executor=new HibernateDAOFactory().getContactStorage();
 		return executor.selectOwnerContact(userId);
 	}
