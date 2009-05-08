@@ -4,21 +4,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.net9.minipie.server.data.AddressData;
-import org.net9.minipie.server.data.BasicContact;
-import org.net9.minipie.server.data.EmailData;
-import org.net9.minipie.server.data.IMData;
-import org.net9.minipie.server.data.MinimalContact;
-import org.net9.minipie.server.data.PhoneNoData;
-import org.net9.minipie.server.data.URLData;
 import org.net9.minipie.server.data.constant.Gender;
 import org.net9.minipie.server.data.constant.Permission;
+import org.net9.minipie.server.data2.entity.AddressData;
+import org.net9.minipie.server.data2.entity.EmailData;
+import org.net9.minipie.server.data2.entity.IMData;
+import org.net9.minipie.server.data2.entity.PhoneNoData;
+import org.net9.minipie.server.data2.entity.URLData;
+import org.net9.minipie.server.data2.storage.BasicContact;
+import org.net9.minipie.server.data2.storage.ContactListEntry;
 import org.net9.minipie.server.db.entity.Contact;
 import org.net9.minipie.server.db.entity.ContactAddress;
 import org.net9.minipie.server.db.entity.ContactEmail;
@@ -359,19 +356,11 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		try {
 			ContactDAOHibernate cdh = new ContactDAOHibernate();
 			Contact contact = cdh.findById(contactId);
-			BasicContact basicContact = new BasicContact();
-			basicContact.setId(contactId);
-			basicContact.setName(contact.getName());
-			basicContact.setImage(contact.getImage());
-			basicContact.setPermission(contact.getPermission());
-			basicContact.setNickName(contact.getNickName());
-			basicContact.setGender(contact.getGender());
-			basicContact.setBirthday(contact.getBirthday());
-			basicContact.setNotes(contact.getNotes());
-			basicContact.setRelationship(contact.getRelationship());
-			basicContact.setOwnerId(contact.getOwner().getId());
-			if (contact.getShadowOf() != null)
-				basicContact.setShadowOf(contact.getShadowOf().getId());
+			BasicContact basicContact = new BasicContact(contactId, contact.getName(), contact.getImage(), contact.getNickName(),
+					contact.getGender(), contact.getBirthday(), contact.getNotes(), contact.getRelationship(),
+					(contact.getOwner()!=null) ? contact.getOwner().getId(): null, 
+					(contact.getShadowOf()!=null) ? contact.getShadowOf().getId():null, 
+					(contact.getGroup()!=null) ? contact.getGroup().getId():null);
 			return basicContact;
 		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("There's no contact with ID: "
@@ -422,33 +411,6 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	public List<Object[]> selectAddtional(Long contactId) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<MinimalContact> selectMinimalInfo(Long contactId) {// this
-		// method
-		// will not
-		// be used.
-		ContactDAOHibernate cdh = new ContactDAOHibernate();
-		Criteria crit = cdh.getSession().createCriteria(Contact.class);
-		crit.add(Restrictions.eq("contact.id", contactId));
-		ProjectionList projList = Projections.projectionList();
-		projList.add(Projections.property("id"));
-		projList.add(Projections.property("name"));
-		projList.add(Projections.property("image"));
-		crit.setProjection(projList);
-		List result = crit.list();
-		List<MinimalContact> selectedResult = new ArrayList<MinimalContact>();
-		Iterator<Object[]> iter = result.iterator();
-		while (iter.hasNext()) {
-			Object[] objs = (Object[]) iter.next();
-			MinimalContact minimalContact = new MinimalContact();
-			minimalContact.setId((Long) objs[0]);
-			minimalContact.setName((String) objs[1]);
-			minimalContact.setImage((String) objs[2]);
-			selectedResult.add(minimalContact);
-		}
-		return selectedResult;
 	}
 
 	public List<EmailData> selectEmail(Long contactId) {
@@ -532,7 +494,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		return selectedResult;
 	}
 
-	public List<MinimalContact> selectOwnerContact(Long ownerId) {
+	public List<ContactListEntry> selectOwnerContact(Long ownerId) {
 		ContactDAOHibernate cdh = new ContactDAOHibernate();
 		/*
 		 * Criteria crit = cdh.getSession().createCriteria(Contact.class);
@@ -550,14 +512,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		 */
 		Criterion criterion = Restrictions.eq("owner.id", ownerId);
 		List<Contact> result = cdh.findByCriteria(criterion);
-		List<MinimalContact> selectedResult = new ArrayList<MinimalContact>();
+		List<ContactListEntry> selectedResult = new ArrayList<ContactListEntry>();
 		Iterator<Contact> iter = result.iterator();
 		while (iter.hasNext()) {
 			Contact contact = (Contact) iter.next();
-			MinimalContact minimalContact = new MinimalContact();
-			minimalContact.setId(contact.getId());
-			minimalContact.setName(contact.getName());
-			minimalContact.setImage(contact.getImage());
+			ContactListEntry minimalContact = new ContactListEntry(contact.getId(), 
+					contact.getName(),contact.getImage());
 			selectedResult.add(minimalContact);
 		}
 		return selectedResult;

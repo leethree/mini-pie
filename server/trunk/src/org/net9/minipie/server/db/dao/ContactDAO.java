@@ -2,14 +2,14 @@ package org.net9.minipie.server.db.dao;
 
 import java.util.List;
 
-import org.net9.minipie.server.data.AddressData;
-import org.net9.minipie.server.data.BasicContact;
-import org.net9.minipie.server.data.EmailData;
-import org.net9.minipie.server.data.IMData;
-import org.net9.minipie.server.data.MinimalContact;
-import org.net9.minipie.server.data.PhoneNoData;
-import org.net9.minipie.server.data.URLData;
 import org.net9.minipie.server.data.constant.Permission;
+import org.net9.minipie.server.data2.entity.AddressData;
+import org.net9.minipie.server.data2.entity.EmailData;
+import org.net9.minipie.server.data2.entity.IMData;
+import org.net9.minipie.server.data2.entity.PhoneNoData;
+import org.net9.minipie.server.data2.entity.URLData;
+import org.net9.minipie.server.data2.storage.BasicContact;
+import org.net9.minipie.server.data2.storage.ContactListEntry;
 import org.net9.minipie.server.db.entity.Contact;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
@@ -64,8 +64,6 @@ public interface ContactDAO extends GenericDAO<Contact, Long>, ContactStorage {
 
 	List<Object[]> selectAddtional(Long contactId);
 
-	List<MinimalContact> selectMinimalInfo(Long contactId);
-
 	BasicContact selectBasicInfo(Long contactId);
 
 	List<EmailData> selectEmail(Long contactId);
@@ -80,7 +78,7 @@ public interface ContactDAO extends GenericDAO<Contact, Long>, ContactStorage {
 
 	List<Object[]> selectShadow(Long ownerId, Long shadowOf);
 
-	List<MinimalContact> selectOwnerContact(Long ownerId);
+	List<ContactListEntry> selectOwnerContact(Long ownerId);
 
 	List<Object[]> selectGroupContact(Long groupId);
 

@@ -7,14 +7,14 @@ import java.util.List;
 import org.net9.minipie.server.db.dao.ContactDAOHibernate;
 import org.net9.minipie.server.db.dao.UserDAOHibernate;
 import org.net9.minipie.server.db.entity.enums.Bool;
-import org.net9.minipie.server.data.AddressData;
-import org.net9.minipie.server.data.BasicContact;
-import org.net9.minipie.server.data.EmailData;
-import org.net9.minipie.server.data.IMData;
-import org.net9.minipie.server.data.PhoneNoData;
-import org.net9.minipie.server.data.URLData;
+import org.net9.minipie.server.data2.entity.AddressData;
+import org.net9.minipie.server.data2.entity.EmailData;
+import org.net9.minipie.server.data2.entity.IMData;
+import org.net9.minipie.server.data2.entity.PhoneNoData;
+import org.net9.minipie.server.data2.entity.URLData;
 import org.net9.minipie.server.data.constant.Gender;
 import org.net9.minipie.server.data.constant.Permission;
+import org.net9.minipie.server.data2.storage.BasicContact;
 
 @SuppressWarnings("unused")
 public class Test {
@@ -47,19 +47,6 @@ public class Test {
 		Long contact1URLId = cdh.addURL(contact1Id, new URLData(0, null,
 				"url", true, null));
 		BasicContact result = cdh.selectBasicInfo(contact1Id);
-		System.out.println("**************************************************");
-		System.out.println(result.getId());
-		System.out.println(result.getPermission());
-		System.out.println(result.getGender());
-		System.out.println(result.getImage());
-		System.out.println(result.getName());
-		System.out.println(result.getNickName());
-		System.out.println(result.getNotes());
-		System.out.println(result.getOwnerId());
-		System.out.println(result.getRelationship());
-		System.out.println(result.getShadowOf());
-		System.out.println(result.getBirthday());
-		System.out.println("**************************************************");
 		List<AddressData> addresses = cdh.selectAddr(contact1Id);
 		Iterator<AddressData> iter1 = addresses.iterator();
 		while (iter1.hasNext()) {
