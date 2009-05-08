@@ -104,7 +104,7 @@ public class Test {
 			System.out.println(url.getType());
 			System.out.println(url.getPrimary());
 		}
-		// cdh.del(contact1Id);
+	    cdh.del(contact1Id);
 	}
 
 }
