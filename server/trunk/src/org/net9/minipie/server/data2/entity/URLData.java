@@ -1,9 +1,9 @@
 /**
- * PhoneNoData.java
+ * URLData.java
  *     in package: * org.net9.minipie.server.data
  * by Mini-Pie Project
  */
-package org.net9.minipie.server.data2;
+package org.net9.minipie.server.data2.entity;
 
 import org.net9.minipie.server.data.constant.Permission;
 
@@ -11,7 +11,8 @@ import org.net9.minipie.server.data.constant.Permission;
  * @author Riversand
  * 
  */
-public class PhoneNoData implements Info {
+public class URLData implements Info {
+
 	private long id;
 	private String value;
 	private String type;
@@ -22,10 +23,10 @@ public class PhoneNoData implements Info {
 	/**
 	 * Constructor
 	 */
-	public PhoneNoData() {
+	public URLData() {
 	}
 
-	public PhoneNoData(long id, String value, String type, boolean primary,
+	public URLData(long id, String value, String type, boolean primary,
 			Permission perm) {
 		setId(id);
 		setValue(value);
@@ -64,29 +65,12 @@ public class PhoneNoData implements Info {
 
 	public void setValue(String value) {
 		if (value == null) {
-			this.value = null;
 			return;
 		}
 		value = value.trim();
-		value = value.replace('(', '-');
-		value = value.replace(')', '-');
-		int start = 0;
-		while (start < value.length() && value.charAt(start) != '+'
-				&& (value.charAt(start) < '0' || value.charAt(start) > '9')) {
-			start++;
-		}
-		if (start == value.length()) {
+		value = value.toLowerCase();
+		if (value.startsWith("http://") == false) {
 			// TODO exception handling
-		}
-		String newValue = new String();
-		for (int i = start; i < value.length(); i++) {
-			if ((value.charAt(i) < '0' || value.charAt(i) > '9')
-					&& value.charAt(i) != '-') {
-				continue;
-			} else if (i != 0 && value.charAt(i) == '+') {
-				continue;
-			}
-			newValue.concat(String.valueOf(value.charAt(i)));
 		}
 		this.value = value;
 	}
@@ -105,4 +89,5 @@ public class PhoneNoData implements Info {
 	public Permission getPerm() {
 		return perm;
 	}
+
 }

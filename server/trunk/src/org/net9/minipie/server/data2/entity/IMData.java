@@ -1,9 +1,9 @@
 /**
- * URLData.java
+ * IMData.java
  *     in package: * org.net9.minipie.server.data
  * by Mini-Pie Project
  */
-package org.net9.minipie.server.data2;
+package org.net9.minipie.server.data2.entity;
 
 import org.net9.minipie.server.data.constant.Permission;
 
@@ -11,22 +11,21 @@ import org.net9.minipie.server.data.constant.Permission;
  * @author Riversand
  * 
  */
-public class URLData implements Info {
-
+public class IMData implements Info {
 	private long id;
 	private String value;
 	private String type;
 	private boolean primary;
-	/* the following field is only referenced by user */
+	/* the following field(s) is referenced only by user */
 	private Permission perm;
 
 	/**
 	 * Constructor
 	 */
-	public URLData() {
+	public IMData() {
 	}
 
-	public URLData(long id, String value, String type, boolean primary,
+	public IMData(long id, String value, String type, boolean primary,
 			Permission perm) {
 		setId(id);
 		setValue(value);
@@ -64,14 +63,6 @@ public class URLData implements Info {
 	}
 
 	public void setValue(String value) {
-		if (value == null) {
-			return;
-		}
-		value = value.trim();
-		value = value.toLowerCase();
-		if (value.startsWith("http://") == false) {
-			// TODO exception handling
-		}
 		this.value = value;
 	}
 

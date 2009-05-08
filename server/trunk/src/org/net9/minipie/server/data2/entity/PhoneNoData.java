@@ -1,9 +1,9 @@
 /**
- * IMData.java
+ * PhoneNoData.java
  *     in package: * org.net9.minipie.server.data
  * by Mini-Pie Project
  */
-package org.net9.minipie.server.data2;
+package org.net9.minipie.server.data2.entity;
 
 import org.net9.minipie.server.data.constant.Permission;
 
@@ -11,21 +11,21 @@ import org.net9.minipie.server.data.constant.Permission;
  * @author Riversand
  * 
  */
-public class IMData implements Info {
+public class PhoneNoData implements Info {
 	private long id;
 	private String value;
 	private String type;
 	private boolean primary;
-	/* the following field(s) is referenced only by user */
+	/* the following field is only referenced by user */
 	private Permission perm;
 
 	/**
 	 * Constructor
 	 */
-	public IMData() {
+	public PhoneNoData() {
 	}
 
-	public IMData(long id, String value, String type, boolean primary,
+	public PhoneNoData(long id, String value, String type, boolean primary,
 			Permission perm) {
 		setId(id);
 		setValue(value);
@@ -63,6 +63,31 @@ public class IMData implements Info {
 	}
 
 	public void setValue(String value) {
+		if (value == null) {
+			this.value = null;
+			return;
+		}
+		value = value.trim();
+		value = value.replace('(', '-');
+		value = value.replace(')', '-');
+		int start = 0;
+		while (start < value.length() && value.charAt(start) != '+'
+				&& (value.charAt(start) < '0' || value.charAt(start) > '9')) {
+			start++;
+		}
+		if (start == value.length()) {
+			// TODO exception handling
+		}
+		String newValue = new String();
+		for (int i = start; i < value.length(); i++) {
+			if ((value.charAt(i) < '0' || value.charAt(i) > '9')
+					&& value.charAt(i) != '-') {
+				continue;
+			} else if (i != 0 && value.charAt(i) == '+') {
+				continue;
+			}
+			newValue.concat(String.valueOf(value.charAt(i)));
+		}
 		this.value = value;
 	}
 
@@ -80,5 +105,4 @@ public class IMData implements Info {
 	public Permission getPerm() {
 		return perm;
 	}
-
 }

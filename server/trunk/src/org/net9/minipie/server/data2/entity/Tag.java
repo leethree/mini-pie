@@ -3,7 +3,7 @@
  *     in package: * org.net9.minipie.server.data
  * by Mini-Pie Project
  */
-package org.net9.minipie.server.data2;
+package org.net9.minipie.server.data2.entity;
 
 /**
  * @author Seastar
