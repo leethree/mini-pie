@@ -5,8 +5,8 @@
  */
 package org.net9.minipie.server.logic.operation;
 
-import org.net9.minipie.server.data2.entity.ContactEntity;
-import org.net9.minipie.server.data2.storage.BasicContact;
+import org.net9.minipie.server.data.entity.ContactEntity;
+import org.net9.minipie.server.data.storage.BasicContact;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.PermissionDeniedException;

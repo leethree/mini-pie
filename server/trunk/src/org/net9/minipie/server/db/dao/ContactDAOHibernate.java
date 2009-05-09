@@ -9,13 +9,13 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.net9.minipie.server.data.constant.Gender;
 import org.net9.minipie.server.data.constant.Permission;
-import org.net9.minipie.server.data2.entity.AddressData;
-import org.net9.minipie.server.data2.entity.EmailData;
-import org.net9.minipie.server.data2.entity.IMData;
-import org.net9.minipie.server.data2.entity.PhoneNoData;
-import org.net9.minipie.server.data2.entity.URLData;
-import org.net9.minipie.server.data2.storage.BasicContact;
-import org.net9.minipie.server.data2.storage.ContactListEntry;
+import org.net9.minipie.server.data.entity.AddressData;
+import org.net9.minipie.server.data.entity.EmailData;
+import org.net9.minipie.server.data.entity.IMData;
+import org.net9.minipie.server.data.entity.PhoneNoData;
+import org.net9.minipie.server.data.entity.URLData;
+import org.net9.minipie.server.data.storage.BasicContact;
+import org.net9.minipie.server.data.storage.ContactListEntry;
 import org.net9.minipie.server.db.entity.Contact;
 import org.net9.minipie.server.db.entity.ContactAddress;
 import org.net9.minipie.server.db.entity.ContactEmail;
@@ -34,7 +34,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		ContactAddress contactAddr = new ContactAddress();
 		contactAddr.setValue(addressData.getValue());
 		contactAddr.setType(addressData.getType());
-		if (addressData.getPrimary() == true)
+		if (addressData.isPrimary() == true)
 			contactAddr.setPrimary(Bool.TRUE);
 		else
 			contactAddr.setPrimary(Bool.FALSE);
@@ -60,7 +60,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		ContactEmail contactEmail = new ContactEmail();
 		contactEmail.setValue(emailData.getValue());
 		contactEmail.setType(emailData.getType());
-		if (emailData.getPrimary() == true)
+		if (emailData.isPrimary() == true)
 			contactEmail.setPrimary(Bool.TRUE);
 		else
 			contactEmail.setPrimary(Bool.FALSE);
@@ -86,7 +86,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		ContactIM contactIM = new ContactIM();
 		contactIM.setValue(imData.getValue());
 		contactIM.setType(imData.getType());
-		if (imData.getPrimary() == true)
+		if (imData.isPrimary() == true)
 			contactIM.setPrimary(Bool.TRUE);
 		else
 			contactIM.setPrimary(Bool.FALSE);
@@ -107,7 +107,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		ContactPhoneNo contactPhone = new ContactPhoneNo();
 		contactPhone.setValue(phoneNoData.getValue());
 		contactPhone.setType(phoneNoData.getType());
-		if (phoneNoData.getPrimary() == true)
+		if (phoneNoData.isPrimary() == true)
 			contactPhone.setPrimary(Bool.TRUE);
 		else
 			contactPhone.setPrimary(Bool.FALSE);
@@ -128,7 +128,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		ContactURL contactURL = new ContactURL();
 		contactURL.setValue(urlData.getValue());
 		contactURL.setType(urlData.getType());
-		if (urlData.getPrimary() == true)
+		if (urlData.isPrimary() == true)
 			contactURL.setPrimary(Bool.TRUE);
 		else
 			contactURL.setPrimary(Bool.FALSE);
@@ -358,9 +358,9 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			Contact contact = cdh.findById(contactId);
 			BasicContact basicContact = new BasicContact(contactId, contact.getName(), contact.getImage(), contact.getNickName(),
 					contact.getGender(), contact.getBirthday(), contact.getNotes(), contact.getRelationship(),
-					(contact.getOwner()!=null) ? contact.getOwner().getId(): null, 
-					(contact.getShadowOf()!=null) ? contact.getShadowOf().getId():null, 
-					(contact.getGroup()!=null) ? contact.getGroup().getId():null);
+					(contact.getOwner()!=null) ? contact.getOwner().getId(): 0, 
+					(contact.getShadowOf()!=null) ? contact.getShadowOf().getId():0, 
+					(contact.getGroup()!=null) ? contact.getGroup().getId():0);
 			return basicContact;
 		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("There's no contact with ID: "

@@ -7,14 +7,14 @@ import java.util.List;
 import org.net9.minipie.server.db.dao.ContactDAOHibernate;
 import org.net9.minipie.server.db.dao.UserDAOHibernate;
 import org.net9.minipie.server.db.entity.enums.Bool;
-import org.net9.minipie.server.data2.entity.AddressData;
-import org.net9.minipie.server.data2.entity.EmailData;
-import org.net9.minipie.server.data2.entity.IMData;
-import org.net9.minipie.server.data2.entity.PhoneNoData;
-import org.net9.minipie.server.data2.entity.URLData;
 import org.net9.minipie.server.data.constant.Gender;
 import org.net9.minipie.server.data.constant.Permission;
-import org.net9.minipie.server.data2.storage.BasicContact;
+import org.net9.minipie.server.data.entity.AddressData;
+import org.net9.minipie.server.data.entity.EmailData;
+import org.net9.minipie.server.data.entity.IMData;
+import org.net9.minipie.server.data.entity.PhoneNoData;
+import org.net9.minipie.server.data.entity.URLData;
+import org.net9.minipie.server.data.storage.BasicContact;
 
 @SuppressWarnings("unused")
 public class Test {
@@ -53,7 +53,7 @@ public class Test {
 			AddressData addr = iter1.next();
 			System.out.println(addr.getValue());
 			System.out.println(addr.getType());
-			System.out.println(addr.getPrimary());
+			System.out.println(addr.isPrimary());
 		}
 		System.out.println("**************************************************");
 		List<EmailData> emails = cdh.selectEmail(contact1Id);
@@ -62,7 +62,7 @@ public class Test {
 			EmailData email = emailIter.next();
 			System.out.println(email.getValue());
 			System.out.println(email.getType());
-			System.out.println(email.getPrimary());
+			System.out.println(email.isPrimary());
 		}
 		System.out.println("**************************************************");
 		List<IMData> ims = cdh.selectIM(contact1Id);
@@ -71,7 +71,7 @@ public class Test {
 			IMData im = imIter.next();
 			System.out.println(im.getValue());
 			System.out.println(im.getType());
-			System.out.println(im.getPrimary());
+			System.out.println(im.isPrimary());
 		}
 		System.out.println("**************************************************");
 		List<PhoneNoData> tels = cdh.selectTel(contact1Id);
@@ -80,7 +80,7 @@ public class Test {
 			PhoneNoData tel = telIter.next();
 			System.out.println(tel.getValue());
 			System.out.println(tel.getType());
-			System.out.println(tel.getPrimary());
+			System.out.println(tel.isPrimary());
 		}
 		System.out.println("**************************************************");
 		List<URLData> urls = cdh.selectURL(contact1Id);
@@ -89,9 +89,9 @@ public class Test {
 			URLData url = urlIter.next();
 			System.out.println(url.getValue());
 			System.out.println(url.getType());
-			System.out.println(url.getPrimary());
+			System.out.println(url.isPrimary());
 		}
-	    cdh.del(contact1Id);
+	    //cdh.del(contact1Id);
 	}
 
 }

@@ -5,7 +5,7 @@
  */
 package org.net9.minipie.server.logic.operation;
 
-import org.net9.minipie.server.data2.api.PersonalProfile;
+import org.net9.minipie.server.data.api.PersonalProfile;
 
 /**
  * @author Seastar

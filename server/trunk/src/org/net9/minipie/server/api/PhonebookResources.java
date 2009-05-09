@@ -11,7 +11,7 @@ public class PhonebookResources {
     protected ResourceContext resourceContext;
 	
 	@Path("contact")
-	public PhonebookContactList getContacts() {
-		return resourceContext.getResource(PhonebookContactList.class);
+	public PhonebookContactListResource getContacts() {
+		return resourceContext.getResource(PhonebookContactListResource.class);
 	}
 }

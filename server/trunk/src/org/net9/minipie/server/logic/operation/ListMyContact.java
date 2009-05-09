@@ -8,8 +8,8 @@ package org.net9.minipie.server.logic.operation;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.net9.minipie.server.data2.api.ContactEntry;
-import org.net9.minipie.server.data2.storage.ContactListEntry;
+import org.net9.minipie.server.data.api.ContactEntry;
+import org.net9.minipie.server.data.storage.ContactListEntry;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
 /**

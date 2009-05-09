@@ -7,16 +7,16 @@ package org.net9.minipie.server.logic.operation;
 
 import java.util.Collection;
 
-import org.net9.minipie.server.data2.api.Add;
-import org.net9.minipie.server.data2.api.Delete;
-import org.net9.minipie.server.data2.api.Edit;
-import org.net9.minipie.server.data2.api.Update;
-import org.net9.minipie.server.data2.entity.AddressData;
-import org.net9.minipie.server.data2.entity.EmailData;
-import org.net9.minipie.server.data2.entity.IMData;
-import org.net9.minipie.server.data2.entity.PhoneNoData;
-import org.net9.minipie.server.data2.entity.URLData;
-import org.net9.minipie.server.data2.entity.ContactEntity;
+import org.net9.minipie.server.data.api.Add;
+import org.net9.minipie.server.data.api.Delete;
+import org.net9.minipie.server.data.api.Edit;
+import org.net9.minipie.server.data.api.Update;
+import org.net9.minipie.server.data.entity.AddressData;
+import org.net9.minipie.server.data.entity.ContactEntity;
+import org.net9.minipie.server.data.entity.EmailData;
+import org.net9.minipie.server.data.entity.IMData;
+import org.net9.minipie.server.data.entity.PhoneNoData;
+import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.PermissionDeniedException;
@@ -125,7 +125,7 @@ public class UpdateMyContact extends Command<Void> {
 					try {
 						switch (newData.getType()) {
 						case ADDRESS:
-							switch (newData.getField()) {
+							switch (newData.getInfoField()) {
 							case VALUE:
 								executor.editAddr(newData.getId(), "value",
 										newData.getValue());
@@ -148,7 +148,7 @@ public class UpdateMyContact extends Command<Void> {
 							}
 							break;
 						case EMAIL:
-							switch (newData.getField()) {
+							switch (newData.getInfoField()) {
 							case VALUE:
 								executor.editEmail(newData.getId(), "value",
 										newData.getValue());
@@ -167,7 +167,7 @@ public class UpdateMyContact extends Command<Void> {
 							}
 							break;
 						case IM:
-							switch (newData.getField()) {
+							switch (newData.getInfoField()) {
 							case VALUE:
 								executor.editIM(newData.getId(), "value",
 										newData.getValue());
@@ -186,7 +186,7 @@ public class UpdateMyContact extends Command<Void> {
 							}
 							break;
 						case PHONE:
-							switch (newData.getField()) {
+							switch (newData.getInfoField()) {
 							case VALUE:
 								executor.editTel(newData.getId(), "value",
 										newData.getValue());
@@ -205,7 +205,7 @@ public class UpdateMyContact extends Command<Void> {
 							}
 							break;
 						case URL:
-							switch (newData.getField()) {
+							switch (newData.getInfoField()) {
 							case VALUE:
 								executor.editURL(newData.getId(), "value",
 										newData.getValue());
@@ -224,7 +224,7 @@ public class UpdateMyContact extends Command<Void> {
 							}
 							break;
 						case BASIC:
-							switch (newData.getField()) {
+							switch (newData.getInfoField()) {
 							case NAME:
 								executor.editBasicInfo(newData.getId(), "name",
 										newData.getValue());

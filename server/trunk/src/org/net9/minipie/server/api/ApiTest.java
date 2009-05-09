@@ -1,28 +1,32 @@
 package org.net9.minipie.server.api;
 
-import javax.ws.rs.FormParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.net9.minipie.server.api.xml.MyContactXml;
-import org.net9.minipie.server.data.PersonalCompleteContact;
-import org.net9.minipie.server.logic.Handler;
-import org.net9.minipie.server.logic.operation.ViewMyContact;
+import org.net9.minipie.server.data.api.Edit;
+import org.net9.minipie.server.data.api.Update;
+import org.net9.minipie.server.data.api.UpdateList;
 
 @Path("/test")
 public class ApiTest {
 
 	@GET
 	@Produces( { "application/xml", "application/json" })
-	public MyContactXml getTest() {
-		return new MyContactXml(new Handler<PersonalCompleteContact>(
-				new ViewMyContact(1L, 1L)).excute());
+	public void getTest() {
+//		return new MyContactXml(new Handler<PersonalCompleteContact>(
+//				new ViewMyContact(1L, 1L)).excute());
 	}
 
 	@POST
-	public void postTest(@FormParam("test") String para) {
-		System.out.println(para);
+	@Consumes( { "application/xml", "application/json" })
+	public void postTest(UpdateList list) {
+		for (Update update : list.getUpdates()) {
+			System.out.println(update);
+			System.out.println(update.getType());
+			System.out.println(((Edit)update).getInfoField());
+		}
 	}
 }
