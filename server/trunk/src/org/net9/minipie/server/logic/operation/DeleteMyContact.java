@@ -7,7 +7,6 @@ package org.net9.minipie.server.logic.operation;
 
 import org.net9.minipie.server.data2.entity.ContactEntity;
 import org.net9.minipie.server.data2.storage.BasicContact;
-import org.net9.minipie.server.db.HibernateDAOFactory;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.PermissionDeniedException;
@@ -17,7 +16,7 @@ import org.net9.minipie.server.logic.storage.ContactStorage;
  * @author Seastar
  * 
  */
-public class DeleteMyContact implements Command<Void> {
+public class DeleteMyContact extends Command<Void> {
 	private Long contactId;
 	private Long userId;
 
@@ -58,7 +57,7 @@ public class DeleteMyContact implements Command<Void> {
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
 	public Void execute() {
-		ContactStorage executor = new HibernateDAOFactory().getContactStorage();
+		ContactStorage executor = getStorageFactory().getContactStorage();
 		BasicContact bContact = executor.selectBasicInfo(contactId);
 		ContactEntity contact = bContact.getEntity();
 		if (contact.getOwnerId() != userId) {

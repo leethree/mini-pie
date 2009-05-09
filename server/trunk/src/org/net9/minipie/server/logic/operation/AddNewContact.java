@@ -9,7 +9,7 @@ package org.net9.minipie.server.logic.operation;
  * @author Seastar
  * 
  */
-public class AddNewContact implements Command<Long> {
+public class AddNewContact extends Command<Long> {
 	private String name;
 	private long userId;
 

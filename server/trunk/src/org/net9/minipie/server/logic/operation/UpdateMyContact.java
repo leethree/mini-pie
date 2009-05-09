@@ -17,7 +17,6 @@ import org.net9.minipie.server.data2.entity.IMData;
 import org.net9.minipie.server.data2.entity.PhoneNoData;
 import org.net9.minipie.server.data2.entity.URLData;
 import org.net9.minipie.server.data2.entity.ContactEntity;
-import org.net9.minipie.server.db.HibernateDAOFactory;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.PermissionDeniedException;
@@ -27,7 +26,7 @@ import org.net9.minipie.server.logic.storage.ContactStorage;
  * @author Seastar
  * 
  */
-public class UpdateMyContact implements Command<Void> {
+public class UpdateMyContact extends Command<Void> {
 	private Collection<Update> datas;
 	private Long contactId;
 	private Long userId;
@@ -81,7 +80,7 @@ public class UpdateMyContact implements Command<Void> {
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
 	public Void execute() {
-		ContactStorage executor = new HibernateDAOFactory().getContactStorage();
+		ContactStorage executor = getStorageFactory().getContactStorage();
 		ContactEntity contact = executor.selectBasicInfo(contactId).getEntity();
 		if (contact.getOwnerId() != userId) {
 			throw new PermissionDeniedException(

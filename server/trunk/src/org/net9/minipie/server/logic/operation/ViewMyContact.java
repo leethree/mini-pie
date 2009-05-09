@@ -7,7 +7,6 @@ package org.net9.minipie.server.logic.operation;
 
 import org.net9.minipie.server.data2.api.PhonebookCompleteContact;
 import org.net9.minipie.server.data2.entity.ContactEntity;
-import org.net9.minipie.server.db.HibernateDAOFactory;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.PermissionDeniedException;
@@ -17,7 +16,7 @@ import org.net9.minipie.server.logic.storage.ContactStorage;
  * @author Seastar
  * 
  */
-public class ViewMyContact implements Command<PhonebookCompleteContact> {
+public class ViewMyContact extends Command<PhonebookCompleteContact> {
 	private Long contactId;
 	private Long userId;
 
@@ -58,7 +57,7 @@ public class ViewMyContact implements Command<PhonebookCompleteContact> {
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
 	public PhonebookCompleteContact execute() {
-		ContactStorage executor = new HibernateDAOFactory().getContactStorage();
+		ContactStorage executor = getStorageFactory().getContactStorage();
 		ContactEntity contact = executor.selectBasicInfo(contactId).getEntity();
 		if (contact.getOwnerId() != userId) {
 			throw new PermissionDeniedException(

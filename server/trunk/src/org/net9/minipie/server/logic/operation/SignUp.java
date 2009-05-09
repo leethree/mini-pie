@@ -9,7 +9,7 @@ package org.net9.minipie.server.logic.operation;
  * @author Seastar
  * 
  */
-public class SignUp implements Command<Long> {
+public class SignUp extends Command<Long> {
 
 	/*
 	 * (non-Javadoc)

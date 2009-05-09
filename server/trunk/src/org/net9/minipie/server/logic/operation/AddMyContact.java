@@ -5,7 +5,6 @@
  */
 package org.net9.minipie.server.logic.operation;
 
-import org.net9.minipie.server.db.HibernateDAOFactory;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
@@ -13,7 +12,7 @@ import org.net9.minipie.server.logic.storage.ContactStorage;
  * @author Seastar
  * 
  */
-public class AddMyContact implements Command<Long> {
+public class AddMyContact extends Command<Long> {
 	private String name;
 	private Long userId;
 
@@ -52,16 +51,8 @@ public class AddMyContact implements Command<Long> {
 	 * @see org.net9.minipie.server.logic.Command#execute()
 	 */
 	public Long execute() {
-		// long returnValue;
-		ContactStorage executor = new HibernateDAOFactory().getContactStorage();
-
-		// System.out.print(name + userId);
-		// try{
+		ContactStorage executor = getStorageFactory().getContactStorage();
 		return executor.addUserContact(userId, name);
 	}
-	// catch(Exception e){
-	// throw new UnknownServerException("Database can't complete the mission");
-	// }
-	// return returnValue;
 
 }

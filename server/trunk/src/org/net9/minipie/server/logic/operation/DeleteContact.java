@@ -10,7 +10,7 @@ package org.net9.minipie.server.logic.operation;
  * @author Seastar
  * 
  */
-public class DeleteContact implements Command<Void> {
+public class DeleteContact extends Command<Void> {
 
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()

@@ -11,7 +11,7 @@ import org.net9.minipie.server.data2.api.PersonalProfile;
  * @author Seastar
  * 
  */
-public class ViewMyInfo implements Command<PersonalProfile> {
+public class ViewMyInfo extends Command<PersonalProfile> {
 
 	/*
 	 * (non-Javadoc)

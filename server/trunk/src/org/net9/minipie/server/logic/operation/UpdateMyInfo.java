@@ -9,7 +9,7 @@ package org.net9.minipie.server.logic.operation;
  * @author Seastar
  * 
  */
-public class UpdateMyInfo implements Command<Void> {
+public class UpdateMyInfo extends Command<Void> {
 
 	/*
 	 * (non-Javadoc)
