@@ -29,7 +29,7 @@ public class Test {
 				Permission.TO_CONTACTS);
 		ContactDAOHibernate cdh = new ContactDAOHibernate();
 		Long contact1Id = cdh.addUserContact(l, "her");
-		cdh.editBasicInfo(contact1Id, "nickName", "mama");
+		cdh.editBasicInfo(new Long(-1), "nickName", "mama");
 		cdh.editBasicInfo(contact1Id, "name", "Jersey");
 		cdh.editBasicInfo(contact1Id, "gender", Gender.FEMALE);
 		cdh.editBasicInfo(contact1Id, "image", "http://server2.net9");

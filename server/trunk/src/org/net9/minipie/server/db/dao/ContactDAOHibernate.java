@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -166,18 +167,28 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	}
 
 	public void del(Long contactId) {
-		Contact contact = findById(contactId);
-		begin();
-		makeTransient(contact);
-		commit();
+		try{
+			Contact contact = findById(contactId);
+			begin();
+			makeTransient(contact);
+			commit();
+		}catch(ObjectNotFoundException e){
+			e.printStackTrace();
+			throw new NotFoundException("Cannot find item with given contact id");
+		}
 	}
 
 	public void delAddr(Long id) {
-		ContactAddressDAOHibernate cadh = new ContactAddressDAOHibernate();
-		ContactAddress contactAddr = cadh.findById(id);
-		cadh.begin();
-		cadh.makeTransient(contactAddr);
-		cadh.commit();
+		try{
+			ContactAddressDAOHibernate cadh = new ContactAddressDAOHibernate();
+			ContactAddress contactAddr = cadh.findById(id);
+			cadh.begin();
+			cadh.makeTransient(contactAddr);
+			cadh.commit();
+		}catch(ObjectNotFoundException e){
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find address item with give id");
+		}
 	}
 
 	public void delAddtional(Long id) {
@@ -186,35 +197,55 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	}
 
 	public void delEmail(Long id) {
-		ContactEmailDAOHibernate cedh = new ContactEmailDAOHibernate();
-		ContactEmail contactEmail = cedh.findById(id);
-		cedh.begin();
-		cedh.makeTransient(contactEmail);
-		cedh.commit();
+		try{
+			ContactEmailDAOHibernate cedh = new ContactEmailDAOHibernate();
+			ContactEmail contactEmail = cedh.findById(id);
+			cedh.begin();
+			cedh.makeTransient(contactEmail);
+			cedh.commit();
+		}catch(ObjectNotFoundException e){
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find email item with give id");
+		}
 	}
 
 	public void delIM(Long id) {
-		ContactIMDAOHibernate cidh = new ContactIMDAOHibernate();
-		ContactIM contactIM = cidh.findById(id);
-		cidh.begin();
-		cidh.makeTransient(contactIM);
-		cidh.commit();
+		try{
+			ContactIMDAOHibernate cidh = new ContactIMDAOHibernate();
+			ContactIM contactIM = cidh.findById(id);
+			cidh.begin();
+			cidh.makeTransient(contactIM);
+			cidh.commit();
+		}catch(ObjectNotFoundException e){
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find im item with give id");
+		}
 	}
 
 	public void delTel(Long id) {
-		ContactPhoneDAOHibernate cpdh = new ContactPhoneDAOHibernate();
-		ContactPhoneNo contactPhone = cpdh.findById(id);
-		cpdh.begin();
-		cpdh.makeTransient(contactPhone);
-		cpdh.commit();
+		try{
+			ContactPhoneDAOHibernate cpdh = new ContactPhoneDAOHibernate();
+			ContactPhoneNo contactPhone = cpdh.findById(id);
+			cpdh.begin();
+			cpdh.makeTransient(contactPhone);
+			cpdh.commit();
+		}catch(ObjectNotFoundException e){
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find phone item with give id");
+		}
 	}
 
 	public void delURL(Long id) {
-		ContactURLDAOHibernate cudh = new ContactURLDAOHibernate();
-		ContactURL contactURL = cudh.findById(id);
-		cudh.begin();
-		cudh.makeTransient(contactURL);
-		cudh.commit();
+		try{
+			ContactURLDAOHibernate cudh = new ContactURLDAOHibernate();
+			ContactURL contactURL = cudh.findById(id);
+			cudh.begin();
+			cudh.makeTransient(contactURL);
+			cudh.commit();
+		}catch(ObjectNotFoundException e){
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find url item with give id");
+		}
 	}
 
 	public void editAdditional(Long id, String attribute, Object value) {
@@ -223,7 +254,13 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 
 	public void editAddr(Long id, String attribute, Object value) {
 		ContactAddressDAOHibernate cadh = new ContactAddressDAOHibernate();
-		ContactAddress contactAddr = cadh.findById(id);
+		ContactAddress contactAddr = null;
+		try{
+			contactAddr = cadh.findById(id);
+		}catch(ObjectNotFoundException e){
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find address "+attribute+" item with give id");
+		}
 		if (attribute.equals("value")) {
 			String addr = (String) value;
 			contactAddr.setValue(addr);
@@ -241,7 +278,13 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 
 	public void editBasicInfo(Long id, String attribute, Object value) {
 		ContactDAOHibernate cdh = new ContactDAOHibernate();
-		Contact contact = cdh.findById(id);
+		Contact contact = null;
+		try{
+			contact = cdh.findById(id);
+		}catch(ObjectNotFoundException e){
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find basic info "+attribute+" item with give id");
+		}
 		if (attribute.equals("name")) {
 			String name = (String) value;
 			contact.setName(name);
@@ -271,7 +314,13 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 
 	public void editEmail(Long id, String attribute, Object value) {
 		ContactEmailDAOHibernate cedh = new ContactEmailDAOHibernate();
-		ContactEmail contactEmail = cedh.findById(id);
+		ContactEmail contactEmail = null;
+		try{
+			contactEmail = cedh.findById(id);
+		}catch(HibernateException e){
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find email "+attribute+" item with give id");
+		}
 		if (attribute.equals("value")) {
 			String email = (String) value;
 			contactEmail.setValue(email);
@@ -289,7 +338,13 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 
 	public void editIM(Long id, String attribute, Object value) {
 		ContactIMDAOHibernate cidh = new ContactIMDAOHibernate();
-		ContactIM contactIM = cidh.findById(id);
+		ContactIM contactIM = null;
+		try{
+			contactIM = cidh.findById(id);
+		}catch(HibernateException e){
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find im "+attribute+" item with give id");
+		}
 		if (attribute.equals("value")) {
 			String im = (String) value;
 			contactIM.setValue(im);
@@ -307,7 +362,13 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 
 	public void editTel(Long id, String attribute, Object value) {
 		ContactPhoneDAOHibernate cpdh = new ContactPhoneDAOHibernate();
-		ContactPhoneNo contactPhone = cpdh.findById(id);
+		ContactPhoneNo contactPhone = null; 
+		try{
+			contactPhone = cpdh.findById(id);
+		}catch(HibernateException e){
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find tel "+attribute+" item with give id");
+		}
 		if (attribute.equals("value")) {
 			String tel = (String) value;
 			contactPhone.setValue(tel);
@@ -325,7 +386,13 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 
 	public void editURL(Long id, String attribute, Object value) {
 		ContactURLDAOHibernate cudh = new ContactURLDAOHibernate();
-		ContactURL contactURL = cudh.findById(id);
+		ContactURL contactURL = null;
+		try{
+			contactURL = cudh.findById(id);
+		}catch(HibernateException e){
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find url "+attribute+" item with give id");
+		}
 		if (attribute.equals("value")) {
 			String url = (String) value;
 			contactURL.setValue(url);
@@ -369,43 +436,29 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	}
 
 	public List<AddressData> selectAddr(Long contactId) {
-		ContactAddressDAOHibernate cadh = new ContactAddressDAOHibernate();
-		/*
-		 * Criteria crit =
-		 * cadh.getSession().createCriteria(ContactAddress.class);
-		 * crit.add(Restrictions.eq("contact.id", contactId)); ProjectionList
-		 * projList = Projections.projectionList();
-		 * projList.add(Projections.property("id"));
-		 * projList.add(Projections.property("value"));
-		 * projList.add(Projections.property("type"));
-		 * projList.add(Projections.property("primary"));
-		 * crit.setProjection(projList); List<Object[]> result = crit.list();
-		 * List<AddressData> selectedResult = new ArrayList<AddressData>();
-		 * Iterator<Object[]> iter = result.iterator(); while(iter.hasNext()){
-		 * Object[] objs = (Object[]) iter.next(); AddressData addressData = new
-		 * AddressData(); addressData.setId((Long)objs[0]);
-		 * addressData.setValue((String)objs[1]);
-		 * addressData.setType((String)objs[2]); if((Bool)objs[3]==Bool.TRUE)
-		 * addressData.setPrimary(true); else addressData.setPrimary(false);
-		 * selectedResult.add(addressData); return selectedResult; }
-		 */
-		Criterion criterion = Restrictions.eq("contact.id", contactId);
-		List<ContactAddress> result = cadh.findByCriteria(criterion);
-		List<AddressData> selectedResult = new ArrayList<AddressData>();
-		Iterator<ContactAddress> iter = result.iterator();
-		while (iter.hasNext()) {
-			ContactAddress contactAddr = (ContactAddress) iter.next();
-			AddressData addressData = new AddressData();
-			addressData.setId(contactAddr.getId());
-			addressData.setValue(contactAddr.getValue());
-			addressData.setType(contactAddr.getType());
-			if (contactAddr.getPrimary() == Bool.TRUE)
-				addressData.setPrimary(true);
-			else
-				addressData.setPrimary(false);
-			selectedResult.add(addressData);
+		try{
+			ContactAddressDAOHibernate cadh = new ContactAddressDAOHibernate();
+			Criterion criterion = Restrictions.eq("contact.id", contactId);
+			List<ContactAddress> result = cadh.findByCriteria(criterion);
+			List<AddressData> selectedResult = new ArrayList<AddressData>();
+			Iterator<ContactAddress> iter = result.iterator();
+			while (iter.hasNext()) {
+				ContactAddress contactAddr = (ContactAddress) iter.next();
+				AddressData addressData = new AddressData();
+				addressData.setId(contactAddr.getId());
+				addressData.setValue(contactAddr.getValue());
+				addressData.setType(contactAddr.getType());
+				if (contactAddr.getPrimary() == Bool.TRUE)
+					addressData.setPrimary(true);
+				else
+					addressData.setPrimary(false);
+				selectedResult.add(addressData);
+			}
+			return selectedResult;
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("There's no contact with ID: "
+					+ contactId);
 		}
-		return selectedResult;
 	}
 
 	public List<Object[]> selectAddtional(Long contactId) {
@@ -414,42 +467,29 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	}
 
 	public List<EmailData> selectEmail(Long contactId) {
-		ContactEmailDAOHibernate cedh = new ContactEmailDAOHibernate();
-		/*
-		 * Criteria crit = cedh.getSession().createCriteria(ContactEmail.class);
-		 * crit.add(Restrictions.eq("contact.id", contactId)); ProjectionList
-		 * projList = Projections.projectionList();
-		 * projList.add(Projections.property("id"));
-		 * projList.add(Projections.property("value"));
-		 * projList.add(Projections.property("type"));
-		 * projList.add(Projections.property("primary"));
-		 * crit.setProjection(projList); List result = crit.list();
-		 * List<EmailData> selectedResult = new ArrayList<EmailData>();
-		 * Iterator<Object[]> iter = result.iterator(); while(iter.hasNext()){
-		 * Object[] objs = (Object[]) iter.next(); EmailData emailData = new
-		 * EmailData(); emailData.setId((Long)objs[0]);
-		 * emailData.setValue((String)objs[1]);
-		 * emailData.setType((String)objs[2]); if((Bool)objs[2]==Bool.TRUE)
-		 * emailData.setPrimary(true); else emailData.setPrimary(false);
-		 * selectedResult.add(emailData); } return selectedResult;
-		 */
-		Criterion criterion = Restrictions.eq("contact.id", contactId);
-		List<ContactEmail> result = cedh.findByCriteria(criterion);
-		List<EmailData> selectedResult = new ArrayList<EmailData>();
-		Iterator<ContactEmail> iter = result.iterator();
-		while (iter.hasNext()) {
-			ContactEmail contactEmail = (ContactEmail) iter.next();
-			EmailData emailData = new EmailData();
-			emailData.setId(contactEmail.getId());
-			emailData.setValue(contactEmail.getValue());
-			emailData.setType(contactEmail.getType());
-			if (contactEmail.getPrimary() == Bool.TRUE)
-				emailData.setPrimary(true);
-			else
-				emailData.setPrimary(false);
-			selectedResult.add(emailData);
+		try{
+			ContactEmailDAOHibernate cedh = new ContactEmailDAOHibernate();
+			Criterion criterion = Restrictions.eq("contact.id", contactId);
+			List<ContactEmail> result = cedh.findByCriteria(criterion);
+			List<EmailData> selectedResult = new ArrayList<EmailData>();
+			Iterator<ContactEmail> iter = result.iterator();
+			while (iter.hasNext()) {
+				ContactEmail contactEmail = (ContactEmail) iter.next();
+				EmailData emailData = new EmailData();
+				emailData.setId(contactEmail.getId());
+				emailData.setValue(contactEmail.getValue());
+				emailData.setType(contactEmail.getType());
+				if (contactEmail.getPrimary() == Bool.TRUE)
+					emailData.setPrimary(true);
+				else
+					emailData.setPrimary(false);
+				selectedResult.add(emailData);
+			}
+			return selectedResult;
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("There's no contact with ID: "
+					+ contactId);
 		}
-		return selectedResult;
 	}
 
 	public List<Object[]> selectGroupContact(Long groupId) {
@@ -458,69 +498,49 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	}
 
 	public List<IMData> selectIM(Long contactId) {
-		ContactIMDAOHibernate cidh = new ContactIMDAOHibernate();
-		/*
-		 * Criteria crit = cidh.getSession().createCriteria(ContactIM.class);
-		 * crit.add(Restrictions.eq("id", contactId)); ProjectionList projList =
-		 * Projections.projectionList();
-		 * projList.add(Projections.property("value"));
-		 * projList.add(Projections.property("type"));
-		 * projList.add(Projections.property("primary"));
-		 * crit.setProjection(projList); List result = crit.list(); List<IMData>
-		 * selectedResult = new ArrayList<IMData>(); Iterator<Object[]> iter =
-		 * result.iterator(); while(iter.hasNext()){ Object[] objs = (Object[])
-		 * iter.next(); IMData imData = new IMData();
-		 * imData.setValue((String)objs[0]); imData.setType((String)objs[1]);
-		 * if((Bool)objs[2]==Bool.TRUE) imData.setPrimary(true); else
-		 * imData.setPrimary(false); selectedResult.add(imData); } return
-		 * selectedResult;
-		 */
-		Criterion criterion = Restrictions.eq("contact.id", contactId);
-		List<ContactIM> result = cidh.findByCriteria(criterion);
-		List<IMData> selectedResult = new ArrayList<IMData>();
-		Iterator<ContactIM> iter = result.iterator();
-		while (iter.hasNext()) {
-			ContactIM contactIM = (ContactIM) iter.next();
-			IMData imData = new IMData();
-			imData.setId(contactIM.getId());
-			imData.setValue(contactIM.getValue());
-			imData.setType(contactIM.getType());
-			if (contactIM.getPrimary() == Bool.TRUE)
-				imData.setPrimary(true);
-			else
-				imData.setPrimary(false);
-			selectedResult.add(imData);
+		try{
+			ContactIMDAOHibernate cidh = new ContactIMDAOHibernate();
+			Criterion criterion = Restrictions.eq("contact.id", contactId);
+			List<ContactIM> result = cidh.findByCriteria(criterion);
+			List<IMData> selectedResult = new ArrayList<IMData>();
+			Iterator<ContactIM> iter = result.iterator();
+			while (iter.hasNext()) {
+				ContactIM contactIM = (ContactIM) iter.next();
+				IMData imData = new IMData();
+				imData.setId(contactIM.getId());
+				imData.setValue(contactIM.getValue());
+				imData.setType(contactIM.getType());
+				if (contactIM.getPrimary() == Bool.TRUE)
+					imData.setPrimary(true);
+				else
+					imData.setPrimary(false);
+				selectedResult.add(imData);
+			}
+			return selectedResult;
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("There's no contact with ID: "
+					+ contactId);
 		}
-		return selectedResult;
 	}
 
 	public List<ContactListEntry> selectOwnerContact(Long ownerId) {
-		ContactDAOHibernate cdh = new ContactDAOHibernate();
-		/*
-		 * Criteria crit = cdh.getSession().createCriteria(Contact.class);
-		 * crit.add(Restrictions.eq("owner.id", ownerId)); ProjectionList
-		 * projList = Projections.projectionList();
-		 * projList.add(Projections.property("name"));
-		 * projList.add(Projections.property("image"));
-		 * projList.add(Projections.property("nickName"));
-		 * projList.add(Projections.property("gender"));
-		 * projList.add(Projections.property("birthday"));
-		 * projList.add(Projections.property("notes"));
-		 * projList.add(Projections.property("relationship"));
-		 * crit.setProjection(projList); List result = crit.list(); return
-		 * result;
-		 */
-		Criterion criterion = Restrictions.eq("owner.id", ownerId);
-		List<Contact> result = cdh.findByCriteria(criterion);
-		List<ContactListEntry> selectedResult = new ArrayList<ContactListEntry>();
-		Iterator<Contact> iter = result.iterator();
-		while (iter.hasNext()) {
-			Contact contact = (Contact) iter.next();
-			ContactListEntry minimalContact = new ContactListEntry(contact.getId(), 
-					contact.getName(),contact.getImage());
-			selectedResult.add(minimalContact);
+		try{
+			ContactDAOHibernate cdh = new ContactDAOHibernate();
+			Criterion criterion = Restrictions.eq("owner.id", ownerId);
+			List<Contact> result = cdh.findByCriteria(criterion);
+			List<ContactListEntry> selectedResult = new ArrayList<ContactListEntry>();
+			Iterator<Contact> iter = result.iterator();
+			while (iter.hasNext()) {
+				Contact contact = (Contact) iter.next();
+				ContactListEntry minimalContact = new ContactListEntry(contact.getId(), 
+						contact.getName(),contact.getImage());
+				selectedResult.add(minimalContact);
+			}
+			return selectedResult;
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("There's no user with ID: "
+					+ ownerId);
 		}
-		return selectedResult;
 	}
 
 	public List<Object[]> selectShadow(Long ownerId, Long shadowOf) {
@@ -534,78 +554,55 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	}
 
 	public List<PhoneNoData> selectTel(Long contactId) {
-		ContactPhoneDAOHibernate cpdh = new ContactPhoneDAOHibernate();
-		/*
-		 * Criteria crit =
-		 * cpdh.getSession().createCriteria(ContactPhoneNo.class);
-		 * crit.add(Restrictions.eq("id", contactId)); ProjectionList projList =
-		 * Projections.projectionList();
-		 * projList.add(Projections.property("value"));
-		 * projList.add(Projections.property("type"));
-		 * projList.add(Projections.property("primary"));
-		 * crit.setProjection(projList); List result = crit.list();
-		 * List<PhoneNoData> selectedResult = new ArrayList<PhoneNoData>();
-		 * Iterator<Object[]> iter = result.iterator(); while(iter.hasNext()){
-		 * Object[] objs = (Object[]) iter.next(); PhoneNoData phoneNoData = new
-		 * PhoneNoData(); phoneNoData.setValue((String)objs[0]);
-		 * phoneNoData.setType((String)objs[1]); if((Bool)objs[2]==Bool.TRUE)
-		 * phoneNoData.setPrimary(true); else phoneNoData.setPrimary(false);
-		 * selectedResult.add(phoneNoData); } return selectedResult;
-		 */
-		Criterion criterion = Restrictions.eq("contact.id", contactId);
-		List<ContactPhoneNo> result = cpdh.findByCriteria(criterion);
-		List<PhoneNoData> selectedResult = new ArrayList<PhoneNoData>();
-		Iterator<ContactPhoneNo> iter = result.iterator();
-		while (iter.hasNext()) {
-			ContactPhoneNo contactPhone = (ContactPhoneNo) iter.next();
-			PhoneNoData phoneData = new PhoneNoData();
-			phoneData.setId(contactPhone.getId());
-			phoneData.setValue(contactPhone.getValue());
-			phoneData.setType(contactPhone.getType());
-			if (contactPhone.getPrimary() == Bool.TRUE)
-				phoneData.setPrimary(true);
-			else
-				phoneData.setPrimary(false);
-			selectedResult.add(phoneData);
+		try{
+			ContactPhoneDAOHibernate cpdh = new ContactPhoneDAOHibernate();
+			Criterion criterion = Restrictions.eq("contact.id", contactId);
+			List<ContactPhoneNo> result = cpdh.findByCriteria(criterion);
+			List<PhoneNoData> selectedResult = new ArrayList<PhoneNoData>();
+			Iterator<ContactPhoneNo> iter = result.iterator();
+			while (iter.hasNext()) {
+				ContactPhoneNo contactPhone = (ContactPhoneNo) iter.next();
+				PhoneNoData phoneData = new PhoneNoData();
+				phoneData.setId(contactPhone.getId());
+				phoneData.setValue(contactPhone.getValue());
+				phoneData.setType(contactPhone.getType());
+				if (contactPhone.getPrimary() == Bool.TRUE)
+					phoneData.setPrimary(true);
+				else
+					phoneData.setPrimary(false);
+				selectedResult.add(phoneData);
+			}
+			return selectedResult;
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("There's no contact with ID: "
+					+ contactId);
 		}
-		return selectedResult;
 	}
 
 	public List<URLData> selectURL(Long contactId) {
-		ContactURLDAOHibernate cudh = new ContactURLDAOHibernate();
-		/*
-		 * Criteria crit = cudh.getSession().createCriteria(ContactURL.class);
-		 * crit.add(Restrictions.eq("id", contactId)); ProjectionList projList =
-		 * Projections.projectionList();
-		 * projList.add(Projections.property("value"));
-		 * projList.add(Projections.property("type"));
-		 * projList.add(Projections.property("primary"));
-		 * crit.setProjection(projList); List result = crit.list();
-		 * List<URLData> selectedResult = new ArrayList<URLData>();
-		 * Iterator<Object[]> iter = result.iterator(); while(iter.hasNext()){
-		 * Object[] objs = (Object[]) iter.next(); URLData urlData = new
-		 * URLData(); urlData.setValue((String)objs[0]);
-		 * urlData.setType((String)objs[1]); if((Bool)objs[2]==Bool.TRUE)
-		 * urlData.setPrimary(true); else urlData.setPrimary(false);
-		 * selectedResult.add(urlData); } return selectedResult;
-		 */
-		Criterion criterion = Restrictions.eq("contact.id", contactId);
-		List<ContactURL> result = cudh.findByCriteria(criterion);
-		List<URLData> selectedResult = new ArrayList<URLData>();
-		Iterator<ContactURL> iter = result.iterator();
-		while (iter.hasNext()) {
-			ContactURL contactURL = (ContactURL) iter.next();
-			URLData urlData = new URLData();
-			urlData.setId(contactURL.getId());
-			urlData.setValue(contactURL.getValue());
-			urlData.setType(contactURL.getType());
-			if (contactURL.getPrimary() == Bool.TRUE)
-				urlData.setPrimary(true);
-			else
-				urlData.setPrimary(false);
-			selectedResult.add(urlData);
+		try{
+			ContactURLDAOHibernate cudh = new ContactURLDAOHibernate();
+			Criterion criterion = Restrictions.eq("contact.id", contactId);
+			List<ContactURL> result = cudh.findByCriteria(criterion);
+			List<URLData> selectedResult = new ArrayList<URLData>();
+			Iterator<ContactURL> iter = result.iterator();
+			while (iter.hasNext()) {
+				ContactURL contactURL = (ContactURL) iter.next();
+				URLData urlData = new URLData();
+				urlData.setId(contactURL.getId());
+				urlData.setValue(contactURL.getValue());
+				urlData.setType(contactURL.getType());
+				if (contactURL.getPrimary() == Bool.TRUE)
+					urlData.setPrimary(true);
+				else
+					urlData.setPrimary(false);
+				selectedResult.add(urlData);
+			}
+			return selectedResult;
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("There's no contact with ID: "
+					+ contactId);
 		}
-		return selectedResult;
 	}
 
 	public void clear() {

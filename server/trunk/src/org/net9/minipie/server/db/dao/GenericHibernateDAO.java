@@ -6,10 +6,12 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.LockMode;
+import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.net9.minipie.server.db.util.HibernateSessionFactory;
+import org.net9.minipie.server.exception.NotFoundException;
 
 public abstract class GenericHibernateDAO <T, Id extends Serializable> implements GenericDAO<T, Id>{
 	private Class<T> persistentClass;
@@ -38,15 +40,23 @@ public abstract class GenericHibernateDAO <T, Id extends Serializable> implement
 
 	@SuppressWarnings("unchecked")
 	public T findById(Id id, boolean lock) {
-		T entity;
-		if (lock)
-			entity = (T) getSession().load(getPersistentClass(), id, LockMode.UPGRADE);
-		else
-			entity = (T) getSession().load(getPersistentClass(), id);
-		return entity;
+		try{
+			T entity;
+			if (lock)
+				entity = (T) getSession().load(getPersistentClass(), id, LockMode.UPGRADE);
+			else
+				entity = (T) getSession().load(getPersistentClass(), id);
+			return entity;
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("there is no item with this id");
+		}
 	}
 	public List<T> findAll() {
-		return findByCriteria();
+		try{
+			return findByCriteria();
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("There is no wanted item");
+		}
 	}
 	@SuppressWarnings("unchecked")
 	public List<T> findByExample(T exampleInstance, String... excludeProperty) {
@@ -81,7 +91,7 @@ public abstract class GenericHibernateDAO <T, Id extends Serializable> implement
 	* Use this inside subclasses as a convenience method.
 	*/
 	@SuppressWarnings("unchecked")
-	protected List<T> findByCriteria(Criterion... criterion) {
+	protected List<T> findByCriteria(Criterion... criterion) throws ObjectNotFoundException{
 		Criteria crit = getSession().createCriteria(getPersistentClass());
 		for (Criterion c : criterion) {
 			crit.add(c);
