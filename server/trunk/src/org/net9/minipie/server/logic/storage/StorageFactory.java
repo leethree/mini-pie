@@ -11,6 +11,6 @@ package org.net9.minipie.server.logic.storage;
  */
 public interface StorageFactory {
 	public ContactStorage getContactStorage();
-
+	public TagStorage getTagStorage();
 	public UserStorage getUserStorage();
 }

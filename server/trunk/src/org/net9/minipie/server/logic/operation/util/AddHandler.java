@@ -34,6 +34,7 @@ public class AddHandler extends UpdateHandler{
 	public void handleUpdate() throws UpdateException{
 		if (dt instanceof Add){
 			Add newData=(Add)dt;
+			if(newData.getInfo()==null) throw new UpdateException("No Entry to add");
 			try {
 				switch (newData.getType()) {
 				case ADDRESS:

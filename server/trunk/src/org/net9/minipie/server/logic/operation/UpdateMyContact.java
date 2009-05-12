@@ -5,10 +5,6 @@
  */
 package org.net9.minipie.server.logic.operation;
 
-import java.util.Collection;
-import java.util.Vector;
-
-import org.net9.minipie.server.data.api.ErrorReport;
 import org.net9.minipie.server.data.api.Update;
 import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.exception.InvalidRequestException;
@@ -22,31 +18,30 @@ import org.net9.minipie.server.logic.storage.ContactStorage;
  * @author Seastar
  * 
  */
-public class UpdateMyContact extends Command<ErrorReport> {
-	private Collection<Update> datas;
+public class UpdateMyContact extends Command<Void> {
+	private Update datas;
 	private Long contactId;
 	private Long userId;
-	private ErrorReport errorReport;
-	private Collection<String> err;
+	//private ErrorReport errorReport;
+	//private Collection<String> err;
 	/**
 	 * Constructor
 	 * 
 	 * @param contactid
 	 * @param userId
 	 */
-	public UpdateMyContact(Long contactId, Long userId, Collection<Update> data) {
+	public UpdateMyContact(Long contactId, Long userId, Update data) {
 		super();
 		setData(data);
 		setContactId(contactId);
 		setUserId(userId);
-		err=new Vector<String>();
 	}
 
 	/**
 	 * @param date
 	 *            the date to set
 	 */
-	public void setData(Collection<Update> data) {
+	public void setData(Update data) {
 		if (data == null) {
 			throw new InvalidRequestException("No changed data");
 		}
@@ -77,7 +72,7 @@ public class UpdateMyContact extends Command<ErrorReport> {
 	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	public ErrorReport execute() {
+	public Void execute() {
 		ContactStorage executor = getStorageFactory().getContactStorage();
 		ContactEntity contact = executor.selectBasicInfo(contactId).getEntity();
 		if (contact.getOwnerId() != userId) {
@@ -86,16 +81,13 @@ public class UpdateMyContact extends Command<ErrorReport> {
 		} else if (contact.getShadowOf() != 0) {
 			throw new NotFoundException("No contact found");
 		} else {
-			for (Update data : datas) {
-				try {
-					new UpdateHandler(data,executor,contactId).handleUpdate();
-				} catch (UpdateException e) {
-					err.add(e.getMessage());					
-				}
-			}
-			if(err.size()!=0) errorReport=new ErrorReport(err);
+			try {
+				new UpdateHandler(datas,executor,contactId).handleUpdate();
+			} catch (UpdateException e) {
+				throw new InvalidRequestException(e.getMessage());
+			}							
 		}
-		return errorReport;
+		return null;
 	}
 	
 }

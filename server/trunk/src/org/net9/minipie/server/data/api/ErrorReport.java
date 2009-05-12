@@ -5,27 +5,36 @@
  */
 package org.net9.minipie.server.data.api;
 
-import java.util.Collection;
-
 /**
  * @author Seastar
  *
  */
-public class ErrorReport {
-	Collection<String> err;
+public class ErrorReport{
+	CommandStatus status;
+	String errorMsg;
 	/**
 	 * Constructor
-	 * @param err
+	 * @param status
+	 * @param errorMsg
 	 */
-	public ErrorReport(Collection<String> err) {
-		super();
-		this.err = err;
+	public ErrorReport(CommandStatus status, String errorMsg) {
+		this.status = status;
+		this.errorMsg = errorMsg;
 	}
 	/**
-	 * @return the err
+	 * @return the errorMsg
 	 */
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+	/**
+	 * @return the status
+	 */
+	public CommandStatus getStatus() {
+		return status;
+	}
 	
-	public Collection<String> getErr() {
-		return err;
+	public enum CommandStatus{
+		SUCCESS,INVALIDREQUEST,NOTFOUND,PERMISSIONDENIED,UNKOWNSERCERERROR
 	}
 }
