@@ -11,21 +11,21 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.net9.minipie.server.data.entity.ContactEntity;
+import org.net9.minipie.server.data.entity.CommonEntity;
 
 /**
  * @author Seastar
  * 
  */
 @XmlType(name = "contact")
-public class ContactEntry {
-	private ContactEntity entity;
+public class CommonEntry {
+	private CommonEntity entity;
 	private URI uri;
 
 	/**
 	 * Constructor
 	 */
-	public ContactEntry() {
+	public CommonEntry() {
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class ContactEntry {
 	 * 
 	 * @param entity
 	 */
-	public ContactEntry(ContactEntity entity) {
+	public CommonEntry(CommonEntity entity) {
 		this.entity = entity;
 	}
 

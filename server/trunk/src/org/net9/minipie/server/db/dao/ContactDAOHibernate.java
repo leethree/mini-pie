@@ -17,7 +17,7 @@ import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.storage.BasicContact;
-import org.net9.minipie.server.data.storage.ContactListEntry;
+import org.net9.minipie.server.data.storage.CommonListEntry;
 import org.net9.minipie.server.db.entity.Contact;
 import org.net9.minipie.server.db.entity.ContactAddress;
 import org.net9.minipie.server.db.entity.ContactEmail;
@@ -428,7 +428,8 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 					contact.getGender(), contact.getBirthday(), contact.getNotes(), contact.getRelationship(),
 					(contact.getOwner()!=null) ? contact.getOwner().getId(): 0, 
 					(contact.getShadowOf()!=null) ? contact.getShadowOf().getId():0, 
-					(contact.getGroup()!=null) ? contact.getGroup().getId():0);
+					(contact.getGroup()!=null) ? contact.getGroup().getId():0, 
+					(contact.getPermission()!=null)?contact.getPermission():null);
 			return basicContact;
 		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("There's no contact with ID: "
@@ -524,16 +525,16 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		}
 	}
 
-	public List<ContactListEntry> selectOwnerContact(Long ownerId) {
+	public List<CommonListEntry> selectOwnerContact(Long ownerId) {
 		try{
 			ContactDAOHibernate cdh = new ContactDAOHibernate();
 			Criterion criterion = Restrictions.eq("owner.id", ownerId);
 			List<Contact> result = cdh.findByCriteria(criterion);
-			List<ContactListEntry> selectedResult = new ArrayList<ContactListEntry>();
+			List<CommonListEntry> selectedResult = new ArrayList<CommonListEntry>();
 			Iterator<Contact> iter = result.iterator();
 			while (iter.hasNext()) {
 				Contact contact = (Contact) iter.next();
-				ContactListEntry minimalContact = new ContactListEntry(contact.getId(), 
+				CommonListEntry minimalContact = new CommonListEntry(contact.getId(), 
 						contact.getName(),contact.getImage());
 				selectedResult.add(minimalContact);
 			}

@@ -12,7 +12,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import org.net9.minipie.server.data.api.ContactEntry;
+import org.net9.minipie.server.data.api.CommonEntry;
 import org.net9.minipie.server.data.api.ContactList;
 import org.net9.minipie.server.logic.Handler;
 import org.net9.minipie.server.logic.operation.AddMyContact;
@@ -29,7 +29,7 @@ public class PhonebookContactListResource {
 	@GET
 	@Produces( { "application/xml", "application/json" })
 	public ContactList get() {
-		return new ContactList(new Handler<Collection<ContactEntry>>(
+		return new ContactList(new Handler<Collection<CommonEntry>>(
 				new ListMyContact(1L)).excute(), uriInfo.getAbsolutePath());
 	}
 

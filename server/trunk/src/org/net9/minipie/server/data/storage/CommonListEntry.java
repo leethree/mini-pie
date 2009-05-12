@@ -5,17 +5,17 @@
  */
 package org.net9.minipie.server.data.storage;
 
-import org.net9.minipie.server.data.entity.ContactEntity;
+import org.net9.minipie.server.data.entity.CommonEntity;
 
 /**
  * @author Seastar
  * 
  */
-public class ContactListEntry {
-	private ContactEntity entity;
+public class CommonListEntry {
+	private CommonEntity entity;
 
-	public ContactListEntry(long id, String name, String image) {
-		entity = new ContactEntity();
+	public CommonListEntry(long id, String name, String image) {
+		entity = new CommonEntity();
 		entity.setId(id);
 		entity.setName(name);
 		entity.setImage(image);
@@ -24,7 +24,7 @@ public class ContactListEntry {
 	/**
 	 * @return the entity
 	 */
-	public ContactEntity getEntity() {
+	public CommonEntity getEntity() {
 		return entity;
 	}
 

@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "contacts")
 public class ContactList {
-	private Collection<ContactEntry> list;
+	private Collection<CommonEntry> list;
 
 	/**
 	 * Constructor
@@ -30,8 +30,8 @@ public class ContactList {
 	/**
 	 * Constructor
 	 */
-	public ContactList(Collection<ContactEntry> list, URI uri) {
-		for (ContactEntry entry : list) {
+	public ContactList(Collection<CommonEntry> list, URI uri) {
+		for (CommonEntry entry : list) {
 			entry.setUri(UriBuilder.fromUri(uri).path(entry.getId() + "/")
 					.build());
 		}
@@ -42,7 +42,7 @@ public class ContactList {
 	 * @return the list
 	 */
 	@XmlElement(name = "contact")
-	public Collection<ContactEntry> getList() {
+	public Collection<CommonEntry> getList() {
 		return list;
 	}
 }

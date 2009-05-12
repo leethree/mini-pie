@@ -9,7 +9,7 @@ import java.util.Collection;
 
 import org.net9.minipie.server.data.constant.Permission;
 import org.net9.minipie.server.data.entity.ContactEntity;
-import org.net9.minipie.server.data.entity.Tag;
+import org.net9.minipie.server.data.entity.TagEntry;
 
 /**
  * @author Seastar, LeeThree
@@ -55,7 +55,7 @@ public class PhonebookContactListEntry {
 		return entity.getName();
 	}
 
-	public Collection<Tag> getTags() {
+	public Collection<TagEntry> getTags() {
 		return entity.getTags();
 	}
 

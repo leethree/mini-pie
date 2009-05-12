@@ -18,7 +18,7 @@ public class BasicContact {
 	
 	public BasicContact(long id,  String name,String image, String nickName, 
 			Gender gender, String birthday,String notes, String relationship,
-			long ownerId,long shadowOf,long groupId) {
+			long ownerId,long shadowOf,long groupId,Permission perm) {
 		entity = new ContactEntity();
 		entity.setId(id);
 		entity.setName(name);
@@ -31,29 +31,9 @@ public class BasicContact {
 		entity.setOwnerId(ownerId);
 		entity.setShadowOf(shadowOf);
 		entity.setGroupId(groupId);
-		entity.setUser(false);
+		entity.setPermission(perm);		
 	}
 	
-	public BasicContact(long id,  String name,String RegisteredEmail,String password ,String image,
-			String nickName, String displayName, Permission gPerm,Permission bdPerm,
-			Permission byPerm ,Gender gender, String birthday,String notes) {
-		entity = new ContactEntity();
-		entity.setId(id);
-		entity.setName(name);
-		entity.setImage(image);
-		entity.setNickName(nickName);
-		entity.setGender(gender);
-		entity.setBirthday(birthday);
-		entity.setNotes(notes);
-		entity.setDisplayname(displayName);
-		entity.setGenderPermission(gPerm);
-		entity.setBirthdayPermission(bdPerm);
-		entity.setBirthdayPermission(byPerm);
-		entity.setPassword(password);
-		entity.setRegisteEmail(RegisteredEmail);
-		entity.setUser(true);
-		
-	}
 	/**
 	 * @return the entity
 	 */

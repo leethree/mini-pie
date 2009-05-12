@@ -14,7 +14,7 @@ import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.storage.BasicContact;
-import org.net9.minipie.server.data.storage.ContactListEntry;
+import org.net9.minipie.server.data.storage.CommonListEntry;
 
 /**
  * @author Seastar
@@ -48,6 +48,6 @@ public interface ContactStorage {
 	Collection<IMData> selectIM(Long contactId);
 	Collection<PhoneNoData> selectTel(Long contactId);
 	Collection<URLData> selectURL(Long contactId);
-	Collection<ContactListEntry> selectOwnerContact(Long ownerId);
+	Collection<CommonListEntry> selectOwnerContact(Long ownerId);
 	void del(Long contactId);
 }

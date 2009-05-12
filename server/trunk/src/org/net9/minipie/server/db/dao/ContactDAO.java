@@ -9,7 +9,7 @@ import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.storage.BasicContact;
-import org.net9.minipie.server.data.storage.ContactListEntry;
+import org.net9.minipie.server.data.storage.CommonListEntry;
 import org.net9.minipie.server.db.entity.Contact;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
@@ -78,7 +78,7 @@ public interface ContactDAO extends GenericDAO<Contact, Long>, ContactStorage {
 
 	List<Object[]> selectShadow(Long ownerId, Long shadowOf);
 
-	List<ContactListEntry> selectOwnerContact(Long ownerId);
+	List<CommonListEntry> selectOwnerContact(Long ownerId);
 
 	List<Object[]> selectGroupContact(Long groupId);
 

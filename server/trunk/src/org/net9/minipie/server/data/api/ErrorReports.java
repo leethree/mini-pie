@@ -15,7 +15,7 @@ import java.util.Vector;
 public class ErrorReports {
 	
 	Collection<ErrorReport> err;
-	int size;
+	//int size;
 	/**
 	 * Constructor
 	 * @param err
