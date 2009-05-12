@@ -10,7 +10,7 @@ package org.net9.minipie.server.logic.operation;
  * 
  */
 public class UpdateMyInfo extends Command<Void> {
-
+ 
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -28,6 +28,7 @@ public class Edit extends Update {
 	 * Constructor
 	 */
 	public Edit() {
+		
 	}
 
 	@XmlAttribute

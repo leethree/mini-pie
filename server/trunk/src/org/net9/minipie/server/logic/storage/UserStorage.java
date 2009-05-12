@@ -10,5 +10,5 @@ package org.net9.minipie.server.logic.storage;
  *
  */
 public interface UserStorage {
-
+	
 }

@@ -9,6 +9,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.net9.minipie.server.data.constant.Gender;
+import org.net9.minipie.server.data.constant.InfoField;
 import org.net9.minipie.server.data.constant.Permission;
 import org.net9.minipie.server.data.entity.AddressData;
 import org.net9.minipie.server.data.entity.EmailData;
@@ -632,6 +633,54 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 
 	public void makeTransient(Contact entity) {
 		super.makeTransient(entity);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.ContactStorage#editAddr(java.lang.Long, org.net9.minipie.server.data.constant.InfoField, java.lang.Object)
+	 */
+	public void editAddr(Long id, InfoField attribute, Object value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.ContactStorage#editBasicInfo(java.lang.Long, org.net9.minipie.server.data.constant.InfoField, java.lang.Object)
+	 */
+	public void editBasicInfo(Long id, InfoField attribute, Object value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.ContactStorage#editEmail(java.lang.Long, org.net9.minipie.server.data.constant.InfoField, java.lang.Object)
+	 */
+	public void editEmail(Long id, InfoField attribute, Object value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.ContactStorage#editIM(java.lang.Long, org.net9.minipie.server.data.constant.InfoField, java.lang.Object)
+	 */
+	public void editIM(Long id, InfoField attribute, Object value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.ContactStorage#editTel(java.lang.Long, org.net9.minipie.server.data.constant.InfoField, java.lang.Object)
+	 */
+	public void editTel(Long id, InfoField attribute, Object value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.ContactStorage#editURL(java.lang.Long, org.net9.minipie.server.data.constant.InfoField, java.lang.Object)
+	 */
+	public void editURL(Long id, InfoField attribute, Object value) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -9,6 +9,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.net9.minipie.server.data.api.ErrorReport;
 import org.net9.minipie.server.data.api.PhonebookCompleteContact;
 import org.net9.minipie.server.data.api.UpdateList;
 import org.net9.minipie.server.logic.Handler;
@@ -47,7 +48,7 @@ public class PhonebookContactResource {
 	@POST
 	@Consumes( { "application/xml", "application/json" })
 	public Response post(UpdateList updates) {
-		new Handler<Void>(new UpdateMyContact(contactId, 1L, updates
+		new Handler<ErrorReport>(new UpdateMyContact(contactId, 1L, updates
 				.getUpdates())).excute();
 		return Response.ok().build();
 	}
