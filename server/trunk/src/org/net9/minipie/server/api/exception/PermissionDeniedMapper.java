@@ -26,7 +26,7 @@ public class PermissionDeniedMapper implements
 	 * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable)
 	 */
 	public Response toResponse(PermissionDeniedException ex) {
-		return Response.status(Status.UNAUTHORIZED).entity(ex.getMessage())
+		return Response.status(Status.FORBIDDEN).entity(ex.getMessage())
 				.type(MediaType.TEXT_PLAIN_TYPE).build();
 	}
 }

@@ -2,6 +2,12 @@ package org.net9.minipie.server.db.dao;
 
 import java.util.List;
 
+import org.net9.minipie.server.data.entity.AddressData;
+import org.net9.minipie.server.data.entity.EmailData;
+import org.net9.minipie.server.data.entity.IMData;
+import org.net9.minipie.server.data.entity.PhoneNoData;
+import org.net9.minipie.server.data.entity.URLData;
+import org.net9.minipie.server.data.storage.BasicUser;
 import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.logic.storage.UserStorage;
 
@@ -46,19 +52,19 @@ public interface UserDAO extends GenericDAO<User, Long>, UserStorage {
 
 	void editURL(Long id, String attribute, Object value);
 
-	List<Object[]> search(Object... criteria);
+	//List<Object[]> search(Object... criteria);
 
-	List<Object[]> selectAddr(Long contactId);
+	List<AddressData> selectAddr(Long contactId);
 
-	List<Object[]> selectAddtional(Long contactId);
+	//List<Object[]> selectAddtional(Long contactId);
 
-	List<Object[]> selectBasicInfo(Long contactId);
+	List<BasicUser> selectBasicInfo(Long contactId);
 
-	List<Object[]> selectEmail(Long contactId);
+	List<EmailData> selectEmail(Long contactId);
 
-	List<Object[]> selectIM(Long contactId);
+	List<IMData> selectIM(Long contactId);
 
-	List<Object[]> selectTel(Long contactId);
+	List<PhoneNoData> selectTel(Long contactId);
 
-	List<Object[]> selectURL(Long contactId);
+	List<URLData> selectURL(Long contactId);
 }

@@ -5,7 +5,10 @@
  */
 package org.net9.minipie.server.data.entity;
 
-import org.net9.minipie.server.data.constant.Permission;
+import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.ServerErrorException;
 
 /**
  * @author Riversand
@@ -24,23 +27,24 @@ public class IMData implements Info {
 	 */
 	public IMData() {
 		setPrimary(false);
+		setPermission(Permission.TO_SELF);
 	}
 
 	public IMData(long id, String value, String type, boolean primary,
-			Permission perm) {
+			Permission perm) throws DataFormatException {
 		setId(id);
 		setValue(value);
 		setType(type);
 		setPrimary(primary);
-		setPerm(perm);
+		setPermission(perm);
 	}
 
 	public long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setId(long id) throws DataFormatException {
+		this.id = Formatter.checkId(id);
 	}
 
 	public String getType() {
@@ -48,7 +52,10 @@ public class IMData implements Info {
 	}
 
 	public void setType(String type) {
-		this.type = type;
+		if (value == null)
+			this.type = null;
+		else
+			this.type = Formatter.compact(type);
 	}
 
 	public boolean isPrimary() {
@@ -64,22 +71,26 @@ public class IMData implements Info {
 	}
 
 	public void setValue(String value) {
-		this.value = value;
+		if (value == null)
+			throw new ServerErrorException("The value should not be null.");
+		this.value = Formatter.removeSpace(value);
 	}
 
 	/**
 	 * @param perm
 	 *            the perm to set
 	 */
-	public void setPerm(Permission perm) {
+	public void setPermission(Permission perm) {
+		if (perm == null)
+			throw new ServerErrorException(
+					"The permission should not be null.");
 		this.perm = perm;
 	}
 
 	/**
-	 * @return the perm
+	 * @return the perm (not nullable)
 	 */
-	public Permission getPerm() {
+	public Permission getPermission() {
 		return perm;
 	}
-
 }

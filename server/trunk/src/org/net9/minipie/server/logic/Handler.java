@@ -5,7 +5,7 @@
  */
 package org.net9.minipie.server.logic;
 
-import org.net9.minipie.server.exception.UnknownServerException;
+import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.operation.Command;
 
 /**
@@ -32,7 +32,7 @@ public class Handler<R> {
 
 	public R excute() {
 		if(command==null){
-			throw new UnknownServerException("Server error");
+			throw new ServerErrorException("Server error");
 		}
 		return command.execute();
 	}

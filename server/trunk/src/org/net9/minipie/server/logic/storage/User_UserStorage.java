@@ -7,8 +7,8 @@ package org.net9.minipie.server.logic.storage;
 
 import java.util.Collection;
 
-import org.net9.minipie.server.data.constant.InfoField;
-import org.net9.minipie.server.data.constant.Permission;
+import org.net9.minipie.server.data.field.InfoField;
+import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.CommonListEntry;
 
 /**
@@ -20,7 +20,7 @@ public interface User_UserStorage {
 	public void del(long userId1,long userId2);
 	public void edit(long userId1,long userId2,InfoField attribute,Object value);
 	public String selectRelationship(long userId1,long userId2);
-	//╠Ма╛╫с:user
+	//О©╫О©╫lО©╫О©╫:user
 	public Collection<CommonListEntry> selectSharedUser(long userId,Permission permission); 
 	
 }

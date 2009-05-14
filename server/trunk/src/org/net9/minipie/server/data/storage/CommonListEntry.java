@@ -6,6 +6,8 @@
 package org.net9.minipie.server.data.storage;
 
 import org.net9.minipie.server.data.entity.CommonEntity;
+import org.net9.minipie.server.data.entity.ContactEntity;
+import org.net9.minipie.server.exception.DataFormatException;
 
 /**
  * @author Seastar
@@ -14,8 +16,8 @@ import org.net9.minipie.server.data.entity.CommonEntity;
 public class CommonListEntry {
 	private CommonEntity entity;
 
-	public CommonListEntry(long id, String name, String image) {
-		entity = new CommonEntity();
+	public CommonListEntry(long id, String name, String image) throws DataFormatException {
+		entity = new ContactEntity();
 		entity.setId(id);
 		entity.setName(name);
 		entity.setImage(image);

@@ -17,36 +17,36 @@ package org.net9.minipie.server.data.storage;
 
 /**
  * @author Seastar
- *
+ * 
  */
 public class Tag {
 	private long id;
 	private String name;
 	private long ownerId;
+
 	/**
 	 * Constructor
 	 */
-	public Tag() {
-		// TODO Auto-generated constructor stub
+	public Tag(long id, String name, long ownerId) {
+		this.id = id;
+		this.name = name;
+		this.ownerId = ownerId;
 	}
-	public Tag(long id,String name,long ownerId){
-		this.id=id;
-		this.name=name;
-		this.ownerId=ownerId;
-	}
+
 	/**
 	 * @return the id
 	 */
 	public long getId() {
 		return id;
 	}
+
 	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * @return the ownerId
 	 */

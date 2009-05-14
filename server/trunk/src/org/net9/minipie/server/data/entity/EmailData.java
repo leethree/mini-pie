@@ -5,7 +5,10 @@
  */
 package org.net9.minipie.server.data.entity;
 
-import org.net9.minipie.server.data.constant.Permission;
+import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.ServerErrorException;
 
 /**
  * @author Riversand
@@ -24,23 +27,32 @@ public class EmailData implements Info {
 	 */
 	public EmailData() {
 		setPrimary(false);
+		setPermission(Permission.TO_SELF);
 	}
 
 	public EmailData(long id, String value, String type, boolean primary,
-			Permission perm) {
+			Permission perm) throws DataFormatException {
 		setId(id);
 		setValue(value);
 		setType(type);
 		setPrimary(primary);
-		setPerm(perm);
+		setPermission(perm);
 	}
 
+	/**
+	 * @param id
+	 *            the id to set
+	 * @throws DataFormatException
+	 */
+	public void setId(long id) throws DataFormatException {
+		this.id = Formatter.checkId(id);
+	}
+
+	/**
+	 * @return the id
+	 */
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getType() {
@@ -48,7 +60,10 @@ public class EmailData implements Info {
 	}
 
 	public void setType(String type) {
-		this.type = type;
+		if (value == null)
+			this.type = null;
+		else
+			this.type = Formatter.compact(type);
 	}
 
 	public boolean isPrimary() {
@@ -63,32 +78,27 @@ public class EmailData implements Info {
 		return value;
 	}
 
-	public void setValue(String value) {
-		if (value == null) {
-			return;
-		}
-		value = value.trim();
-		value = value.toLowerCase();
-		if (value.contains("@") == false) { // TODO check only one '@' using
-			// regular exp
-			// TODO exception handling
-		}
-		this.value = value;
+	public void setValue(String value) throws DataFormatException {
+		if (value == null)
+			throw new ServerErrorException("The value should not be null.");
+		this.value = Formatter.formatEmail(value);
 	}
 
 	/**
 	 * @param perm
 	 *            the perm to set
 	 */
-	public void setPerm(Permission perm) {
+	public void setPermission(Permission perm) {
+		if (perm == null)
+			throw new ServerErrorException(
+					"The permission should not be null.");
 		this.perm = perm;
 	}
 
 	/**
-	 * @return the perm
+	 * @return the perm (not nullable)
 	 */
-	public Permission getPerm() {
+	public Permission getPermission() {
 		return perm;
 	}
-
 }

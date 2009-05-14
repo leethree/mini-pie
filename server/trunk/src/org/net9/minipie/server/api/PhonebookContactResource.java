@@ -9,11 +9,13 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import org.net9.minipie.server.data.api.ErrorReport;
 import org.net9.minipie.server.data.api.PhonebookCompleteContact;
+import org.net9.minipie.server.data.api.StatusReportList;
+import org.net9.minipie.server.data.api.Update;
 import org.net9.minipie.server.data.api.UpdateList;
 import org.net9.minipie.server.logic.Handler;
 import org.net9.minipie.server.logic.operation.DeleteMyContact;
+import org.net9.minipie.server.logic.operation.MacroCommand;
 import org.net9.minipie.server.logic.operation.UpdateMyContact;
 import org.net9.minipie.server.logic.operation.ViewMyContact;
 
@@ -45,12 +47,23 @@ public class PhonebookContactResource {
 				contactId)).excute();
 	}
 
+	/**
+	 * TODO: handle with only one update request
+	 * @param updates
+	 * @return
+	 */
 	@POST
 	@Consumes( { "application/xml", "application/json" })
+	@Produces( { "application/xml", "application/json" })
 	public Response post(UpdateList updates) {
-		new Handler<ErrorReport>(new UpdateMyContact(contactId, 1L, updates
-				.getUpdates())).excute();
-		return Response.ok().build();
+		MacroCommand macro = new MacroCommand();
+		for (Update update : updates.getUpdates()) {
+			macro.addCommand(new UpdateMyContact(1L, contactId, update));
+		}
+		StatusReportList statuses = new Handler<StatusReportList>(macro)
+				.excute();
+		return Response.status(StatusReportList.MULTI_STATUS).entity(statuses)
+				.build();
 	}
 
 	@DELETE

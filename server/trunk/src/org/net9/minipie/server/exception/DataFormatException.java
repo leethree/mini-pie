@@ -18,11 +18,6 @@ public class DataFormatException extends Exception {
 	 * @param message
 	 */
 	public DataFormatException(String message) {
-		super(message);
-	}
-
-	@Override
-	public String getMessage() {
-		return "Data Format Error: " + super.getMessage();
+		super("Data Format Error: " + message);
 	}
 }

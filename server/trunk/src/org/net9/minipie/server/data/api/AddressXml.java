@@ -41,22 +41,6 @@ public class AddressXml implements DetailedInfoXml {
 	}
 
 	/**
-	 * @return the value
-	 */
-	@XmlElement
-	public String getValue() {
-		return entity.getValue();
-	}
-
-	/**
-	 * @param value
-	 *            the value to set
-	 */
-	public void setValue(String value) {
-		entity.setValue(value);
-	}
-
-	/**
 	 * @return the type
 	 */
 	@XmlElement
@@ -94,9 +78,9 @@ public class AddressXml implements DetailedInfoXml {
 	/**
 	 * @return the formatted
 	 */
-	@XmlElement
+	@XmlElement(required = true)
 	public String getFormatted() {
-		return entity.getFormatted();
+		return entity.getValue();
 	}
 
 	/**
@@ -104,7 +88,7 @@ public class AddressXml implements DetailedInfoXml {
 	 *            the formatted to set
 	 */
 	public void setFormatted(String formatted) {
-		entity.setFormatted(formatted);
+		entity.setValue(formatted);
 	}
 
 	/**
@@ -128,10 +112,10 @@ public class AddressXml implements DetailedInfoXml {
 	 */
 	@XmlAttribute(name = "permission")
 	public String getPerm() {
-		if (entity.getPerm() == null)
+		if (entity.getPermission() == null)
 			return null;
 		else
-			return entity.getPerm().toString();
+			return entity.getPermission().toString();
 	}
 
 	@XmlTransient

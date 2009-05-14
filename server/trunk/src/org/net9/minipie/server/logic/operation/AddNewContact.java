@@ -5,6 +5,8 @@
  */
 package org.net9.minipie.server.logic.operation;
 
+import org.net9.minipie.server.data.Formatter;
+
 /**
  * @author Seastar
  * 
@@ -26,9 +28,6 @@ public class AddNewContact extends Command<Long> {
 	 *            the userId to set
 	 */
 	public void setUserId(long userId) {
-		if (userId < 0) {
-			// TODO:Exception
-		}
 		this.userId = userId;
 	}
 
@@ -37,11 +36,7 @@ public class AddNewContact extends Command<Long> {
 	 *            the name to set
 	 */
 	public void setName(String name) {
-		if (name == null) {
-			return;
-		}
-		name = name.trim();
-		this.name = name;
+		this.name = Formatter.compact(name);
 	}
 
 	/*

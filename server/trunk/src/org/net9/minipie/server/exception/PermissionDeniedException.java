@@ -12,11 +12,6 @@ package org.net9.minipie.server.exception;
 @SuppressWarnings("serial")
 public class PermissionDeniedException extends RuntimeException {
 	public PermissionDeniedException(String message) {
-		super(message);
-	}
-
-	@Override
-	public String getMessage() {
-		return "Permission Denied: " + super.getMessage();
+		super("Permission Denied: " + message);
 	}
 }

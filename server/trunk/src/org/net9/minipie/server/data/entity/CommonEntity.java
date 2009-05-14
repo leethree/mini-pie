@@ -5,24 +5,25 @@
  */
 package org.net9.minipie.server.data.entity;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
 
-import org.net9.minipie.server.data.constant.Gender;
+import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.data.field.Birthdate;
+import org.net9.minipie.server.data.field.Gender;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.ServerErrorException;
 
 /**
  * @author Seastar
- *
+ * 
  */
-public class CommonEntity {
+public abstract class CommonEntity {
 	private long id;
 	private String name;
 	private String image;
 	private String nickName;
 	private Gender gender;
-	private Date birthday;
+	private Birthdate birthday;
 	private String notes;
 	private Collection<AddressData> addrs;
 	private Collection<EmailData> emails;
@@ -30,6 +31,7 @@ public class CommonEntity {
 	private Collection<PhoneNoData> tels;
 	private Collection<URLData> urls;
 	private Collection<TagEntry> tags;
+
 	/**
 	 * @return the id
 	 */
@@ -40,9 +42,10 @@ public class CommonEntity {
 	/**
 	 * @param id
 	 *            the id to set
+	 * @throws DataFormatException
 	 */
-	public void setId(long id) {
-		this.id = id;
+	public void setId(long id) throws DataFormatException {
+		this.id = Formatter.checkId(id);
 	}
 
 	/**
@@ -54,10 +57,12 @@ public class CommonEntity {
 
 	/**
 	 * @param name
-	 *            the name to set
+	 *            the name to set (not nullable)
 	 */
 	public void setName(String name) {
-		this.name = name;
+		if (name == null)
+			throw new ServerErrorException("The name should not be null.");
+		this.name = Formatter.compact(name);
 	}
 
 	/**
@@ -69,10 +74,14 @@ public class CommonEntity {
 
 	/**
 	 * @param image
-	 *            the image to set
+	 *            the image to set (nullable)
+	 * @throws DataFormatException
 	 */
-	public void setImage(String image) {
-		this.image = image;
+	public void setImage(String image) throws DataFormatException {
+		if (image == null)
+			this.image = null;
+		else
+			this.image = Formatter.formatImage(image);
 	}
 
 	/**
@@ -84,10 +93,13 @@ public class CommonEntity {
 
 	/**
 	 * @param nickName
-	 *            the nickName to set
+	 *            the nickName to set (nullable)
 	 */
 	public void setNickName(String nickName) {
-		this.nickName = nickName;
+		if (nickName == null)
+			this.nickName = null;
+		else
+			this.nickName = Formatter.compact(nickName);
 	}
 
 	/**
@@ -99,7 +111,7 @@ public class CommonEntity {
 
 	/**
 	 * @param gender
-	 *            the gender to set
+	 *            the gender to set (nullable)
 	 */
 	public void setGender(Gender gender) {
 		this.gender = gender;
@@ -108,21 +120,16 @@ public class CommonEntity {
 	/**
 	 * @return the birthday
 	 */
-	public Date getBirthday() {
+	public Birthdate getBirthday() {
 		return birthday;
 	}
 
 	/**
 	 * @param birthday
-	 *            the birthday to set
+	 *            the birthday to set (nullable)
 	 */
-	public void setBirthday(String birthday) {			// 为什么这里是String? -- LeeThree
-		if (birthday == null) {
-			return;
-		}
-		SimpleDateFormat dateFormat = new SimpleDateFormat();
-		ParsePosition parsePos = new ParsePosition(0);
-		this.birthday = dateFormat.parse(birthday, parsePos);
+	public void setBirthday(Birthdate birthday) {
+		this.birthday = birthday;
 	}
 
 	/**
@@ -134,11 +141,12 @@ public class CommonEntity {
 
 	/**
 	 * @param notes
-	 *            the notes to set
+	 *            the notes to set (nullable)
 	 */
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+
 	/**
 	 * @return the addrs
 	 */
@@ -148,7 +156,7 @@ public class CommonEntity {
 
 	/**
 	 * @param addrs
-	 *            the addrs to set
+	 *            the addrs to set (nullable)
 	 */
 	public void setAddrs(Collection<AddressData> addrs) {
 		this.addrs = addrs;
@@ -163,7 +171,7 @@ public class CommonEntity {
 
 	/**
 	 * @param emails
-	 *            the emails to set
+	 *            the emails to set (nullable)
 	 */
 	public void setEmails(Collection<EmailData> emails) {
 		this.emails = emails;
@@ -178,7 +186,7 @@ public class CommonEntity {
 
 	/**
 	 * @param ims
-	 *            the ims to set
+	 *            the ims to set (nullable)
 	 */
 	public void setIms(Collection<IMData> ims) {
 		this.ims = ims;
@@ -193,7 +201,7 @@ public class CommonEntity {
 
 	/**
 	 * @param tels
-	 *            the tels to set
+	 *            the tels to set (nullable)
 	 */
 	public void setTels(Collection<PhoneNoData> tels) {
 		this.tels = tels;
@@ -208,7 +216,7 @@ public class CommonEntity {
 
 	/**
 	 * @param urls
-	 *            the urls to set
+	 *            the urls to set (nullable)
 	 */
 	public void setUrls(Collection<URLData> urls) {
 		this.urls = urls;
@@ -223,18 +231,9 @@ public class CommonEntity {
 
 	/**
 	 * @param tags
-	 *            the tags to set
+	 *            the tags to set (nullable)
 	 */
 	public void setTags(Collection<TagEntry> tags) {
 		this.tags = tags;
 	}
-
-	/**
-	 * @param birthday
-	 *            the birthday to set
-	 */
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-
 }

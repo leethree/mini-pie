@@ -8,7 +8,7 @@ package org.net9.minipie.server.logic.operation;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.net9.minipie.server.data.api.CommonEntry;
+import org.net9.minipie.server.data.api.PhonebookContactListEntry;
 import org.net9.minipie.server.data.storage.CommonListEntry;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
@@ -16,7 +16,7 @@ import org.net9.minipie.server.logic.storage.ContactStorage;
  * @author Seastar
  * 
  */
-public class ListMyContact extends Command<Collection<CommonEntry>> {
+public class ListMyContact extends Command<Collection<PhonebookContactListEntry>> {
 	private Long userId;
 
 	/**
@@ -39,11 +39,11 @@ public class ListMyContact extends Command<Collection<CommonEntry>> {
 	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	public Collection<CommonEntry> execute() {
+	public Collection<PhonebookContactListEntry> execute() {
 		ContactStorage executor = getStorageFactory().getContactStorage();
-		Collection<CommonEntry> collection = new ArrayList<CommonEntry>();
+		Collection<PhonebookContactListEntry> collection = new ArrayList<PhonebookContactListEntry>();
 		for (CommonListEntry entry : executor.selectOwnerContact(userId)) {
-			collection.add(new CommonEntry(entry.getEntity()));
+			collection.add(new PhonebookContactListEntry(entry.getEntity()));
 		}
 		return collection;
 	}

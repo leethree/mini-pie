@@ -5,7 +5,8 @@
  */
 package org.net9.minipie.server.data.api;
 
-import org.net9.minipie.server.data.constant.InfoType;
+import org.net9.minipie.server.data.field.InfoType;
+import org.net9.minipie.server.exception.ServerErrorException;
 
 /**
  * @author Seastar
@@ -24,7 +25,7 @@ public abstract class Update {
 	 * Constructor
 	 */
 	public Update(InfoType type) {
-		this.type = type;
+		setType(type);
 	}
 
 	/**
@@ -39,6 +40,8 @@ public abstract class Update {
 	 *            the type to set
 	 */
 	protected void setType(InfoType type) {
+		if (type == null)
+			throw new ServerErrorException("Information field should not be null.");
 		this.type = type;
 	}
 }

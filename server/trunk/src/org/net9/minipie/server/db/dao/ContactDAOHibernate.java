@@ -8,14 +8,14 @@ import org.hibernate.HibernateException;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
-import org.net9.minipie.server.data.constant.Gender;
-import org.net9.minipie.server.data.constant.InfoField;
-import org.net9.minipie.server.data.constant.Permission;
 import org.net9.minipie.server.data.entity.AddressData;
 import org.net9.minipie.server.data.entity.EmailData;
 import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
+import org.net9.minipie.server.data.field.Gender;
+import org.net9.minipie.server.data.field.InfoField;
+import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicContact;
 import org.net9.minipie.server.data.storage.CommonListEntry;
 import org.net9.minipie.server.db.entity.Contact;
@@ -26,7 +26,9 @@ import org.net9.minipie.server.db.entity.ContactPhoneNo;
 import org.net9.minipie.server.db.entity.ContactURL;
 import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.db.entity.enums.Bool;
+import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.NotFoundException;
+import org.net9.minipie.server.exception.ServerErrorException;
 
 public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		implements ContactDAO {
@@ -168,25 +170,26 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	}
 
 	public void del(Long contactId) {
-		try{
+		try {
 			Contact contact = findById(contactId);
 			begin();
 			makeTransient(contact);
 			commit();
-		}catch(ObjectNotFoundException e){
+		} catch (ObjectNotFoundException e) {
 			e.printStackTrace();
-			throw new NotFoundException("Cannot find item with given contact id");
+			throw new NotFoundException(
+					"Cannot find item with given contact id");
 		}
 	}
 
 	public void delAddr(Long id) {
-		try{
+		try {
 			ContactAddressDAOHibernate cadh = new ContactAddressDAOHibernate();
 			ContactAddress contactAddr = cadh.findById(id);
 			cadh.begin();
 			cadh.makeTransient(contactAddr);
 			cadh.commit();
-		}catch(ObjectNotFoundException e){
+		} catch (ObjectNotFoundException e) {
 			e.printStackTrace();
 			throw new NotFoundException("Cannt find address item with give id");
 		}
@@ -198,53 +201,52 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	}
 
 	public void delEmail(Long id) {
-		try{
+		try {
 			ContactEmailDAOHibernate cedh = new ContactEmailDAOHibernate();
 			ContactEmail contactEmail = cedh.findById(id);
 			cedh.begin();
 			cedh.makeTransient(contactEmail);
 			cedh.commit();
-		}catch(ObjectNotFoundException e){
+		} catch (ObjectNotFoundException e) {
 			e.printStackTrace();
 			throw new NotFoundException("Cannt find email item with give id");
 		}
 	}
 
 	public void delIM(Long id) {
-		try{
+		try {
 			ContactIMDAOHibernate cidh = new ContactIMDAOHibernate();
 			ContactIM contactIM = cidh.findById(id);
 			cidh.begin();
 			cidh.makeTransient(contactIM);
 			cidh.commit();
-		}catch(ObjectNotFoundException e){
+		} catch (ObjectNotFoundException e) {
 			e.printStackTrace();
 			throw new NotFoundException("Cannt find im item with give id");
 		}
 	}
 
 	public void delTel(Long id) {
-		try{
+		try {
 			ContactPhoneDAOHibernate cpdh = new ContactPhoneDAOHibernate();
 			ContactPhoneNo contactPhone = cpdh.findById(id);
 			cpdh.begin();
 			cpdh.makeTransient(contactPhone);
 			cpdh.commit();
-		}catch(ObjectNotFoundException e){
+		} catch (ObjectNotFoundException e) {
 			e.printStackTrace();
 			throw new NotFoundException("Cannt find phone item with give id");
 		}
 	}
 
 	public void delURL(Long id) {
-		try{
+		try {
 			ContactURLDAOHibernate cudh = new ContactURLDAOHibernate();
 			ContactURL contactURL = cudh.findById(id);
 			cudh.begin();
 			cudh.makeTransient(contactURL);
 			cudh.commit();
-		}catch(ObjectNotFoundException e){
-			e.printStackTrace();
+		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("Cannt find url item with give id");
 		}
 	}
@@ -256,11 +258,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	public void editAddr(Long id, String attribute, Object value) {
 		ContactAddressDAOHibernate cadh = new ContactAddressDAOHibernate();
 		ContactAddress contactAddr = null;
-		try{
+		try {
 			contactAddr = cadh.findById(id);
-		}catch(ObjectNotFoundException e){
+		} catch (ObjectNotFoundException e) {
 			e.printStackTrace();
-			throw new NotFoundException("Cannt find address "+attribute+" item with give id");
+			throw new NotFoundException("Cannt find address " + attribute
+					+ " item with give id");
 		}
 		if (attribute.equals("value")) {
 			String addr = (String) value;
@@ -280,11 +283,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	public void editBasicInfo(Long id, String attribute, Object value) {
 		ContactDAOHibernate cdh = new ContactDAOHibernate();
 		Contact contact = null;
-		try{
+		try {
 			contact = cdh.findById(id);
-		}catch(ObjectNotFoundException e){
+		} catch (ObjectNotFoundException e) {
 			e.printStackTrace();
-			throw new NotFoundException("Cannt find basic info "+attribute+" item with give id");
+			throw new NotFoundException("Cannt find basic info " + attribute
+					+ " item with give id");
 		}
 		if (attribute.equals("name")) {
 			String name = (String) value;
@@ -316,11 +320,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	public void editEmail(Long id, String attribute, Object value) {
 		ContactEmailDAOHibernate cedh = new ContactEmailDAOHibernate();
 		ContactEmail contactEmail = null;
-		try{
+		try {
 			contactEmail = cedh.findById(id);
-		}catch(HibernateException e){
+		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new NotFoundException("Cannt find email "+attribute+" item with give id");
+			throw new NotFoundException("Cannt find email " + attribute
+					+ " item with give id");
 		}
 		if (attribute.equals("value")) {
 			String email = (String) value;
@@ -340,11 +345,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	public void editIM(Long id, String attribute, Object value) {
 		ContactIMDAOHibernate cidh = new ContactIMDAOHibernate();
 		ContactIM contactIM = null;
-		try{
+		try {
 			contactIM = cidh.findById(id);
-		}catch(HibernateException e){
+		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new NotFoundException("Cannt find im "+attribute+" item with give id");
+			throw new NotFoundException("Cannt find im " + attribute
+					+ " item with give id");
 		}
 		if (attribute.equals("value")) {
 			String im = (String) value;
@@ -363,12 +369,13 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 
 	public void editTel(Long id, String attribute, Object value) {
 		ContactPhoneDAOHibernate cpdh = new ContactPhoneDAOHibernate();
-		ContactPhoneNo contactPhone = null; 
-		try{
+		ContactPhoneNo contactPhone = null;
+		try {
 			contactPhone = cpdh.findById(id);
-		}catch(HibernateException e){
+		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new NotFoundException("Cannt find tel "+attribute+" item with give id");
+			throw new NotFoundException("Cannt find tel " + attribute
+					+ " item with give id");
 		}
 		if (attribute.equals("value")) {
 			String tel = (String) value;
@@ -388,11 +395,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	public void editURL(Long id, String attribute, Object value) {
 		ContactURLDAOHibernate cudh = new ContactURLDAOHibernate();
 		ContactURL contactURL = null;
-		try{
+		try {
 			contactURL = cudh.findById(id);
-		}catch(HibernateException e){
+		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new NotFoundException("Cannt find url "+attribute+" item with give id");
+			throw new NotFoundException("Cannt find url " + attribute
+					+ " item with give id");
 		}
 		if (attribute.equals("value")) {
 			String url = (String) value;
@@ -424,21 +432,27 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		try {
 			ContactDAOHibernate cdh = new ContactDAOHibernate();
 			Contact contact = cdh.findById(contactId);
-			BasicContact basicContact = new BasicContact(contactId, contact.getName(), contact.getImage(), contact.getNickName(),
-					contact.getGender(), contact.getBirthday(), contact.getNotes(), contact.getRelationship(),
-					(contact.getOwner()!=null) ? contact.getOwner().getId(): 0, 
-					(contact.getShadowOf()!=null) ? contact.getShadowOf().getId():0, 
-					(contact.getGroup()!=null) ? contact.getGroup().getId():0, 
-					(contact.getPermission()!=null)?contact.getPermission():null);
+			BasicContact basicContact = new BasicContact(contactId, contact
+					.getName(), contact.getImage(), contact.getNickName(),
+					contact.getGender(), contact.getBirthday(), contact
+							.getNotes(), contact.getRelationship(), (contact
+							.getOwner() != null) ? contact.getOwner().getId()
+							: 0, (contact.getShadowOf() != null) ? contact
+							.getShadowOf().getId() : 0,
+					(contact.getGroup() != null) ? contact.getGroup().getId()
+							: 0, (contact.getPermission() != null) ? contact
+							.getPermission() : null);
 			return basicContact;
 		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("There's no contact with ID: "
 					+ contactId);
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
 		}
 	}
 
 	public List<AddressData> selectAddr(Long contactId) {
-		try{
+		try {
 			ContactAddressDAOHibernate cadh = new ContactAddressDAOHibernate();
 			Criterion criterion = Restrictions.eq("contact.id", contactId);
 			List<ContactAddress> result = cadh.findByCriteria(criterion);
@@ -457,9 +471,11 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 				selectedResult.add(addressData);
 			}
 			return selectedResult;
-		}catch(ObjectNotFoundException e){
+		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("There's no contact with ID: "
 					+ contactId);
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
 		}
 	}
 
@@ -469,7 +485,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	}
 
 	public List<EmailData> selectEmail(Long contactId) {
-		try{
+		try {
 			ContactEmailDAOHibernate cedh = new ContactEmailDAOHibernate();
 			Criterion criterion = Restrictions.eq("contact.id", contactId);
 			List<ContactEmail> result = cedh.findByCriteria(criterion);
@@ -488,9 +504,11 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 				selectedResult.add(emailData);
 			}
 			return selectedResult;
-		}catch(ObjectNotFoundException e){
+		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("There's no contact with ID: "
 					+ contactId);
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
 		}
 	}
 
@@ -500,7 +518,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	}
 
 	public List<IMData> selectIM(Long contactId) {
-		try{
+		try {
 			ContactIMDAOHibernate cidh = new ContactIMDAOHibernate();
 			Criterion criterion = Restrictions.eq("contact.id", contactId);
 			List<ContactIM> result = cidh.findByCriteria(criterion);
@@ -519,14 +537,16 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 				selectedResult.add(imData);
 			}
 			return selectedResult;
-		}catch(ObjectNotFoundException e){
+		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("There's no contact with ID: "
 					+ contactId);
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
 		}
 	}
 
 	public List<CommonListEntry> selectOwnerContact(Long ownerId) {
-		try{
+		try {
 			ContactDAOHibernate cdh = new ContactDAOHibernate();
 			Criterion criterion = Restrictions.eq("owner.id", ownerId);
 			List<Contact> result = cdh.findByCriteria(criterion);
@@ -534,14 +554,15 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			Iterator<Contact> iter = result.iterator();
 			while (iter.hasNext()) {
 				Contact contact = (Contact) iter.next();
-				CommonListEntry minimalContact = new CommonListEntry(contact.getId(), 
-						contact.getName(),contact.getImage());
+				CommonListEntry minimalContact = new CommonListEntry(contact
+						.getId(), contact.getName(), contact.getImage());
 				selectedResult.add(minimalContact);
 			}
 			return selectedResult;
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("There's no user with ID: "
-					+ ownerId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("There's no user with ID: " + ownerId);
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
 		}
 	}
 
@@ -556,7 +577,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	}
 
 	public List<PhoneNoData> selectTel(Long contactId) {
-		try{
+		try {
 			ContactPhoneDAOHibernate cpdh = new ContactPhoneDAOHibernate();
 			Criterion criterion = Restrictions.eq("contact.id", contactId);
 			List<ContactPhoneNo> result = cpdh.findByCriteria(criterion);
@@ -575,14 +596,16 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 				selectedResult.add(phoneData);
 			}
 			return selectedResult;
-		}catch(ObjectNotFoundException e){
+		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("There's no contact with ID: "
 					+ contactId);
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
 		}
 	}
 
 	public List<URLData> selectURL(Long contactId) {
-		try{
+		try {
 			ContactURLDAOHibernate cudh = new ContactURLDAOHibernate();
 			Criterion criterion = Restrictions.eq("contact.id", contactId);
 			List<ContactURL> result = cudh.findByCriteria(criterion);
@@ -601,9 +624,11 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 				selectedResult.add(urlData);
 			}
 			return selectedResult;
-		}catch(ObjectNotFoundException e){
+		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("There's no contact with ID: "
 					+ contactId);
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
 		}
 	}
 
@@ -636,52 +661,77 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		super.makeTransient(entity);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.ContactStorage#editAddr(java.lang.Long, org.net9.minipie.server.data.constant.InfoField, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#editAddr(java.lang
+	 * .Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
 	public void editAddr(Long id, InfoField attribute, Object value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.ContactStorage#editBasicInfo(java.lang.Long, org.net9.minipie.server.data.constant.InfoField, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#editBasicInfo(java
+	 * .lang.Long, org.net9.minipie.server.data.field.InfoField,
+	 * java.lang.Object)
 	 */
 	public void editBasicInfo(Long id, InfoField attribute, Object value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.ContactStorage#editEmail(java.lang.Long, org.net9.minipie.server.data.constant.InfoField, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#editEmail(java.lang
+	 * .Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
 	public void editEmail(Long id, InfoField attribute, Object value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.ContactStorage#editIM(java.lang.Long, org.net9.minipie.server.data.constant.InfoField, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#editIM(java.lang
+	 * .Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
 	public void editIM(Long id, InfoField attribute, Object value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.ContactStorage#editTel(java.lang.Long, org.net9.minipie.server.data.constant.InfoField, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#editTel(java.lang
+	 * .Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
 	public void editTel(Long id, InfoField attribute, Object value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.ContactStorage#editURL(java.lang.Long, org.net9.minipie.server.data.constant.InfoField, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#editURL(java.lang
+	 * .Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
 	public void editURL(Long id, InfoField attribute, Object value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

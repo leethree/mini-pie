@@ -5,7 +5,12 @@
  */
 package org.net9.minipie.server.data.entity;
 
-import org.net9.minipie.server.data.constant.Permission;
+import java.net.URI;
+
+import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.ServerErrorException;
 
 /**
  * @author Riversand
@@ -14,7 +19,7 @@ import org.net9.minipie.server.data.constant.Permission;
 public class URLData implements Info {
 
 	private long id;
-	private String value;
+	private URI value;
 	private String type;
 	private boolean primary;
 	/* the following field is only referenced by user */
@@ -25,23 +30,24 @@ public class URLData implements Info {
 	 */
 	public URLData() {
 		setPrimary(false);
+		setPermission(Permission.TO_SELF);
 	}
 
 	public URLData(long id, String value, String type, boolean primary,
-			Permission perm) {
+			Permission perm) throws DataFormatException {
 		setId(id);
 		setValue(value);
 		setType(type);
 		setPrimary(primary);
-		setPerm(perm);
+		setPermission(perm);
 	}
 
 	public long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setId(long id) throws DataFormatException {
+		this.id = Formatter.checkId(id);
 	}
 
 	public String getType() {
@@ -49,7 +55,10 @@ public class URLData implements Info {
 	}
 
 	public void setType(String type) {
-		this.type = type;
+		if (value == null)
+			this.type = null;
+		else
+			this.type = Formatter.compact(type);
 	}
 
 	public boolean isPrimary() {
@@ -61,33 +70,30 @@ public class URLData implements Info {
 	}
 
 	public String getValue() {
-		return value;
+		return value.toASCIIString();
 	}
 
-	public void setValue(String value) {
-		if (value == null) {
-			return;
-		}
-		value = value.trim();
-		value = value.toLowerCase();
-		if (value.startsWith("http://") == false) {
-			// TODO exception handling
-		}
-		this.value = value;
+	public void setValue(String value) throws DataFormatException {
+		if (value == null)
+			throw new ServerErrorException("The value should not be null.");
+		this.value = Formatter.formatUri(value);
 	}
 
 	/**
 	 * @param perm
 	 *            the perm to set
 	 */
-	public void setPerm(Permission perm) {
+	public void setPermission(Permission perm) {
+		if (perm == null)
+			throw new ServerErrorException(
+					"The permission should not be null.");
 		this.perm = perm;
 	}
 
 	/**
 	 * @return the perm
 	 */
-	public Permission getPerm() {
+	public Permission getPermission() {
 		return perm;
 	}
 

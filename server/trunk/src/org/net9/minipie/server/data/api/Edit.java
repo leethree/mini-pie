@@ -10,8 +10,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import org.net9.minipie.server.data.constant.InfoField;
-import org.net9.minipie.server.data.constant.InfoType;
+import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.data.field.InfoField;
+import org.net9.minipie.server.data.field.InfoType;
+import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 
 /**
@@ -28,17 +30,17 @@ public class Edit extends Update {
 	 * Constructor
 	 */
 	public Edit() {
-		
+
 	}
 
-	@XmlAttribute
+	@XmlAttribute(required = true)
 	public void setType(String type) {
 		try {
-			super.setType(InfoType.valueOf(type.toUpperCase()));
-		} catch (IllegalArgumentException e) {
-			throw new InvalidRequestException("Invalid information type.");
+			super.setType(InfoType.value(type));
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException(e);
 		}
-	};
+	}
 
 	/**
 	 * @return the field
@@ -51,13 +53,14 @@ public class Edit extends Update {
 	/**
 	 * @param field
 	 *            the field to set
+	 * @throws DataFormatException
 	 */
 	@XmlAttribute(required = true)
 	public void setField(String field) {
 		try {
-			this.field = InfoField.valueOf(field.toUpperCase());
-		} catch (IllegalArgumentException e) {
-			throw new InvalidRequestException("Invalid information field.");
+			this.field = InfoField.value(field);
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException(e);
 		}
 	}
 
@@ -74,10 +77,11 @@ public class Edit extends Update {
 	 */
 	@XmlElement
 	public void setId(long id) {
-		if (id < 0) {
-			throw new InvalidRequestException("id is illegal");
+		try {
+			this.id = Formatter.checkId(id);
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException(e);
 		}
-		this.id = id;
 	}
 
 	/**
@@ -89,9 +93,10 @@ public class Edit extends Update {
 
 	/**
 	 * @param value
-	 *            the value to set
+	 *            the value to set (empty string is allowed, but null is not
+	 *            allowed)
 	 */
-	@XmlElement
+	@XmlElement(required = true)
 	public void setValue(String value) {
 		this.value = value;
 	}

@@ -12,11 +12,6 @@ package org.net9.minipie.server.exception;
 @SuppressWarnings("serial")
 public class NotFoundException extends RuntimeException {
 	public NotFoundException(String message) {
-		super(message);
-	}
-
-	@Override
-	public String getMessage() {
-		return "Not Found: " + super.getMessage();
+		super("Not Found: " + message);
 	}
 }

@@ -2,12 +2,12 @@ package org.net9.minipie.server.db.dao;
 
 import java.util.List;
 
-import org.net9.minipie.server.data.constant.Permission;
 import org.net9.minipie.server.data.entity.AddressData;
 import org.net9.minipie.server.data.entity.EmailData;
 import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
+import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicContact;
 import org.net9.minipie.server.data.storage.CommonListEntry;
 import org.net9.minipie.server.db.entity.Contact;

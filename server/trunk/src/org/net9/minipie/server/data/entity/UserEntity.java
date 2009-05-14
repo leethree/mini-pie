@@ -5,41 +5,54 @@
  */
 package org.net9.minipie.server.data.entity;
 
-import org.net9.minipie.server.data.constant.Permission;
+import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.ServerErrorException;
 
 /**
  * @author Seastar
- *
+ * 
  */
-public class UserEntity extends CommonEntity{
-	private String registeredEmail; // for user
-	private String password; // for user
-	private String displayname; // for user
-	private Permission genderPermission; // for user
-	private Permission birthdayPermission; // for user
-	private Permission birthyearPermission; // for user
-	private boolean isAdmin; // for user
-	
+public class UserEntity extends CommonEntity {
+	private String registeredEmail;
+	private String password;
+	private String displayname;
+	private Permission addAsContactPermission;
+	private Permission genderPermission;
+	private Permission birthDatePermission;
+	private Permission birthYearPermission;
+	private boolean isAdmin;
+
 	/**
 	 * Constructor
 	 */
 	public UserEntity() {
+		addAsContactPermission = Permission.TO_CONTACTS;
 		genderPermission = Permission.TO_CONTACTS;
-		birthdayPermission = Permission.TO_CONTACTS;
-		birthyearPermission = Permission.TO_CONTACTS;
+		birthDatePermission = Permission.TO_CONTACTS;
+		birthYearPermission = Permission.TO_CONTACTS;
 		setAdmin(false);
 	}
-	
-	public String getRegisteEmail() {
+
+	/**
+	 * @return the registeredEmail
+	 */
+	public String getRegisteredEmail() {
 		return registeredEmail;
 	}
 
 	/**
-	 * @param registeEmail
-	 *            the registeEmail to set
+	 * @param registeredEmail
+	 *            the registeredEmail to set
+	 * @throws DataFormatException
 	 */
-	public void setRegisteEmail(String registeEmail) {
-		this.registeredEmail = registeEmail;
+	public void setRegisteredEmail(String registeredEmail)
+			throws DataFormatException {
+		if (registeredEmail == null)
+			throw new ServerErrorException(
+					"The registerd email should not be null.");
+		this.registeredEmail = Formatter.formatEmail(registeredEmail);
 	}
 
 	/**
@@ -52,9 +65,12 @@ public class UserEntity extends CommonEntity{
 	/**
 	 * @param password
 	 *            the password to set
+	 * @throws DataFormatException
 	 */
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPassword(String password) throws DataFormatException {
+		if (registeredEmail == null)
+			throw new ServerErrorException("The password should not be null.");
+		this.password = Formatter.formatPassword(password);
 	}
 
 	/**
@@ -69,7 +85,28 @@ public class UserEntity extends CommonEntity{
 	 *            the displayname to set
 	 */
 	public void setDisplayname(String displayname) {
-		this.displayname = displayname;
+		if (displayname == null)
+			this.displayname = null;
+		else
+			this.displayname = Formatter.compact(displayname);
+	}
+
+	/**
+	 * @return the addAsContactPermission
+	 */
+	public Permission getAddAsContactPermission() {
+		return addAsContactPermission;
+	}
+
+	/**
+	 * @param addAsContactPermission
+	 *            the addAsContactPermission to set
+	 */
+	public void setAddAsContactPermission(Permission addAsContactPermission) {
+		if (addAsContactPermission == null)
+			throw new ServerErrorException(
+					"Add-as-contact permission not be null.");
+		this.addAsContactPermission = addAsContactPermission;
 	}
 
 	/**
@@ -84,51 +121,43 @@ public class UserEntity extends CommonEntity{
 	 *            the genderPermission to set
 	 */
 	public void setGenderPermission(Permission genderPermission) {
+		if (genderPermission == null)
+			throw new ServerErrorException("Gender permission should not be null.");
 		this.genderPermission = genderPermission;
 	}
 
 	/**
-	 * @return the birthdayPermission
+	 * @return the birthDatePermission
 	 */
-	public Permission getBirthdayPermission() {
-		return birthdayPermission;
+	public Permission getBirthdatePermission() {
+		return birthDatePermission;
 	}
 
 	/**
-	 * @param birthdayPermission
-	 *            the birthdayPermission to set
+	 * @param birthDatePermission
+	 *            the birthDatePermission to set
 	 */
-	public void setBirthdayPermission(Permission birthdayPermission) {
-		this.birthdayPermission = birthdayPermission;
+	public void setBirthdatePermission(Permission birthDatePermission) {
+		if (birthDatePermission == null)
+			throw new ServerErrorException("Birth-date permission should not be null.");
+		this.birthDatePermission = birthDatePermission;
 	}
 
 	/**
-	 * @return the birthyearPermission
+	 * @return the birthYearPermission
 	 */
 	public Permission getBirthyearPermission() {
-		return birthyearPermission;
+		return birthYearPermission;
 	}
 
 	/**
-	 * @param birthyearPermission
-	 *            the birthyearPermission to set
+	 * @param birthYearPermission
+	 *            the birthYearPermission to set
 	 */
 	public void setBirthyearPermission(Permission birthyearPermission) {
-		this.birthyearPermission = birthyearPermission;
-	}
-	/**
-	 * @return the registeredEmail
-	 */
-	public String getRegisteredEmail() {
-		return registeredEmail;
-	}
-
-	/**
-	 * @param registeredEmail
-	 *            the registeredEmail to set
-	 */
-	public void setRegisteredEmail(String registeredEmail) {
-		this.registeredEmail = registeredEmail;
+		if (birthyearPermission == null)
+			throw new ServerErrorException("Birth-year permission should not be null.");
+		this.birthYearPermission = birthyearPermission;
 	}
 
 	/**
@@ -146,7 +175,4 @@ public class UserEntity extends CommonEntity{
 		this.isAdmin = isAdmin;
 	}
 
-
 }
-
-

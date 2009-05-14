@@ -30,7 +30,7 @@ public class UpdateMyContact extends Command<Void> {
 	 * @param contactid
 	 * @param userId
 	 */
-	public UpdateMyContact(Long contactId, Long userId, Update data) {
+	public UpdateMyContact(Long userId, Long contactId, Update data) {
 		super();
 		setData(data);
 		setContactId(contactId);

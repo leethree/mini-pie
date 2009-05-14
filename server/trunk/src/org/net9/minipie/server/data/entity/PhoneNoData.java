@@ -5,7 +5,10 @@
  */
 package org.net9.minipie.server.data.entity;
 
-import org.net9.minipie.server.data.constant.Permission;
+import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.ServerErrorException;
 
 /**
  * @author Riversand
@@ -24,23 +27,24 @@ public class PhoneNoData implements Info {
 	 */
 	public PhoneNoData() {
 		setPrimary(false);
+		setPermission(Permission.TO_SELF);
 	}
 
 	public PhoneNoData(long id, String value, String type, boolean primary,
-			Permission perm) {
+			Permission perm) throws DataFormatException {
 		setId(id);
 		setValue(value);
 		setType(type);
 		setPrimary(primary);
-		setPerm(perm);
+		setPermission(perm);
 	}
 
 	public long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setId(long id) throws DataFormatException {
+		this.id = Formatter.checkId(id);
 	}
 
 	public String getType() {
@@ -48,7 +52,10 @@ public class PhoneNoData implements Info {
 	}
 
 	public void setType(String type) {
-		this.type = type;
+		if (value == null)
+			this.type = null;
+		else
+			this.type = Formatter.compact(type);
 	}
 
 	public boolean isPrimary() {
@@ -63,47 +70,27 @@ public class PhoneNoData implements Info {
 		return value;
 	}
 
-	public void setValue(String value) {
-		if (value == null) {
-			this.value = null;
-			return;
-		}
-		value = value.trim();
-		value = value.replace('(', '-');
-		value = value.replace(')', '-');
-		int start = 0;
-		while (start < value.length() && value.charAt(start) != '+'
-				&& (value.charAt(start) < '0' || value.charAt(start) > '9')) {
-			start++;
-		}
-		if (start == value.length()) {
-			// TODO exception handling
-		}
-		String newValue = new String();
-		for (int i = start; i < value.length(); i++) {
-			if ((value.charAt(i) < '0' || value.charAt(i) > '9')
-					&& value.charAt(i) != '-') {
-				continue;
-			} else if (i != 0 && value.charAt(i) == '+') {
-				continue;
-			}
-			newValue.concat(String.valueOf(value.charAt(i)));
-		}
-		this.value = value;
+	public void setValue(String value) throws DataFormatException {
+		if (value == null)
+			throw new ServerErrorException("The value should not be null.");
+		this.value = Formatter.formatPhone(value);
 	}
 
 	/**
 	 * @param perm
 	 *            the perm to set
 	 */
-	public void setPerm(Permission perm) {
+	public void setPermission(Permission perm) {
+		if (perm == null)
+			throw new ServerErrorException(
+					"The permission should not be null.");
 		this.perm = perm;
 	}
 
 	/**
-	 * @return the perm
+	 * @return the perm (not nullable)
 	 */
-	public Permission getPerm() {
+	public Permission getPermission() {
 		return perm;
 	}
 }

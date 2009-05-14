@@ -9,7 +9,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.net9.minipie.server.data.constant.InfoType;
+import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.data.field.InfoType;
+import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 
 /**
@@ -26,14 +28,14 @@ public class Delete extends Update {
 	public Delete() {
 	}
 
-	@XmlAttribute
+	@XmlAttribute(required = true)
 	public void setType(String type) {
 		try {
-			super.setType(InfoType.valueOf(type.toUpperCase()));
-		} catch (IllegalArgumentException e) {
-			throw new InvalidRequestException("Invalid information type.");
+			super.setType(InfoType.value(type));
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException(e);
 		}
-	};
+	}
 
 	/**
 	 * @return the id
@@ -46,11 +48,12 @@ public class Delete extends Update {
 	 * @param id
 	 *            the id to set
 	 */
-	@XmlElement
+	@XmlElement(required = true)
 	public void setId(long id) {
-		if (id < 0) {
-			throw new InvalidRequestException("id is illegal");
+		try {
+			this.id = Formatter.checkId(id);
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException(e);
 		}
-		this.id = id;
 	}
 }

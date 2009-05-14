@@ -6,19 +6,20 @@
 package org.net9.minipie.server.data.api;
 
 import java.util.Collection;
-import java.util.Date;
 
-import org.net9.minipie.server.data.constant.Gender;
+import javax.xml.bind.annotation.XmlElement;
+
 import org.net9.minipie.server.data.entity.AddressData;
 import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.data.entity.EmailData;
 import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
+import org.net9.minipie.server.data.field.Gender;
 
 /**
  * @author Seastar, LeeThree
- *
+ * TODO
  */
 public class PersonalProfile {
 	private ContactEntity entity; 
@@ -58,8 +59,12 @@ public class PersonalProfile {
 	/**
 	 * @return the birthday
 	 */
-	public Date getBirthday() {
-		return entity.getBirthday();
+	@XmlElement
+	public String getBirthday() {
+		if (entity.getBirthday() == null)
+			return null;
+		else
+			return entity.getBirthday().toString();
 	}
 	
 //	/**

@@ -5,26 +5,27 @@
  */
 package org.net9.minipie.server.data.entity;
 
-import org.net9.minipie.server.data.constant.Permission;
+import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.ServerErrorException;
 
 /**
  * @author Seastar
  * 
  */
 public class ContactEntity extends CommonEntity{
-	
-	private String relationship; // for unregister
-	private Permission permission; // for unregister
-	private long ownerId; // for unregister
-	private long shadowOf; // for unregister
-	private long groupId; // for unregister
+	private String relationship;
+	private Permission permission;
+	private long ownerId;
+	private long shadowOf;
+	private long groupId;
 	
 	/**
 	 * Constructor
 	 */
 	public ContactEntity() {
 		permission = Permission.TO_SELF;
-		
 	}
 
 	/**
@@ -36,7 +37,7 @@ public class ContactEntity extends CommonEntity{
 
 	/**
 	 * @param relationship
-	 *            the relationship to set
+	 *            the relationship to set (nullable)
 	 */
 	public void setRelationship(String relationship) {
 		this.relationship = relationship;
@@ -54,6 +55,8 @@ public class ContactEntity extends CommonEntity{
 	 *            the permission to set
 	 */
 	public void setPermission(Permission permission) {
+		if (permission == null)
+			throw new ServerErrorException("The permission should not be null.");
 		this.permission = permission;
 	}
 
@@ -67,9 +70,10 @@ public class ContactEntity extends CommonEntity{
 	/**
 	 * @param ownerId
 	 *            the ownerId to set
+	 * @throws DataFormatException 
 	 */
-	public void setOwnerId(long ownerId) {
-		this.ownerId = ownerId;
+	public void setOwnerId(long ownerId) throws DataFormatException {
+		this.ownerId = Formatter.checkNullableId(ownerId);
 	}
 
 	/**
@@ -82,9 +86,10 @@ public class ContactEntity extends CommonEntity{
 	/**
 	 * @param shadowOf
 	 *            the shadowOf to set
+	 * @throws DataFormatException 
 	 */
-	public void setShadowOf(long shadowOf) {
-		this.shadowOf = shadowOf;
+	public void setShadowOf(long shadowOf) throws DataFormatException {
+		this.shadowOf = Formatter.checkNullableId(shadowOf);
 	}
 
 	/**
@@ -97,9 +102,10 @@ public class ContactEntity extends CommonEntity{
 	/**
 	 * @param groupId
 	 *            the groupId to set
+	 * @throws DataFormatException 
 	 */
-	public void setGroupId(long groupId) {
-		this.groupId = groupId;
+	public void setGroupId(long groupId) throws DataFormatException {
+		this.groupId = Formatter.checkNullableId(groupId);
 	}
 
 }

@@ -7,7 +7,7 @@ package org.net9.minipie.server.logic.operation;
 
 import java.util.ResourceBundle;
 
-import org.net9.minipie.server.exception.UnknownServerException;
+import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.storage.StorageFactory;
 
 /**
@@ -41,19 +41,19 @@ public abstract class Command<R> {
 						STORAGE_FACTORY_CLASS_NAME).newInstance();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
-				throw new UnknownServerException(
+				throw new ServerErrorException(
 						"FATAL ERROR: Storage Factory instantiation failed.");
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
-				throw new UnknownServerException(
+				throw new ServerErrorException(
 						"FATAL ERROR: Storage Factory access denied.");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-				throw new UnknownServerException(
+				throw new ServerErrorException(
 						"FATAL ERROR: Storage Factory class not found.");
 			} catch (ClassCastException e){
 				e.printStackTrace();
-				throw new UnknownServerException(
+				throw new ServerErrorException(
 						"FATAL ERROR: Storage Factory class incompatible.");
 			}
 		}

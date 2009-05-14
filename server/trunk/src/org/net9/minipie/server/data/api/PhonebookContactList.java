@@ -1,5 +1,5 @@
 /**
- * ContactList.java
+ * PhonebookContactList.java
  *     in package: * org.net9.minipie.server.api.xmlhelper
  * by Mini-Pie Project
  */
@@ -18,20 +18,20 @@ import javax.xml.bind.annotation.XmlRootElement;
  * 
  */
 @XmlRootElement(name = "contacts")
-public class ContactList {
-	private Collection<CommonEntry> list;
+public class PhonebookContactList {
+	private Collection<PhonebookContactListEntry> list;
 
 	/**
 	 * Constructor
 	 */
-	public ContactList() {
+	public PhonebookContactList() {
 	}
 
 	/**
 	 * Constructor
 	 */
-	public ContactList(Collection<CommonEntry> list, URI uri) {
-		for (CommonEntry entry : list) {
+	public PhonebookContactList(Collection<PhonebookContactListEntry> list, URI uri) {
+		for (PhonebookContactListEntry entry : list) {
 			entry.setUri(UriBuilder.fromUri(uri).path(entry.getId() + "/")
 					.build());
 		}
@@ -42,7 +42,7 @@ public class ContactList {
 	 * @return the list
 	 */
 	@XmlElement(name = "contact")
-	public Collection<CommonEntry> getList() {
+	public Collection<PhonebookContactListEntry> getList() {
 		return list;
 	}
 }

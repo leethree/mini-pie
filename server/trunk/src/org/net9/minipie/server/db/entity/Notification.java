@@ -8,7 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.net9.minipie.server.data.constant.NotificationType;
+import org.net9.minipie.server.data.field.NotificationType;
 
 @Entity
 @Table(name = "NOTIFICATION")

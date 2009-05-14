@@ -7,7 +7,6 @@ package org.net9.minipie.server.data.api;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -49,8 +48,11 @@ public class PhonebookCompleteContact {
 	 * @return the birthday
 	 */
 	@XmlElement
-	public Date getBirthday() {
-		return entity.getBirthday();
+	public String getBirthday() {
+		if (entity.getBirthday() == null)
+			return null;
+		else
+			return entity.getBirthday().toString();
 	}
 
 	// /**

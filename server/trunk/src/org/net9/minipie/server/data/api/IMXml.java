@@ -43,7 +43,7 @@ public class IMXml implements DetailedInfoXml {
 	/**
 	 * @return the value
 	 */
-	@XmlElement
+	@XmlElement(required = true)
 	public String getValue() {
 		return entity.getValue();
 	}
@@ -96,10 +96,10 @@ public class IMXml implements DetailedInfoXml {
 	 */
 	@XmlAttribute(name = "permission")
 	public String getPerm() {
-		if (entity.getPerm() == null)
+		if (entity.getPermission() == null)
 			return null;
 		else
-			return entity.getPerm().toString();
+			return entity.getPermission().toString();
 	}
 	
 	@XmlTransient

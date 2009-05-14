@@ -10,6 +10,7 @@ import org.net9.minipie.server.data.api.Edit;
 import org.net9.minipie.server.data.api.Update;
 import org.net9.minipie.server.data.api.UpdateList;
 
+@SuppressWarnings("unused")
 @Path("/test")
 public class ApiTest {
 
@@ -26,7 +27,7 @@ public class ApiTest {
 		for (Update update : list.getUpdates()) {
 			System.out.println(update);
 			System.out.println(update.getType());
-			System.out.println(((Edit)update).getInfoField());
+			//System.out.println(((Edit)update).getInfoField());
 		}
 	}
 }

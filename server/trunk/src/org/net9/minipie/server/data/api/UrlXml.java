@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import org.net9.minipie.server.data.entity.URLData;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.InvalidRequestException;
 
 /**
  * @author LeeThree
@@ -42,7 +44,7 @@ public class UrlXml implements DetailedInfoXml {
 	/**
 	 * @return the value
 	 */
-	@XmlElement
+	@XmlElement(required = true)
 	public String getValue() {
 		return entity.getValue();
 	}
@@ -52,7 +54,11 @@ public class UrlXml implements DetailedInfoXml {
 	 *            the value to set
 	 */
 	public void setValue(String value) {
-		entity.setValue(value);
+		try {
+			entity.setValue(value);
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException(e);
+		}
 	}
 
 	/**
@@ -95,10 +101,10 @@ public class UrlXml implements DetailedInfoXml {
 	 */
 	@XmlAttribute(name = "permission")
 	public String getPerm() {
-		if (entity.getPerm() == null)
+		if (entity.getPermission() == null)
 			return null;
 		else
-			return entity.getPerm().toString();
+			return entity.getPermission().toString();
 	}
 
 	@XmlTransient
