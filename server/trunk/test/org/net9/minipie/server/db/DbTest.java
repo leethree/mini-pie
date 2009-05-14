@@ -1,4 +1,4 @@
-package org.net9.minipie.server.db.util;
+package org.net9.minipie.server.db;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -17,7 +17,7 @@ import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicContact;
 
 @SuppressWarnings("unused")
-public class Test {
+public class DbTest {
 
 	/**
 	 * @param args

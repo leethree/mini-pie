@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="**/.svn/*|**/.svn/**" kind="src" path="src"/>
+	<classpathentry excluding="**/.svn/*|**/.svn/**" kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/Hibernate 3.3 Annotations/ejb3-persistence.jar"/>
 	<classpathentry kind="lib" path="lib/Hibernate 3.3 Annotations/hibernate-annotations.jar"/>
