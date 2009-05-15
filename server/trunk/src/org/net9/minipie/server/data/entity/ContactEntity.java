@@ -7,6 +7,7 @@ package org.net9.minipie.server.data.entity;
 
 import org.net9.minipie.server.data.Formatter;
 import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.data.field.Relationships;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.ServerErrorException;
 
@@ -14,13 +15,13 @@ import org.net9.minipie.server.exception.ServerErrorException;
  * @author Seastar
  * 
  */
-public class ContactEntity extends CommonEntity{
-	private String relationship;
+public class ContactEntity extends CommonEntity {
+	private Relationships relationship;
 	private Permission permission;
 	private long ownerId;
 	private long shadowOf;
 	private long groupId;
-	
+
 	/**
 	 * Constructor
 	 */
@@ -31,7 +32,7 @@ public class ContactEntity extends CommonEntity{
 	/**
 	 * @return the relationship
 	 */
-	public String getRelationship() {
+	public Relationships getRelationship() {
 		return relationship;
 	}
 
@@ -39,7 +40,7 @@ public class ContactEntity extends CommonEntity{
 	 * @param relationship
 	 *            the relationship to set (nullable)
 	 */
-	public void setRelationship(String relationship) {
+	public void setRelationship(Relationships relationship) {
 		this.relationship = relationship;
 	}
 
@@ -70,7 +71,7 @@ public class ContactEntity extends CommonEntity{
 	/**
 	 * @param ownerId
 	 *            the ownerId to set
-	 * @throws DataFormatException 
+	 * @throws DataFormatException
 	 */
 	public void setOwnerId(long ownerId) throws DataFormatException {
 		this.ownerId = Formatter.checkNullableId(ownerId);
@@ -86,7 +87,7 @@ public class ContactEntity extends CommonEntity{
 	/**
 	 * @param shadowOf
 	 *            the shadowOf to set
-	 * @throws DataFormatException 
+	 * @throws DataFormatException
 	 */
 	public void setShadowOf(long shadowOf) throws DataFormatException {
 		this.shadowOf = Formatter.checkNullableId(shadowOf);
@@ -102,7 +103,7 @@ public class ContactEntity extends CommonEntity{
 	/**
 	 * @param groupId
 	 *            the groupId to set
-	 * @throws DataFormatException 
+	 * @throws DataFormatException
 	 */
 	public void setGroupId(long groupId) throws DataFormatException {
 		this.groupId = Formatter.checkNullableId(groupId);

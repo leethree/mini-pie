@@ -6,21 +6,18 @@
 package org.net9.minipie.server.data;
 
 import org.net9.minipie.server.data.entity.PhoneNoData;
+import org.net9.minipie.server.data.field.Relationships;
 import org.net9.minipie.server.exception.DataFormatException;
 
 /**
  * @author LeeThree
  * 
  */
+@SuppressWarnings("unused")
 public class DataTest {
 	public static void main(String[] args) {
-		try {
-			//UserEntity entity = new UserEntity();
-			PhoneNoData phone = new PhoneNoData();
-			phone.setValue("+(010)159-*&&^&102-9944_");
-			System.out.println(phone.getValue());
-		} catch (DataFormatException e) {
-			e.printStackTrace();
-		}
+		Relationships rels = new Relationships(" rose, sweetheasdrt");
+		System.out.println(rels);
+		System.out.println(rels.isEmpty());
 	}
 }

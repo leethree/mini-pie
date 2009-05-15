@@ -176,7 +176,10 @@ public class CompleteContact {
 	 * @return the relationship
 	 */
 	public String getRelationship() {
-		return entity.getRelationship();
+		if (entity.getRelationship() == null)
+			return null;
+		else
+			return entity.getRelationship().toString();
 	}
 
 	/**

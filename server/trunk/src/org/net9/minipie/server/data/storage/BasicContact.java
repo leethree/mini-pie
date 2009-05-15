@@ -9,6 +9,7 @@ import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.data.field.Birthdate;
 import org.net9.minipie.server.data.field.Gender;
 import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.data.field.Relationships;
 import org.net9.minipie.server.exception.DataFormatException;
 
 /**
@@ -32,7 +33,9 @@ public class BasicContact {
 			entity.setBirthday(new Birthdate(birthday));
 		}
 		entity.setNotes(notes);
-		entity.setRelationship(relationship);
+		if (relationship != null) {
+			entity.setRelationship(new Relationships(relationship));
+		}
 		entity.setOwnerId(ownerId);
 		entity.setShadowOf(shadowOf);
 		entity.setGroupId(groupId);
