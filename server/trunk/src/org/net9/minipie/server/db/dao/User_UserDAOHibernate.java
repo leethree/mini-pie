@@ -42,11 +42,11 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Long> 
 			e.printStackTrace();
 			throw new NotFoundException("Cannt find user with given id "+ userId2);
 		}
-		User2User bind = new User2User();
-		bind.setUser1(user1);
-		bind.setuser2(user2);
-		bind.setLeft(Permission.TO_CONTACTS);
-		bind.setRight(Permission.TO_CONTACTS);
+		User2User bind = new User2User(user1, user2,  // only this constructor in user2user
+												// gives a primary key. Don't simply use
+												// setUser1 or setUser2 methods, otherwise,
+												// one get strange errors.
+				Permission.TO_CONTACTS, Permission.TO_CONTACTS);
 		begin();
 		getSession().save(bind);
 		commit();
@@ -54,6 +54,8 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Long> 
 		user2.getUsers1().add(bind);
 		udh.begin();
 		udh.makePersistent(user1);
+		udh.commit();
+		udh.begin();
 		udh.makePersistent(user2);
 		udh.commit();
 	}

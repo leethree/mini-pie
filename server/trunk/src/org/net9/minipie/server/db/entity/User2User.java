@@ -32,14 +32,12 @@ public class User2User {
 		}
 		@Override
 		public boolean equals(Object o) {
-			// TODO Auto-generated method stub
 			Id obj = (Id) o;
 			return ((this.user1Id.equals(obj.user1Id) && this.user2Id.equals(obj.user2Id))
 					||(this.user1Id.equals(obj.user2Id) && this.user2Id.equals(obj.user1Id))) ;
 		}
 		@Override
 		public int hashCode() {
-			// TODO Auto-generated method stub
 			return user1Id.hashCode()+user2Id.hashCode();
 		}
 	}
