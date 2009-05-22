@@ -255,7 +255,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		// TODO Auto-generated method stub
 	}
 
-	public void editAddr(Long id, String attribute, Object value) {
+	public void editAddr(Long id, InfoField attribute, Object value) {
 		ContactAddressDAOHibernate cadh = new ContactAddressDAOHibernate();
 		ContactAddress contactAddr = null;
 		try {
@@ -265,13 +265,13 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			throw new NotFoundException("Cannt find address " + attribute
 					+ " item with give id");
 		}
-		if (attribute.equals("value")) {
+		if (attribute==InfoField.VALUE) {
 			String addr = (String) value;
 			contactAddr.setValue(addr);
-		} else if (attribute.equals("type")) {
+		} else if (attribute==InfoField.TYPE) {
 			String type = (String) value;
 			contactAddr.setType(type);
-		} else if (attribute.equals("primary")) {
+		} else if (attribute==InfoField.PRIMARY) {
 			Bool primary = (Bool) value;
 			contactAddr.setPrimary(primary);
 		}
@@ -280,7 +280,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		cadh.commit();
 	}
 
-	public void editBasicInfo(Long id, String attribute, Object value) {
+	public void editBasicInfo(Long id, InfoField attribute, Object value) {
 		ContactDAOHibernate cdh = new ContactDAOHibernate();
 		Contact contact = null;
 		try {
@@ -290,25 +290,22 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			throw new NotFoundException("Cannt find basic info " + attribute
 					+ " item with give id");
 		}
-		if (attribute.equals("name")) {
+		if (attribute==InfoField.NAME) {
 			String name = (String) value;
 			contact.setName(name);
-		} else if (attribute.equals("image")) {
-			String image = (String) value;
-			contact.setImage(image);
-		} else if (attribute.equals("nickName")) {
+		} else if (attribute==InfoField.NICKNAME) {
 			String nickName = (String) value;
 			contact.setNickName(nickName);
-		} else if (attribute.equals("gender")) {
+		} else if (attribute==InfoField.GENDER) {
 			Gender gender = (Gender) value;
 			contact.setGender(gender);
-		} else if (attribute.equals("birthday")) {
+		} else if (attribute==InfoField.BIRTHDAY) {
 			String birthday = (String) value;
 			contact.setBirthday(birthday);
-		} else if (attribute.equals("notes")) {
+		} else if (attribute==InfoField.NOTE) {
 			String notes = (String) value;
 			contact.setNotes(notes);
-		} else if (attribute.equals("relationship")) {
+		} else if (attribute==InfoField.RELATIONSHIP) {
 			String relationship = (String) value;
 			contact.setRelationship(relationship);
 		}
@@ -317,7 +314,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		cdh.commit();
 	}
 
-	public void editEmail(Long id, String attribute, Object value) {
+	public void editEmail(Long id, InfoField attribute, Object value) {
 		ContactEmailDAOHibernate cedh = new ContactEmailDAOHibernate();
 		ContactEmail contactEmail = null;
 		try {
@@ -327,13 +324,13 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			throw new NotFoundException("Cannt find email " + attribute
 					+ " item with give id");
 		}
-		if (attribute.equals("value")) {
+		if (attribute==InfoField.VALUE) {
 			String email = (String) value;
 			contactEmail.setValue(email);
-		} else if (attribute.equals("type")) {
+		} else if (attribute==InfoField.TYPE) {
 			String type = (String) value;
 			contactEmail.setType(type);
-		} else if (attribute.equals("primary")) {
+		} else if (attribute==InfoField.PRIMARY) {
 			Bool primary = (Bool) value;
 			contactEmail.setPrimary(primary);
 		}
@@ -342,7 +339,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		cedh.commit();
 	}
 
-	public void editIM(Long id, String attribute, Object value) {
+	public void editIM(Long id, InfoField attribute, Object value) {
 		ContactIMDAOHibernate cidh = new ContactIMDAOHibernate();
 		ContactIM contactIM = null;
 		try {
@@ -352,13 +349,13 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			throw new NotFoundException("Cannt find im " + attribute
 					+ " item with give id");
 		}
-		if (attribute.equals("value")) {
+		if (attribute==InfoField.VALUE) {
 			String im = (String) value;
 			contactIM.setValue(im);
-		} else if (attribute.equals("type")) {
+		} else if (attribute==InfoField.TYPE) {
 			String type = (String) value;
 			contactIM.setType(type);
-		} else if (attribute.equals("primary")) {
+		} else if (attribute==InfoField.PRIMARY) {
 			Bool primary = (Bool) value;
 			contactIM.setPrimary(primary);
 		}
@@ -367,7 +364,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		cidh.commit();
 	}
 
-	public void editTel(Long id, String attribute, Object value) {
+	public void editTel(Long id, InfoField attribute, Object value) {
 		ContactPhoneDAOHibernate cpdh = new ContactPhoneDAOHibernate();
 		ContactPhoneNo contactPhone = null;
 		try {
@@ -377,13 +374,13 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			throw new NotFoundException("Cannt find tel " + attribute
 					+ " item with give id");
 		}
-		if (attribute.equals("value")) {
+		if (attribute==InfoField.VALUE) {
 			String tel = (String) value;
 			contactPhone.setValue(tel);
-		} else if (attribute.equals("type")) {
+		} else if (attribute==InfoField.TYPE) {
 			String type = (String) value;
 			contactPhone.setType(type);
-		} else if (attribute.equals("primary")) {
+		} else if (attribute==InfoField.PRIMARY) {
 			Bool primary = (Bool) value;
 			contactPhone.setPrimary(primary);
 		}
@@ -392,7 +389,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		cpdh.commit();
 	}
 
-	public void editURL(Long id, String attribute, Object value) {
+	public void editURL(Long id, InfoField attribute, Object value) {
 		ContactURLDAOHibernate cudh = new ContactURLDAOHibernate();
 		ContactURL contactURL = null;
 		try {
@@ -402,13 +399,13 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			throw new NotFoundException("Cannt find url " + attribute
 					+ " item with give id");
 		}
-		if (attribute.equals("value")) {
+		if (attribute==InfoField.VALUE) {
 			String url = (String) value;
 			contactURL.setValue(url);
-		} else if (attribute.equals("type")) {
+		} else if (attribute==InfoField.TYPE) {
 			String type = (String) value;
 			contactURL.setType(type);
-		} else if (attribute.equals("primary")) {
+		} else if (attribute==InfoField.PRIMARY) {
 			Bool primary = (Bool) value;
 			contactURL.setPrimary(primary);
 		}
@@ -660,78 +657,4 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	public void makeTransient(Contact entity) {
 		super.makeTransient(entity);
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.net9.minipie.server.logic.storage.ContactStorage#editAddr(java.lang
-	 * .Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
-	 */
-	public void editAddr(Long id, InfoField attribute, Object value) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.net9.minipie.server.logic.storage.ContactStorage#editBasicInfo(java
-	 * .lang.Long, org.net9.minipie.server.data.field.InfoField,
-	 * java.lang.Object)
-	 */
-	public void editBasicInfo(Long id, InfoField attribute, Object value) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.net9.minipie.server.logic.storage.ContactStorage#editEmail(java.lang
-	 * .Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
-	 */
-	public void editEmail(Long id, InfoField attribute, Object value) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.net9.minipie.server.logic.storage.ContactStorage#editIM(java.lang
-	 * .Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
-	 */
-	public void editIM(Long id, InfoField attribute, Object value) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.net9.minipie.server.logic.storage.ContactStorage#editTel(java.lang
-	 * .Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
-	 */
-	public void editTel(Long id, InfoField attribute, Object value) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.net9.minipie.server.logic.storage.ContactStorage#editURL(java.lang
-	 * .Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
-	 */
-	public void editURL(Long id, InfoField attribute, Object value) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

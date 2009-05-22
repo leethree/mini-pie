@@ -2,6 +2,7 @@ package org.net9.minipie.server.db.dao;
 
 import java.util.List;
 
+import org.hibernate.ObjectNotFoundException;
 import org.net9.minipie.server.data.entity.AddressData;
 import org.net9.minipie.server.data.entity.EmailData;
 import org.net9.minipie.server.data.entity.IMData;
@@ -9,75 +10,42 @@ import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.storage.BasicUser;
+import org.net9.minipie.server.db.entity.ContactAddress;
+import org.net9.minipie.server.db.entity.ContactEmail;
+import org.net9.minipie.server.db.entity.ContactIM;
+import org.net9.minipie.server.db.entity.ContactPhoneNo;
+import org.net9.minipie.server.db.entity.ContactURL;
 import org.net9.minipie.server.db.entity.User;
+import org.net9.minipie.server.exception.NotFoundException;
 
 public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
-		UserDAO {
+		UserDAO, UserStorage {
 	
 	public Long add(String name, String pwd, String email) {
 		User newUser = new User();
 		newUser.setUserName(name);
 		newUser.setPassword(pwd);
 		newUser.setRegisterEmail(email);
+		begin();
 		Long id = makePersistent(newUser).getId();
-		flush();
+		commit();
 		return id;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#addAddr(java.lang.Long, java.lang.Object[])
-	 */
-	public Long addAddr(Long userId, Object... value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#addAddtional(java.lang.Long, java.lang.Object[])
-	 */
-	public Long addAddtional(Long contactId, Object... value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#addEmail(java.lang.Long, java.lang.Object[])
-	 */
-	public Long addEmail(Long contactId, Object... value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#addIM(java.lang.Long, java.lang.Object[])
-	 */
-	public Long addIM(Long contactId, Object... value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#addTel(java.lang.Long, java.lang.Object[])
-	 */
-	public Long addTel(Long contactId, Object... value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#addURL(java.lang.Long, java.lang.Object[])
-	 */
-	public Long addURL(Long contactId, Object... value) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.UserDAO#delAddr(java.lang.Long)
 	 */
 	public void delAddr(Long id) {
-		// TODO Auto-generated method stub
-		
+		try {
+			UserAddressDAOHibernate uadh = new UserAddressDAOHibernate();
+			UserAddress userAddr = uadh.findById(id);
+			uadh.begin();
+			uadh.makeTransient(userAddr);
+			uadh.commit();
+		} catch (ObjectNotFoundException e) {
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find address item with give id");
+		}
 	}
 
 	/* (non-Javadoc)
@@ -92,7 +60,16 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 	 * @see org.net9.minipie.server.db.dao.UserDAO#delEmail(java.lang.Long)
 	 */
 	public void delEmail(Long id) {
-		// TODO Auto-generated method stub
+		try {
+			UserEmailDAOHibernate uedh = new UserEmailDAOHibernate();
+			UserEmail userEmail = uedh.findById(id);
+			uedh.begin();
+			uedh.makeTransient(userEmail);
+			uedh.commit();
+		} catch (ObjectNotFoundException e) {
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find email item with give id");
+		}
 		
 	}
 
@@ -100,7 +77,16 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 	 * @see org.net9.minipie.server.db.dao.UserDAO#delIM(java.lang.Long)
 	 */
 	public void delIM(Long id) {
-		// TODO Auto-generated method stub
+		try {
+			UserIMDAOHibernate uidh = new UserIMDAOHibernate();
+			UserIM userIM = uidh.findById(id);
+			uidh.begin();
+			uidh.makeTransient(userIM);
+			uidh.commit();
+		} catch (ObjectNotFoundException e) {
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find im item with give id");
+		}
 		
 	}
 
@@ -108,7 +94,16 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 	 * @see org.net9.minipie.server.db.dao.UserDAO#delTel(java.lang.Long)
 	 */
 	public void delTel(Long id) {
-		// TODO Auto-generated method stub
+		try {
+			UserPhoneDAOHibernate updh = new UserPhoneDAOHibernate();
+			UserPhoneNo userPhone = updh.findById(id);
+			updh.begin();
+			updh.makeTransient(userPhone);
+			updh.commit();
+		} catch (ObjectNotFoundException e) {
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find phone item with give id");
+		}
 		
 	}
 
@@ -116,63 +111,15 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 	 * @see org.net9.minipie.server.db.dao.UserDAO#delURL(java.lang.Long)
 	 */
 	public void delURL(Long id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#editAdditional(java.lang.Long, java.lang.String, java.lang.Object)
-	 */
-	public void editAdditional(Long id, String attribute, Object value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#editAddr(java.lang.Long, java.lang.String, java.lang.Object)
-	 */
-	public void editAddr(Long id, String attribute, Object value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#editBasicInfo(java.lang.Long, java.lang.String, java.lang.Object)
-	 */
-	public void editBasicInfo(Long id, String attribute, Object value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#editEmail(java.lang.Long, java.lang.String, java.lang.Object)
-	 */
-	public void editEmail(Long id, String attribute, Object value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#editIM(java.lang.Long, java.lang.String, java.lang.Object)
-	 */
-	public void editIM(Long id, String attribute, Object value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#editTel(java.lang.Long, java.lang.String, java.lang.Object)
-	 */
-	public void editTel(Long id, String attribute, Object value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#editURL(java.lang.Long, java.lang.String, java.lang.Object)
-	 */
-	public void editURL(Long id, String attribute, Object value) {
-		// TODO Auto-generated method stub
+		try {
+			UserURLDAOHibernate uudh = new UserURLDAOHibernate();
+			UserURL userURL = uudh.findById(id);
+			uudh.begin();
+			uudh.makeTransient(userURL);
+			uudh.commit();
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("Cannt find url item with give id");
+		}
 		
 	}
 

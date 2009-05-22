@@ -14,17 +14,17 @@ import org.net9.minipie.server.logic.storage.UserStorage;
 public interface UserDAO extends GenericDAO<User, Long>, UserStorage {
 	Long add(String name, String pwd, String email);
 
-	Long addAddr(Long userId, Object... value);
+	Long addAddr(Long userId, AddressData value);
 
 	Long addAddtional(Long contactId, Object... value);
 
-	Long addEmail(Long contactId, Object... value);
+	Long addEmail(Long contactId, EmailData value);
 
-	Long addIM(Long contactId, Object... value);
+	Long addIM(Long contactId, IMData value);
 
-	Long addTel(Long contactId, Object... value);
+	Long addTel(Long contactId, PhoneNoData value);
 
-	Long addURL(Long contactId, Object... value);
+	Long addURL(Long contactId, URLData value);
 
 	void delAddr(Long id);
 
@@ -38,19 +38,19 @@ public interface UserDAO extends GenericDAO<User, Long>, UserStorage {
 
 	void delURL(Long id);
 
-	void editAddr(Long id, String attribute, Object value);
+	void editAddr(Long id, InfoField attribute, Object value);
 
-	void editAdditional(Long id, String attribute, Object value);
+	void editAdditional(Long id, InfoField attribute, Object value);
 
-	void editBasicInfo(Long id, String attribute, Object value);
+	void editBasicInfo(Long id, InfoField attribute, Object value);
 
-	void editEmail(Long id, String attribute, Object value);
+	void editEmail(Long id, InfoField attribute, Object value);
 
-	void editIM(Long id, String attribute, Object value);
+	void editIM(Long id, InfoField attribute, Object value);
 
-	void editTel(Long id, String attribute, Object value);
+	void editTel(Long id, InfoField attribute, Object value);
 
-	void editURL(Long id, String attribute, Object value);
+	void editURL(Long id, InfoField attribute, Object value);
 
 	//List<Object[]> search(Object... criteria);
 

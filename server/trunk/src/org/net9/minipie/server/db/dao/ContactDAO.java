@@ -44,19 +44,19 @@ public interface ContactDAO extends GenericDAO<Contact, Long>, ContactStorage {
 
 	void delURL(Long id);
 
-	void editAddr(Long id, String attribute, Object value);
+	void editAddr(Long id, InfoField attribute, Object value);
 
-	void editAdditional(Long id, String attribute, Object value);
+	void editAdditional(Long id, InfoField attribute, Object value);
 
-	void editBasicInfo(Long id, String attribute, Object value);
+	void editBasicInfo(Long id, InfoField attribute, Object value);
 
-	void editEmail(Long id, String attribute, Object value);
+	void editEmail(Long id, InfoField attribute, Object value);
 
-	void editIM(Long id, String attribute, Object value);
+	void editIM(Long id, InfoField attribute, Object value);
 
-	void editTel(Long id, String attribute, Object value);
+	void editTel(Long id, InfoField attribute, Object value);
 
-	void editURL(Long id, String attribute, Object value);
+	void editURL(Long id, InfoField attribute, Object value);
 
 	List<Object[]> search(Object... criteria);
 
