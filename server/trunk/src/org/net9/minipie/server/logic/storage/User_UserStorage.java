@@ -16,11 +16,11 @@ import org.net9.minipie.server.data.storage.CommonListEntry;
  *
  */
 public interface User_UserStorage {
-	public void add(long userId1,long userId2);
-	public void del(long userId1,long userId2);
-	public void edit(long userId1,long userId2,InfoField attribute,Object value);
-	public String selectRelationship(long userId1,long userId2);
+	public void add(Long userId1,Long userId2);
+	public void del(Long userId1,Long userId2);
+	public void edit(Long userId1,Long userId2,InfoField attribute,Object value);
+	public String selectRelationship(Long userId1,Long userId2);
 	//��l��:user
-	public Collection<CommonListEntry> selectSharedUser(long userId,Permission permission); 
+	public Collection<CommonListEntry> selectSharedUser(Long userId,Permission permission); 
 	
 }

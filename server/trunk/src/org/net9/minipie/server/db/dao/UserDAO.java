@@ -55,17 +55,17 @@ public interface UserDAO extends GenericDAO<User, Long>, UserStorage {
 
 	//List<Object[]> search(Object... criteria);
 
-	List<AddressData> selectAddr(Long contactId);
+	List<AddressData> selectAddr(Long userId);
 
 	//List<Object[]> selectAddtional(Long contactId);
 
-	List<BasicUser> selectBasicInfo(Long contactId);
+	BasicUser selectBasicInfo(Long userId);
 
-	List<EmailData> selectEmail(Long contactId);
+	List<EmailData> selectEmail(Long userId);
 
-	List<IMData> selectIM(Long contactId);
+	List<IMData> selectIM(Long userId);
 
-	List<PhoneNoData> selectTel(Long contactId);
+	List<PhoneNoData> selectTel(Long userId);
 
-	List<URLData> selectURL(Long contactId);
+	List<URLData> selectURL(Long userId);
 }

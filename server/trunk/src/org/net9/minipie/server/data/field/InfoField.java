@@ -15,7 +15,10 @@ public enum InfoField {
 	NAME("name"), NICKNAME("nickname"), BIRTHDAY("birthday"), GENDER("gender"), NOTE(
 			"note"), RELATIONSHIP("relationship"), VALUE("value"), PRIMARY(
 			"primary"), ZIPCODE("zipcode"), TYPE("type"), PERMISSION(
-			"permission");
+			"permission"),BIRTHDAYPERMISSION("birthdayPermission")
+			,BIRTHYEARPERMISSION("birthyearPermission"),REGISTEREMAIL("registerEmail")
+			,PASSWORD("password"),DISPLAYNAME("displayName")
+			,GENDERPERMISSION("genderPermission");
 	private String field;
 
 	/**

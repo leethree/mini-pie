@@ -439,7 +439,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 							.getShadowOf().getId() : 0,
 					(contact.getGroup() != null) ? contact.getGroup().getId()
 							: 0, (contact.getPermission() != null) ? contact
-							.getPermission() : null);
+							.getPermission() : Permission.TO_CONTACTS);  // to contact is default
 			return basicContact;
 		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("There's no contact with ID: "

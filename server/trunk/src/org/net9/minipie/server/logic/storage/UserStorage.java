@@ -65,7 +65,7 @@ public interface UserStorage {
 
 	//List<> selectAddtional(Long userId);
 
-	List<BasicUser> selectBasicInfo(Long userId);
+	BasicUser selectBasicInfo(Long userId);
 
 	List<EmailData> selectEmail(Long userId);
 

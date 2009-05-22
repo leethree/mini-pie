@@ -52,7 +52,7 @@ public class IMData implements Info {
 	}
 
 	public void setType(String type) {
-		if (value == null)
+		if (type == null)
 			this.type = null;
 		else
 			this.type = Formatter.compact(type);

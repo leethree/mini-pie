@@ -1,6 +1,7 @@
 package org.net9.minipie.server.db.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,10 +14,10 @@ import org.net9.minipie.server.data.entity.EmailData;
 import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
+import org.net9.minipie.server.data.field.Gender;
 import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicUser;
-import org.net9.minipie.server.db.entity.ContactEmail;
 import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.db.entity.UserAddress;
 import org.net9.minipie.server.db.entity.UserEmail;
@@ -155,7 +156,7 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 					addressData.setPrimary(true);
 				else
 					addressData.setPrimary(false);
-				addressData.setPermission(Permission.TO_CONTACTS);
+				addressData.setPermission(userAddr.getPerm());
 				selectedResult.add(addressData);
 			}
 			return selectedResult;
@@ -170,41 +171,150 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.UserDAO#selectBasicInfo(java.lang.Long)
 	 */
-	public List<BasicUser> selectBasicInfo(Long contactId) {
-		// TODO Auto-generated method stub
-		return null;
+	public BasicUser selectBasicInfo(Long userId) {
+		try{
+			UserDAOHibernate udh = new UserDAOHibernate();
+			User user = udh.findById(userId);
+			BasicUser result = new BasicUser(user.getId(), user.getUserName(), user.getRegisterEmail(),
+					user.getPassword(), user.getImageURL(), user.getNickName(), user.getDisplayName(),
+					user.getGenderPermission(), user.getBirthdayPermission(), user.getBirthyearPermission(),
+					user.getGender(), user.getBirthday().toString(), user.getNotes());
+			return result;
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("There's no user with ID: "
+					+ userId);
+		} catch (DataFormatException e) {
+			System.out.println("Date format error");
+			throw new ServerErrorException("error date format");
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.UserDAO#selectEmail(java.lang.Long)
 	 */
-	public List<EmailData> selectEmail(Long contactId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<EmailData> selectEmail(Long userId) {
+		try {
+			UserEmailDAOHibernate uedh = new UserEmailDAOHibernate();
+			Criterion criterion = Restrictions.eq("user.id", userId);
+			List<UserEmail> result = uedh.findByCriteria(criterion);
+			List<EmailData> selectedResult = new ArrayList<EmailData>();
+			Iterator<UserEmail> iter = result.iterator();
+			while (iter.hasNext()) {
+				UserEmail userEmail = (UserEmail) iter.next();
+				EmailData emailData = new EmailData();
+				emailData.setId(userEmail.getId());
+				emailData.setValue(userEmail.getValue());
+				emailData.setType(userEmail.getType());
+				if (userEmail.getPrimary() == Bool.TRUE)
+					emailData.setPrimary(true);
+				else
+					emailData.setPrimary(false);
+				emailData.setPermission(userEmail.getPerm());
+				selectedResult.add(emailData);
+			}
+			return selectedResult;
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("There's no user with ID: "
+					+ userId);
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.UserDAO#selectIM(java.lang.Long)
 	 */
-	public List<IMData> selectIM(Long contactId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<IMData> selectIM(Long userId) {
+		try {
+			UserIMDAOHibernate uidh = new UserIMDAOHibernate();
+			Criterion criterion = Restrictions.eq("user.id", userId);
+			List<UserIM> result = uidh.findByCriteria(criterion);
+			List<IMData> selectedResult = new ArrayList<IMData>();
+			Iterator<UserIM> iter = result.iterator();
+			while (iter.hasNext()) {
+				UserIM userIM = (UserIM) iter.next();
+				IMData imData = new IMData();
+				imData.setId(userIM.getId());
+				imData.setValue(userIM.getValue());
+				imData.setType(userIM.getType());
+				if (userIM.getPrimary() == Bool.TRUE)
+					imData.setPrimary(true);
+				else
+					imData.setPrimary(false);
+				imData.setPermission(userIM.getPerm());
+				selectedResult.add(imData);
+			}
+			return selectedResult;
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("There's no user with ID: "
+					+ userId);
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.UserDAO#selectTel(java.lang.Long)
 	 */
-	public List<PhoneNoData> selectTel(Long contactId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PhoneNoData> selectTel(Long userId) {
+		try {
+			UserPhoneDAOHibernate updh = new UserPhoneDAOHibernate();
+			Criterion criterion = Restrictions.eq("user.id", userId);
+			List<UserPhoneNo> result = updh.findByCriteria(criterion);
+			List<PhoneNoData> selectedResult = new ArrayList<PhoneNoData>();
+			Iterator<UserPhoneNo> iter = result.iterator();
+			while (iter.hasNext()) {
+				UserPhoneNo userPhone = (UserPhoneNo) iter.next();
+				PhoneNoData phoneData = new PhoneNoData();
+				phoneData.setId(userPhone.getId());
+				phoneData.setValue(userPhone.getValue());
+				phoneData.setType(userPhone.getType());
+				if (userPhone.getPrimary() == Bool.TRUE)
+					phoneData.setPrimary(true);
+				else
+					phoneData.setPrimary(false);
+				phoneData.setPermission(userPhone.getPerm());
+				selectedResult.add(phoneData);
+			}
+			return selectedResult;
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("There's no user with ID: "
+					+ userId);
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.UserDAO#selectURL(java.lang.Long)
 	 */
-	public List<URLData> selectURL(Long contactId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<URLData> selectURL(Long userId) {
+		try {
+			UserURLDAOHibernate uudh = new UserURLDAOHibernate();
+			Criterion criterion = Restrictions.eq("contact.id", userId);
+			List<UserURL> result = uudh.findByCriteria(criterion);
+			List<URLData> selectedResult = new ArrayList<URLData>();
+			Iterator<UserURL> iter = result.iterator();
+			while (iter.hasNext()) {
+				UserURL userURL = (UserURL) iter.next();
+				URLData urlData = new URLData();
+				urlData.setId(userURL.getId());
+				urlData.setValue(userURL.getValue());
+				urlData.setType(userURL.getType());
+				if (userURL.getPrimary() == Bool.TRUE)
+					urlData.setPrimary(true);
+				else
+					urlData.setPrimary(false);
+				urlData.setPermission(userURL.getPerm());
+				selectedResult.add(urlData);
+			}
+			return selectedResult;
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("There's no contact with ID: "
+					+ userId);
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
+		}
 	}
 
 	/* (non-Javadoc)
@@ -371,18 +481,48 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		User user = null;
 		try{
 			user = udh.findById(userId);
+			if(attribute==InfoField.NAME){
+				String userName = (String) value;
+				user.setUserName(userName);
+			}else if(attribute==InfoField.REGISTEREMAIL){
+				String registerEmail = (String) value;
+				user.setRegisterEmail(registerEmail);
+			}else if(attribute==InfoField.PASSWORD){
+				String password = (String) value;
+				user.setPassword(password);
+			}else if(attribute==InfoField.NICKNAME){
+				String nickname = (String) value;
+				user.setNickName(nickname);
+			}else if(attribute==InfoField.DISPLAYNAME){
+				String displayName = (String)value;
+				user.setDisplayName(displayName);
+			}else if(attribute==InfoField.GENDERPERMISSION){
+				Permission gPerm = (Permission) value;
+				user.setGenderPermission(gPerm);
+			}else if(attribute==InfoField.BIRTHDAYPERMISSION){
+				Permission bdPerm = (Permission) value;
+				user.setBirthdayPermission(bdPerm);
+			}else if(attribute==InfoField.BIRTHYEARPERMISSION){
+				Permission byPerm = (Permission) value;
+				user.setBirthyearPermission(byPerm);
+			}else if(attribute==InfoField.GENDER){
+				Gender gender = (Gender) value;
+				user.setGender(gender);
+			}else if(attribute==InfoField.BIRTHDAY){
+				Date birthday = (Date)value;
+				user.setBirthday(birthday);
+			}else if(attribute==InfoField.NOTE){
+				String note = (String) value;
+				user.setNotes(note);
+			}
+			udh.begin();
+			udh.makePersistent(user);
+			udh.commit();
 		}catch(ObjectNotFoundException e){
 			e.printStackTrace();
-			throw new NotFoundException("Cannot find user info "+ attribute
-					+ " item with given userId");
+			throw new NotFoundException("Cannt find attribute " + attribute
+					+ " item with give id");
 		}
-		if(attribute==InfoField.NAME){
-			String userName = (String) value;
-			user.setUserName(userName);
-		}
-		udh.begin();
-		udh.makePersistent(user);
-		udh.commit();
 		
 	}
 
@@ -421,24 +561,96 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.logic.storage.UserStorage#editIM(java.lang.Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
-	public void editIM(Long userId, InfoField attribute, Object value) {
-		// TODO Auto-generated method stub
+	public void editIM(Long id, InfoField attribute, Object value) {
+		UserIMDAOHibernate uidh = new UserIMDAOHibernate();
+		UserIM userIM = null;
+		try {
+			userIM = uidh.findById(id);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find im " + attribute
+					+ " item with give id");
+		}
+		if (attribute==InfoField.VALUE) {
+			String im = (String) value;
+			userIM.setValue(im);
+		} else if (attribute==InfoField.TYPE) {
+			String type = (String) value;
+			userIM.setType(type);
+		} else if (attribute==InfoField.PRIMARY) {
+			Bool primary = (Bool) value;
+			userIM.setPrimary(primary);
+		} else if(attribute==InfoField.PERMISSION){
+			Permission perm = (Permission) value;
+			userIM.setPerm(perm);
+		}
+		uidh.begin();
+		uidh.makePersistent(userIM);
+		uidh.commit();
 		
 	}
 
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.logic.storage.UserStorage#editTel(java.lang.Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
-	public void editTel(Long userId, InfoField attribute, Object value) {
-		// TODO Auto-generated method stub
+	public void editTel(Long id, InfoField attribute, Object value) {
+		UserPhoneDAOHibernate updh = new UserPhoneDAOHibernate();
+		UserPhoneNo userPhone = null;
+		try {
+			userPhone = updh.findById(id);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find tel " + attribute
+					+ " item with give id");
+		}
+		if (attribute==InfoField.VALUE) {
+			String tel = (String) value;
+			userPhone.setValue(tel);
+		} else if (attribute==InfoField.TYPE) {
+			String type = (String) value;
+			userPhone.setType(type);
+		} else if (attribute==InfoField.PRIMARY) {
+			Bool primary = (Bool) value;
+			userPhone.setPrimary(primary);
+		} else if(attribute==InfoField.PERMISSION){
+			Permission perm = (Permission) value;
+			userPhone.setPerm(perm);
+		}
+		updh.begin();
+		updh.makePersistent(userPhone);
+		updh.commit();
 		
 	}
 
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.logic.storage.UserStorage#editURL(java.lang.Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
-	public void editURL(Long userId, InfoField attribute, Object value) {
-		// TODO Auto-generated method stub
+	public void editURL(Long id, InfoField attribute, Object value) {
+		UserURLDAOHibernate uudh = new UserURLDAOHibernate();
+		UserURL userURL = null;
+		try {
+			userURL = uudh.findById(id);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			throw new NotFoundException("Cannt find url " + attribute
+					+ " item with give id");
+		}
+		if (attribute==InfoField.VALUE) {
+			String url = (String) value;
+			userURL.setValue(url);
+		} else if (attribute==InfoField.TYPE) {
+			String type = (String) value;
+			userURL.setType(type);
+		} else if (attribute==InfoField.PRIMARY) {
+			Bool primary = (Bool) value;
+			userURL.setPrimary(primary);
+		} else if(attribute==InfoField.PERMISSION){
+			Permission perm = (Permission) value;
+			userURL.setPerm(perm);
+		}
+		uudh.begin();
+		uudh.makePersistent(userURL);
+		uudh.commit();
 		
 	}
 
