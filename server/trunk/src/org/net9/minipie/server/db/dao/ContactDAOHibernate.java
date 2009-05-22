@@ -29,9 +29,10 @@ import org.net9.minipie.server.db.entity.enums.Bool;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.ServerErrorException;
+import org.net9.minipie.server.logic.storage.ContactStorage;
 
 public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
-		implements ContactDAO {
+		implements ContactDAO, ContactStorage {
 
 	public Long addAddr(Long contactId, AddressData addressData) {
 		Contact contact = findById(contactId);
@@ -656,5 +657,13 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 
 	public void makeTransient(Contact entity) {
 		super.makeTransient(entity);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.db.dao.ContactDAO#editAdditional(java.lang.Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
+	 */
+	public void editAdditional(Long id, InfoField attribute, Object value) {
+		// TODO Auto-generated method stub
+		
 	}
 }

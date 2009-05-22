@@ -7,6 +7,7 @@ import org.net9.minipie.server.data.entity.EmailData;
 import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
+import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.storage.BasicUser;
 import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.logic.storage.UserStorage;
