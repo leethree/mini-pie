@@ -15,8 +15,8 @@ import javax.ws.rs.core.UriInfo;
 import org.net9.minipie.server.data.api.PhonebookContactListEntry;
 import org.net9.minipie.server.data.api.PhonebookContactList;
 import org.net9.minipie.server.logic.Handler;
-import org.net9.minipie.server.logic.operation.AddMyContact;
-import org.net9.minipie.server.logic.operation.ListMyContact;
+import org.net9.minipie.server.logic.operation.contact.AddMyContact;
+import org.net9.minipie.server.logic.operation.contact.ListMyContact;
 
 import com.sun.jersey.api.core.ResourceContext;
 

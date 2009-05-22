@@ -18,5 +18,6 @@ public interface Tag_UserStorage {
 	public void add(long tagId,long userId);
 	public void del(long tagId,long userId);
 	public Collection<TagEntry> selectTagsOfUser(long userId,long ownerId);
+	//±Ì¡¨Ω”£∫user
 	public Collection<CommonListEntry> selectTaggedUser(long tagId);
 }

@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.net9.minipie.server.data.entity.ContactEntity;
+import org.net9.minipie.server.data.entity.CommonEntity;
 
 /**
  * @author Seastar, LeeThree
@@ -17,14 +17,14 @@ import org.net9.minipie.server.data.entity.ContactEntity;
  */
 @XmlType(name = "contact")
 public class ContactListEntry {
-	private ContactEntity entity;
+	private CommonEntity entity;
 
 	/**
 	 * Constructor
 	 * 
 	 * @param entity
 	 */
-	public ContactListEntry(ContactEntity entity) {
+	public ContactListEntry(CommonEntity entity) {
 		this.entity = entity;
 	}
 

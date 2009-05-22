@@ -17,7 +17,7 @@ import org.net9.minipie.server.exception.ServerErrorException;
  * @author Seastar
  * 
  */
-public abstract class CommonEntity {
+public class CommonEntity {
 	private long id;
 	private String name;
 	private String image;

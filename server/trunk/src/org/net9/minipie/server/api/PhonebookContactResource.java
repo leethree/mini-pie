@@ -14,10 +14,10 @@ import org.net9.minipie.server.data.api.StatusReportList;
 import org.net9.minipie.server.data.api.Update;
 import org.net9.minipie.server.data.api.UpdateList;
 import org.net9.minipie.server.logic.Handler;
-import org.net9.minipie.server.logic.operation.DeleteMyContact;
 import org.net9.minipie.server.logic.operation.MacroCommand;
-import org.net9.minipie.server.logic.operation.UpdateMyContact;
-import org.net9.minipie.server.logic.operation.ViewMyContact;
+import org.net9.minipie.server.logic.operation.contact.DeleteMyContact;
+import org.net9.minipie.server.logic.operation.contact.UpdateMyContact;
+import org.net9.minipie.server.logic.operation.contact.ViewMyContact;
 
 public class PhonebookContactResource {
 	@SuppressWarnings("unused")

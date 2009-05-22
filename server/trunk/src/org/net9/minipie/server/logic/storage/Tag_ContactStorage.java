@@ -17,7 +17,7 @@ import org.net9.minipie.server.data.storage.CommonListEntry;
 public interface Tag_ContactStorage {
 	public void add(long tagId,long contactId);
 	public void del(long tagId,long contactId);
-	public Collection<TagEntry> selectTagsOfContact(long contactId,long ownerId);
+	public Collection<TagEntry> selectTagsOfContact(long contactId);
 	//±Ì¡¨Ω”£∫contact
 	public Collection<CommonListEntry> selectTaggedContact(long tagId);
 }

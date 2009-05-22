@@ -5,14 +5,14 @@
  */
 package org.net9.minipie.server.logic;
 
-import org.net9.minipie.server.logic.operation.AddMyContact;
+import org.net9.minipie.server.logic.operation.contact.AddMyContact;
 
 /**
  * @author Seastar
  * 
  */
 public class LogicTest {
-	void test() {
+	public static void main(String avg[]) {
 		long i = new Handler<Long>(new AddMyContact(111111L, "oo")).excute();
 		System.out.print(i);
 	}

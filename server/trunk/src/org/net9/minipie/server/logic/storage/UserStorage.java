@@ -49,15 +49,15 @@ public interface UserStorage {
 
 	//void editAdditional(Long userId, InfoField attribute, Object value);
 
-	void editBasicInfo(Long userId, InfoField attribute, Object value);
+	void editBasicInfo(Long Id, InfoField attribute, Object value);
 
-	void editEmail(Long userId, InfoField attribute, Object value);
+	void editEmail(Long Id, InfoField attribute, Object value);
 
-	void editIM(Long userId, InfoField attribute, Object value);
+	void editIM(Long Id, InfoField attribute, Object value);
 
-	void editTel(Long userId, InfoField attribute, Object value);
+	void editTel(Long Id, InfoField attribute, Object value);
 
-	void editURL(Long userId, InfoField attribute, Object value);
+	void editURL(Long Id, InfoField attribute, Object value);
 
 	//List<Object[]> search(Object... criteria);
 
