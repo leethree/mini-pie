@@ -1,35 +1,52 @@
 /**
- * ViewMyContact.java
+ * UpdateContact.java
  *     in package: * org.net9.minipie.server.logic.operation
  * by Mini-Pie Project
  */
-package org.net9.minipie.server.logic.operation;
+package org.net9.minipie.server.logic.operation.contact;
 
-import org.net9.minipie.server.data.api.PhonebookCompleteContact;
+import org.net9.minipie.server.data.api.Update;
 import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.PermissionDeniedException;
+import org.net9.minipie.server.logic.exception.UpdateException;
+import org.net9.minipie.server.logic.operation.Command;
+import org.net9.minipie.server.logic.operation.util.UpdateHandler;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
 /**
  * @author Seastar
  * 
  */
-public class ViewMyContact extends Command<PhonebookCompleteContact> {
+public class UpdateMyContact extends Command<Void> {
+	private Update datas;
 	private Long contactId;
 	private Long userId;
-
+	//private ErrorReport errorReport;
+	//private Collection<String> err;
 	/**
 	 * Constructor
 	 * 
 	 * @param contactid
 	 * @param userId
 	 */
-	public ViewMyContact(Long userId, Long contactId) {
+	public UpdateMyContact(Long userId, Long contactId, Update data) {
 		super();
+		setData(data);
 		setContactId(contactId);
 		setUserId(userId);
+	}
+
+	/**
+	 * @param date
+	 *            the date to set
+	 */
+	public void setData(Update data) {
+		if (data == null) {
+			throw new InvalidRequestException("No changed data");
+		}
+		this.datas = data;
 	}
 
 	/**
@@ -56,7 +73,7 @@ public class ViewMyContact extends Command<PhonebookCompleteContact> {
 	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	public PhonebookCompleteContact execute() {
+	public Void execute() {
 		ContactStorage executor = getStorageFactory().getContactStorage();
 		ContactEntity contact = executor.selectBasicInfo(contactId).getEntity();
 		if (contact.getOwnerId() != userId) {
@@ -65,13 +82,13 @@ public class ViewMyContact extends Command<PhonebookCompleteContact> {
 		} else if (contact.getShadowOf() != 0) {
 			throw new NotFoundException("No contact found");
 		} else {
-			contact.setEmails(executor.selectEmail(contactId));
-			contact.setAddrs(executor.selectAddr(contactId));
-			contact.setIms(executor.selectIM(contactId));
-			contact.setTels(executor.selectTel(contactId));
-			contact.setUrls(executor.selectURL(contactId));
+			try {
+				new UpdateHandler(datas,executor,contactId).handleUpdate();
+			} catch (UpdateException e) {
+				throw new InvalidRequestException(e.getMessage());
+			}							
 		}
-		return new PhonebookCompleteContact(contact);
+		return null;
 	}
-
+	
 }

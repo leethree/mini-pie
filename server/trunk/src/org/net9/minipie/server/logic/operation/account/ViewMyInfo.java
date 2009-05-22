@@ -3,9 +3,10 @@
  *     in package: * org.net9.minipie.server.logic.operation
  * by Mini-Pie Project
  */
-package org.net9.minipie.server.logic.operation;
+package org.net9.minipie.server.logic.operation.account;
 
 import org.net9.minipie.server.data.api.PersonalProfile;
+import org.net9.minipie.server.logic.operation.Command;
 
 /**
  * @author Seastar

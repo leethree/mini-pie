@@ -1,22 +1,24 @@
 /**
- * SignUp.java
+ * UpdateMyInfo.java
  *     in package: * org.net9.minipie.server.logic.operation
  * by Mini-Pie Project
  */
-package org.net9.minipie.server.logic.operation;
+package org.net9.minipie.server.logic.operation.account;
+
+import org.net9.minipie.server.logic.operation.Command;
 
 /**
  * @author Seastar
  * 
  */
-public class SignUp extends Command<Long> {
-
+public class UpdateMyInfo extends Command<Void> {
+ 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
-	public Long execute() {
+	public Void execute() {
 		// TODO Auto-generated method stub
 		return null;
 	}

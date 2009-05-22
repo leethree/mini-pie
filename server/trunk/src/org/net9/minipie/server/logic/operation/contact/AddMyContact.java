@@ -3,9 +3,10 @@
  *     in package: * org.net9.minipie.server.logic
  * by Mini-Pie Project
  */
-package org.net9.minipie.server.logic.operation;
+package org.net9.minipie.server.logic.operation.contact;
 
 import org.net9.minipie.server.exception.InvalidRequestException;
+import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
 /**
