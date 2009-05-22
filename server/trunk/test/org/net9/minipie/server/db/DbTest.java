@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.net9.minipie.server.db.dao.ContactDAOHibernate;
 import org.net9.minipie.server.db.dao.UserDAOHibernate;
+import org.net9.minipie.server.db.dao.User_UserDAOHibernate;
 import org.net9.minipie.server.db.entity.enums.Bool;
 import org.net9.minipie.server.data.entity.AddressData;
 import org.net9.minipie.server.data.entity.EmailData;
@@ -27,26 +28,42 @@ public class DbTest {
 		try {
 			UserDAOHibernate dao = new UserDAOHibernate();
 			Long l = dao.add("jinyq06", "123", "jinyq06@gmail.com");
-			Long adId = dao.addAddr(l, new AddressData(0, "home", "Zijing", false, "Tsinghua", "100084",
+			Long l2 = dao.add("tom", "333", "tom06@gmail.com");
+			System.out.println("l "+l+"l2 "+l2);
+			User_UserDAOHibernate bindManager = new User_UserDAOHibernate();
+			bindManager.add(l2, l);
+			System.out.println("long id "+l);
+			Long adId = dao.addAddr(l, new AddressData(1, "home", "Zijing", false, "Tsinghua", "100084",
 					Permission.TO_CONTACTS));
 			ContactDAOHibernate cdh = new ContactDAOHibernate();
 			Long contact1Id = cdh.addUserContact(l, "her");
-			cdh.editBasicInfo(new Long(-1), InfoField.NICKNAME, "mama");
 			cdh.editBasicInfo(contact1Id, InfoField.NAME, "Jersey");
 			cdh.editBasicInfo(contact1Id, InfoField.GENDER, Gender.FEMALE);
 			cdh.editBasicInfo(contact1Id, InfoField.NOTE, "this is my best friend");
 			cdh.editBasicInfo(contact1Id, InfoField.RELATIONSHIP, "friends");
-			Long contact1AddrId = cdh.addAddr(contact1Id, new AddressData(0,
-					"Tsinghua", "University", false, null, null, null));
+			AddressData addressData = new AddressData();
+			addressData.setPermission(Permission.TO_CONTACTS);
+			addressData.setPrimary(false);
+			addressData.setType("home");
+			addressData.setValue("zijing");
+			addressData.setZipcode("10084");
+			Long contact1AddrId = cdh.addAddr(contact1Id, addressData);
 			cdh.editAddr(contact1AddrId, InfoField.VALUE, "zijing building");
-			Long contact1EmailId = cdh.addEmail(contact1Id, new EmailData(0,
-					"jinyq06@gmail", "gmail", true, null));
-			Long contact1IMId = cdh.addIM(contact1Id, new IMData(0,
-					"601524835", null, false, null));
-			Long contact1PhoneId = cdh.addTel(contact1Id, new PhoneNoData(0,
-					"110", "home", false, null));
-			Long contact1URLId = cdh.addURL(contact1Id, new URLData(0, null,
-					"url", true, null));
+			EmailData emailData = new EmailData();
+			emailData.setPermission(Permission.TO_EVERYONE);
+			emailData.setPrimary(true);
+			emailData.setType("main");
+			emailData.setValue("jinyq06@gmail.com");
+			Long contact1EmailId = cdh.addEmail(contact1Id, emailData);
+			IMData imData = new IMData();
+			imData.setValue("601524835");
+			Long contact1IMId = cdh.addIM(contact1Id, imData);
+			PhoneNoData phoneNoData = new PhoneNoData();
+			phoneNoData.setValue("13581979236");
+			Long contact1PhoneId = cdh.addTel(contact1Id, phoneNoData);
+			URLData urlData = new URLData();
+			urlData.setValue("www.google.cn/my.jpg");
+			Long contact1URLId = cdh.addURL(contact1Id, urlData);
 			BasicContact result = cdh.selectBasicInfo(contact1Id);
 			List<AddressData> addresses = cdh.selectAddr(contact1Id);
 			Iterator<AddressData> iter1 = addresses.iterator();
