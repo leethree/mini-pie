@@ -13,6 +13,7 @@ import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.field.Gender;
+import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicContact;
 
@@ -26,19 +27,18 @@ public class DbTest {
 		try {
 			UserDAOHibernate dao = new UserDAOHibernate();
 			Long l = dao.add("jinyq06", "123", "jinyq06@gmail.com");
-			Long adId = dao.addAddr(l, "home", null, "100084", Bool.FALSE,
-					Permission.TO_CONTACTS);
+			Long adId = dao.addAddr(l, new AddressData(0, "home", "Zijing", false, "Tsinghua", "100084",
+					Permission.TO_CONTACTS));
 			ContactDAOHibernate cdh = new ContactDAOHibernate();
 			Long contact1Id = cdh.addUserContact(l, "her");
-			cdh.editBasicInfo(new Long(-1), "nickName", "mama");
-			cdh.editBasicInfo(contact1Id, "name", "Jersey");
-			cdh.editBasicInfo(contact1Id, "gender", Gender.FEMALE);
-			cdh.editBasicInfo(contact1Id, "image", "http://server2.net9");
-			cdh.editBasicInfo(contact1Id, "notes", "this is my best friend");
-			cdh.editBasicInfo(contact1Id, "relationship", "friends");
+			cdh.editBasicInfo(new Long(-1), InfoField.NICKNAME, "mama");
+			cdh.editBasicInfo(contact1Id, InfoField.NAME, "Jersey");
+			cdh.editBasicInfo(contact1Id, InfoField.GENDER, Gender.FEMALE);
+			cdh.editBasicInfo(contact1Id, InfoField.NOTE, "this is my best friend");
+			cdh.editBasicInfo(contact1Id, InfoField.RELATIONSHIP, "friends");
 			Long contact1AddrId = cdh.addAddr(contact1Id, new AddressData(0,
 					"Tsinghua", "University", false, null, null, null));
-			cdh.editAddr(contact1AddrId, "value", "zijing building");
+			cdh.editAddr(contact1AddrId, InfoField.VALUE, "zijing building");
 			Long contact1EmailId = cdh.addEmail(contact1Id, new EmailData(0,
 					"jinyq06@gmail", "gmail", true, null));
 			Long contact1IMId = cdh.addIM(contact1Id, new IMData(0,
