@@ -198,9 +198,32 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		return id;
 	}
 
-	public Long addUserShadow(Long userId, Long targeted) {
-		// TODO Auto-generated method stub
-		return null;
+	public Long addUserShadow(Long userId, Long targetId) {
+		Contact shadow = new Contact();
+		shadow.setName("SHADOW");
+		UserDAOHibernate udh = new UserDAOHibernate();
+		User owner = null;
+		User target = null;
+		try{
+			owner = udh.findById(userId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("there is no user with userId: "+userId);
+		}
+		try{
+			target = udh.findById(targetId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("there is no user with userId: "+targetId);
+		}
+		shadow.setOwner(owner);
+		shadow.setShadowOf(target);
+		begin();
+		makePersistent(shadow);
+		commit();
+		owner.getShadows().add(shadow);
+		udh.begin();
+		udh.makePersistent(owner);
+		udh.commit();
+		return shadow.getId();
 	}
 
 	public void del(Long contactId) {
@@ -607,9 +630,37 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		}
 	}
 
-	public List<Object[]> selectShadow(Long ownerId, Long shadowOf) {
-		// TODO Auto-generated method stub
-		return null;
+	public BasicContact selectShadow(Long ownerId, Long shadowOf) {
+		Criterion criterion1 = Restrictions.eq("owner.id", ownerId);
+		Criterion criterion2 = Restrictions.eq("shadowOf.id", shadowOf);
+		Contact shadow = null;
+		try{
+			List<Contact> contacts = findByCriteria(criterion1, criterion2);
+			if(contacts.isEmpty()){
+				throw new NotFoundException("there is no shadow with ownerId: "+ownerId
+					+" and shadowOf: "+shadowOf);
+			}
+			Iterator<Contact> iter = contacts.iterator();
+			shadow = iter.next();
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("there is no shadow with ownerId: "+ownerId
+					+" and shadowOf: "+shadowOf);
+		}
+		BasicContact basicContact;
+		try {
+			basicContact = new BasicContact(shadow.getId().longValue(),
+					shadow.getName(), shadow.getImage(), shadow.getNickName(),
+					shadow.getGender(),
+					(shadow.getBirthday()!=null)? shadow.getBirthday().toString():null,
+					shadow.getNotes(), shadow.getRelationship(),
+					(shadow.getOwner()!=null)? shadow.getOwner().getId().longValue(): 0, 
+					(shadow.getShadowOf()!=null)? shadow.getShadowOf().getId(): 0, 
+					(shadow.getGroup()!=null)? shadow.getGroup().getId(): 0, 
+					shadow.getPermission());
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
+		}
+		return basicContact;
 	}
 
 	public List<Object[]> selectSharedContact(Long ownerId, Permission perm) {
@@ -861,6 +912,6 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		udh.begin();
 		udh.makePersistent(owner);
 		udh.commit();
-		return null;
+		return shadow.getId();
 	}
 }

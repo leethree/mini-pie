@@ -77,7 +77,7 @@ public interface ContactDAO extends GenericDAO<Contact, Long>, ContactStorage {
 
 	List<Object[]> selectSharedContact(Long ownerId, Permission perm);
 
-	List<Object[]> selectShadow(Long ownerId, Long shadowOf);
+	BasicContact selectShadow(Long ownerId, Long shadowOf);
 
 	List<CommonListEntry> selectOwnerContact(Long ownerId);
 
