@@ -57,7 +57,7 @@ public class PhonebookUserListEntry {
 	 */
 	@XmlElement
 	public String getName() {
-		return entity.getName();
+		return entity.getDisplayname();
 	}
 
 	/**

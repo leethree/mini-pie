@@ -19,7 +19,7 @@ public final class Formatter {
 	private static final String IMAGE_REGEX = "([^\\s]+(?=\\.(jpg|gif|png))\\.\\2)";
 
 	// letters, digits, underlines, dots before @
-	private static final String EMAIL_REGEX = "(\\w[\\w\\.]+@[a-zA-Z_]+?(\\.[a-zA-Z]{2,10})+)";
+	private static final String EMAIL_REGEX = "(\\w[\\w\\.]+@[0-9a-zA-Z_]+?(\\.[0-9a-zA-Z]{2,10})+)";
 
 	// any character except \n, length between 6, 20
 	private static final String PASSWORD_REGEX = "(.{6,20})";

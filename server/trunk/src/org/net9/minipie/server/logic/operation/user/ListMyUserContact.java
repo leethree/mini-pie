@@ -40,7 +40,8 @@ public class ListMyUserContact extends Command<Collection<PhonebookUserListEntry
 		for(UserRelation uu:list){
 			//PhonebookUserListEntry temp;
 			UserEntity user=executor.selectBasicInfo(uu.getId()).getEntity();
-			user.setRelationship(new Relationships(uu.getRelationship()));
+			if (uu.getRelationship() != null)
+				user.setRelationship(new Relationships(uu.getRelationship()));
 			user.setPermission(uu.getPermission());
 			user.setTags(executor3.selectTagsOfUser(uu.getId(), userId));
 			result.add(new PhonebookUserListEntry(user));

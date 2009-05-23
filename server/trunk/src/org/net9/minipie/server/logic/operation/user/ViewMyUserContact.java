@@ -19,6 +19,8 @@ import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.field.Relationships;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
+import org.net9.minipie.server.exception.NotFoundException;
+import org.net9.minipie.server.exception.PermissionDeniedException;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.Tag_UserStorage;
 import org.net9.minipie.server.logic.storage.UserStorage;
@@ -50,7 +52,13 @@ public class ViewMyUserContact extends Command<PhonebookCompleteUser> {
 		User_UserStorage executor2 = getStorageFactory().getUser_UserStorage();
 		Tag_UserStorage executor3 = getStorageFactory().getTag_UserStorage();
 		UserEntity user = executor.selectBasicInfo(targetId).getEntity();
-		String rel = executor2.selectRelationship(userId, targetId);
+		String rel;
+		try {
+			rel = executor2.selectRelationship(userId, targetId);
+		} catch (NotFoundException e) {
+			throw new PermissionDeniedException("User with id " + targetId
+					+ " is not your user contact.");
+		}
 		executor.selectBasicInfo(targetId);
 		if (user.getGenderPermission() == Permission.TO_SELF)
 			user.setGender(null);
@@ -59,7 +67,8 @@ public class ViewMyUserContact extends Command<PhonebookCompleteUser> {
 		}
 		if (user.getBirthdatePermission() == Permission.TO_SELF)
 			user.setBirthday(null);
-		user.setRelationship(new Relationships(rel));
+		if (rel != null)
+			user.setRelationship(new Relationships(rel));
 
 		Collection<AddressData> addrs = executor.selectAddr(targetId);
 		for (AddressData t : addrs)

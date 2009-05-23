@@ -54,9 +54,9 @@ public class AddUserAsContact extends Command<Void>{
 	 */
 	public void setUserId(long userId) {
 		try {
-			this.targetId = Formatter.checkId(userId);
+			this.userId = Formatter.checkId(userId);
 			if(this.targetId==this.userId)
-				throw new InvalidRequestException("can't add youselft as contact");
+				throw new InvalidRequestException("can't add youself as contact");
 		} catch (DataFormatException e) {
 			throw new InvalidRequestException(e);
 		}
@@ -70,16 +70,16 @@ public class AddUserAsContact extends Command<Void>{
 		UserStorage executor=getStorageFactory().getUserStorage();
 		UserEntity entity;
 		try{
-			entity=executor.selectBasicInfo(userId).getEntity();
+			entity=executor.selectBasicInfo(targetId).getEntity();
 		}catch (NotFoundException e){
-			throw new InvalidRequestException("the user you want to add" +
+			throw new InvalidRequestException("the user you want to add " +
 					"doesn't exist");
 		}
 		User_UserStorage executor2=getStorageFactory().getUser_UserStorage();
 		try{
 			executor2.selectRelationship(userId, targetId);
 			//flag=false;
-			throw new InvalidRequestException("the user you want to add" +
+			throw new InvalidRequestException("the user you want to add " +
 					"is already your contact");
 		}catch (NotFoundException e){
 			flag=true;
@@ -87,7 +87,7 @@ public class AddUserAsContact extends Command<Void>{
 		if(flag){
 			switch(entity.getAddAsContactPermission()){
 				case NO_ONE:
-					throw new InvalidRequestException("the user can't be add" +
+					throw new InvalidRequestException("the user can't be add " +
 							"as contact");
 				case CONFIRMED_ONES:
 					NotificationStorage executor3=getStorageFactory().getNotifacationStorage();

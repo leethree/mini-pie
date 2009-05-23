@@ -30,6 +30,12 @@ public class PersonalProfile {
 
 	/**
 	 * Constructor
+	 */
+	public PersonalProfile() {
+	}
+
+	/**
+	 * Constructor
 	 * 
 	 * @param entity
 	 */
@@ -49,16 +55,15 @@ public class PersonalProfile {
 	}
 
 	@XmlElement(name = "birth_date_perm")
-	public String getBirthdayPermission(){
+	public String getBirthdayPermission() {
 		return entity.getBirthdatePermission().toString();
 	}
-	
+
 	@XmlElement(name = "birth_year_perm")
-	public String getBirthyearPermission(){
+	public String getBirthyearPermission() {
 		return entity.getBirthyearPermission().toString();
 	}
-	
-	
+
 	/**
 	 * @return the gender
 	 */
@@ -66,9 +71,9 @@ public class PersonalProfile {
 	public String getGender() {
 		return entity.getGender().toString();
 	}
-	
+
 	@XmlElement(name = "gender_perm")
-	public Permission getGenderPermission(){
+	public Permission getGenderPermission() {
 		return entity.getGenderPermission();
 	}
 
@@ -79,16 +84,17 @@ public class PersonalProfile {
 	public long getId() {
 		return entity.getId();
 	}
+
 	@XmlElement
-	public String getPassword(){
+	public String getPassword() {
 		return entity.getPassword();
 	}
+
 	@XmlElement(name = "register_email")
-	public String getRegisterEmail(){
+	public String getRegisterEmail() {
 		return entity.getRegisteredEmail();
 	}
-	
-	
+
 	/**
 	 * @return the image
 	 */
@@ -104,15 +110,17 @@ public class PersonalProfile {
 	public String getNickName() {
 		return entity.getNickName();
 	}
+
 	@XmlElement
-	public String getDisplayName(){
+	public String getDisplayName() {
 		return entity.getDisplayname();
 	}
+
 	@XmlElement(name = "add_as_contact_perm")
-	public String getAddAsContactPermission(){
+	public String getAddAsContactPermission() {
 		return entity.getAddAsContactPermission().toString();
 	}
-		
+
 	/**
 	 * @return the name
 	 */
@@ -120,7 +128,7 @@ public class PersonalProfile {
 	public String getName() {
 		return entity.getName();
 	}
-	
+
 	/**
 	 * @return the notes
 	 */
@@ -132,7 +140,8 @@ public class PersonalProfile {
 	/**
 	 * @return the detailed information
 	 */
-	@XmlElements( { @XmlElement(name = "address", type = ProfileAddressXml.class),
+	@XmlElements( {
+			@XmlElement(name = "address", type = ProfileAddressXml.class),
 			@XmlElement(name = "email", type = ProfileEmailXml.class),
 			@XmlElement(name = "im", type = ProfileIMXml.class),
 			@XmlElement(name = "phone", type = ProfilePhoneXml.class),
@@ -156,5 +165,5 @@ public class PersonalProfile {
 		}
 		return collection;
 	}
-	
+
 }

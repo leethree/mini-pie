@@ -140,10 +140,10 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			UserAddressDAOHibernate uadh = new UserAddressDAOHibernate();
 			Criterion criterion = Restrictions.eq("user.id", userId);
 			List<UserAddress> result = uadh.findByCriteria(criterion);
-			if(result.isEmpty()){
-				throw new NotFoundException("There's no user with ID: "
-						+ userId);
-			}
+//			if(result.isEmpty()){
+//				throw new NotFoundException("There's no user with ID: "
+//						+ userId);
+//			}
 			List<AddressData> selectedResult = new ArrayList<AddressData>();
 			Iterator<UserAddress> iter = result.iterator();
 			while (iter.hasNext()) {
@@ -184,8 +184,7 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			throw new NotFoundException("There's no user with ID: "
 					+ userId);
 		} catch (DataFormatException e) {
-			System.out.println("Date format error");
-			throw new ServerErrorException("error date format");
+			throw new ServerErrorException(e.getMessage());
 		}
 	}
 
@@ -197,10 +196,10 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			UserEmailDAOHibernate uedh = new UserEmailDAOHibernate();
 			Criterion criterion = Restrictions.eq("user.id", userId);
 			List<UserEmail> result = uedh.findByCriteria(criterion);
-			if(result.isEmpty()){
-				throw new NotFoundException("There's no email whose owner has ID: "
-						+ userId);
-			}
+//			if(result.isEmpty()){
+//				throw new NotFoundException("There's no email whose owner has ID: "
+//						+ userId);
+//			}
 			List<EmailData> selectedResult = new ArrayList<EmailData>();
 			Iterator<UserEmail> iter = result.iterator();
 			while (iter.hasNext()) {
@@ -233,10 +232,10 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			UserIMDAOHibernate uidh = new UserIMDAOHibernate();
 			Criterion criterion = Restrictions.eq("user.id", userId);
 			List<UserIM> result = uidh.findByCriteria(criterion);
-			if(result.isEmpty()){
-				throw new NotFoundException("There's no im whose owner has ID: "
-						+ userId);
-			}
+//			if(result.isEmpty()){
+//				throw new NotFoundException("There's no im whose owner has ID: "
+//						+ userId);
+//			}
 			List<IMData> selectedResult = new ArrayList<IMData>();
 			Iterator<UserIM> iter = result.iterator();
 			while (iter.hasNext()) {
@@ -269,10 +268,10 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			UserPhoneDAOHibernate updh = new UserPhoneDAOHibernate();
 			Criterion criterion = Restrictions.eq("user.id", userId);
 			List<UserPhoneNo> result = updh.findByCriteria(criterion);
-			if(result.isEmpty()){
-				throw new NotFoundException("There's no phone whose owner has ID: "
-						+ userId);
-			}
+//			if(result.isEmpty()){
+//				throw new NotFoundException("There's no phone whose owner has ID: "
+//						+ userId);
+//			}
 			List<PhoneNoData> selectedResult = new ArrayList<PhoneNoData>();
 			Iterator<UserPhoneNo> iter = result.iterator();
 			while (iter.hasNext()) {
@@ -303,12 +302,12 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 	public List<URLData> selectURL(Long userId) {
 		try {
 			UserURLDAOHibernate uudh = new UserURLDAOHibernate();
-			Criterion criterion = Restrictions.eq("contact.id", userId);
+			Criterion criterion = Restrictions.eq("user.id", userId);
 			List<UserURL> result = uudh.findByCriteria(criterion);
-			if(result.isEmpty()){
-				throw new NotFoundException("There's no url whose owner has ID: "
-						+ userId);
-			}
+//			if(result.isEmpty()){
+//				throw new NotFoundException("There's no url whose owner has ID: "
+//						+ userId);
+//			}
 			List<URLData> selectedResult = new ArrayList<URLData>();
 			Iterator<UserURL> iter = result.iterator();
 			while (iter.hasNext()) {
