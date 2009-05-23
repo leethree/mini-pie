@@ -9,20 +9,25 @@ import java.util.Collection;
 
 import org.net9.minipie.server.data.entity.TagEntry;
 import org.net9.minipie.server.logic.operation.Command;
+import org.net9.minipie.server.logic.storage.TagStorage;
 
 /**
  * @author Seastar
  *
  */
 public class ListAllTags extends Command<Collection<TagEntry>> {
-
+	private long userId;
+	
+	public ListAllTags(long userId){
+		this.userId=userId;
+	}
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
 	@Override
 	public Collection<TagEntry> execute() {
-		// TODO Auto-generated method stub
-		return null;
+		TagStorage executor=getStorageFactory().getTagStorage();		
+		return executor.selectAllTags(userId);
 	}
 
 }
