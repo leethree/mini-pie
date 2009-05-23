@@ -20,13 +20,14 @@ import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.ServerErrorException;
+import org.net9.minipie.server.logic.storage.NotificationStorage;
 
 /**
  * @author Riversand
  *
  */
 public class NotificationDAOHibernate extends GenericHibernateDAO<Notification, Long>
-		implements NotificationDAO {
+		implements NotificationDAO, NotificationStorage {
 
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.NotificationDAO#add(org.net9.minipie.server.db.entity.Notification)

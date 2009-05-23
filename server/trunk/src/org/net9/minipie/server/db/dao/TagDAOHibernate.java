@@ -14,6 +14,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.net9.minipie.server.data.entity.TagEntry;
+import org.net9.minipie.server.data.storage.TagData;
 import org.net9.minipie.server.db.entity.Tag;
 import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.exception.DataFormatException;
@@ -90,6 +91,9 @@ public class TagDAOHibernate extends GenericHibernateDAO<Tag, Long> implements
 	public Collection<TagEntry> selectAllTags(Long userId) {
 		Criterion criterion  = Restrictions.eq("owner.id", userId);
 		List<Tag> tags = findByCriteria(criterion);
+		if(tags.isEmpty()){
+			throw new NotFoundException("user with userId: "+userId+" does not have tags");
+		}
 		Iterator<Tag> iter = tags.iterator();
 		List<TagEntry> result = new ArrayList<TagEntry>();
 		while(iter.hasNext()){
@@ -110,6 +114,9 @@ public class TagDAOHibernate extends GenericHibernateDAO<Tag, Long> implements
 		Criterion criterion1 = Restrictions.eq("owner.id", userId);
 		Criterion criterion2 = Restrictions.eq("tagName", tagName);
 		List<Tag> tags = findByCriteria(criterion1, criterion2);
+		if(tags.isEmpty()){
+			throw new NotFoundException("there is no tag matching this condition: ownerid: "+userId+" tagName: "+tagName);
+		}
 		Iterator<Tag> iter = tags.iterator();
 		return iter.next().getId();
 	}
@@ -117,14 +124,14 @@ public class TagDAOHibernate extends GenericHibernateDAO<Tag, Long> implements
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.TagDAO#selectName(java.lang.Long)
 	 */
-	public Tag selectTag(Long tagId) {
+	public TagData selectTag(Long tagId) {
 		Tag tag = null;
 		try{
 			tag = findById(tagId);
 		}catch(ObjectNotFoundException e){
 			throw new NotFoundException("there is no tag with id: "+tagId);
 		}
-		return tag;
+		return new TagData(tag.getId(), tag.getTagName(), tag.getOwner().getId());
 	}
 
 	/* (non-Javadoc)

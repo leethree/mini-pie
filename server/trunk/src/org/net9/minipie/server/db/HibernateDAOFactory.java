@@ -8,7 +8,12 @@ package org.net9.minipie.server.db;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.net9.minipie.server.db.dao.ContactDAOHibernate;
+import org.net9.minipie.server.db.dao.NotificationDAOHibernate;
+import org.net9.minipie.server.db.dao.TagDAOHibernate;
+import org.net9.minipie.server.db.dao.Tag_ContactDAOHibernate;
+import org.net9.minipie.server.db.dao.Tag_UserDAOHibernate;
 import org.net9.minipie.server.db.dao.UserDAOHibernate;
+import org.net9.minipie.server.db.dao.User_UserDAOHibernate;
 import org.net9.minipie.server.db.util.HibernateSessionFactory;
 import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.storage.ContactStorage;
@@ -73,8 +78,7 @@ public class HibernateDAOFactory implements StorageFactory {
 	 * ()
 	 */
 	public NotificationStorage getNotifacationStorage() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		return new NotificationDAOHibernate();
 	}
 
 	/*
@@ -83,8 +87,7 @@ public class HibernateDAOFactory implements StorageFactory {
 	 * @see org.net9.minipie.server.logic.storage.StorageFactory#getTagStorage()
 	 */
 	public TagStorage getTagStorage() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		return new TagDAOHibernate();
 	}
 
 	/*
@@ -95,8 +98,7 @@ public class HibernateDAOFactory implements StorageFactory {
 	 * ()
 	 */
 	public Tag_ContactStorage getTag_ContactStorage() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		return new Tag_ContactDAOHibernate();
 	}
 
 	/*
@@ -106,8 +108,7 @@ public class HibernateDAOFactory implements StorageFactory {
 	 * org.net9.minipie.server.logic.storage.StorageFactory#getTag_UserStorage()
 	 */
 	public Tag_UserStorage getTag_UserStorage() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		return new Tag_UserDAOHibernate();
 	}
 
 	/*
@@ -118,7 +119,6 @@ public class HibernateDAOFactory implements StorageFactory {
 	 * ()
 	 */
 	public User_UserStorage getUser_UserStorage() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		return new User_UserDAOHibernate();
 	}
 }

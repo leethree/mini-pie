@@ -19,7 +19,7 @@ package org.net9.minipie.server.data.storage;
  * @author Seastar
  * 
  */
-public class Tag {
+public class TagData {
 	private long id;
 	private String name;
 	private long ownerId;
@@ -27,7 +27,7 @@ public class Tag {
 	/**
 	 * Constructor
 	 */
-	public Tag(long id, String name, long ownerId) {
+	public TagData(long id, String name, long ownerId) {
 		this.id = id;
 		this.name = name;
 		this.ownerId = ownerId;
