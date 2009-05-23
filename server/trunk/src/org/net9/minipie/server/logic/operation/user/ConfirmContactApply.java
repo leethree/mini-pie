@@ -22,9 +22,11 @@ public class ConfirmContactApply extends Command<Void> {
 
 	private long userId;
 	private long notificationId;
-	
-	public ConfirmContactApply(long userId,long notificationId){
-		
+	private boolean confirm;
+	public ConfirmContactApply(long userId,long notificationId,boolean confirm){
+		setUserId(userId);
+		this.confirm=confirm;
+		setNotificationId(notificationId);
 	}
 	/**
 	 * @param userId the userId to set
@@ -45,12 +47,19 @@ public class ConfirmContactApply extends Command<Void> {
 	@Override
 	public Void execute() {
 		User_UserStorage executor = getStorageFactory().getUser_UserStorage();
-		NotificationStorage executor1 = getStorageFactory().getNotifacationStorage();		
+		NotificationStorage executor1 = getStorageFactory().getNotifacationStorage();
 		NotificationData noti=executor1.selectNotification(notificationId);
-		if(noti.getReceiverId()==userId ||noti.getType()==NotificationType.CONTACT_APPLICATION){
-			executor.add(userId, noti.getSenderId());			
-		}else
-			throw new InvalidRequestException("this is not your notification or not the correct type");
+		if(confirm){						
+			if(noti.getReceiverId()==userId ||noti.getType()==NotificationType.CONTACT_APPLICATION){
+				executor.add(userId, noti.getSenderId());	
+				executor1.del(notificationId);
+			}else
+				throw new InvalidRequestException("this is not your notification or not the correct type");
+		}else{			
+			if(noti.getReceiverId()==userId ||noti.getType()==NotificationType.CONTACT_APPLICATION){
+				executor1.del(notificationId);
+			}
+		}
 		return null;
 	}
 
