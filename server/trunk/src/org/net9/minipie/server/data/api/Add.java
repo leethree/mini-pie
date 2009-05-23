@@ -22,7 +22,7 @@ import org.net9.minipie.server.exception.InvalidRequestException;
  */
 @XmlType(name = "add")
 public class Add extends Update {
-	private Info info;
+	private DetailedInfoXml info;
 
 	/**
 	 * Constructor
@@ -44,7 +44,7 @@ public class Add extends Update {
 	 */
 	@XmlTransient
 	public Info getInfo() {
-		return info;
+		return info.getInfo();
 	}
 
 	/**
@@ -58,6 +58,19 @@ public class Add extends Update {
 			@XmlElement(name = "phone", type = PhoneXml.class),
 			@XmlElement(name = "url", type = UrlXml.class) })
 	public void setDetail(DetailedInfoXml detail) {
-		this.info = detail.getInfo();
+		this.info = detail;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.data.api.Update#checkThis()
+	 */
+	@Override
+	public Add checkThis() {
+		if (getType() == null)
+			throw new InvalidRequestException("Invalid add format: type missing.");
+		else if (info == null)
+			throw new InvalidRequestException("Invalid add format: detailed info missing.");
+		info.checkThis();
+		return this;
 	}
 }

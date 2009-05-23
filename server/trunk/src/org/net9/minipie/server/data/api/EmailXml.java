@@ -92,12 +92,28 @@ public class EmailXml implements DetailedInfoXml {
 	 * @param primary
 	 *            the primary to set
 	 */
-	public void setPrimary(boolean isPrimary) {
-		entity.setPrimary(isPrimary);
+	public void setPrimary(String isPrimary) {
+		if (isPrimary == null)
+			entity.setPrimary(false);
+		else if (isPrimary.equals("true"))
+			entity.setPrimary(true);
+		else
+			entity.setPrimary(false);
 	}
 
 	@XmlTransient
 	public EmailData getInfo() {
 		return entity;
+	}
+	
+	/**
+	 * Check data consistency
+	 * @return this
+	 */
+	public EmailXml checkThis() {
+		setValue(getValue());
+		setType(getType());
+		setPrimary(getPrimary());
+		return this;
 	}
 }

@@ -13,6 +13,8 @@ import org.net9.minipie.server.data.api.PhonebookCompleteContact;
 import org.net9.minipie.server.data.api.StatusReportList;
 import org.net9.minipie.server.data.api.Update;
 import org.net9.minipie.server.data.api.UpdateList;
+import org.net9.minipie.server.exception.InvalidRequestException;
+import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.Handler;
 import org.net9.minipie.server.logic.operation.MacroCommand;
 import org.net9.minipie.server.logic.operation.contact.DeleteMyContact;
@@ -48,7 +50,7 @@ public class PhonebookContactResource {
 	}
 
 	/**
-	 * TODO: handle with only one update request
+	 * 
 	 * @param updates
 	 * @return
 	 */
@@ -56,14 +58,36 @@ public class PhonebookContactResource {
 	@Consumes( { "application/xml", "application/json" })
 	@Produces( { "application/xml", "application/json" })
 	public Response post(UpdateList updates) {
-		MacroCommand macro = new MacroCommand();
-		for (Update update : updates.getUpdates()) {
-			macro.addCommand(new UpdateMyContact(1L, contactId, update));
+		if (updates.getUpdates().size() == 0) {
+			throw new InvalidRequestException("No update information provided.");
+		} else if (updates.getUpdates().size() == 1) {
+			for (Update update : updates.getUpdates()) {
+				return update(update);
+			}
+			throw new ServerErrorException("Unexpected size of updates.");
+		} else {
+			MacroCommand macro = new MacroCommand();
+			for (Update update : updates.getUpdates()) {
+				macro.addCommand(new UpdateMyContact(1L, contactId, update
+						.checkThis()));
+			}
+			StatusReportList statuses = new Handler<StatusReportList>(macro)
+					.excute();
+			return Response.status(StatusReportList.MULTI_STATUS).entity(
+					statuses).build();
 		}
-		StatusReportList statuses = new Handler<StatusReportList>(macro)
+	}
+
+	/**
+	 * 
+	 * @param update
+	 * @return
+	 */
+	public Response update(Update update) {
+		new Handler<Void>(
+				new UpdateMyContact(1L, contactId, update.checkThis()))
 				.excute();
-		return Response.status(StatusReportList.MULTI_STATUS).entity(statuses)
-				.build();
+		return Response.ok().build();
 	}
 
 	@DELETE

@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import org.net9.minipie.server.data.entity.AddressData;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.InvalidRequestException;
 
 
 /**
@@ -71,8 +73,13 @@ public class ProfileAddressXml implements ProfileDetailedInfoXml {
 	 * @param primary
 	 *            the primary to set
 	 */
-	public void setPrimary(boolean isPrimary) {
-		entity.setPrimary(isPrimary);
+	public void setPrimary(String isPrimary) {
+		if (isPrimary == null)
+			entity.setPrimary(false);
+		else if (isPrimary.equals("true"))
+			entity.setPrimary(true);
+		else
+			entity.setPrimary(false);
 	}
 
 	/**
@@ -88,7 +95,11 @@ public class ProfileAddressXml implements ProfileDetailedInfoXml {
 	 *            the formatted to set
 	 */
 	public void setFormatted(String formatted) {
-		entity.setValue(formatted);
+		try {
+			entity.setValue(formatted);
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException(e);
+		}
 	}
 
 	/**
@@ -122,5 +133,16 @@ public class ProfileAddressXml implements ProfileDetailedInfoXml {
 	public AddressData getInfo() {
 		return entity;
 	}
-
+	
+	/**
+	 * Check data consistency
+	 * @return this
+	 */
+	public ProfileAddressXml checkThis() {
+		setFormatted(getFormatted());
+		setType(getType());
+		setPrimary(getPrimary());
+		setZipcode(getZipcode());
+		return this;
+	}
 }

@@ -44,4 +44,6 @@ public abstract class Update {
 			throw new ServerErrorException("Information field should not be null.");
 		this.type = type;
 	}
+	
+	public abstract Update checkThis() ; 
 }

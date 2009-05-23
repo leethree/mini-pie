@@ -63,8 +63,8 @@ public class AddHandler extends UpdateHandler{
 				}
 			} 
 			catch (ClassCastException e) {
-				throw new UpdateException("The info provided is not suitable:"
-						+ newData.getType().toString()+"wanted");
+				throw new UpdateException("Unexpected detailed info type : \""
+						+ newData.getType().toString()+"\" expected.");
 			}
 		}
 		else{

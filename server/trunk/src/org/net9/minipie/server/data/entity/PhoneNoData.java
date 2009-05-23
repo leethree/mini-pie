@@ -72,7 +72,7 @@ public class PhoneNoData implements Info {
 
 	public void setValue(String value) throws DataFormatException {
 		if (value == null)
-			throw new ServerErrorException("The value should not be null.");
+			throw new DataFormatException("The value should not be null.");
 		this.value = Formatter.formatPhone(value);
 	}
 

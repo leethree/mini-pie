@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import org.net9.minipie.server.data.entity.IMData;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.InvalidRequestException;
 
 
 /**
@@ -53,7 +55,11 @@ public class IMXml implements DetailedInfoXml {
 	 *            the value to set
 	 */
 	public void setValue(String value) {
-		entity.setValue(value);
+		try {
+			entity.setValue(value);
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException(e);
+		}
 	}
 
 	/**
@@ -87,12 +93,28 @@ public class IMXml implements DetailedInfoXml {
 	 * @param primary
 	 *            the primary to set
 	 */
-	public void setPrimary(boolean isPrimary) {
-		entity.setPrimary(isPrimary);
+	public void setPrimary(String isPrimary) {
+		if (isPrimary == null)
+			entity.setPrimary(false);
+		else if (isPrimary.equals("true"))
+			entity.setPrimary(true);
+		else
+			entity.setPrimary(false);
 	}
 	
 	@XmlTransient
 	public IMData getInfo() {
 		return entity;
+	}
+	
+	/**
+	 * Check data consistency
+	 * @return this
+	 */
+	public IMXml checkThis() {
+		setValue(getValue());
+		setType(getType());
+		setPrimary(getPrimary());
+		return this;
 	}
 }

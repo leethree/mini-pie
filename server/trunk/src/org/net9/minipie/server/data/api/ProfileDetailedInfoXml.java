@@ -14,4 +14,9 @@ import org.net9.minipie.server.data.entity.Info;
  */
 public interface ProfileDetailedInfoXml {
 	public Info getInfo();
+	/**
+	 * Check data consistency
+	 * @return this
+	 */
+	public ProfileDetailedInfoXml checkThis();
 }

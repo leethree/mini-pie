@@ -61,10 +61,11 @@ public class AddressData implements Info {
 	/**
 	 * @param value
 	 *            the value to set (not nullable)
+	 * @throws DataFormatException 
 	 */
-	public void setValue(String value) {
+	public void setValue(String value) throws DataFormatException {
 		if (value == null)
-			throw new ServerErrorException("The value should not be null.");
+			throw new DataFormatException("The value should not be null.");
 		this.value = value.trim();
 	}
 
@@ -113,10 +114,10 @@ public class AddressData implements Info {
 	 *            the zipcode to set (nullable)
 	 */
 	public void setZipcode(String zipcode) {
-		if (zipcode == null) {
+		if (zipcode == null)
 			this.zipcode = null;
-		}
-		this.zipcode = Formatter.compact(zipcode).toUpperCase();
+		else
+			this.zipcode = Formatter.compact(zipcode).toUpperCase();
 	}
 
 	/**
@@ -132,8 +133,7 @@ public class AddressData implements Info {
 	 */
 	public void setPermission(Permission perm) {
 		if (perm == null)
-			throw new ServerErrorException(
-					"The permission should not be null.");
+			throw new ServerErrorException("The permission should not be null.");
 		this.perm = perm;
 	}
 

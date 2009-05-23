@@ -69,13 +69,15 @@ public class URLData implements Info {
 		this.primary = primary;
 	}
 
-	public String getValue() {
+	public String getValue() throws DataFormatException {
+		if (value == null)
+			throw new DataFormatException("The value is invalid or null.");
 		return value.toASCIIString();
 	}
 
 	public void setValue(String value) throws DataFormatException {
 		if (value == null)
-			throw new ServerErrorException("The value should not be null.");
+			throw new DataFormatException("The value should not be null.");
 		this.value = Formatter.formatUri(value);
 	}
 

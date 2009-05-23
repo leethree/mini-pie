@@ -56,4 +56,15 @@ public class Delete extends Update {
 			throw new InvalidRequestException(e);
 		}
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.data.api.Update#checkThis()
+	 */
+	@Override
+	public Delete checkThis() {
+		if (getType() == null)
+			throw new InvalidRequestException("Invalid delete format: : type missing.");
+		setId(getId());
+		return this;
+	}
 }

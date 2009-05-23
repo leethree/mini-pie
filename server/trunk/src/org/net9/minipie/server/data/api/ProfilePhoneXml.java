@@ -92,8 +92,13 @@ public class ProfilePhoneXml implements ProfileDetailedInfoXml {
 	 * @param primary
 	 *            the primary to set
 	 */
-	public void setPrimary(boolean isPrimary) {
-		entity.setPrimary(isPrimary);
+	public void setPrimary(String isPrimary) {
+		if (isPrimary == null)
+			entity.setPrimary(false);
+		else if (isPrimary.equals("true"))
+			entity.setPrimary(true);
+		else
+			entity.setPrimary(false);
 	}
 
 	/**
@@ -110,5 +115,16 @@ public class ProfilePhoneXml implements ProfileDetailedInfoXml {
 	@XmlTransient
 	public PhoneNoData getInfo() {
 		return entity;
+	}
+	
+	/**
+	 * Check data consistency
+	 * @return this
+	 */
+	public ProfilePhoneXml checkThis() {
+		setValue(getValue());
+		setType(getType());
+		setPrimary(getPrimary());
+		return this;
 	}
 }

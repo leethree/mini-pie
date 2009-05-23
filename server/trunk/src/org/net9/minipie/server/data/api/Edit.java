@@ -100,4 +100,14 @@ public class Edit extends Update {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.data.api.Update#checkThis()
+	 */
+	@Override
+	public Edit checkThis() {
+		if (getType() == null || getInfoField() == null )
+			throw new InvalidRequestException("Invalid edit format.");
+		return this;
+	}
 }

@@ -14,4 +14,10 @@ import org.net9.minipie.server.data.entity.Info;
  */
 public interface DetailedInfoXml {
 	public Info getInfo();
+	
+	/**
+	 * Check data consistency
+	 * @return this
+	 */
+	public DetailedInfoXml checkThis();
 }
