@@ -7,7 +7,9 @@ package org.net9.minipie.server.logic.storage;
 
 import java.util.Collection;
 
+import org.net9.minipie.server.data.api.ContactListEntry;
 import org.net9.minipie.server.data.entity.TagEntry;
+import org.net9.minipie.server.data.storage.BasicContact;
 import org.net9.minipie.server.data.storage.CommonListEntry;
 
 /**
@@ -19,5 +21,5 @@ public interface Tag_ContactStorage {
 	public void del(Long tagId,Long contactId);
 	public Collection<TagEntry> selectTagsOfContact(Long contactId);
 	//±Ì¡¨Ω”£∫contact
-	public Collection<CommonListEntry> selectTaggedContact(Long tagId);
+	public Collection<BasicContact> selectTaggedContact(Long tagId);
 }

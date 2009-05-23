@@ -8,6 +8,7 @@ package org.net9.minipie.server.logic.storage;
 import java.util.Collection;
 
 import org.net9.minipie.server.data.entity.TagEntry;
+import org.net9.minipie.server.data.storage.BasicUser;
 import org.net9.minipie.server.data.storage.CommonListEntry;
 
 /**
@@ -19,5 +20,5 @@ public interface Tag_UserStorage {
 	public void del(Long tagId,Long userId);
 	public Collection<TagEntry> selectTagsOfUser(Long userId,Long ownerId);
 	//±Ì¡¨Ω”£∫user
-	public Collection<CommonListEntry> selectTaggedUser(Long tagId);
+	public Collection<BasicUser> selectTaggedUser(Long tagId);
 }
