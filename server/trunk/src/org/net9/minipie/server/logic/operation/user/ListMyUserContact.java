@@ -13,7 +13,7 @@ import org.net9.minipie.server.data.api.PhonebookUserListEntry;
 import org.net9.minipie.server.data.entity.UserEntity;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.CommonListEntry;
-import org.net9.minipie.server.data.storage.User_User;
+import org.net9.minipie.server.data.storage.UserRelation;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.UserStorage;
 import org.net9.minipie.server.logic.storage.User_UserStorage;
@@ -35,9 +35,9 @@ public class ListMyUserContact extends Command<Collection<PhonebookUserListEntry
 	public Collection<PhonebookUserListEntry> execute() {
 		UserStorage executor=getStorageFactory().getUserStorage();
 		User_UserStorage executor2=getStorageFactory().getUser_UserStorage();
-		Collection<User_User> list=executor2.selectMyUserContact(userId);
+		Collection<UserRelation> list=executor2.selectMyUserContact(userId);
 		Collection<PhonebookUserListEntry> result=new Vector<PhonebookUserListEntry>();
-		for(User_User uu:list){
+		for(UserRelation uu:list){
 			PhonebookUserListEntry temp;
 			UserEntity user=executor.selectBasicInfo(uu.getId()).getEntity();
 			

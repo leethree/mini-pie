@@ -16,7 +16,7 @@ import org.hibernate.criterion.Restrictions;
 import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.CommonListEntry;
-import org.net9.minipie.server.data.storage.User_User;
+import org.net9.minipie.server.data.storage.UserRelation;
 import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.db.entity.User2User;
 import org.net9.minipie.server.db.entity.User2User.Id;
@@ -197,7 +197,7 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id> im
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.logic.storage.User_UserStorage#selectMyUserContact(java.lang.Long)
 	 */
-	public Collection<User_User> selectMyUserContact(Long id) {
+	public Collection<UserRelation> selectMyUserContact(Long id) {
 		Criterion criterion1 = Restrictions.eq("user1.id", id);
 		List<User2User> binds1 = null;
 		try{
@@ -212,7 +212,19 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id> im
 		}catch(ObjectNotFoundException e){
 			throw new NotFoundException("there is no user2 with id: "+id);
 		}
-		
-		return null;
+		List<UserRelation> result = new ArrayList<UserRelation>();
+		Iterator<User2User> iter1 = binds1.iterator();
+		while(iter1.hasNext()){
+			User2User bind = iter1.next();
+			result.add(new UserRelation(bind.getuser2().getId(),
+					bind.getRelationship(), bind.getRight()));
+		}
+		Iterator<User2User> iter2 = binds2.iterator();
+		while(iter2.hasNext()){
+			User2User bind = iter2.next();
+			result.add(new UserRelation(bind.getUser1().getId(),
+					bind.getRelationship(), bind.getRight()));
+		}
+		return result;
 	}
 }

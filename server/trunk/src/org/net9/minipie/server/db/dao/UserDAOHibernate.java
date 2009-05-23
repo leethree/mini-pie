@@ -14,6 +14,7 @@ import org.net9.minipie.server.data.entity.EmailData;
 import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
+import org.net9.minipie.server.data.field.AddAsContactPermission;
 import org.net9.minipie.server.data.field.Gender;
 import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.Permission;
@@ -38,7 +39,7 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		newUser.setUserName(name);
 		newUser.setPassword(pwd);
 		newUser.setRegisterEmail(email);
-		newUser.setPerm(Permission.TO_CONTACTS);
+		newUser.setPerm(AddAsContactPermission.CONFIRMED_ONES);
 		begin();
 		Long id = makePersistent(newUser).getId();
 		commit();
@@ -178,7 +179,7 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			BasicUser result = new BasicUser(user.getId(), user.getUserName(), user.getRegisterEmail(),
 					user.getPassword(), user.getImageURL(), user.getNickName(), user.getDisplayName(),
 					user.getGenderPermission(), user.getBirthdayPermission(), user.getBirthyearPermission(),
-					user.getGender(), user.getBirthday().toString(), user.getNotes());
+					user.getGender(), user.getBirthday().toString(), user.getNotes(), user.getPerm());
 			return result;
 		}catch(ObjectNotFoundException e){
 			throw new NotFoundException("There's no user with ID: "

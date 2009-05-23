@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.net9.minipie.server.data.field.AddAsContactPermission;
 import org.net9.minipie.server.data.field.Gender;
 import org.net9.minipie.server.data.field.Permission;
 
@@ -28,8 +29,8 @@ public class User{
 	private String password;
 	@Column(name = "REG_EMAIL")
 	private String registerEmail;
-	@Column(name = "PERMISSION")
-	private Permission perm;
+	@Column(name = "ADD_AS_CONTACT_PERMISSION")
+	private AddAsContactPermission perm;
 	@Column(name = "NAME_TO_DISPLAY")
 	private String displayName;
 	@Column(name = "NICKNAME")
@@ -199,12 +200,6 @@ public class User{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Permission getPerm() {
-		return perm;
-	}
-	public void setPerm(Permission perm) {
-		this.perm = perm;
-	}
 	public String getRegisterEmail() {
 		return registerEmail;
 	}
@@ -301,5 +296,17 @@ public class User{
 	}
 	public void setOwnedTags(Collection<Tag> ownedTags) {
 		this.ownedTags = ownedTags;
+	}
+	/**
+	 * @param perm the perm to set
+	 */
+	public void setPerm(AddAsContactPermission perm) {
+		this.perm = perm;
+	}
+	/**
+	 * @return the perm
+	 */
+	public AddAsContactPermission getPerm() {
+		return perm;
 	}
 }
