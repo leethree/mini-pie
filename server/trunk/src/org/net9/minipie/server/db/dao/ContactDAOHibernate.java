@@ -25,6 +25,7 @@ import org.net9.minipie.server.db.entity.ContactIM;
 import org.net9.minipie.server.db.entity.ContactPhoneNo;
 import org.net9.minipie.server.db.entity.ContactURL;
 import org.net9.minipie.server.db.entity.User;
+import org.net9.minipie.server.db.entity.UserAddress;
 import org.net9.minipie.server.db.entity.enums.Bool;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.NotFoundException;
@@ -665,5 +666,75 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	public void editAdditional(Long id, InfoField attribute, Object value) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.ContactStorage#findAddressOwner(long)
+	 */
+	public Long findAddressOwner(Long addrId) {
+		ContactAddress contactAddr = null;
+		ContactAddressDAOHibernate cadh = new ContactAddressDAOHibernate();
+		try{
+			contactAddr = cadh.findById(addrId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException ("there is no address with addr id: "+addrId);
+		}
+		return contactAddr.getContact().getId();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.ContactStorage#findEmailOwner(long)
+	 */
+	public Long findEmailOwner(Long emailId) {
+		ContactEmail contactEmail = null;
+		ContactEmailDAOHibernate cedh = new ContactEmailDAOHibernate();
+		try{
+			contactEmail = cedh.findById(emailId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException ("there is no email with email id: "+emailId);
+		}
+		return contactEmail.getContact().getId();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.ContactStorage#findIMOwner(long)
+	 */
+	public Long findIMOwner(Long imId) {
+		ContactIM contactIM = null;
+		ContactIMDAOHibernate cidh = new ContactIMDAOHibernate();
+		try{
+			contactIM = cidh.findById(imId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException ("there is no im with im id: "+imId);
+		}
+		return contactIM.getContact().getId();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.ContactStorage#findTelOwner(long)
+	 */
+	public Long findTelOwner(Long telId) {
+		ContactPhoneNo contactPhoneNo = null;
+		ContactPhoneDAOHibernate cpdh = new ContactPhoneDAOHibernate();
+		try{
+			contactPhoneNo = cpdh.findById(telId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException ("there is no phone with phone id: "+telId);
+		}
+		return contactPhoneNo.getContact().getId();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.ContactStorage#findURLOwner(long)
+	 */
+	public Long findURLOwner(Long urlId) {
+		ContactURL contactURL = null;
+		ContactURLDAOHibernate cudh = new ContactURLDAOHibernate();
+		try{
+			contactURL = cudh.findById(urlId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException ("there is no url with url id: "+urlId);
+		}
+		return contactURL.getContact().getId();
 	}
 }

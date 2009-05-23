@@ -699,4 +699,74 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.UserStorage#findAddressOwner(long)
+	 */
+	public Long findAddressOwner(Long addrId) {
+		UserAddress userAddr = null;
+		UserAddressDAOHibernate uadh = new UserAddressDAOHibernate();
+		try{
+			userAddr = uadh.findById(addrId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException ("there is no address with addr id: "+addrId);
+		}
+		return userAddr.getUser().getId();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.UserStorage#findEmailOwner(long)
+	 */
+	public Long findEmailOwner(Long emailId) {
+		UserEmail userEmail = null;
+		UserEmailDAOHibernate uedh = new UserEmailDAOHibernate();
+		try{
+			userEmail = uedh.findById(emailId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException ("there is no email with email id: "+emailId);
+		}
+		return userEmail.getUser().getId();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.UserStorage#findIMOwner(long)
+	 */
+	public Long findIMOwner(Long imId) {
+		UserIM userIM = null;
+		UserIMDAOHibernate uidh = new UserIMDAOHibernate();
+		try{
+			userIM = uidh.findById(imId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException ("there is no im with im id: "+imId);
+		}
+		return userIM.getUser().getId();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.UserStorage#findTelOwner(long)
+	 */
+	public Long findTelOwner(Long telId) {
+		UserPhoneNo userPhoneNo = null;
+		UserPhoneDAOHibernate updh = new UserPhoneDAOHibernate();
+		try{
+			userPhoneNo = updh.findById(telId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException ("there is no phone with tel id: "+telId);
+		}
+		return userPhoneNo.getUser().getId();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.UserStorage#findURLOwner(long)
+	 */
+	public Long findURLOwner(Long urlId) {
+		UserURL userURL = null;
+		UserURLDAOHibernate uudh = new UserURLDAOHibernate();
+		try{
+			userURL = uudh.findById(urlId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException ("there is no url with url id: "+urlId);
+		}
+		return userURL.getUser().getId();
+	}
+
 }

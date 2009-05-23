@@ -50,9 +50,9 @@ public interface ContactStorage {
 	Collection<URLData> selectURL(Long contactId);
 	Collection<CommonListEntry> selectOwnerContact(Long ownerId);
 	void del(Long contactId);
-	long findAddressOwner(long addrId);
-	long findEmailOwner(long emailId);
-	long findIMOwner(long imId);
-	long findTelOwner(long telId);
-	long findURLOwner(long urlId);
+	Long findAddressOwner(Long addrId);
+	Long findEmailOwner(Long emailId);
+	Long findIMOwner(Long imId);
+	Long findTelOwner(Long telId);
+	Long findURLOwner(Long urlId);
 }
