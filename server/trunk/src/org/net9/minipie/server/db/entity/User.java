@@ -2,7 +2,6 @@ package org.net9.minipie.server.db.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,7 +41,7 @@ public class User{
 	@Column(name = "VIEW_GENDER_PERMISSION")
 	private Permission genderPermission;
 	@Column(name = "BIRTHDAY")
-	private Date birthday;
+	private String birthday;
 	@Column(name = "VIEW_BIRTHYEAR_PERMISSION")
 	private Permission birthyearPermission;
 	@Column(name = "VIEW_BIRTHDAYDAY_PERMISSION")
@@ -134,10 +133,16 @@ public class User{
 	)
 	private Collection<UserURL> url = new ArrayList<UserURL>();
 	
-	public Date getBirthday() {
+	/**
+	 * @return the birthday
+	 */
+	public String getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(Date birthday) {
+	/**
+	 * @param birthday the birthday to set
+	 */
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 	public Permission getBirthdayPermission() {
