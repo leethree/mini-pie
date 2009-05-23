@@ -784,4 +784,22 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		return userURL.getUser().getId();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.UserStorage#setAddAsContactPermission(org.net9.minipie.server.data.field.AddAsContactPermission, java.lang.Long)
+	 */
+	public Void setAddAsContactPermission(AddAsContactPermission perm,
+			Long userId) {
+		User user = null;
+		try{
+			user = findById(userId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("there is no user with userId: "+userId);
+		}
+		user.setPerm(perm);
+		begin();
+		makePersistent(user);
+		commit();
+		return null;
+	}
+
 }

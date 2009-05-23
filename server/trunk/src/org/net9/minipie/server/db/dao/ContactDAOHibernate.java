@@ -758,4 +758,21 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		}
 		return contactURL.getContact().getId();
 	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.ContactStorage#setPermission(org.net9.minipie.server.data.field.Permission, java.lang.Long)
+	 */
+	public Void setPermission(Permission perm, Long contactId) {
+		Contact contact = null;
+		try{
+			contact = findById(contactId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("there is no contact with contactId: "+contactId);
+		}
+		contact.setPermission(perm);
+		begin();
+		makePersistent(contact);
+		commit();
+		return null;
+	}
 }

@@ -112,6 +112,9 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id> im
 		}else if(attribute==InfoField.RIGHTPERMISSION){
 			Permission rPerm = (Permission) value;
 			bind.setRight(rPerm);
+		}else if(attribute==InfoField.RELATIONSHIP){
+			String relation = (String) value;
+			bind.setRelationship(relation);
 		}
 		begin();
 		makePersistent(bind);
