@@ -50,6 +50,7 @@ public interface ContactStorage {
 	Collection<PhoneNoData> selectTel(Long contactId);
 	Collection<URLData> selectURL(Long contactId);
 	Collection<CommonListEntry> selectOwnerContact(Long ownerId);
+	BasicContact selectShadowOf(Long ownerId,Long shadowOf);
 	void del(Long contactId);
 	Long findAddressOwner(Long addrId);
 	Long findEmailOwner(Long emailId);
@@ -57,4 +58,5 @@ public interface ContactStorage {
 	Long findTelOwner(Long telId);
 	Long findURLOwner(Long urlId);
 	Void setPermission(Permission perm,Long contactId);
+	
 }
