@@ -215,7 +215,7 @@ public class EditHandler extends UpdateHandler{
 						if (newData.getValue() != null)
 							contact.setBirthday(new Birthdate(newData.getValue()));
 						contactExecutor.editBasicInfo(contactId, InfoField.BIRTHDAY,
-								contact.getBirthday());
+								contact.getBirthday().toString());
 						break;
 					case GENDER:
 						if (newData.getValue() != null)
@@ -231,7 +231,7 @@ public class EditHandler extends UpdateHandler{
 					case RELATIONSHIP:
 						contact.setRelationship(new Relationships(newData.getValue()));
 						contactExecutor.editBasicInfo(contactId, InfoField.RELATIONSHIP,
-								contact.getRelationship());
+								contact.getRelationship().toString());
 						break;
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
@@ -242,7 +242,7 @@ public class EditHandler extends UpdateHandler{
 					throw new UpdateException("Unsupported InfoType: "+ dt.getType().toString());
 				}
 			} catch (ClassCastException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				throw new UpdateException("Wrong Attribute at "+ dt.getType().toString()+
 						" "+ newData.getInfoField().toString());
 			}

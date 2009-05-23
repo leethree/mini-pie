@@ -157,7 +157,7 @@ public class PhonebookCompleteContact {
 	/**
 	 * @return the notes
 	 */
-	@XmlElement
+	@XmlElement(name = "note")
 	public String getNotes() {
 		return entity.getNotes();
 	}
