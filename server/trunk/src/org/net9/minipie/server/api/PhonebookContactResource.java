@@ -46,7 +46,7 @@ public class PhonebookContactResource {
 	@Produces( { "application/xml", "application/json" })
 	public PhonebookCompleteContact get() {
 		return new Handler<PhonebookCompleteContact>(new ViewMyContact(1L,
-				contactId)).excute();
+				contactId)).execute();
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class PhonebookContactResource {
 						.checkThis()));
 			}
 			StatusReportList statuses = new Handler<StatusReportList>(macro)
-					.excute();
+					.execute();
 			return Response.status(StatusReportList.MULTI_STATUS).entity(
 					statuses).build();
 		}
@@ -86,13 +86,13 @@ public class PhonebookContactResource {
 	public Response update(Update update) {
 		new Handler<Void>(
 				new UpdateMyContact(1L, contactId, update.checkThis()))
-				.excute();
+				.execute();
 		return Response.ok().build();
 	}
 
 	@DELETE
 	public Response delete() {
-		new Handler<Void>(new DeleteMyContact(1L, contactId)).excute();
+		new Handler<Void>(new DeleteMyContact(1L, contactId)).execute();
 		return Response.ok().build();
 	}
 }

@@ -13,7 +13,7 @@ import org.net9.minipie.server.data.entity.CommonEntity;
 
 /**
  * @author Seastar, LeeThree
- * TODO
+ * 
  */
 @XmlType(name = "user")
 public class UserListEntry {
@@ -27,12 +27,6 @@ public class UserListEntry {
 	public UserListEntry(CommonEntity entity) {
 		this.entity = entity;
 	}
-
-	// public ContactListEntry(long id, String name, String image) {
-	// entity.setId(id);
-	// entity.setName(name);
-	// entity.setImage(image);
-	// }
 
 	/**
 	 * @return the id
@@ -55,7 +49,6 @@ public class UserListEntry {
 	 */
 	@XmlElement
 	public String getName() {
-		// return entity.isUser() ? entity.getDisplayname() : entity.getName();
 		return entity.getName();
 	}
 

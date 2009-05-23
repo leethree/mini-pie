@@ -6,10 +6,12 @@
 package org.net9.minipie.server.data.api;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
 import org.net9.minipie.server.data.entity.ContactEntity;
@@ -80,11 +82,17 @@ public class PhonebookContactListEntry {
 	}
 	
 	/**
-	 * TODO add tag
+	 * 
 	 * @return
 	 */
-	public Collection<TagEntry> getTags() {
-		return entity.getTags();
+	@XmlElement(name = "tag")
+	@XmlElementWrapper(name = "tags")
+	public Collection<TagXml> getTags() {
+		Collection<TagXml> tags = new ArrayList<TagXml>();
+		for (TagEntry tagEntry : entity.getTags()) {
+			tags.add(new TagXml(tagEntry));
+		}
+		return tags;
 	}
 
 	/**

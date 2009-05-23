@@ -39,18 +39,18 @@ public class PhonebookUserListResource {
 	@Produces( { "application/xml", "application/json" })
 	public PhonebookUserList get() {
 		return new PhonebookUserList(new Handler<Collection<PhonebookUserListEntry>>(
-				new ListMyUserContact(1L)).excute(), uriInfo.getAbsolutePath());
+				new ListMyUserContact(1L)).execute(), uriInfo.getAbsolutePath());
 	}
 
 	@POST
 	public Response post(@FormParam("userid") long targetId,
 			@FormParam("message") String message) {
-		new Handler<Void>(new AddUserAsContact(1L, targetId, message)).excute();
+		new Handler<Void>(new AddUserAsContact(1L, targetId, message)).execute();
 		return Response.ok().build();
 	}
 
 	@Path("{id}")
-	public PhonebookUserResource getContact(@PathParam("id") long id) {
+	public PhonebookUserResource getUser(@PathParam("id") long id) {
 		PhonebookUserResource user = resourceContext
 				.getResource(PhonebookUserResource.class);
 		user.setUserId(id);

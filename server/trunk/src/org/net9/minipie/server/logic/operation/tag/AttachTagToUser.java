@@ -19,21 +19,21 @@ import org.net9.minipie.server.logic.storage.User_UserStorage;
 
 /**
  * @author Seastar
- *
+ * 
  */
 public class AttachTagToUser extends Command<Void> {
 	private long tagId;
 	private long userId;
 	private long targetId;
-	
+
 	/**
 	 * Constructor
+	 * 
 	 * @param tagId
 	 * @param userId
 	 * @param targetId
 	 */
-	public AttachTagToUser(long tagId, long userId, long targetId) {
-		super();		
+	public AttachTagToUser(long userId, long targetId, long tagId) {
 		this.userId = userId;
 		try {
 			this.tagId = Formatter.checkId(tagId);
@@ -41,29 +41,31 @@ public class AttachTagToUser extends Command<Void> {
 		} catch (DataFormatException e) {
 			throw new InvalidRequestException(e);
 		}
-		
+
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
 	@Override
 	public Void execute() {
-		UserStorage executor=getStorageFactory().getUserStorage();
-		User_UserStorage executor2=getStorageFactory().getUser_UserStorage();
-		TagStorage executor3=getStorageFactory().getTagStorage();
-		Tag_UserStorage executor4=getStorageFactory().getTag_UserStorage();
+		UserStorage executor = getStorageFactory().getUserStorage();
+		User_UserStorage executor2 = getStorageFactory().getUser_UserStorage();
+		TagStorage executor3 = getStorageFactory().getTagStorage();
+		Tag_UserStorage executor4 = getStorageFactory().getTag_UserStorage();
 		executor.selectBasicInfo(targetId);
-		TagData t=executor3.selectTag(tagId);
-		if(t.getOwnerId()==userId){
-			try{
+		TagData t = executor3.selectTag(tagId);
+		if (t.getOwnerId() == userId) {
+			try {
 				executor2.selectRelationship(userId, targetId);
-			}catch(NotFoundException e){
-				throw new PermissionDeniedException("Target is not your user contact");
+			} catch (NotFoundException e) {
+				throw new PermissionDeniedException(
+						"Target is not your user contact");
 			}
 			executor4.add(tagId, targetId);
-		}else{
+		} else {
 			throw new PermissionDeniedException("this is not your tag");
 		}
 		return null;

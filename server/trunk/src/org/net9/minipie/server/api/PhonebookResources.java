@@ -14,4 +14,14 @@ public class PhonebookResources {
 	public PhonebookContactListResource getContacts() {
 		return resourceContext.getResource(PhonebookContactListResource.class);
 	}
+	
+	@Path("user")
+	public PhonebookUserListResource getUsers() {
+		return resourceContext.getResource(PhonebookUserListResource.class);
+	}
+	
+	@Path("tag")
+	public PhonebookTagListResource getTags() {
+		return resourceContext.getResource(PhonebookTagListResource.class);
+	}
 }

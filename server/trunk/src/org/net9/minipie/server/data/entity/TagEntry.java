@@ -7,7 +7,6 @@ package org.net9.minipie.server.data.entity;
 
 import org.net9.minipie.server.data.Formatter;
 import org.net9.minipie.server.exception.DataFormatException;
-import org.net9.minipie.server.exception.ServerErrorException;
 
 /**
  * @author Seastar
@@ -54,10 +53,11 @@ public class TagEntry {
 	/**
 	 * @param name
 	 *            the name to set
+	 * @throws DataFormatException 
 	 */
-	public void setName(String name) {
+	public void setName(String name) throws DataFormatException {
 		if (name == null)
-			throw new ServerErrorException("Tag name should not be null.");
+			throw new DataFormatException("Tag name should not be null.");
 		this.name = Formatter.removeSpace(name);
 	}
 }

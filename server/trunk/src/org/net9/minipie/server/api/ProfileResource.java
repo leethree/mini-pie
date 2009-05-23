@@ -42,7 +42,7 @@ public class ProfileResource {
 	@GET
 	@Produces( { "application/xml", "application/json" })
 	public PersonalProfile get() {
-		return new Handler<PersonalProfile>(new ViewMyInfo(1L)).excute();
+		return new Handler<PersonalProfile>(new ViewMyInfo(1L)).execute();
 	}
 
 	@POST
@@ -62,7 +62,7 @@ public class ProfileResource {
 				macro.addCommand(new UpdateMyInfo(1L, update.checkThis()));
 			}
 			StatusReportList statuses = new Handler<StatusReportList>(macro)
-					.excute();
+					.execute();
 			return Response.status(StatusReportList.MULTI_STATUS).entity(
 					statuses).build();
 		}
@@ -74,7 +74,7 @@ public class ProfileResource {
 	 * @return
 	 */
 	public Response update(Update update) {
-		new Handler<Void>(new UpdateMyInfo(1L, update.checkThis())).excute();
+		new Handler<Void>(new UpdateMyInfo(1L, update.checkThis())).execute();
 		return Response.ok().build();
 	}
 }

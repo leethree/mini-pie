@@ -30,12 +30,12 @@ public class PhonebookContactListResource {
 	@Produces( { "application/xml", "application/json" })
 	public PhonebookContactList get() {
 		return new PhonebookContactList(new Handler<Collection<PhonebookContactListEntry>>(
-				new ListMyContact(1L)).excute(), uriInfo.getAbsolutePath());
+				new ListMyContact(1L)).execute(), uriInfo.getAbsolutePath());
 	}
 
 	@POST
 	public Response post(@FormParam("name") String name) {
-		long newId = new Handler<Long>(new AddMyContact(1L, name)).excute();
+		long newId = new Handler<Long>(new AddMyContact(1L, name)).execute();
 		return Response.created(uriInfo.getAbsolutePath().resolve(newId + "/"))
 				.build();
 	}

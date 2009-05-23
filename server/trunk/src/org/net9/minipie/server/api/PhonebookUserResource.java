@@ -45,12 +45,12 @@ public class PhonebookUserResource {
 	@Produces( { "application/xml", "application/json" })
 	public PhonebookCompleteUser get() {
 		return new Handler<PhonebookCompleteUser>(new ViewMyUserContact(1L,
-				userId)).excute();
+				userId)).execute();
 	}
 	
 	@DELETE
 	public Response delete() {
-		new Handler<Void>(new RemoveUserContact(1L, userId)).excute();
+		new Handler<Void>(new RemoveUserContact(1L, userId)).execute();
 		return Response.ok().build();
 	}
 }

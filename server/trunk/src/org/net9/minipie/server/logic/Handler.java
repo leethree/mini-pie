@@ -30,7 +30,7 @@ public class Handler<R> {
 		this.command = command;
 	}
 
-	public R excute() {
+	public R execute() {
 		if(command==null){
 			throw new ServerErrorException("Server error");
 		}

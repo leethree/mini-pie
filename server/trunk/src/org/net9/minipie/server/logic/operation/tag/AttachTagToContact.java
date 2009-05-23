@@ -31,8 +31,7 @@ public class AttachTagToContact extends Command<Void> {
 	 * @param userId
 	 * @param targetId
 	 */
-	public AttachTagToContact(long tagId, long userId, long targetId) {
-		super();		
+	public AttachTagToContact(long userId,  long targetId, long tagId) {
 		this.userId = userId;
 		try {
 			this.tagId = Formatter.checkId(tagId);

@@ -35,7 +35,7 @@ public class NotificationResource {
 	@Produces( { "application/xml", "application/json" })
 	public NotificationList get() {
 		return new NotificationList(new Handler<Collection<NotificationXml>>(
-				new ListAllMyNotification(1L)).excute(), uriInfo
+				new ListAllMyNotification(1L)).execute(), uriInfo
 				.getAbsolutePath());
 	}
 }
