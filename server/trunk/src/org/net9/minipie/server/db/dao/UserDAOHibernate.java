@@ -1,7 +1,6 @@
 package org.net9.minipie.server.db.dao;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -529,7 +528,7 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 				Gender gender = (Gender) value;
 				user.setGender(gender);
 			}else if(attribute==InfoField.BIRTHDAY){
-				Date birthday = (Date)value;
+				String birthday = (String)value;
 				user.setBirthday(birthday);
 			}else if(attribute==InfoField.NOTE){
 				String note = (String) value;
