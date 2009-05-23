@@ -92,7 +92,7 @@ public class NotificationDAOHibernate extends GenericHibernateDAO<Notification, 
 			throw new NotFoundException("there is no notification with id: "+notificationId);
 		}
 		try {
-			NotificationData notificationData = new NotificationData(notification.getSender().getId(),
+			NotificationData notificationData = new NotificationData(notificationId, notification.getSender().getId(),
 					notification.getReceiver().getId(), notification.getContent(),
 					notification.getType());
 			return notificationData;
@@ -120,7 +120,7 @@ public class NotificationDAOHibernate extends GenericHibernateDAO<Notification, 
 		while(iter.hasNext()){
 			Notification notification = iter.next();
 			try {
-				result.add(new NotificationData(notification.getSender().getId(),
+				result.add(new NotificationData(notification.getId(), notification.getSender().getId(),
 						notification.getReceiver().getId(), notification.getContent(),
 						notification.getType()));
 			} catch (DataFormatException e) {

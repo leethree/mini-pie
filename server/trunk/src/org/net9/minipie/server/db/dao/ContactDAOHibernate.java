@@ -832,4 +832,35 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		}
 		return basicContact;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.ContactStorage#addShadow(java.lang.Long, java.lang.Long)
+	 */
+	public Long addShadow(Long userId, Long targetId) {
+		Contact shadow = new Contact();
+		shadow.setName("SHADOW");
+		UserDAOHibernate udh = new UserDAOHibernate();
+		User owner = null;
+		User target = null;
+		try{
+			owner = udh.findById(userId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("there is no user with userId: "+userId);
+		}
+		try{
+			target = udh.findById(targetId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("there is no user with userId: "+targetId);
+		}
+		shadow.setOwner(owner);
+		shadow.setShadowOf(target);
+		begin();
+		makePersistent(shadow);
+		commit();
+		owner.getShadows().add(shadow);
+		udh.begin();
+		udh.makePersistent(owner);
+		udh.commit();
+		return null;
+	}
 }
