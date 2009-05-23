@@ -233,4 +233,12 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id> im
 		}
 		return result;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.User_UserStorage#selectPermission(java.lang.Long, java.lang.Long)
+	 */
+	public Permission selectPermission(Long userId1, Long userId2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
