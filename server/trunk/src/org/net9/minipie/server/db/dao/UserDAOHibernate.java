@@ -178,7 +178,7 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			BasicUser result = new BasicUser(user.getId(), user.getUserName(), user.getRegisterEmail(),
 					user.getPassword(), user.getImageURL(), user.getNickName(), user.getDisplayName(),
 					user.getGenderPermission(), user.getBirthdayPermission(), user.getBirthyearPermission(),
-					user.getGender(), user.getBirthday().toString(), user.getNotes(), user.getPerm());
+					user.getGender(), user.getBirthday(), user.getNotes(), user.getPerm());
 			return result;
 		}catch(ObjectNotFoundException e){
 			throw new NotFoundException("There's no user with ID: "

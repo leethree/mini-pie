@@ -20,8 +20,7 @@ import org.net9.minipie.server.logic.storage.UserStorage;
 public class UpdateMyInfo extends Command<Void> {
 	private Update datas;	
 	private Long userId;
-	//private ErrorReport errorReport;
-	//private Collection<String> err;
+
 	/**
 	 * Constructor
 	 * 
@@ -72,5 +71,4 @@ public class UpdateMyInfo extends Command<Void> {
 		
 		return null;
 	}
-	
 }

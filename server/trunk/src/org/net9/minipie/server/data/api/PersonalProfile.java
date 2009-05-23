@@ -5,9 +5,13 @@
  */
 package org.net9.minipie.server.data.api;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.net9.minipie.server.data.entity.AddressData;
 import org.net9.minipie.server.data.entity.EmailData;
@@ -15,13 +19,12 @@ import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.entity.UserEntity;
-import org.net9.minipie.server.data.field.AddAsContactPermission;
-import org.net9.minipie.server.data.field.Gender;
 import org.net9.minipie.server.data.field.Permission;
 
 /**
- * @author Seastar, LeeThree TODO
+ * @author Seastar, LeeThree
  */
+@XmlRootElement(name = "profile")
 public class PersonalProfile {
 	private UserEntity entity;
 
@@ -45,23 +48,26 @@ public class PersonalProfile {
 			return entity.getBirthday().toString();
 	}
 
-	public Permission getBirthdayPermission(){
-		return entity.getBirthdatePermission();
+	@XmlElement(name = "birth_date_perm")
+	public String getBirthdayPermission(){
+		return entity.getBirthdatePermission().toString();
 	}
 	
-	public Permission getBirthyearPermission(){
-		return entity.getBirthyearPermission();
+	@XmlElement(name = "birth_year_perm")
+	public String getBirthyearPermission(){
+		return entity.getBirthyearPermission().toString();
 	}
 	
 	
 	/**
 	 * @return the gender
 	 */
-	public Gender getGender() {
-		return entity.getGender();
+	@XmlElement
+	public String getGender() {
+		return entity.getGender().toString();
 	}
 	
-
+	@XmlElement(name = "gender_perm")
 	public Permission getGenderPermission(){
 		return entity.getGenderPermission();
 	}
@@ -69,14 +75,15 @@ public class PersonalProfile {
 	/**
 	 * @return the id
 	 */
+	@XmlAttribute
 	public long getId() {
 		return entity.getId();
 	}
-
+	@XmlElement
 	public String getPassword(){
 		return entity.getPassword();
 	}
-	
+	@XmlElement(name = "register_email")
 	public String getRegisterEmail(){
 		return entity.getRegisteredEmail();
 	}
@@ -85,121 +92,69 @@ public class PersonalProfile {
 	/**
 	 * @return the image
 	 */
+	@XmlElement
 	public String getImage() {
 		return entity.getImage();
 	}
 
 	/**
-	 * @return the name
+	 * @return the nickname
 	 */
+	@XmlElement
 	public String getNickName() {
 		return entity.getNickName();
 	}
-	
+	@XmlElement
 	public String getDisplayName(){
 		return entity.getDisplayname();
 	}
-	
-	public AddAsContactPermission getAddAsContactPermission(){
-		return entity.getAddAsContactPermission();
+	@XmlElement(name = "add_as_contact_perm")
+	public String getAddAsContactPermission(){
+		return entity.getAddAsContactPermission().toString();
 	}
 		
 	/**
-	 * @return the nickName
+	 * @return the name
 	 */
+	@XmlElement(name = "username")
 	public String getName() {
 		return entity.getName();
 	}
-
-	// /**
-	// * @param notes
-	// * the notes to set
-	// */
-	// public void setNotes(String notes) {
-	// entity.setNotes(notes);
-	// }
-
+	
 	/**
 	 * @return the notes
 	 */
+	@XmlElement(name = "note")
 	public String getNotes() {
 		return entity.getNotes();
 	}
 
-
 	/**
-	 * @return the addrs
+	 * @return the detailed information
 	 */
-	public Collection<AddressData> getAddrs() {
-		return entity.getAddrs();
+	@XmlElements( { @XmlElement(name = "address", type = ProfileAddressXml.class),
+			@XmlElement(name = "email", type = ProfileEmailXml.class),
+			@XmlElement(name = "im", type = ProfileIMXml.class),
+			@XmlElement(name = "phone", type = ProfilePhoneXml.class),
+			@XmlElement(name = "url", type = ProfileUrlXml.class) })
+	public Collection<ProfileDetailedInfoXml> getDetails() {
+		Collection<ProfileDetailedInfoXml> collection = new ArrayList<ProfileDetailedInfoXml>();
+		for (AddressData address : entity.getAddrs()) {
+			collection.add(new ProfileAddressXml(address));
+		}
+		for (EmailData email : entity.getEmails()) {
+			collection.add(new ProfileEmailXml(email));
+		}
+		for (IMData im : entity.getIms()) {
+			collection.add(new ProfileIMXml(im));
+		}
+		for (PhoneNoData phone : entity.getTels()) {
+			collection.add(new ProfilePhoneXml(phone));
+		}
+		for (URLData url : entity.getUrls()) {
+			collection.add(new ProfileUrlXml(url));
+		}
+		return collection;
 	}
-
-	// /**
-	// * @param addrs
-	// * the addrs to set
-	// */
-	// public void setAddrs(Collection<AddressData> addrs) {
-	// entity.setAddrs(addrs);
-	// }
-
-	/**
-	 * @return the emails
-	 */
-	public Collection<EmailData> getEmails() {
-		return entity.getEmails();
-	}
-
-	// /**
-	// * @param emails
-	// * the emails to set
-	// */
-	// public void setEmails(Collection<EmailData> emails) {
-	// entity.setEmails(emails);
-	// }
-
-	/**
-	 * @return the ims
-	 */
-	public Collection<IMData> getIms() {
-		return entity.getIms();
-	}
-
-	// /**
-	// * @param ims
-	// * the ims to set
-	// */
-	// public void setIMs(Collection<IMData> ims) {
-	// entity.setIms(ims);
-	// }
-
-	/**
-	 * @return the phoneNos
-	 */
-	public Collection<PhoneNoData> getTels() {
-		return entity.getTels();
-	}
-
-	// /**
-	// * @param phoneNos
-	// * the phoneNos to set
-	// */
-	// public void setPhoneNos(Collection<PhoneNoData> tels) {
-	// entity.setTels(tels);
-	// }
-
-	/**
-	 * @return the urls
-	 */
-	public Collection<URLData> getUrls() {
-		return entity.getUrls();
-	}
-
-	// /**
-	// * @param urls
-	// * the urls to set
-	// */
-	// public void setURLs(Collection<URLData> urls) {
-	// entity.setUrls(urls);
-	// }
-
+	
 }

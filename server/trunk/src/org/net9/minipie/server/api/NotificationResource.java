@@ -1,5 +1,5 @@
 /**
- * NotificationResources.java
+ * NotificationResource.java
  *     in package: * org.net9.minipie.server.api
  * by Mini-Pie Project
  */
@@ -25,7 +25,7 @@ import com.sun.jersey.api.core.ResourceContext;
  * 
  */
 @Path("/notification")
-public class NotificationResources {
+public class NotificationResource {
 	@Context
 	private UriInfo uriInfo;
 	@Context
