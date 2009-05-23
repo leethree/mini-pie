@@ -74,4 +74,10 @@ public interface UserStorage {
 	List<PhoneNoData> selectTel(Long userId);
 
 	List<URLData> selectURL(Long userId);
+		
+	long findAddressOwner(long addrId);
+	long findEmailOwner(long emailId);
+	long findIMOwner(long imId);
+	long findTelOwner(long telId);
+	long findURLOwner(long urlId);
 }

@@ -6,6 +6,7 @@
 package org.net9.minipie.server.data.entity;
 
 import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.data.field.AddAsContactPermission;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.ServerErrorException;
@@ -18,7 +19,7 @@ public class UserEntity extends CommonEntity {
 	private String registeredEmail;
 	private String password;
 	private String displayname;
-	private Permission addAsContactPermission;
+	private AddAsContactPermission addAsContactPermission;
 	private Permission genderPermission;
 	private Permission birthDatePermission;
 	private Permission birthYearPermission;
@@ -28,7 +29,7 @@ public class UserEntity extends CommonEntity {
 	 * Constructor
 	 */
 	public UserEntity() {
-		addAsContactPermission = Permission.TO_CONTACTS;
+		addAsContactPermission = AddAsContactPermission.CONFIRMED_ONES;
 		genderPermission = Permission.TO_CONTACTS;
 		birthDatePermission = Permission.TO_CONTACTS;
 		birthYearPermission = Permission.TO_CONTACTS;
@@ -68,7 +69,7 @@ public class UserEntity extends CommonEntity {
 	 * @throws DataFormatException
 	 */
 	public void setPassword(String password) throws DataFormatException {
-		if (registeredEmail == null)
+		if (password == null)
 			throw new ServerErrorException("The password should not be null.");
 		this.password = Formatter.formatPassword(password);
 	}
@@ -94,7 +95,7 @@ public class UserEntity extends CommonEntity {
 	/**
 	 * @return the addAsContactPermission
 	 */
-	public Permission getAddAsContactPermission() {
+	public AddAsContactPermission getAddAsContactPermission() {
 		return addAsContactPermission;
 	}
 
@@ -102,7 +103,7 @@ public class UserEntity extends CommonEntity {
 	 * @param addAsContactPermission
 	 *            the addAsContactPermission to set
 	 */
-	public void setAddAsContactPermission(Permission addAsContactPermission) {
+	public void setAddAsContactPermission(AddAsContactPermission addAsContactPermission) {
 		if (addAsContactPermission == null)
 			throw new ServerErrorException(
 					"Add-as-contact permission not be null.");

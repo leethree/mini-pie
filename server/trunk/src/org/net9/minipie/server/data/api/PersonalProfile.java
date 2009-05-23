@@ -10,52 +10,29 @@ import java.util.Collection;
 import javax.xml.bind.annotation.XmlElement;
 
 import org.net9.minipie.server.data.entity.AddressData;
-import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.data.entity.EmailData;
 import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
+import org.net9.minipie.server.data.entity.UserEntity;
+import org.net9.minipie.server.data.field.AddAsContactPermission;
 import org.net9.minipie.server.data.field.Gender;
+import org.net9.minipie.server.data.field.Permission;
 
 /**
  * @author Seastar, LeeThree TODO
  */
 public class PersonalProfile {
-	private ContactEntity entity;
+	private UserEntity entity;
 
 	/**
 	 * Constructor
 	 * 
 	 * @param entity
 	 */
-	public PersonalProfile(ContactEntity entity) {
+	public PersonalProfile(UserEntity entity) {
 		this.entity = entity;
 	}
-
-	// public PersonalProfile() {
-	// entity=new ContactEntity();
-	// }
-	//
-	// public PersonalProfile(long id, String name,String image, String
-	// nickName,
-	// Gender gender, String birthday,String notes, String relationship,
-	// Collection<AddressData> addrs, Collection<EmailData> emails,
-	// Collection<IMData> ims, Collection<PhoneNoData> phoneNos,
-	// Collection<URLData> urls) {
-	// entity.setId(id);
-	// entity.setName(name);
-	// entity.setImage(image);
-	// entity.setNickName(nickName);
-	// entity.setGender(gender);
-	// entity.setBirthday(birthday);
-	// entity.setNotes(notes);
-	// entity.setRelationship(relationship);
-	// entity.setAddrs(addrs);
-	// entity.setEmails(emails);
-	// entity.setIms(ims);
-	// entity.setTels(phoneNos);
-	// entity.setUrls(urls);
-	// }
 
 	/**
 	 * @return the birthday
@@ -68,28 +45,26 @@ public class PersonalProfile {
 			return entity.getBirthday().toString();
 	}
 
-	// /**
-	// * @param birthday
-	// * the birthday to set
-	// */
-	// public void setBirthday(String birthday) {
-	// entity.setBirthday(birthday);
-	// }
-
+	public Permission getBirthdayPermission(){
+		return entity.getBirthdatePermission();
+	}
+	
+	public Permission getBirthyearPermission(){
+		return entity.getBirthyearPermission();
+	}
+	
+	
 	/**
 	 * @return the gender
 	 */
 	public Gender getGender() {
 		return entity.getGender();
 	}
+	
 
-	// /**
-	// * @param gender
-	// * the gender to set
-	// */
-	// public void setGender(Gender gender) {
-	// entity.setGender(gender);
-	// }
+	public Permission getGenderPermission(){
+		return entity.getGenderPermission();
+	}
 
 	/**
 	 * @return the id
@@ -98,14 +73,15 @@ public class PersonalProfile {
 		return entity.getId();
 	}
 
-	// /**
-	// * @param id
-	// * the id to set
-	// */
-	// public void setId(long id) {
-	// entity.setId(id);
-	// }
-
+	public String getPassword(){
+		return entity.getPassword();
+	}
+	
+	public String getRegisterEmail(){
+		return entity.getRegisteredEmail();
+	}
+	
+	
 	/**
 	 * @return the image
 	 */
@@ -113,37 +89,21 @@ public class PersonalProfile {
 		return entity.getImage();
 	}
 
-	// /**
-	// * @param image
-	// * the image to set
-	// */
-	// public void setImage(String image) {
-	// entity.setImage(image);
-	// }
-
-	// /**
-	// * @param name
-	// * the name to set
-	// */
-	// public void setNickName(String nickName) {
-	// entity.setNickName(nickName);
-	// }
-
 	/**
 	 * @return the name
 	 */
 	public String getNickName() {
 		return entity.getNickName();
 	}
-
-	// /**
-	// * @param nickName
-	// * the nickName to set
-	// */
-	// public void setName(String name) {
-	// entity.setName(name);
-	// }
-
+	
+	public String getDisplayName(){
+		return entity.getDisplayname();
+	}
+	
+	public AddAsContactPermission getAddAsContactPermission(){
+		return entity.getAddAsContactPermission();
+	}
+		
 	/**
 	 * @return the nickName
 	 */
@@ -166,23 +126,6 @@ public class PersonalProfile {
 		return entity.getNotes();
 	}
 
-	// /**
-	// * @param relationship
-	// * the relationship to set
-	// */
-	// public void setRelationship(String relationship) {
-	// entity.setRelationship(relationship);
-	// }
-
-	/**
-	 * @return the relationship
-	 */
-	public String getRelationship() {
-		if (entity.getRelationship() == null)
-			return null;
-		else
-			return entity.getRelationship().toString();
-	}
 
 	/**
 	 * @return the addrs

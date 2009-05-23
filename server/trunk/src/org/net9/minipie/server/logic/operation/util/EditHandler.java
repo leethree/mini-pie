@@ -20,8 +20,9 @@ public class EditHandler extends UpdateHandler{
 	 * Constructor
 	 * @param successor
 	 * @param dt
+	 * @throws UpdateException 
 	 */
-	protected EditHandler(Update dt,ContactStorage executor) {
+	protected EditHandler(Update dt,ContactStorage executor) throws UpdateException {
 		super(null, dt,executor);
 	}
 	

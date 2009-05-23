@@ -5,21 +5,69 @@
  */
 package org.net9.minipie.server.logic;
 
+import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.db.HibernateDAOFactory;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.InvalidRequestException;
+import org.net9.minipie.server.exception.ServerErrorException;
+import org.net9.minipie.server.logic.storage.UserStorage;
+
 
 /**
  * @author Seastar
  * 
  */
 public class SignUp {
-
+	private String name;
+	private String pwd;
+	private String email;
+	
+	public SignUp(String name,String email,String password){
+		setName(name);
+		setEmail(email);
+		setPwd(password);
+	}
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		if (email == null)
+			throw new InvalidRequestException(
+					"The registerd email should not be null.");
+		try {
+			this.email = Formatter.formatEmail(email);
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException(e);
+		}
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		if (name == null)
+			throw new ServerErrorException("The name should not be null.");
+		this.name = Formatter.compact(name);
+	}
+	/**
+	 * @param pwd the pwd to set
+	 */
+	public void setPwd(String pwd) {
+		if (pwd == null)
+			throw new InvalidRequestException("The password should not be null.");
+		try {
+			this.pwd = Formatter.formatPassword(pwd);
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException(e);
+		}
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#excute()
 	 */
 	public Long execute() {
-		
-		return null;
+		UserStorage executor=new HibernateDAOFactory().getUserStorage();		
+		return executor.add(name, pwd, email);
 	}
 
 }

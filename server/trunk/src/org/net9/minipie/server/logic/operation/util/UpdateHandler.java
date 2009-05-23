@@ -21,15 +21,19 @@ public class UpdateHandler{
 	 * Constructor
 	 * @param successor
 	 * @param dt
+	 * @throws UpdateException 
 	 */
-	protected UpdateHandler(UpdateHandler successor, Update dt,ContactStorage executor) {
+	protected UpdateHandler(UpdateHandler successor, Update dt,ContactStorage executor) throws UpdateException {
 		super();
 		this.successor = successor;
 		this.executor=executor;
+
+		if(dt.getType()==null)
+			throw new UpdateException("Unknow Updata Type");
 		this.dt = dt;
 		
 	}
-	public UpdateHandler(Update dt,ContactStorage executor,long id){
+	public UpdateHandler(Update dt,ContactStorage executor,long id) throws UpdateException{
 		super();
 		this.successor=new AddHandler(dt,id,executor);
 	}

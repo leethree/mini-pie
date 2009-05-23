@@ -5,20 +5,106 @@
  */
 package org.net9.minipie.server.logic.operation.user;
 
+import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.data.entity.Notification;
+import org.net9.minipie.server.data.entity.UserEntity;
+import org.net9.minipie.server.data.field.NotificationType;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.InvalidRequestException;
+import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.logic.operation.Command;
+import org.net9.minipie.server.logic.storage.NotifacationStorage;
+import org.net9.minipie.server.logic.storage.UserStorage;
+import org.net9.minipie.server.logic.storage.User_UserStorage;
 
 /**
  * @author Seastar
  *
  */
 public class AddUserAsContact extends Command<Void>{
+	private long userId;
+	private long targetId;
+	//private Relationships relationShip;
+	private String message;
+	
+	public AddUserAsContact(long userId,long targetId,String message){
+		setUserId(userId);
+		setTargetId(targetId);
+		setMessage(message);
+	}
 
+	/**
+	 * @param message the message to set
+	 */
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	/**
+	 * @param targetId the targetId to set
+	 */
+	public void setTargetId(long targetId) {
+		try {
+			this.targetId = Formatter.checkId(targetId);
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException(e);
+		}
+	}
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(long userId) {
+		try {
+			this.targetId = Formatter.checkId(userId);
+			if(this.targetId==this.userId)
+				throw new InvalidRequestException("can't add youselft as contact");
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException(e);
+		}
+	}
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
 	@Override
 	public Void execute() {
-		// TODO Auto-generated method stub
+		boolean flag=false;
+		UserStorage executor=getStorageFactory().getUserStorage();
+		UserEntity entity;
+		try{
+			entity=executor.selectBasicInfo(userId).getEntity();
+		}catch (NotFoundException e){
+			throw new InvalidRequestException("the user you want to add" +
+					"doesn't exist");
+		}
+		User_UserStorage executor2=getStorageFactory().getUser_UserStorage();
+		try{
+			executor2.selectRelationship(userId, targetId);
+			//flag=false;
+			throw new InvalidRequestException("the user you want to add" +
+					"is already your contact");
+		}catch (NotFoundException e){
+			flag=true;
+		}
+		if(flag){
+			switch(entity.getAddAsContactPermission()){
+				case NO_ONE:
+					throw new InvalidRequestException("the user can't be add" +
+							"as contact");
+				case CONFIRMED_ONES:
+					NotifacationStorage executor3=getStorageFactory().getNotifacationStorage();
+					try {
+						executor3.add(new Notification(userId,targetId,
+								"user "+userId +" want you to be his/her contact," +
+								"please confirm\r\n" +
+								"his/her message:"+message
+								,NotificationType.CONTACT_APPLICATION));
+					} catch (DataFormatException e) {
+						//won't appear,ignore
+					}
+				case EVERYONE:
+					executor2.add(userId, targetId);
+					break;
+			}
+		}
 		return null;
 	}
 

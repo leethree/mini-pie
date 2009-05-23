@@ -18,16 +18,19 @@ public class DelHandler extends UpdateHandler{
 
 	/**
 	 * Constructor
+	 * @throws UpdateException 
 	 */
-	protected DelHandler(Update dt,ContactStorage executor) {
+	protected DelHandler(Update dt,ContactStorage executor) throws UpdateException {
 		super(new EditHandler(dt,executor), dt,executor);
 	}
 	
 	public void handleUpdate() throws UpdateException{
 		if(dt instanceof Delete){
 			Delete newData = (Delete) dt;
+			
 			switch (newData.getType()) {
 				case ADDRESS:
+					//if(executor.selectAddr(newData.getId()))
 					executor.delAddr(newData.getId());
 					break;
 				case EMAIL:

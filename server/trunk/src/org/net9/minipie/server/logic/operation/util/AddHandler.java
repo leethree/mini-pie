@@ -25,8 +25,9 @@ public class AddHandler extends UpdateHandler{
 	 * Constructor
 	 * @param successor
 	 * @param dt
+	 * @throws UpdateException 
 	 */
-	protected AddHandler(Update dt,long id,ContactStorage executor) {
+	protected AddHandler(Update dt,long id,ContactStorage executor) throws UpdateException {
 		super(new DelHandler(dt,executor), dt,executor);
 		this.id=id;
 	}

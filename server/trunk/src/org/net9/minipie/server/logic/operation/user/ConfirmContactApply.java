@@ -5,7 +5,15 @@
  */
 package org.net9.minipie.server.logic.operation.user;
 
+import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.data.entity.Notification;
+import org.net9.minipie.server.data.field.NotificationType;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.logic.operation.Command;
+import org.net9.minipie.server.logic.storage.NotifacationStorage;
+import org.net9.minipie.server.logic.storage.UserStorage;
+import org.net9.minipie.server.logic.storage.User_UserStorage;
 
 /**
  * @author Seastar
@@ -13,12 +21,37 @@ import org.net9.minipie.server.logic.operation.Command;
  */
 public class ConfirmContactApply extends Command<Void> {
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.operation.Command#execute()
+	private long userId;
+	private long notificationId;
+	
+	public ConfirmContactApply(long userId,long notificationId){
+		
+	}
+	/**
+	 * @param userId the userId to set
 	 */
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+	/**
+	 * @param notificationId the notificationId to set
+	 */
+	public void setNotificationId(long notificationId) {
+		try {
+			this.notificationId = Formatter.checkId(notificationId);
+		} catch (DataFormatException e) {			
+			throw new InvalidRequestException("not such notification");
+		}
+	}
 	@Override
 	public Void execute() {
-		// TODO Auto-generated method stub
+		User_UserStorage executor = getStorageFactory().getUser_UserStorage();
+		NotifacationStorage executor1 = getStorageFactory().getNotifacationStorage();		
+		Notification noti=executor1.selectNotification(notificationId);
+		if(noti.getReceiverId()==userId ||noti.getType()==NotificationType.CONTACT_APPLICATION){
+			executor.add(userId, noti.getSendId());			
+		}else
+			throw new InvalidRequestException("this is not your notification or not the correct type");
 		return null;
 	}
 

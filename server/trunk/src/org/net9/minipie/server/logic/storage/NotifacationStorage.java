@@ -17,4 +17,5 @@ public interface NotifacationStorage {
 	public long add(Notification notification);
 	public void del(Long notifacationId);
 	public Collection<Notification> selectReceiver(Long receiverId);
+	public Notification selectNotification(long notificationId);
 }
