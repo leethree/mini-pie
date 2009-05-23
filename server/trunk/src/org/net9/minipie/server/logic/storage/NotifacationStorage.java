@@ -15,6 +15,6 @@ import org.net9.minipie.server.data.entity.Notification;
  */
 public interface NotifacationStorage {
 	public long add(Notification notification);
-	public void del(long notifacationId);
-	public Collection<Notification> selectReceiver(long receiverId);
+	public void del(Long notifacationId);
+	public Collection<Notification> selectReceiver(Long receiverId);
 }

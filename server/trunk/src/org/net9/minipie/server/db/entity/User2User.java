@@ -57,6 +57,8 @@ public class User2User {
 			insertable = false,
 			updatable = false)
 	private User user2;
+	@Column(name = "RELATIONSHIP")
+	private String relationship;
 	public User2User() {}
 	public User2User(User user1, User user2, Permission left, Permission right){
 		this.id.user1Id = user1.getId();
@@ -97,6 +99,18 @@ public class User2User {
 	}
 	public Permission getRight(){
 		return this.right;
+	}
+	/**
+	 * @param relationship the relationship to set
+	 */
+	public void setRelationship(String relationship) {
+		this.relationship = relationship;
+	}
+	/**
+	 * @return the relationship
+	 */
+	public String getRelationship() {
+		return relationship;
 	}
 
 }

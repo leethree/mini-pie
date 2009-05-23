@@ -18,7 +18,8 @@ public enum InfoField {
 			"permission"),BIRTHDAYPERMISSION("birthdayPermission")
 			,BIRTHYEARPERMISSION("birthyearPermission"),REGISTEREMAIL("registerEmail")
 			,PASSWORD("password"),DISPLAYNAME("displayName")
-			,GENDERPERMISSION("genderPermission");
+			,GENDERPERMISSION("genderPermission"), LEFTPERMISSION("leftPermission"),
+			RIGHTPERMISSION("rightPermission");
 	private String field;
 
 	/**
