@@ -55,6 +55,7 @@ public class ListTaggedUser extends Command<Collection<PhonebookUserListEntry>> 
 			long id=entity.getId();
 			entity.setTags(executor2.selectTagsOfUser(id,userId));
 			entity.setRelationship(new Relationships(executor3.selectRelationship(userId, id)));
+			entity.setPermission(executor3.selectPermission(userId, id));
 			result.add(new PhonebookUserListEntry(entity));
 		}
 		return result;
