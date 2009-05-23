@@ -125,7 +125,7 @@ public class PhonebookCompleteContact {
 	/**
 	 * @return the name
 	 */
-	@XmlElement
+	@XmlElement(name = "nickname")
 	public String getNickName() {
 		return entity.getNickName();
 	}
@@ -173,7 +173,7 @@ public class PhonebookCompleteContact {
 	/**
 	 * @return the relationship
 	 */
-	@XmlElement
+	@XmlAttribute(name = "rel")
 	public String getRelationship() {
 		if (entity.getRelationship() == null)
 			return null;

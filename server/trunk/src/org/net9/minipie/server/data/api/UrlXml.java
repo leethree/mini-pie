@@ -96,17 +96,6 @@ public class UrlXml implements DetailedInfoXml {
 		entity.setPrimary(isPrimary);
 	}
 
-	/**
-	 * @return the perm
-	 */
-	@XmlAttribute(name = "permission")
-	public String getPerm() {
-		if (entity.getPermission() == null)
-			return null;
-		else
-			return entity.getPermission().toString();
-	}
-
 	@XmlTransient
 	public URLData getInfo() {
 		return entity;

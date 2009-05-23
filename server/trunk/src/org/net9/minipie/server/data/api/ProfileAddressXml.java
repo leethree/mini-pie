@@ -1,5 +1,5 @@
 /**
- * AddressXml.java
+ * ProfileAddressXml.java
  *     in package: * org.net9.minipie.server.api.xml
  * by Mini-Pie Project
  */
@@ -18,17 +18,17 @@ import org.net9.minipie.server.data.entity.AddressData;
  * 
  */
 @XmlType(name = "address")
-public class AddressXml implements DetailedInfoXml {
+public class ProfileAddressXml implements ProfileDetailedInfoXml {
 	private AddressData entity;
 
 	/**
 	 * Constructor
 	 */
-	public AddressXml() {
+	public ProfileAddressXml() {
 		entity = new AddressData();
 	}
 
-	public AddressXml(AddressData entity) {
+	public ProfileAddressXml(AddressData entity) {
 		this.entity = entity;
 	}
 
@@ -105,6 +105,17 @@ public class AddressXml implements DetailedInfoXml {
 	 */
 	public void setZipcode(String zipcode) {
 		entity.setZipcode(zipcode);
+	}
+
+	/**
+	 * @return the perm
+	 */
+	@XmlAttribute(name = "permission")
+	public String getPerm() {
+		if (entity.getPermission() == null)
+			return null;
+		else
+			return entity.getPermission().toString();
 	}
 
 	@XmlTransient

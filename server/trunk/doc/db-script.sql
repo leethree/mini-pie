@@ -401,7 +401,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `unregistered_contact` WRITE;
 /*!40000 ALTER TABLE `unregistered_contact` DISABLE KEYS */;
-INSERT INTO `unregistered_contact` VALUES (1,'1988/02/11',0,'http://example.com/tom.jpg','Tom','tommy','a cat',0,'friend',NULL,1,NULL),(2,'1989/02/14',1,'http://example.com/jerry.jpg','Jerry','jerry','a rat',1,'acquaintance',NULL,1,NULL),(3,'1990/08/01',1,'http://example.com/rachael.jpg','Rachael','rachae','somebody',0,'sweetheart',NULL,1,NULL),(4,'1987/06/01',1,'http://example.com/monica.png','Monica','monica','somebody else',0,'met',NULL,1,NULL),(5,'1988/02/12',0,'http://example.com/ross.bmp','Ross','rossy','somebody else else',2,'co-worker',NULL,1,NULL);
+INSERT INTO `unregistered_contact` VALUES (1,'1988-02-11',0,'http://example.com/tom.jpg','Tom','tommy','a cat',0,'friend',NULL,1,NULL),(2,'1989-02-14',1,'http://example.com/jerry.jpg','Jerry','jerry','a rat',1,'acquaintance',NULL,1,NULL),(3,'1990-08-01',1,'http://example.com/rachael.jpg','Rachael','rachae','somebody',0,'sweetheart',NULL,1,NULL),(4,'1987-06-01',1,'http://example.com/monica.png','Monica','monica','somebody else',0,'met',NULL,1,NULL),(5,'1988-02-12',0,'http://example.com/ross.jpg','Ross','rossy','somebody else else',2,'co-worker',NULL,1,NULL);
 /*!40000 ALTER TABLE `unregistered_contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -590,4 +590,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-05-09 18:26:22
+-- Dump completed on 2009-05-23  2:55:53

@@ -19,17 +19,17 @@ import org.net9.minipie.server.exception.InvalidRequestException;
  * 
  */
 @XmlType(name = "email")
-public class EmailXml implements DetailedInfoXml {
+public class ProfileEmailXml implements ProfileDetailedInfoXml {
 	private EmailData entity;
 
 	/**
 	 * Constructor
 	 */
-	public EmailXml() {
+	public ProfileEmailXml() {
 		entity = new EmailData();
 	}
 
-	public EmailXml(EmailData entity) {
+	public ProfileEmailXml(EmailData entity) {
 		this.entity = entity;
 	}
 
@@ -94,6 +94,17 @@ public class EmailXml implements DetailedInfoXml {
 	 */
 	public void setPrimary(boolean isPrimary) {
 		entity.setPrimary(isPrimary);
+	}
+
+	/**
+	 * @return the perm
+	 */
+	@XmlAttribute(name = "permission")
+	public String getPerm() {
+		if (entity.getPermission() == null)
+			return null;
+		else
+			return entity.getPermission().toString();
 	}
 
 	@XmlTransient

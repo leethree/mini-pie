@@ -14,7 +14,6 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.data.entity.TagEntry;
-import org.net9.minipie.server.data.field.Permission;
 
 /**
  * @author Seastar
@@ -90,8 +89,14 @@ public class PhonebookContactListEntry {
 		return entity.getTags();
 	}
 
+	/**
+	 * @return the permission
+	 */
 	@XmlAttribute
-	public Permission getPermission() {
-		return entity.getPermission();
+	public String getPermission() {
+		if (entity.getPermission() == null)
+			return null;
+		else
+			return entity.getPermission().toString();
 	}
 }

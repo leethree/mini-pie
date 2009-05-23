@@ -1,5 +1,5 @@
 /**
- * EmailXml.java
+ * PhoneXml.java
  *     in package: * org.net9.minipie.server.api.xml
  * by Mini-Pie Project
  */
@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import org.net9.minipie.server.data.entity.EmailData;
+import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 
@@ -18,18 +18,18 @@ import org.net9.minipie.server.exception.InvalidRequestException;
  * @author LeeThree
  * 
  */
-@XmlType(name = "email")
-public class EmailXml implements DetailedInfoXml {
-	private EmailData entity;
+@XmlType(name = "phone")
+public class ProfilePhoneXml implements ProfileDetailedInfoXml {
+	private PhoneNoData entity;
 
 	/**
 	 * Constructor
 	 */
-	public EmailXml() {
-		entity = new EmailData();
+	public ProfilePhoneXml() {
+		entity = new PhoneNoData();
 	}
 
-	public EmailXml(EmailData entity) {
+	public ProfilePhoneXml(PhoneNoData entity) {
 		this.entity = entity;
 	}
 
@@ -96,8 +96,19 @@ public class EmailXml implements DetailedInfoXml {
 		entity.setPrimary(isPrimary);
 	}
 
+	/**
+	 * @return the perm
+	 */
+	@XmlAttribute(name = "permission")
+	public String getPerm() {
+		if (entity.getPermission() == null)
+			return null;
+		else
+			return entity.getPermission().toString();
+	}
+
 	@XmlTransient
-	public EmailData getInfo() {
+	public PhoneNoData getInfo() {
 		return entity;
 	}
 }

@@ -90,17 +90,6 @@ public class IMXml implements DetailedInfoXml {
 	public void setPrimary(boolean isPrimary) {
 		entity.setPrimary(isPrimary);
 	}
-
-	/**
-	 * @return the perm
-	 */
-	@XmlAttribute(name = "permission")
-	public String getPerm() {
-		if (entity.getPermission() == null)
-			return null;
-		else
-			return entity.getPermission().toString();
-	}
 	
 	@XmlTransient
 	public IMData getInfo() {
