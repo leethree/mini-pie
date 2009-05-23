@@ -238,7 +238,25 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id> im
 	 * @see org.net9.minipie.server.logic.storage.User_UserStorage#selectPermission(java.lang.Long, java.lang.Long)
 	 */
 	public Permission selectPermission(Long userId1, Long userId2) {
-		// TODO Auto-generated method stub
+		Id id1 = new Id(userId1, userId2);
+		User2User bind = null;
+		boolean flag = false;
+		try{
+			bind = findById(id1);
+			return bind.getLeft();
+		}catch(ObjectNotFoundException e){
+			flag = true;
+		}
+		if(flag){
+			Id id2 = new Id(userId2, userId1);
+			try{
+				bind = findById(id2);
+				return bind.getRight();
+			}catch(ObjectNotFoundException e){
+				throw new NotFoundException("there is no such bind with user id "+ userId1+" "+userId2);
+			}
+		}
 		return null;
+		
 	}
 }
