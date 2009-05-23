@@ -21,6 +21,7 @@ public interface User_UserStorage {
 	public void del(Long userId1,Long userId2);
 	public void edit(Long userId1,Long userId2,InfoField attribute,Object value);
 	public String selectRelationship(Long userId1,Long userId2);
+	public Permission selectPermission(Long userId1,Long userId2);
 	//��l��:user
 	public Collection<CommonListEntry> selectSharedUser(Long userId,Permission permission); 
 	public Collection<UserRelation> selectMyUserContact(Long id);
