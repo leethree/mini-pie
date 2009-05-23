@@ -110,12 +110,11 @@ public class Tag_UserDAOHibernate extends GenericHibernateDAO<Tag2User, Id> impl
 	 * @see org.net9.minipie.server.db.dao.Tag_UserDAO#selectTagsOfUser(java.lang.Long, java.lang.Long)
 	 */
 	public Collection<TagEntry> selectTagsOfUser(Long userId, Long ownerId) {
-		Criterion criterion1 = Restrictions.eq("user.id", userId);
-		Criterion criterion2 = Restrictions.eq("tag.owner.id", ownerId);
+		Criterion criterion = Restrictions.eq("user.id", userId);
 		List<TagEntry> tags = new ArrayList<TagEntry>();
 		List<Tag2User> tagUsers = null;
 		try{
-			tagUsers = findByCriteria(criterion1, criterion2);
+			tagUsers = findByCriteria(criterion);
 		}catch(ObjectNotFoundException e){
 			throw new NotFoundException("no tag2user with userid: "+userId+" "
 					+"and with tagownerid: "+ownerId);
@@ -123,6 +122,9 @@ public class Tag_UserDAOHibernate extends GenericHibernateDAO<Tag2User, Id> impl
 		Iterator<Tag2User> iter = tagUsers.iterator();
 		while(iter.hasNext()){
 			Tag tag = iter.next().getTag();
+			if(tag.getOwner().getId()!=ownerId){
+				continue;
+			}
 			try {
 				tags.add(new TagEntry(tag.getId(), tag.getTagName()));
 			} catch (DataFormatException e) {
