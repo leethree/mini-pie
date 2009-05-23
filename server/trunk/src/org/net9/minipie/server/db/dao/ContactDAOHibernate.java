@@ -25,7 +25,6 @@ import org.net9.minipie.server.db.entity.ContactIM;
 import org.net9.minipie.server.db.entity.ContactPhoneNo;
 import org.net9.minipie.server.db.entity.ContactURL;
 import org.net9.minipie.server.db.entity.User;
-import org.net9.minipie.server.db.entity.UserAddress;
 import org.net9.minipie.server.db.entity.enums.Bool;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.NotFoundException;

@@ -12,7 +12,7 @@ import org.net9.minipie.server.db.dao.UserDAOHibernate;
 import org.net9.minipie.server.db.util.HibernateSessionFactory;
 import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.storage.ContactStorage;
-import org.net9.minipie.server.logic.storage.NotifacationStorage;
+import org.net9.minipie.server.logic.storage.NotificationStorage;
 import org.net9.minipie.server.logic.storage.StorageFactory;
 import org.net9.minipie.server.logic.storage.TagStorage;
 import org.net9.minipie.server.logic.storage.Tag_ContactStorage;
@@ -72,7 +72,7 @@ public class HibernateDAOFactory implements StorageFactory {
 	 * org.net9.minipie.server.logic.storage.StorageFactory#getNotifacationStorage
 	 * ()
 	 */
-	public NotifacationStorage getNotifacationStorage() {
+	public NotificationStorage getNotifacationStorage() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}

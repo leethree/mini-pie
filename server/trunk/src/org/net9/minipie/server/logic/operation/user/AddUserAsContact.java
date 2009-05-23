@@ -6,14 +6,14 @@
 package org.net9.minipie.server.logic.operation.user;
 
 import org.net9.minipie.server.data.Formatter;
-import org.net9.minipie.server.data.entity.Notification;
+import org.net9.minipie.server.data.entity.NotificationData;
 import org.net9.minipie.server.data.entity.UserEntity;
 import org.net9.minipie.server.data.field.NotificationType;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.logic.operation.Command;
-import org.net9.minipie.server.logic.storage.NotifacationStorage;
+import org.net9.minipie.server.logic.storage.NotificationStorage;
 import org.net9.minipie.server.logic.storage.UserStorage;
 import org.net9.minipie.server.logic.storage.User_UserStorage;
 
@@ -90,9 +90,9 @@ public class AddUserAsContact extends Command<Void>{
 					throw new InvalidRequestException("the user can't be add" +
 							"as contact");
 				case CONFIRMED_ONES:
-					NotifacationStorage executor3=getStorageFactory().getNotifacationStorage();
+					NotificationStorage executor3=getStorageFactory().getNotifacationStorage();
 					try {
-						executor3.add(new Notification(userId,targetId,
+						executor3.add(new NotificationData(userId,targetId,
 								"user "+userId +" want you to be his/her contact," +
 								"please confirm\r\n" +
 								"his/her message:"+message

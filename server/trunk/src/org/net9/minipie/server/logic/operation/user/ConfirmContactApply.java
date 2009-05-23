@@ -6,12 +6,12 @@
 package org.net9.minipie.server.logic.operation.user;
 
 import org.net9.minipie.server.data.Formatter;
-import org.net9.minipie.server.data.entity.Notification;
+import org.net9.minipie.server.data.entity.NotificationData;
 import org.net9.minipie.server.data.field.NotificationType;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.logic.operation.Command;
-import org.net9.minipie.server.logic.storage.NotifacationStorage;
+import org.net9.minipie.server.logic.storage.NotificationStorage;
 import org.net9.minipie.server.logic.storage.UserStorage;
 import org.net9.minipie.server.logic.storage.User_UserStorage;
 
@@ -46,8 +46,8 @@ public class ConfirmContactApply extends Command<Void> {
 	@Override
 	public Void execute() {
 		User_UserStorage executor = getStorageFactory().getUser_UserStorage();
-		NotifacationStorage executor1 = getStorageFactory().getNotifacationStorage();		
-		Notification noti=executor1.selectNotification(notificationId);
+		NotificationStorage executor1 = getStorageFactory().getNotifacationStorage();		
+		NotificationData noti=executor1.selectNotification(notificationId);
 		if(noti.getReceiverId()==userId ||noti.getType()==NotificationType.CONTACT_APPLICATION){
 			executor.add(userId, noti.getSendId());			
 		}else
