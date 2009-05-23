@@ -1,5 +1,5 @@
 /**
- * PhonebookCompleteUserInfo.java
+ * PhonebookCompleteUser.java
  *     in package: * org.net9.minipie.server.data.api
  * by Mini-Pie Project
  */
@@ -11,6 +11,7 @@ import java.util.Collection;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.net9.minipie.server.data.entity.AddressData;
 import org.net9.minipie.server.data.entity.EmailData;
@@ -21,16 +22,17 @@ import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.entity.UserEntity;
 
 /**
- * @author Seastar
+ * @author Seastar, LeeThree
  *
  */
-public class PhonebookCompleteUserInfo {
+@XmlRootElement(name = "user")
+public class PhonebookCompleteUser {
 	private UserEntity entity;
 
 	/**
 	 * Constructor
 	 */
-	public PhonebookCompleteUserInfo() {
+	public PhonebookCompleteUser() {
 	}
 
 	/**
@@ -38,7 +40,7 @@ public class PhonebookCompleteUserInfo {
 	 * 
 	 * @param entity
 	 */
-	public PhonebookCompleteUserInfo(UserEntity entity) {
+	public PhonebookCompleteUser(UserEntity entity) {
 		this.entity = entity;
 	}
 
@@ -124,11 +126,12 @@ public class PhonebookCompleteUserInfo {
 	/**
 	 * @return the nickName
 	 */
-	@XmlElement
+	@XmlElement(name = "username")
 	public String getName() {
 		return entity.getName();
 	}
-
+	
+	@XmlElement(name = "name")
 	public String getDisplayName(){
 		return entity.getDisplayname();
 	}
@@ -143,7 +146,7 @@ public class PhonebookCompleteUserInfo {
 	/**
 	 * @return the notes
 	 */
-	@XmlElement
+	@XmlElement(name = "note")
 	public String getNotes() {
 		return entity.getNotes();
 	}
@@ -197,7 +200,7 @@ public class PhonebookCompleteUserInfo {
 
 
 	/**
-	 * @return the tags
+	 * @return the tags TODO
 	 */
 	@XmlElement
 	public Collection<TagEntry> getTags() {

@@ -58,6 +58,11 @@ public class PhonebookUserListEntry {
 		return entity.getName();
 	}
 
+	/**
+	 * TODO add tag
+	 * 
+	 * @return
+	 */
 	public Collection<TagEntry> getTags() {
 		return entity.getTags();
 	}

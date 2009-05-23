@@ -78,7 +78,11 @@ public class PhonebookContactListEntry {
 	public void setUri(URI uri) {
 		this.uri = uri;
 	}
-
+	
+	/**
+	 * TODO add tag
+	 * @return
+	 */
 	public Collection<TagEntry> getTags() {
 		return entity.getTags();
 	}

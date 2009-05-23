@@ -221,7 +221,7 @@ public class PhonebookCompleteContact {
 	}
 
 	/**
-	 * @return the tags
+	 * @return the tags TODO
 	 */
 	@XmlElement
 	public Collection<TagEntry> getTags() {
