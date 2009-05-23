@@ -58,6 +58,8 @@ public class ConfirmContactApply extends Command<Void> {
 		}else{			
 			if(noti.getReceiverId()==userId ||noti.getType()==NotificationType.CONTACT_APPLICATION){
 				executor1.del(notificationId);
+			}else{
+				throw new InvalidRequestException("this is not your notification or not the correct type");
 			}
 		}
 		return null;
