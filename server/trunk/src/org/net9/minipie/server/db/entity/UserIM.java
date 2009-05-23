@@ -12,7 +12,7 @@ import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.db.entity.enums.Bool;
 
 @Entity
-@Table(name = "USER_IMAGE")
+@Table(name = "USER_IM")
 public class UserIM {
 	@Id
 	@GeneratedValue
