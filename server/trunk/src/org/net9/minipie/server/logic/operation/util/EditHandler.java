@@ -23,8 +23,8 @@ public class EditHandler extends UpdateHandler{
 	 * @param dt
 	 * @throws UpdateException 
 	 */
-	protected EditHandler(Update dt,ContactStorage executor) throws UpdateException {
-		super(null, dt,executor);
+	protected EditHandler(Update dt,ContactStorage executor,long id) throws UpdateException {
+		super(null, dt,executor,id);
 	}
 	
 	public void handleUpdate() throws UpdateException{

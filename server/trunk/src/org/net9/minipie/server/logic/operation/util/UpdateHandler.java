@@ -24,11 +24,11 @@ public class UpdateHandler{
 	 * @param dt
 	 * @throws UpdateException 
 	 */
-	protected UpdateHandler(UpdateHandler successor, Update dt,ContactStorage executor) throws UpdateException {
+	protected UpdateHandler(UpdateHandler successor, Update dt,ContactStorage executor,long contactId) throws UpdateException {
 		super();
 		this.successor = successor;
 		this.executor=executor;
-
+		this.contactId=contactId;
 		if(dt.getType()==null)
 			throw new UpdateException("Unknow Updata Type");
 		this.dt = dt;
@@ -37,7 +37,7 @@ public class UpdateHandler{
 	public UpdateHandler(Update dt,ContactStorage executor,long id) throws UpdateException{
 		super();
 		this.contactId=id;
-		this.successor=new AddHandler(dt,executor);
+		this.successor=new AddHandler(dt,executor,contactId);
 	}
 	
 	public void handleUpdate() throws UpdateException{

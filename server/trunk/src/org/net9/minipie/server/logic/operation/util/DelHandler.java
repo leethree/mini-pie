@@ -21,8 +21,8 @@ public class DelHandler extends UpdateHandler{
 	 * Constructor
 	 * @throws UpdateException 
 	 */
-	protected DelHandler(Update dt,ContactStorage executor) throws UpdateException {
-		super(new EditHandler(dt,executor), dt,executor);
+	protected DelHandler(Update dt,ContactStorage executor,long id) throws UpdateException {
+		super(new EditHandler(dt,executor,id), dt,executor,id);
 	}
 	
 	public void handleUpdate() throws UpdateException{
