@@ -48,7 +48,7 @@ public class ConfirmContactApply extends Command<Void> {
 		NotificationStorage executor1 = getStorageFactory().getNotifacationStorage();		
 		NotificationData noti=executor1.selectNotification(notificationId);
 		if(noti.getReceiverId()==userId ||noti.getType()==NotificationType.CONTACT_APPLICATION){
-			executor.add(userId, noti.getSendId());			
+			executor.add(userId, noti.getSenderId());			
 		}else
 			throw new InvalidRequestException("this is not your notification or not the correct type");
 		return null;

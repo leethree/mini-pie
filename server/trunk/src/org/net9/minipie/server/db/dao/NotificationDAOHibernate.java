@@ -38,15 +38,15 @@ public class NotificationDAOHibernate extends GenericHibernateDAO<Notification, 
 		UserDAOHibernate udh = new UserDAOHibernate();
 		User sender = null;
 		try{
-			sender = udh.findById(notificationData.getSendId());
+			sender = udh.findById(notificationData.getSenderId());
 		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no sender with userId: "+notificationData.getSendId());
+			throw new NotFoundException("there is no sender with userId: "+notificationData.getSenderId());
 		}
 		User receiver = null;
 		try{
 			receiver = udh.findById(notificationData.getReceiverId());
 		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no receiver with userId: "+notificationData.getSendId());
+			throw new NotFoundException("there is no receiver with userId: "+notificationData.getSenderId());
 		}
 		notification.setSender(sender);
 		notification.setReceiver(receiver);

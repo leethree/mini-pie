@@ -16,7 +16,7 @@ import org.net9.minipie.server.exception.ServerErrorException;
  */
 public class NotificationData {
 	private Long id;
-	private Long sendId;
+	private Long senderId;
 	private Long receiverId;
 	private String content;
 	private NotificationType type;
@@ -24,7 +24,7 @@ public class NotificationData {
 	/**
 	 * Constructor
 	 * 
-	 * @param sendId
+	 * @param senderId
 	 * @param receiverId
 	 * @param content
 	 * @param type
@@ -33,29 +33,41 @@ public class NotificationData {
 	public NotificationData(Long id,Long sendId, Long receiverId, String content,
 			NotificationType type) throws DataFormatException {
 		setId(id);
-		setSendId(sendId);
+		setSenderId(sendId);
 		setReceiverId(receiverId);
 		setContent(content);
 		setType(type);
 	}
 
 	/**
-	 * @return the sendId
+	 * @return the id
 	 */
-	public Long getSendId() {
-		return sendId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setId(long id){
-		this.id=id;
+	/**
+	 * @param id
+	 *            the id to set
+	 * @throws DataFormatException 
+	 */
+	public void setId(Long id) throws DataFormatException {
+		this.id = Formatter.checkId(id);
 	}
 	/**
-	 * @param sendId
-	 *            the sendId to set
+	 * @return the senderId
+	 */
+	public Long getSenderId() {
+		return senderId;
+	}
+
+	/**
+	 * @param senderId
+	 *            the senderId to set
 	 * @throws DataFormatException
 	 */
-	public void setSendId(long sendId) throws DataFormatException {
-		this.sendId = Formatter.checkId(sendId);
+	public void setSenderId(long sendId) throws DataFormatException {
+		this.senderId = Formatter.checkId(sendId);
 	}
 
 	/**
