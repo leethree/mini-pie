@@ -6,6 +6,7 @@
 package org.net9.minipie.server.logic.operation.util;
 
 import org.net9.minipie.server.data.api.Update;
+import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.logic.exception.UpdateException;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
@@ -40,7 +41,7 @@ public class UpdateHandler{
 		this.successor=new AddHandler(dt,executor,contactId);
 	}
 	
-	public void handleUpdate() throws UpdateException{
+	public void handleUpdate() throws UpdateException, DataFormatException{
 		if(successor!=null)
 			successor.handleUpdate();
 		else

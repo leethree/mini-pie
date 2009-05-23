@@ -12,6 +12,7 @@ import org.net9.minipie.server.data.entity.EmailData;
 import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
+import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.logic.exception.UpdateException;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
@@ -32,7 +33,7 @@ public class AddHandler extends UpdateHandler{
 		//this.id=id;
 	}
 	
-	public void handleUpdate() throws UpdateException{
+	public void handleUpdate() throws UpdateException, DataFormatException{
 		if (dt instanceof Add){
 			Add newData=(Add)dt;
 			if(newData.getInfo()==null) throw new UpdateException("No Entry to add");

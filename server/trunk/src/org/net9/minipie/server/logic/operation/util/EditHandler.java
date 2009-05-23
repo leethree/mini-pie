@@ -7,7 +7,18 @@ package org.net9.minipie.server.logic.operation.util;
 
 import org.net9.minipie.server.data.api.Edit;
 import org.net9.minipie.server.data.api.Update;
-import org.net9.minipie.server.exception.InvalidRequestException;
+import org.net9.minipie.server.data.entity.AddressData;
+import org.net9.minipie.server.data.entity.ContactEntity;
+import org.net9.minipie.server.data.entity.EmailData;
+import org.net9.minipie.server.data.entity.IMData;
+import org.net9.minipie.server.data.entity.PhoneNoData;
+import org.net9.minipie.server.data.entity.URLData;
+import org.net9.minipie.server.data.field.Birthdate;
+import org.net9.minipie.server.data.field.Gender;
+import org.net9.minipie.server.data.field.InfoField;
+import org.net9.minipie.server.data.field.Relationships;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.PermissionDeniedException;
 import org.net9.minipie.server.logic.exception.UpdateException;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
@@ -27,24 +38,40 @@ public class EditHandler extends UpdateHandler{
 		super(null, dt,executor,id);
 	}
 	
-	public void handleUpdate() throws UpdateException{
+	public void handleUpdate() throws UpdateException, DataFormatException{
 		if(dt instanceof Edit){
 			Edit newData = (Edit) dt;
 			try {
 				switch (newData.getType()) {
 				case ADDRESS:
 					if(executor.findAddressOwner(newData.getId())!=contactId)
-						throw new InvalidRequestException("this is not your address info");
+						throw new PermissionDeniedException("this is not your address info");
+					AddressData address = new AddressData();
 					switch (newData.getInfoField()) {
 					case VALUE:
+						address.setValue(newData.getValue());
+						executor.editAddr(newData.getId(), InfoField.VALUE,
+								address.getValue());
+						break;
 					case ZIPCODE:
+						address.setZipcode(newData.getValue());
+						executor.editAddr(newData.getId(), InfoField.ZIPCODE,
+								address.getZipcode());
+						break;
 					case TYPE:	
-						executor.editAddr(newData.getId(), newData.getInfoField(),
-								newData.getValue());
+						address.setType(newData.getValue());
+						executor.editAddr(newData.getId(), InfoField.TYPE,
+								address.getType());
 						break;
 					case PRIMARY:
-						executor.editAddr(newData.getId(),  newData.getInfoField(),
-							Boolean.valueOf(newData.getValue()));
+						if (newData.getValue() == null)
+							address.setPrimary(false);
+						else if (newData.getValue().equals("true"))
+							address.setPrimary(true);
+						else
+							address.setPrimary(false);
+						executor.editAddr(newData.getId(), InfoField.PRIMARY,
+							Boolean.valueOf(address.isPrimary()));
 						break;
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
@@ -52,17 +79,29 @@ public class EditHandler extends UpdateHandler{
 					}
 					break;
 				case EMAIL:
-					if(executor.findAddressOwner(newData.getId())!=contactId)
-						throw new InvalidRequestException("this is not your email info");
+					if(executor.findEmailOwner(newData.getId())!=contactId)
+						throw new PermissionDeniedException("this is not your email info");
+					EmailData email = new EmailData();
 					switch (newData.getInfoField()) {
-					case VALUE:					
+					case VALUE:
+						email.setValue(newData.getValue());
+						executor.editEmail(newData.getId(), InfoField.VALUE,
+								email.getValue());
+						break;
 					case TYPE:
-						executor.editEmail(newData.getId(), newData.getInfoField(),
-								newData.getValue());
+						email.setType(newData.getValue());
+						executor.editEmail(newData.getId(), InfoField.TYPE,
+								email.getType());
 						break;
 					case PRIMARY:
-						executor.editEmail(newData.getId(),  newData.getInfoField(),
-							Boolean.valueOf(newData.getValue()));
+						if (newData.getValue() == null)
+							email.setPrimary(false);
+						else if (newData.getValue().equals("true"))
+							email.setPrimary(true);
+						else
+							email.setPrimary(false);
+						executor.editEmail(newData.getId(), InfoField.PRIMARY,
+							Boolean.valueOf(email.isPrimary()));
 						break;
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
@@ -70,35 +109,59 @@ public class EditHandler extends UpdateHandler{
 					}
 					break;
 				case IM:
-					if(executor.findAddressOwner(newData.getId())!=contactId)
-						throw new InvalidRequestException("this is not your im info");
+					if(executor.findIMOwner(newData.getId())!=contactId)
+						throw new PermissionDeniedException("this is not your im info");
+					IMData im = new IMData();
 					switch (newData.getInfoField()) {
-					case VALUE:					
+					case VALUE:
+						im.setValue(newData.getValue());
+						executor.editIM(newData.getId(), InfoField.VALUE,
+								im.getValue());
+						break;
 					case TYPE:
-						executor.editIM(newData.getId(), newData.getInfoField(),
-								newData.getValue());
+						im.setType(newData.getValue());
+						executor.editIM(newData.getId(), InfoField.TYPE,
+								im.getType());
 						break;
 					case PRIMARY:
-						executor.editIM(newData.getId(),  newData.getInfoField(),
-							Boolean.valueOf(newData.getValue()));
-						break;	
+						if (newData.getValue() == null)
+							im.setPrimary(false);
+						else if (newData.getValue().equals("true"))
+							im.setPrimary(true);
+						else
+							im.setPrimary(false);
+						executor.editIM(newData.getId(), InfoField.PRIMARY,
+							Boolean.valueOf(im.isPrimary()));
+						break;
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
 								+" in IMData");
 					}
 					break;
 				case PHONE:
-					if(executor.findAddressOwner(newData.getId())!=contactId)
-						throw new InvalidRequestException("this is not your phone info");
+					if(executor.findTelOwner(newData.getId())!=contactId)
+						throw new PermissionDeniedException("this is not your phone info");
+					PhoneNoData phone = new PhoneNoData();
 					switch (newData.getInfoField()) {
 					case VALUE:
+						phone.setValue(newData.getValue());
+						executor.editTel(newData.getId(), InfoField.VALUE,
+								phone.getValue());
+						break;
 					case TYPE:
-						executor.editTel(newData.getId(), newData.getInfoField(),
-								newData.getValue());
+						phone.setType(newData.getValue());
+						executor.editTel(newData.getId(), InfoField.TYPE,
+								phone.getType());
 						break;
 					case PRIMARY:
-						executor.editTel(newData.getId(),  newData.getInfoField(),
-							Boolean.valueOf(newData.getValue()));
+						if (newData.getValue() == null)
+							phone.setPrimary(false);
+						else if (newData.getValue().equals("true"))
+							phone.setPrimary(true);
+						else
+							phone.setPrimary(false);
+						executor.editTel(newData.getId(), InfoField.PRIMARY,
+							Boolean.valueOf(phone.isPrimary()));
 						break;
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
@@ -106,17 +169,29 @@ public class EditHandler extends UpdateHandler{
 					}
 					break;
 				case URL:
-					if(executor.findAddressOwner(newData.getId())!=contactId)
-						throw new InvalidRequestException("this is not your url info");
+					if(executor.findURLOwner(newData.getId())!=contactId)
+						throw new PermissionDeniedException("this is not your url info");
+					URLData url = new URLData();
 					switch (newData.getInfoField()) {
 					case VALUE:
+						url.setValue(newData.getValue());
+						executor.editURL(newData.getId(), InfoField.VALUE,
+								url.getValue());
+						break;
 					case TYPE:
-						executor.editURL(newData.getId(), newData.getInfoField(),
-								newData.getValue());
+						url.setType(newData.getValue());
+						executor.editURL(newData.getId(), InfoField.TYPE,
+								url.getType());
 						break;
 					case PRIMARY:
-						executor.editURL(newData.getId(),  newData.getInfoField(),
-							Boolean.valueOf(newData.getValue()));
+						if (newData.getValue() == null)
+							url.setPrimary(false);
+						else if (newData.getValue().equals("true"))
+							url.setPrimary(true);
+						else
+							url.setPrimary(false);
+						executor.editURL(newData.getId(), InfoField.PRIMARY,
+							Boolean.valueOf(url.isPrimary()));
 						break;
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
@@ -124,17 +199,40 @@ public class EditHandler extends UpdateHandler{
 					}
 					break;
 				case BASIC:
+					ContactEntity contact = new ContactEntity();
 					switch (newData.getInfoField()) {
 					case NAME:
-					case NICKNAME:
-					case BIRTHDAY:
-					case GENDER:
-					case NOTE:
-					case RELATIONSHIP:
-						executor.editBasicInfo(newData.getId(), newData.getInfoField(),
-								newData.getValue());
+						contact.setName(newData.getValue());
+						executor.editBasicInfo(contactId, InfoField.NAME,
+								contact.getName());
 						break;
-										
+					case NICKNAME:
+						contact.setNickName(newData.getValue());
+						executor.editBasicInfo(contactId, InfoField.NICKNAME,
+								contact.getNickName());
+						break;
+					case BIRTHDAY:
+						if (newData.getValue() != null)
+							contact.setBirthday(new Birthdate(newData.getValue()));
+						executor.editBasicInfo(contactId, InfoField.BIRTHDAY,
+								contact.getBirthday());
+						break;
+					case GENDER:
+						if (newData.getValue() != null)
+							contact.setGender(Gender.value(newData.getValue()));
+						executor.editBasicInfo(contactId, InfoField.GENDER,
+								contact.getGender());
+						break;
+					case NOTE:
+						contact.setNotes(newData.getValue());
+						executor.editBasicInfo(contactId, InfoField.NOTE,
+								contact.getNotes());
+						break;
+					case RELATIONSHIP:
+						contact.setRelationship(new Relationships(newData.getValue()));
+						executor.editBasicInfo(contactId, InfoField.RELATIONSHIP,
+								contact.getRelationship());
+						break;
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
 								+" in ContactInfo");
@@ -144,6 +242,7 @@ public class EditHandler extends UpdateHandler{
 					throw new UpdateException("Unsupported InfoType: "+ dt.getType().toString());
 				}
 			} catch (ClassCastException e) {
+				e.printStackTrace();
 				throw new UpdateException("Wrong Attribute at "+ dt.getType().toString()+
 						" "+ newData.getInfoField().toString());
 			}

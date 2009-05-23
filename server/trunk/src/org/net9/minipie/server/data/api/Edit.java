@@ -106,8 +106,15 @@ public class Edit extends Update {
 	 */
 	@Override
 	public Edit checkThis() {
-		if (getType() == null || getInfoField() == null )
-			throw new InvalidRequestException("Invalid edit format.");
+		if (getType() == null)
+			throw new InvalidRequestException("Invalid edit format: type missing.");
+		if (getInfoField() == null)
+			throw new InvalidRequestException("Invalid edit format: field missing.");
+		/**
+		 * value == null means clear a nullable field, like type
+		 */
+//		if (getValue() == null)
+//			throw new InvalidRequestException("Invalid edit format: no valid new value provided.");
 		return this;
 	}
 }

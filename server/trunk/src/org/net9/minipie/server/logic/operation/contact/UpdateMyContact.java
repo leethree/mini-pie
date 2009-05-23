@@ -7,6 +7,7 @@ package org.net9.minipie.server.logic.operation.contact;
 
 import org.net9.minipie.server.data.api.Update;
 import org.net9.minipie.server.data.entity.ContactEntity;
+import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.PermissionDeniedException;
@@ -86,6 +87,8 @@ public class UpdateMyContact extends Command<Void> {
 				new UpdateHandler(datas,executor,contactId).handleUpdate();
 			} catch (UpdateException e) {
 				throw new InvalidRequestException(e.getMessage());
+			} catch (DataFormatException e) {
+				throw new InvalidRequestException(e);
 			}							
 		}
 		return null;
