@@ -17,11 +17,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import org.net9.minipie.server.data.api.PhonebookContactList;
-import org.net9.minipie.server.data.api.PhonebookContactListEntry;
+import org.net9.minipie.server.data.api.PhonebookUserList;
+import org.net9.minipie.server.data.api.PhonebookUserListEntry;
 import org.net9.minipie.server.logic.Handler;
-import org.net9.minipie.server.logic.operation.contact.AddMyContact;
-import org.net9.minipie.server.logic.operation.contact.ListMyContact;
+import org.net9.minipie.server.logic.operation.user.AddUserAsContact;
+import org.net9.minipie.server.logic.operation.user.ListMyUserContact;
 
 import com.sun.jersey.api.core.ResourceContext;
 
@@ -35,19 +35,19 @@ public class PhonebookUserListResource {
 	@Context
 	protected ResourceContext resourceContext;
 
-//	@GET
-//	@Produces( { "application/xml", "application/json" })
-//	public PhonebookContactList get() {
-//		return new PhonebookContactList(new Handler<Collection<PhonebookContactListEntry>>(
-//				new ListMyContact(1L)).excute(), uriInfo.getAbsolutePath());
-//	}
-//
-//	@POST
-//	public Response post(@FormParam("name") String name) {
-//		long newId = new Handler<Long>(new AddUserAsContact(1L, name)).excute();
-//		return Response.created(uriInfo.getAbsolutePath().resolve(newId + "/"))
-//				.build();
-//	}
+	@GET
+	@Produces( { "application/xml", "application/json" })
+	public PhonebookUserList get() {
+		return new PhonebookUserList(new Handler<Collection<PhonebookUserListEntry>>(
+				new ListMyUserContact(1L)).excute(), uriInfo.getAbsolutePath());
+	}
+
+	@POST
+	public Response post(@FormParam("userid") long targetId,
+			@FormParam("message") String message) {
+		new Handler<Void>(new AddUserAsContact(1L, targetId, message)).excute();
+		return Response.ok().build();
+	}
 
 	@Path("{id}")
 	public PhonebookUserResource getContact(@PathParam("id") long id) {

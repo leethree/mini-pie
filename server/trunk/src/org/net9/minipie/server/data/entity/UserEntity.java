@@ -200,7 +200,7 @@ public class UserEntity extends CommonEntity {
 	/**
 	 * @return the relationship
 	 */
-	public String getRelationship() {
-		return relationship.toString();
+	public Relationships getRelationship() {
+		return relationship;
 	}
 }

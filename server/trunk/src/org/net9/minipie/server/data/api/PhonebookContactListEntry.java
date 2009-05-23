@@ -39,12 +39,6 @@ public class PhonebookContactListEntry {
 		this.entity = entity;
 	}
 
-	// public ContactEntry(long id, String name, String image) {
-	// entity.setId(id);
-	// entity.setName(name);
-	// entity.setImage(image);
-	// }
-
 	/**
 	 * @return the id
 	 */

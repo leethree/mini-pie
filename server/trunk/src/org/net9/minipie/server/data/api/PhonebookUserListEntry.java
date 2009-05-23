@@ -5,26 +5,35 @@
  */
 package org.net9.minipie.server.data.api;
 
+import java.net.URI;
 import java.util.Collection;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 import org.net9.minipie.server.data.entity.TagEntry;
 import org.net9.minipie.server.data.entity.UserEntity;
-import org.net9.minipie.server.data.field.Permission;
 
 /**
  * @author Seastar
- *
+ * 
  */
+@XmlType(name = "user")
 public class PhonebookUserListEntry {
 	private UserEntity entity;
-	
-	public PhonebookUserListEntry(UserEntity entity){
-		this.entity=entity;
+	private URI uri;
+
+	/**
+	 * Constructor
+	 */
+	public PhonebookUserListEntry() {
 	}
-	
+
+	public PhonebookUserListEntry(UserEntity entity) {
+		this.entity = entity;
+	}
+
 	/**
 	 * @return the id
 	 */
@@ -45,19 +54,42 @@ public class PhonebookUserListEntry {
 	 * @return the name
 	 */
 	@XmlElement
-	public String getName() {		
+	public String getName() {
 		return entity.getName();
 	}
 
-	public Collection<TagEntry> getTags(){
+	public Collection<TagEntry> getTags() {
 		return entity.getTags();
 	}
-	
-	public Permission getPermission(){
-		return entity.getPermission();
+
+	/**
+	 * @return the permission
+	 */
+	@XmlAttribute
+	public String getPermission() {
+		if (entity.getPermission() == null)
+			return null;
+		else
+			return entity.getPermission().toString();
 	}
-	
-	public String getRelationship(){
-		return entity.getRelationship();
+
+	public String getRelationship() {
+		return entity.getRelationship().toString();
+	}
+
+	/**
+	 * @return the uri
+	 */
+	@XmlAttribute
+	public URI getUri() {
+		return uri;
+	}
+
+	/**
+	 * @param uri
+	 *            the uri to set
+	 */
+	public void setUri(URI uri) {
+		this.uri = uri;
 	}
 }
