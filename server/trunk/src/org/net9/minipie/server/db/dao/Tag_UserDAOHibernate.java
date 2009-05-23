@@ -14,7 +14,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.net9.minipie.server.data.entity.TagEntry;
-import org.net9.minipie.server.data.storage.CommonListEntry;
+import org.net9.minipie.server.data.storage.BasicUser;
 import org.net9.minipie.server.db.entity.Tag;
 import org.net9.minipie.server.db.entity.Tag2User;
 import org.net9.minipie.server.db.entity.User;
@@ -83,7 +83,7 @@ public class Tag_UserDAOHibernate extends GenericHibernateDAO<Tag2User, Id> impl
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.Tag_UserDAO#selectTaggedUser(java.lang.Long)
 	 */
-	public Collection<CommonListEntry> selectTaggedUser(Long tagId) {
+	public Collection<BasicUser> selectTaggedUser(Long tagId) {
 		Criterion criterion  = Restrictions.eq("id.tagId", tagId);
 		List<Tag2User> tagUsers = null;
 		try{
@@ -92,13 +92,16 @@ public class Tag_UserDAOHibernate extends GenericHibernateDAO<Tag2User, Id> impl
 			throw new NotFoundException("there is no tag relationship with tagid: "+ tagId);
 		}
 		Iterator<Tag2User> iter = tagUsers.iterator();
-		List<CommonListEntry> result = new ArrayList<CommonListEntry>();
+		List<BasicUser> result = new ArrayList<BasicUser>();
 		while(iter.hasNext()){
 			Tag2User tagUser = iter.next();
 			User user = tagUser.getUser();
 			try {
-				result.add(new CommonListEntry(user.getId(), user.getDisplayName(),
-						user.getImageURL()));
+				result.add(new BasicUser(user.getId().longValue(), user.getUserName(),
+						user.getRegisterEmail(), user.getPassword(), user.getImageURL(),
+						user.getNickName(), user.getDisplayName(), user.getGenderPermission(),
+						user.getBirthdayPermission(), user.getBirthyearPermission(),
+						user.getGender(), user.getBirthday().toString(), user.getNotes(), user.getPerm()));
 			} catch (DataFormatException e) {
 				throw new ServerErrorException(e.getMessage());
 			}

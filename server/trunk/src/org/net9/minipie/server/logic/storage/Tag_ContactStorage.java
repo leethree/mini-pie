@@ -7,10 +7,9 @@ package org.net9.minipie.server.logic.storage;
 
 import java.util.Collection;
 
-import org.net9.minipie.server.data.api.ContactListEntry;
 import org.net9.minipie.server.data.entity.TagEntry;
 import org.net9.minipie.server.data.storage.BasicContact;
-import org.net9.minipie.server.data.storage.CommonListEntry;
+
 
 /**
  * @author Seastar

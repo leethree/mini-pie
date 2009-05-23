@@ -14,7 +14,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.net9.minipie.server.data.entity.TagEntry;
-import org.net9.minipie.server.data.storage.CommonListEntry;
+import org.net9.minipie.server.data.storage.BasicContact;
 import org.net9.minipie.server.db.entity.Contact;
 import org.net9.minipie.server.db.entity.Tag;
 import org.net9.minipie.server.db.entity.Tag2Contact;
@@ -83,7 +83,7 @@ public class Tag_ContactDAOHibernate extends GenericHibernateDAO<Tag2Contact, Id
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.Tag_ContactDAO#selectTaggedContact(java.lang.Long)
 	 */
-	public Collection<CommonListEntry> selectTaggedContact(Long tagId) {
+	public Collection<BasicContact> selectTaggedContact(Long tagId) {
 		Criterion criterion  = Restrictions.eq("id.tagId", tagId);
 		List<Tag2Contact> tagContacts = null;
 		try{
@@ -92,13 +92,18 @@ public class Tag_ContactDAOHibernate extends GenericHibernateDAO<Tag2Contact, Id
 			throw new NotFoundException("there is no tag relationship with tagid: "+ tagId);
 		}
 		Iterator<Tag2Contact> iter = tagContacts.iterator();
-		List<CommonListEntry> result = new ArrayList<CommonListEntry>();
+		List<BasicContact> result = new ArrayList<BasicContact>();
 		while(iter.hasNext()){
 			Tag2Contact tagContact = iter.next();
 			Contact contact = tagContact.getContact();
 			try {
-				result.add(new CommonListEntry(contact.getId(), contact.getName(),
-						contact.getImage()));
+				result.add(new BasicContact(contact.getId(), contact.getName(),
+						contact.getImage(), contact.getNickName(), contact.getGender(),
+						contact.getBirthday().toString(), contact.getNotes(),
+						contact.getRelationship(), (contact.getOwner()!=null)? contact.getOwner().getId().longValue(): 0, 
+						(contact.getShadowOf()!=null)? contact.getShadowOf().getId().longValue():0, 
+						(contact.getGroup()!=null)? contact.getGroup().getId().longValue():0, 
+						contact.getPermission()));
 			} catch (DataFormatException e) {
 				throw new ServerErrorException(e.getMessage());
 			}
