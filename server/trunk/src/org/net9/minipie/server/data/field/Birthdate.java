@@ -34,11 +34,16 @@ public class Birthdate {
 					+ ", pattern: " + DATE_PATTERN);
 		}
 	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return DATE_FORMATTER.format(date);
+	}
+	public Birthdate toSimpleDate(){
+		//TODO:return the date and month format
+		return this;
 	}
 }

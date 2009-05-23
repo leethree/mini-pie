@@ -39,13 +39,18 @@ public class UserEntity extends CommonEntity {
 		permission=Permission.TO_CONTACTS;
 		setAdmin(false);
 	}
-
+	
+	
 	/**
 	 * @return the registeredEmail
 	 */
 	
 	public Permission getPermission(){
 		return this.permission;
+	}
+	
+	public void setPermission(Permission perm){
+		this.permission=perm;
 	}
 	
 	public String getRegisteredEmail() {

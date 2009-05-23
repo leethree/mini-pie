@@ -6,7 +6,6 @@
 package org.net9.minipie.server.data.storage;
 
 import org.net9.minipie.server.data.entity.ContactEntity;
-import org.net9.minipie.server.data.field.AddAsContactPermission;
 import org.net9.minipie.server.data.field.Birthdate;
 import org.net9.minipie.server.data.field.Gender;
 import org.net9.minipie.server.data.field.Permission;

@@ -25,7 +25,7 @@ public class Edit extends Update {
 	private InfoField field;
 	private long id;
 	private String value;
-
+	
 	/**
 	 * Constructor
 	 */
