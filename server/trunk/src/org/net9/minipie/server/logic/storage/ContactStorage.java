@@ -23,6 +23,7 @@ import org.net9.minipie.server.data.storage.CommonListEntry;
  */
 public interface ContactStorage {
 	Long addUserContact(Long userId, String name);
+	Long addShadow(Long userId,Long targetId);
 	Long addAddr(Long contactId, AddressData addressData);
 	//Long addAddtional(Long contactId, Object...value);
 	Long addEmail(Long contactId, EmailData emailData);
