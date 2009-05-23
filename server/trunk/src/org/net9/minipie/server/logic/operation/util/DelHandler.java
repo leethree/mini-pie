@@ -37,25 +37,25 @@ public class DelHandler extends UpdateHandler{
 						throw new InvalidRequestException("this is not your address info");
 					break;
 				case EMAIL:
-					if(executor.findAddressOwner(newData.getId())==contactId)			
+					if(executor.findEmailOwner(newData.getId())==contactId)			
 						executor.delEmail(newData.getId());
 					else
 						throw new InvalidRequestException("this is not your email info");
 					break;
 				case IM:
-					if(executor.findAddressOwner(newData.getId())==contactId)			
+					if(executor.findIMOwner(newData.getId())==contactId)			
 						executor.delIM(newData.getId());
 					else
 						throw new InvalidRequestException("this is not your im info");
 					break;
 				case PHONE:
-					if(executor.findAddressOwner(newData.getId())==contactId)			
+					if(executor.findTelOwner(newData.getId())==contactId)			
 						executor.delTel(newData.getId());
 					else
 						throw new InvalidRequestException("this is not your phone info");
 					break;
 				case URL:
-					if(executor.findAddressOwner(newData.getId())==contactId)			
+					if(executor.findURLOwner(newData.getId())==contactId)			
 						executor.delURL(newData.getId());
 					else
 						throw new InvalidRequestException("this is not your url info");
