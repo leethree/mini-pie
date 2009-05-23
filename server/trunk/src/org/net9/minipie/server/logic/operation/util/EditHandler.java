@@ -7,6 +7,7 @@ package org.net9.minipie.server.logic.operation.util;
 
 import org.net9.minipie.server.data.api.Edit;
 import org.net9.minipie.server.data.api.Update;
+import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.logic.exception.UpdateException;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
@@ -32,6 +33,8 @@ public class EditHandler extends UpdateHandler{
 			try {
 				switch (newData.getType()) {
 				case ADDRESS:
+					if(executor.findAddressOwner(newData.getId())!=contactId)
+						throw new InvalidRequestException("this is not your address info");
 					switch (newData.getInfoField()) {
 					case VALUE:
 					case ZIPCODE:
@@ -49,6 +52,8 @@ public class EditHandler extends UpdateHandler{
 					}
 					break;
 				case EMAIL:
+					if(executor.findAddressOwner(newData.getId())!=contactId)
+						throw new InvalidRequestException("this is not your email info");
 					switch (newData.getInfoField()) {
 					case VALUE:					
 					case TYPE:
@@ -65,6 +70,8 @@ public class EditHandler extends UpdateHandler{
 					}
 					break;
 				case IM:
+					if(executor.findAddressOwner(newData.getId())!=contactId)
+						throw new InvalidRequestException("this is not your im info");
 					switch (newData.getInfoField()) {
 					case VALUE:					
 					case TYPE:
@@ -81,6 +88,8 @@ public class EditHandler extends UpdateHandler{
 					}
 					break;
 				case PHONE:
+					if(executor.findAddressOwner(newData.getId())!=contactId)
+						throw new InvalidRequestException("this is not your phone info");
 					switch (newData.getInfoField()) {
 					case VALUE:
 					case TYPE:
@@ -97,6 +106,8 @@ public class EditHandler extends UpdateHandler{
 					}
 					break;
 				case URL:
+					if(executor.findAddressOwner(newData.getId())!=contactId)
+						throw new InvalidRequestException("this is not your url info");
 					switch (newData.getInfoField()) {
 					case VALUE:
 					case TYPE:

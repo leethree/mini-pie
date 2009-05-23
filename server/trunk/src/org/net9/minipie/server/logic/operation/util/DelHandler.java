@@ -7,6 +7,7 @@ package org.net9.minipie.server.logic.operation.util;
 
 import org.net9.minipie.server.data.api.Delete;
 import org.net9.minipie.server.data.api.Update;
+import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.logic.exception.UpdateException;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
@@ -30,20 +31,34 @@ public class DelHandler extends UpdateHandler{
 			
 			switch (newData.getType()) {
 				case ADDRESS:
-					//if(executor.selectAddr(newData.getId()))
-					executor.delAddr(newData.getId());
+					if(executor.findAddressOwner(newData.getId())==contactId)			
+						executor.delAddr(newData.getId());
+					else
+						throw new InvalidRequestException("this is not your address info");
 					break;
 				case EMAIL:
-					executor.delEmail(newData.getId());
+					if(executor.findAddressOwner(newData.getId())==contactId)			
+						executor.delEmail(newData.getId());
+					else
+						throw new InvalidRequestException("this is not your email info");
 					break;
 				case IM:
-					executor.delIM(newData.getId());
+					if(executor.findAddressOwner(newData.getId())==contactId)			
+						executor.delIM(newData.getId());
+					else
+						throw new InvalidRequestException("this is not your im info");
 					break;
 				case PHONE:
-					executor.delTel(newData.getId());
+					if(executor.findAddressOwner(newData.getId())==contactId)			
+						executor.delTel(newData.getId());
+					else
+						throw new InvalidRequestException("this is not your phone info");
 					break;
 				case URL:
-					executor.delURL(newData.getId());
+					if(executor.findAddressOwner(newData.getId())==contactId)			
+						executor.delURL(newData.getId());
+					else
+						throw new InvalidRequestException("this is not your url info");
 					break;
 				default:
 					throw new UpdateException("Can't delete "+ newData.getType().toString());

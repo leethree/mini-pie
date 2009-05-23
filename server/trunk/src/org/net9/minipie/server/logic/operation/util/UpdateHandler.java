@@ -17,6 +17,7 @@ public class UpdateHandler{
 	protected UpdateHandler successor;
 	protected Update dt;
 	protected ContactStorage executor;
+	protected Long contactId;
 	/**
 	 * Constructor
 	 * @param successor
@@ -35,7 +36,8 @@ public class UpdateHandler{
 	}
 	public UpdateHandler(Update dt,ContactStorage executor,long id) throws UpdateException{
 		super();
-		this.successor=new AddHandler(dt,id,executor);
+		this.contactId=id;
+		this.successor=new AddHandler(dt,executor);
 	}
 	
 	public void handleUpdate() throws UpdateException{

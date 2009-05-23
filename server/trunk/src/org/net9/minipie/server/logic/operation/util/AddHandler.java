@@ -20,16 +20,16 @@ import org.net9.minipie.server.logic.storage.ContactStorage;
  *
  */
 public class AddHandler extends UpdateHandler{
-	private long id;
+	//private long id;
 	/**
 	 * Constructor
 	 * @param successor
 	 * @param dt
 	 * @throws UpdateException 
 	 */
-	protected AddHandler(Update dt,long id,ContactStorage executor) throws UpdateException {
+	protected AddHandler(Update dt,ContactStorage executor) throws UpdateException {
 		super(new DelHandler(dt,executor), dt,executor);
-		this.id=id;
+		//this.id=id;
 	}
 	
 	public void handleUpdate() throws UpdateException{
@@ -40,23 +40,23 @@ public class AddHandler extends UpdateHandler{
 				switch (newData.getType()) {
 				case ADDRESS:
 					AddressData addr = (AddressData) newData.getInfo();
-					executor.addAddr(id, addr);
+					executor.addAddr(contactId, addr);
 					break;
 				case EMAIL:
 					EmailData email = (EmailData) newData.getInfo();
-					executor.addEmail(id, email);
+					executor.addEmail(contactId, email);
 					break;
 				case IM:
 					IMData im = (IMData) newData.getInfo();
-					executor.addIM(id, im);
+					executor.addIM(contactId, im);
 					break;
 				case PHONE:
 					PhoneNoData tel = (PhoneNoData) newData.getInfo();
-					executor.addTel(id, tel);
+					executor.addTel(contactId, tel);
 					break;
 				case URL:
 					URLData url = (URLData) newData.getInfo();
-					executor.addURL(id, url);
+					executor.addURL(contactId, url);
 					break;
 				default:
 					throw new UpdateException("Can't add "+ newData.getType().toString());
