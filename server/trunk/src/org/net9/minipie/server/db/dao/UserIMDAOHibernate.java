@@ -21,7 +21,7 @@ public class UserIMDAOHibernate extends GenericHibernateDAO<UserIM, Long> implem
 	}
 
 	public UserIM findById(Long id) {
-		return super.findById(id, false);
+		return super.findById(id, true);
 	}
 
 	public void flush() {

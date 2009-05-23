@@ -24,7 +24,7 @@ public class ContactEmailDAOHibernate extends GenericHibernateDAO<ContactEmail, 
 
 	public ContactEmail findById(Long id) {
 		// TODO Auto-generated method stub
-		return super.findById(id, false);
+		return super.findById(id, true);
 	}
 
 	public void flush() {

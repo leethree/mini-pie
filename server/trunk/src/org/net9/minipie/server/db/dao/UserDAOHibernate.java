@@ -57,7 +57,6 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			uadh.makeTransient(userAddr);
 			uadh.commit();
 		} catch (ObjectNotFoundException e) {
-			e.printStackTrace();
 			throw new NotFoundException("Cannt find address item with give id");
 		}
 	}
@@ -81,7 +80,6 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			uedh.makeTransient(userEmail);
 			uedh.commit();
 		} catch (ObjectNotFoundException e) {
-			e.printStackTrace();
 			throw new NotFoundException("Cannt find email item with give id");
 		}
 		
@@ -98,7 +96,6 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			uidh.makeTransient(userIM);
 			uidh.commit();
 		} catch (ObjectNotFoundException e) {
-			e.printStackTrace();
 			throw new NotFoundException("Cannt find im item with give id");
 		}
 		
@@ -115,7 +112,6 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			updh.makeTransient(userPhone);
 			updh.commit();
 		} catch (ObjectNotFoundException e) {
-			e.printStackTrace();
 			throw new NotFoundException("Cannt find phone item with give id");
 		}
 		
@@ -145,6 +141,10 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			UserAddressDAOHibernate uadh = new UserAddressDAOHibernate();
 			Criterion criterion = Restrictions.eq("user.id", userId);
 			List<UserAddress> result = uadh.findByCriteria(criterion);
+			if(result.isEmpty()){
+				throw new NotFoundException("There's no user with ID: "
+						+ userId);
+			}
 			List<AddressData> selectedResult = new ArrayList<AddressData>();
 			Iterator<UserAddress> iter = result.iterator();
 			while (iter.hasNext()) {
@@ -198,6 +198,10 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			UserEmailDAOHibernate uedh = new UserEmailDAOHibernate();
 			Criterion criterion = Restrictions.eq("user.id", userId);
 			List<UserEmail> result = uedh.findByCriteria(criterion);
+			if(result.isEmpty()){
+				throw new NotFoundException("There's no email whose owner has ID: "
+						+ userId);
+			}
 			List<EmailData> selectedResult = new ArrayList<EmailData>();
 			Iterator<UserEmail> iter = result.iterator();
 			while (iter.hasNext()) {
@@ -230,6 +234,10 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			UserIMDAOHibernate uidh = new UserIMDAOHibernate();
 			Criterion criterion = Restrictions.eq("user.id", userId);
 			List<UserIM> result = uidh.findByCriteria(criterion);
+			if(result.isEmpty()){
+				throw new NotFoundException("There's no im whose owner has ID: "
+						+ userId);
+			}
 			List<IMData> selectedResult = new ArrayList<IMData>();
 			Iterator<UserIM> iter = result.iterator();
 			while (iter.hasNext()) {
@@ -262,6 +270,10 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			UserPhoneDAOHibernate updh = new UserPhoneDAOHibernate();
 			Criterion criterion = Restrictions.eq("user.id", userId);
 			List<UserPhoneNo> result = updh.findByCriteria(criterion);
+			if(result.isEmpty()){
+				throw new NotFoundException("There's no phone whose owner has ID: "
+						+ userId);
+			}
 			List<PhoneNoData> selectedResult = new ArrayList<PhoneNoData>();
 			Iterator<UserPhoneNo> iter = result.iterator();
 			while (iter.hasNext()) {
@@ -294,6 +306,10 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			UserURLDAOHibernate uudh = new UserURLDAOHibernate();
 			Criterion criterion = Restrictions.eq("contact.id", userId);
 			List<UserURL> result = uudh.findByCriteria(criterion);
+			if(result.isEmpty()){
+				throw new NotFoundException("There's no url whose owner has ID: "
+						+ userId);
+			}
 			List<URLData> selectedResult = new ArrayList<URLData>();
 			Iterator<UserURL> iter = result.iterator();
 			while (iter.hasNext()) {
@@ -424,7 +440,11 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 	public Long addURL(Long userId, URLData urlData) {
 		User user = findById(userId);
 		UserURL userURL = new UserURL();
-		userURL.setValue(urlData.getValue());
+		try {
+			userURL.setValue(urlData.getValue());
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
+		}
 		userURL.setType(urlData.getType());
 		if (urlData.isPrimary() == true)
 			userURL.setPrimary(Bool.TRUE);
@@ -452,7 +472,6 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		try {
 			userAddr = uadh.findById(id);
 		} catch (ObjectNotFoundException e) {
-			e.printStackTrace();
 			throw new NotFoundException("Cannt find address " + attribute
 					+ " item with give id");
 		}
@@ -520,7 +539,6 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			udh.makePersistent(user);
 			udh.commit();
 		}catch(ObjectNotFoundException e){
-			e.printStackTrace();
 			throw new NotFoundException("Cannt find attribute " + attribute
 					+ " item with give id");
 		}
@@ -536,7 +554,6 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		try {
 			userEmail = uedh.findById(id);
 		} catch (HibernateException e) {
-			e.printStackTrace();
 			throw new NotFoundException("Cannt find email " + attribute
 					+ " item with give id");
 		}
@@ -568,7 +585,6 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		try {
 			userIM = uidh.findById(id);
 		} catch (HibernateException e) {
-			e.printStackTrace();
 			throw new NotFoundException("Cannt find im " + attribute
 					+ " item with give id");
 		}
@@ -600,7 +616,6 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		try {
 			userPhone = updh.findById(id);
 		} catch (HibernateException e) {
-			e.printStackTrace();
 			throw new NotFoundException("Cannt find tel " + attribute
 					+ " item with give id");
 		}
@@ -632,7 +647,6 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		try {
 			userURL = uudh.findById(id);
 		} catch (HibernateException e) {
-			e.printStackTrace();
 			throw new NotFoundException("Cannt find url " + attribute
 					+ " item with give id");
 		}
@@ -669,7 +683,7 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 	}
 
 	public User findById(Long id) {
-		return super.findById(id, false);
+		return super.findById(id, true);
 	}
 
 	public void flush() {
@@ -708,7 +722,7 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		UserAddressDAOHibernate uadh = new UserAddressDAOHibernate();
 		try{
 			userAddr = uadh.findById(addrId);
-		}catch(ObjectNotFoundException e){
+		}catch(org.hibernate.ObjectNotFoundException e){
 			throw new NotFoundException ("there is no address with addr id: "+addrId);
 		}
 		return userAddr.getUser().getId();

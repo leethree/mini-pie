@@ -111,6 +111,9 @@ public class NotificationDAOHibernate extends GenericHibernateDAO<Notification, 
 		}catch(ObjectNotFoundException e){
 			throw new NotFoundException("there is no notification with receiverid: "+receiverId);
 		}
+		if(notifications.isEmpty()){
+			throw new NotFoundException("there is no notification with receiverid: "+receiverId);
+		}
 		List<NotificationData> result = new ArrayList<NotificationData>();
 		Iterator<Notification> iter = notifications.iterator();
 		while(iter.hasNext()){
@@ -130,6 +133,6 @@ public class NotificationDAOHibernate extends GenericHibernateDAO<Notification, 
 	 * @see org.net9.minipie.server.db.dao.GenericDAO#findById(java.io.Serializable)
 	 */
 	public Notification findById(Long id) {
-		return super.findById(id, false);
+		return super.findById(id, true);
 	}
 }

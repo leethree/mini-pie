@@ -21,7 +21,7 @@ public class UserPhoneDAOHibernate extends GenericHibernateDAO<UserPhoneNo, Long
 	}
 
 	public UserPhoneNo findById(Long id) {
-		return super.findById(id, false);
+		return super.findById(id, true);
 	}
 
 	public void flush() {

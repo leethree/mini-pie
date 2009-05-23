@@ -135,7 +135,7 @@ public class Tag_ContactDAOHibernate extends GenericHibernateDAO<Tag2Contact, Id
 	 * @see org.net9.minipie.server.db.dao.GenericDAO#findById(java.io.Serializable)
 	 */
 	public Tag2Contact findById(Id id) {
-		return super.findById(id, false);
+		return super.findById(id, true);
 	}
 
 }

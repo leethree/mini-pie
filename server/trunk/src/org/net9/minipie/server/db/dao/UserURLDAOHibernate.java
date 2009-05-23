@@ -21,7 +21,7 @@ public class UserURLDAOHibernate extends GenericHibernateDAO<UserURL, Long> impl
 	}
 
 	public UserURL findById(Long id) {
-		return super.findById(id, false);
+		return super.findById(id, true);
 	}
 
 	public void flush() {

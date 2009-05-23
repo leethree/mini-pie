@@ -21,7 +21,7 @@ public class UserEmailDAOHibernate extends GenericHibernateDAO<UserEmail, Long> 
 	}
 
 	public UserEmail findById(Long id) {
-		return super.findById(id, false);
+		return super.findById(id, true);
 	}
 
 	public void flush() {

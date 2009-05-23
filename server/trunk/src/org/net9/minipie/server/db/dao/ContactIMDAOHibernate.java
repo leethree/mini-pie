@@ -24,7 +24,7 @@ public class ContactIMDAOHibernate extends GenericHibernateDAO<ContactIM, Long> 
 
 	public ContactIM findById(Long id) {
 		// TODO Auto-generated method stub
-		return super.findById(id, false);
+		return super.findById(id, true);
 	}
 
 	public void flush() {

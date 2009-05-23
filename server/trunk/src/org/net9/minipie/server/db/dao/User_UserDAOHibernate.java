@@ -42,13 +42,11 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id> im
 		try{
 			user1 = udh.findById(userId1);
 		}catch(ObjectNotFoundException e){
-			e.printStackTrace();
 			throw new NotFoundException("Cannt find user with give id "+ userId1);
 		}
 		try{
 			user2 = udh.findById(userId2);
 		}catch(ObjectNotFoundException e){
-			e.printStackTrace();
 			throw new NotFoundException("Cannt find user with given id "+ userId2);
 		}
 		User2User bind = new User2User(user1, user2,  // only this constructor in user2user
@@ -78,7 +76,6 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id> im
 		try{
 			bind = findById(id);
 		}catch(ObjectNotFoundException e){
-			e.printStackTrace();
 			throw new NotFoundException("cannot find bind between user1 with id: "+userId1+
 					" user2 with id: "+userId2);
 		}
@@ -159,6 +156,9 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id> im
 		List<User2User> binds2 = null;
 		binds1 = findByCriteria(criterion1, criterion2);
 		binds2 = findByCriteria(criterion3, criterion4);
+		if(binds1.isEmpty() && binds2.isEmpty()){
+			throw new NotFoundException("there is no shared user for user: "+userId);
+		}
 		List<CommonListEntry> result = new ArrayList<CommonListEntry>();
 		if(binds1!=null){
 			Iterator<User2User> iter1 = binds1.iterator();
@@ -191,7 +191,7 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id> im
 	 * @see org.net9.minipie.server.db.dao.GenericDAO#findById(java.io.Serializable)
 	 */
 	public User2User findById(Id id) {
-		return super.findById(id, false);
+		return super.findById(id, true);
 	}
 
 	/* (non-Javadoc)
@@ -211,6 +211,9 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id> im
 			binds2 = findByCriteria(criterion2);
 		}catch(ObjectNotFoundException e){
 			throw new NotFoundException("there is no user2 with id: "+id);
+		}
+		if(binds1.isEmpty() && binds2.isEmpty()){
+			throw new NotFoundException("there is no relationship between user with id: "+id);
 		}
 		List<UserRelation> result = new ArrayList<UserRelation>();
 		Iterator<User2User> iter1 = binds1.iterator();

@@ -19,6 +19,6 @@ public interface TagDAO extends GenericDAO<Tag, Long> {
 	public void editTag(Long tagId,String newName);
 	public void removeTag(Long tagId);
 	public Long selectId(Long userId,String tagName);
-	public String selectName(Long tagId);
+	public Tag selectTag(Long tagId);
 	public Collection<TagEntry> selectAllTags(Long userId);
 }

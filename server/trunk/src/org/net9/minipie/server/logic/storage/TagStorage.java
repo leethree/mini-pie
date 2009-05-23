@@ -8,6 +8,7 @@ package org.net9.minipie.server.logic.storage;
 import java.util.Collection;
 
 import org.net9.minipie.server.data.entity.TagEntry;
+import org.net9.minipie.server.db.entity.Tag;
 
 /**
  * @author Seastar
@@ -18,6 +19,6 @@ public interface TagStorage {
 	public void editTag(Long tagId,String newName);
 	public void removeTag(Long tagId);
 	public Long selectId(Long userId,String tagName);
-	public String selectName(Long tagId);
+	public Tag selectTag(Long tagId);
 	public Collection<TagEntry> selectAllTags(Long userId);
 }

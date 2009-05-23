@@ -138,6 +138,6 @@ public class Tag_UserDAOHibernate extends GenericHibernateDAO<Tag2User, Id> impl
 	 * @see org.net9.minipie.server.db.dao.GenericDAO#findById(java.io.Serializable)
 	 */
 	public Tag2User findById(Id id) {
-		return super.findById(id, false);
+		return super.findById(id, true);
 	}
 }

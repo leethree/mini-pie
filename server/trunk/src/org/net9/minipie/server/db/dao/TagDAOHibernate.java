@@ -117,21 +117,21 @@ public class TagDAOHibernate extends GenericHibernateDAO<Tag, Long> implements
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.TagDAO#selectName(java.lang.Long)
 	 */
-	public String selectName(Long tagId) {
+	public Tag selectTag(Long tagId) {
 		Tag tag = null;
 		try{
 			tag = findById(tagId);
 		}catch(ObjectNotFoundException e){
 			throw new NotFoundException("there is no tag with id: "+tagId);
 		}
-		return tag.getTagName();
+		return tag;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.GenericDAO#findById(java.io.Serializable)
 	 */
 	public Tag findById(Long id) {
-		return super.findById(id, false);
+		return super.findById(id, true);
 	}
 
 	/* (non-Javadoc)

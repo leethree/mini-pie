@@ -22,7 +22,7 @@ public class UserAddressDAOHibernate extends GenericHibernateDAO<UserAddress, Lo
 	}
 
 	public UserAddress findById(Long id) {
-		return super.findById(id, false);
+		return super.findById(id, true);
 	}
 
 	public void flush() {

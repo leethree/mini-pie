@@ -20,7 +20,7 @@ public class ContactAddressDAOHibernate extends GenericHibernateDAO<ContactAddre
 	}
 
 	public ContactAddress findById(Long id) {
-		return super.findById(id, false);
+		return super.findById(id, true);
 	}
 
 	public void flush() {

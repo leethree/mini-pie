@@ -131,7 +131,11 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	public Long addURL(Long contactId, URLData urlData) {
 		Contact contact = findById(contactId);
 		ContactURL contactURL = new ContactURL();
-		contactURL.setValue(urlData.getValue());
+		try {
+			contactURL.setValue(urlData.getValue());
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
+		}
 		contactURL.setType(urlData.getType());
 		if (urlData.isPrimary() == true)
 			contactURL.setPrimary(Bool.TRUE);
