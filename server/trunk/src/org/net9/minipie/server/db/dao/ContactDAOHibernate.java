@@ -310,6 +310,7 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		cadh.begin();
 		cadh.makePersistent(contactAddr);
 		cadh.commit();
+		
 	}
 
 	public void editBasicInfo(Long id, InfoField attribute, Object value) {

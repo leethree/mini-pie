@@ -86,7 +86,6 @@ public abstract class GenericHibernateDAO <T, Id extends Serializable> implement
 	}
 	public void commit(){
 		getSession().getTransaction().commit();
-		getSession().close();
 	}
 	/**
 	* Use this inside subclasses as a convenience method.

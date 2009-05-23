@@ -30,6 +30,14 @@ import org.net9.minipie.server.logic.storage.User_UserStorage;
  * 
  */
 public class HibernateDAOFactory implements StorageFactory {
+	private ContactDAOHibernate contactDAOHibernate;
+	private UserDAOHibernate userDAOHibernate;
+	private NotificationDAOHibernate notificationDAOHibernate;
+	private TagDAOHibernate tagDAOHibernate;
+	private Tag_ContactDAOHibernate tagContactDAOHibernate;
+	private Tag_UserDAOHibernate tagUserDAOHibernate;
+	private User_UserDAOHibernate user_userDAOHibernate;
+	
 	/**
 	 * Constructor which is used for checking whether db connection has been
 	 * established.
@@ -39,6 +47,13 @@ public class HibernateDAOFactory implements StorageFactory {
 			Session session = HibernateSessionFactory.getSession();
 			session.beginTransaction();
 			session.getTransaction().commit();
+			contactDAOHibernate = new ContactDAOHibernate();
+			userDAOHibernate = new UserDAOHibernate();
+			notificationDAOHibernate = new NotificationDAOHibernate();
+			tagDAOHibernate = new TagDAOHibernate();
+			tagContactDAOHibernate = new Tag_ContactDAOHibernate();
+			tagUserDAOHibernate = new Tag_UserDAOHibernate();
+			user_userDAOHibernate = new User_UserDAOHibernate();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			throw new ServerErrorException(
@@ -57,7 +72,7 @@ public class HibernateDAOFactory implements StorageFactory {
 	 * org.net9.minipie.server.logic.storage.StorageFactory#getContactStorage()
 	 */
 	public ContactStorage getContactStorage() {
-		return new ContactDAOHibernate();
+		return contactDAOHibernate;
 	}
 
 	/*
@@ -67,7 +82,7 @@ public class HibernateDAOFactory implements StorageFactory {
 	 * org.net9.minipie.server.logic.storage.StorageFactory#getUserStorage()
 	 */
 	public UserStorage getUserStorage() {
-		return new UserDAOHibernate();
+		return userDAOHibernate;
 	}
 
 	/*
@@ -78,7 +93,7 @@ public class HibernateDAOFactory implements StorageFactory {
 	 * ()
 	 */
 	public NotificationStorage getNotifacationStorage() {
-		return new NotificationDAOHibernate();
+		return notificationDAOHibernate;
 	}
 
 	/*
@@ -87,7 +102,7 @@ public class HibernateDAOFactory implements StorageFactory {
 	 * @see org.net9.minipie.server.logic.storage.StorageFactory#getTagStorage()
 	 */
 	public TagStorage getTagStorage() {
-		return new TagDAOHibernate();
+		return tagDAOHibernate;
 	}
 
 	/*
@@ -98,7 +113,7 @@ public class HibernateDAOFactory implements StorageFactory {
 	 * ()
 	 */
 	public Tag_ContactStorage getTag_ContactStorage() {
-		return new Tag_ContactDAOHibernate();
+		return tagContactDAOHibernate;
 	}
 
 	/*
@@ -108,7 +123,7 @@ public class HibernateDAOFactory implements StorageFactory {
 	 * org.net9.minipie.server.logic.storage.StorageFactory#getTag_UserStorage()
 	 */
 	public Tag_UserStorage getTag_UserStorage() {
-		return new Tag_UserDAOHibernate();
+		return tagUserDAOHibernate;
 	}
 
 	/*
@@ -119,6 +134,6 @@ public class HibernateDAOFactory implements StorageFactory {
 	 * ()
 	 */
 	public User_UserStorage getUser_UserStorage() {
-		return new User_UserDAOHibernate();
+		return user_userDAOHibernate;
 	}
 }

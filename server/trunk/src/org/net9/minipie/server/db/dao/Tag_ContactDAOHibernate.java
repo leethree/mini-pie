@@ -99,7 +99,7 @@ public class Tag_ContactDAOHibernate extends GenericHibernateDAO<Tag2Contact, Id
 			try {
 				result.add(new BasicContact(contact.getId(), contact.getName(),
 						contact.getImage(), contact.getNickName(), contact.getGender(),
-						contact.getBirthday().toString(), contact.getNotes(),
+						(contact.getBirthday()!=null)? contact.getBirthday().toString(): null, contact.getNotes(),
 						contact.getRelationship(), (contact.getOwner()!=null)? contact.getOwner().getId().longValue(): 0, 
 						(contact.getShadowOf()!=null)? contact.getShadowOf().getId().longValue():0, 
 						(contact.getGroup()!=null)? contact.getGroup().getId().longValue():0, 
