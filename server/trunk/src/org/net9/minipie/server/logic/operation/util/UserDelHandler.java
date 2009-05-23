@@ -1,5 +1,5 @@
 /**
- * DelHandler.java
+ * UserDelHandler.java
  *     in package: * org.net9.minipie.server.logic.operation.util
  * by Mini-Pie Project
  */
@@ -10,54 +10,59 @@ import org.net9.minipie.server.data.api.Update;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.PermissionDeniedException;
 import org.net9.minipie.server.logic.exception.UpdateException;
-import org.net9.minipie.server.logic.storage.ContactStorage;
+import org.net9.minipie.server.logic.storage.UserStorage;
 
 /**
  * @author Seastar
  *
  */
-public class DelHandler extends UpdateHandler{
-
+public class UserDelHandler extends UpdateHandler{
+	private long userId;
 	/**
 	 * Constructor
-	 * @throws UpdateException 
+	 * @param dt
+	 * @param executor
+	 * @param id
+	 * @throws UpdateException
 	 */
-	protected DelHandler(Update dt,ContactStorage executor,long id) throws UpdateException {
-		super(new EditHandler(dt,executor,id), dt,executor,id);
+	public UserDelHandler(Update dt, UserStorage executor, long id)
+			throws UpdateException {
+		super(null,dt, executor);
+		this.userId=id;
 	}
-	
+
 	public void handleUpdate() throws UpdateException, DataFormatException{
 		if(dt instanceof Delete){
 			Delete newData = (Delete) dt;
 			
 			switch (newData.getType()) {
 				case ADDRESS:
-					if(contactExecutor.findAddressOwner(newData.getId())==contactId)			
-						contactExecutor.delAddr(newData.getId());
+					if(userExecutor.findAddressOwner(newData.getId())==userId)			
+						userExecutor.delAddr(newData.getId());
 					else
 						throw new PermissionDeniedException("this is not your address info");
 					break;
 				case EMAIL:
-					if(contactExecutor.findEmailOwner(newData.getId())==contactId)			
-						contactExecutor.delEmail(newData.getId());
+					if(userExecutor.findEmailOwner(newData.getId())==userId)			
+						userExecutor.delEmail(newData.getId());
 					else
 						throw new PermissionDeniedException("this is not your email info");
 					break;
 				case IM:
-					if(contactExecutor.findIMOwner(newData.getId())==contactId)			
-						contactExecutor.delIM(newData.getId());
+					if(userExecutor.findIMOwner(newData.getId())==userId)			
+						userExecutor.delIM(newData.getId());
 					else
 						throw new PermissionDeniedException("this is not your im info");
 					break;
 				case PHONE:
-					if(contactExecutor.findTelOwner(newData.getId())==contactId)			
-						contactExecutor.delTel(newData.getId());
+					if(userExecutor.findTelOwner(newData.getId())==userId)			
+						userExecutor.delTel(newData.getId());
 					else
 						throw new PermissionDeniedException("this is not your phone info");
 					break;
 				case URL:
-					if(contactExecutor.findURLOwner(newData.getId())==contactId)			
-						contactExecutor.delURL(newData.getId());
+					if(userExecutor.findURLOwner(newData.getId())==userId)			
+						userExecutor.delURL(newData.getId());
 					else
 						throw new PermissionDeniedException("this is not your url info");
 					break;

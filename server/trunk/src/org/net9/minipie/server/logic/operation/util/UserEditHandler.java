@@ -1,5 +1,5 @@
 /**
- * EditHandler.java
+ * UserEditHandler.java
  *     in package: * org.net9.minipie.server.logic.operation.util
  * by Mini-Pie Project
  */
@@ -8,59 +8,62 @@ package org.net9.minipie.server.logic.operation.util;
 import org.net9.minipie.server.data.api.Edit;
 import org.net9.minipie.server.data.api.Update;
 import org.net9.minipie.server.data.entity.AddressData;
-import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.data.entity.EmailData;
 import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
+import org.net9.minipie.server.data.entity.UserEntity;
 import org.net9.minipie.server.data.field.Birthdate;
 import org.net9.minipie.server.data.field.Gender;
 import org.net9.minipie.server.data.field.InfoField;
-import org.net9.minipie.server.data.field.Relationships;
+import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.PermissionDeniedException;
 import org.net9.minipie.server.logic.exception.UpdateException;
-import org.net9.minipie.server.logic.storage.ContactStorage;
+import org.net9.minipie.server.logic.storage.UserStorage;
 
 /**
  * @author Seastar
  *
  */
-public class EditHandler extends UpdateHandler{
-
+public class UserEditHandler extends UpdateHandler {
+	private long userId;
 	/**
 	 * Constructor
-	 * @param successor
 	 * @param dt
-	 * @throws UpdateException 
+	 * @param executor
+	 * @param id
+	 * @throws UpdateException
 	 */
-	protected EditHandler(Update dt,ContactStorage executor,long id) throws UpdateException {
-		super(null, dt,executor,id);
+	protected UserEditHandler(Update dt, UserStorage executor, long id)
+			throws UpdateException {
+		super(new UserDelHandler(dt,executor,id),dt, executor);
+		this.userId=id;
 	}
-	
+
 	public void handleUpdate() throws UpdateException, DataFormatException{
 		if(dt instanceof Edit){
 			Edit newData = (Edit) dt;
 			try {
 				switch (newData.getType()) {
 				case ADDRESS:
-					if(contactExecutor.findAddressOwner(newData.getId())!=contactId)
+					if(userExecutor.findAddressOwner(newData.getId())!=userId)
 						throw new PermissionDeniedException("this is not your address info");
 					AddressData address = new AddressData();
 					switch (newData.getInfoField()) {
 					case VALUE:
 						address.setValue(newData.getValue());
-						contactExecutor.editAddr(newData.getId(), InfoField.VALUE,
+						userExecutor.editAddr(newData.getId(), InfoField.VALUE,
 								address.getValue());
 						break;
 					case ZIPCODE:
 						address.setZipcode(newData.getValue());
-						contactExecutor.editAddr(newData.getId(), InfoField.ZIPCODE,
+						userExecutor.editAddr(newData.getId(), InfoField.ZIPCODE,
 								address.getZipcode());
 						break;
 					case TYPE:	
 						address.setType(newData.getValue());
-						contactExecutor.editAddr(newData.getId(), InfoField.TYPE,
+						userExecutor.editAddr(newData.getId(), InfoField.TYPE,
 								address.getType());
 						break;
 					case PRIMARY:
@@ -70,8 +73,12 @@ public class EditHandler extends UpdateHandler{
 							address.setPrimary(true);
 						else
 							address.setPrimary(false);
-						contactExecutor.editAddr(newData.getId(), InfoField.PRIMARY,
+						userExecutor.editAddr(newData.getId(), InfoField.PRIMARY,
 							Boolean.valueOf(address.isPrimary()));
+						break;
+					case PERMISSION:
+						userExecutor.editAddr(newData.getId(), InfoField.PERMISSION
+								, Permission.value( newData.getValue()));
 						break;
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
@@ -79,18 +86,18 @@ public class EditHandler extends UpdateHandler{
 					}
 					break;
 				case EMAIL:
-					if(contactExecutor.findEmailOwner(newData.getId())!=contactId)
+					if(userExecutor.findEmailOwner(newData.getId())!=userId)
 						throw new PermissionDeniedException("this is not your email info");
 					EmailData email = new EmailData();
 					switch (newData.getInfoField()) {
 					case VALUE:
 						email.setValue(newData.getValue());
-						contactExecutor.editEmail(newData.getId(), InfoField.VALUE,
+						userExecutor.editEmail(newData.getId(), InfoField.VALUE,
 								email.getValue());
 						break;
 					case TYPE:
 						email.setType(newData.getValue());
-						contactExecutor.editEmail(newData.getId(), InfoField.TYPE,
+						userExecutor.editEmail(newData.getId(), InfoField.TYPE,
 								email.getType());
 						break;
 					case PRIMARY:
@@ -100,8 +107,12 @@ public class EditHandler extends UpdateHandler{
 							email.setPrimary(true);
 						else
 							email.setPrimary(false);
-						contactExecutor.editEmail(newData.getId(), InfoField.PRIMARY,
+						userExecutor.editEmail(newData.getId(), InfoField.PRIMARY,
 							Boolean.valueOf(email.isPrimary()));
+						break;
+					case PERMISSION:
+						userExecutor.editEmail(newData.getId(), InfoField.PERMISSION
+								, Permission.value( newData.getValue()));
 						break;
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
@@ -109,18 +120,18 @@ public class EditHandler extends UpdateHandler{
 					}
 					break;
 				case IM:
-					if(contactExecutor.findIMOwner(newData.getId())!=contactId)
+					if(userExecutor.findIMOwner(newData.getId())!=userId)
 						throw new PermissionDeniedException("this is not your im info");
 					IMData im = new IMData();
 					switch (newData.getInfoField()) {
 					case VALUE:
 						im.setValue(newData.getValue());
-						contactExecutor.editIM(newData.getId(), InfoField.VALUE,
+						userExecutor.editIM(newData.getId(), InfoField.VALUE,
 								im.getValue());
 						break;
 					case TYPE:
 						im.setType(newData.getValue());
-						contactExecutor.editIM(newData.getId(), InfoField.TYPE,
+						userExecutor.editIM(newData.getId(), InfoField.TYPE,
 								im.getType());
 						break;
 					case PRIMARY:
@@ -130,8 +141,12 @@ public class EditHandler extends UpdateHandler{
 							im.setPrimary(true);
 						else
 							im.setPrimary(false);
-						contactExecutor.editIM(newData.getId(), InfoField.PRIMARY,
+						userExecutor.editIM(newData.getId(), InfoField.PRIMARY,
 							Boolean.valueOf(im.isPrimary()));
+						break;
+					case PERMISSION:
+						userExecutor.editIM(newData.getId(), InfoField.PERMISSION
+								, Permission.value( newData.getValue()));
 						break;
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
@@ -139,18 +154,18 @@ public class EditHandler extends UpdateHandler{
 					}
 					break;
 				case PHONE:
-					if(contactExecutor.findTelOwner(newData.getId())!=contactId)
+					if(userExecutor.findTelOwner(newData.getId())!=userId)
 						throw new PermissionDeniedException("this is not your phone info");
 					PhoneNoData phone = new PhoneNoData();
 					switch (newData.getInfoField()) {
 					case VALUE:
 						phone.setValue(newData.getValue());
-						contactExecutor.editTel(newData.getId(), InfoField.VALUE,
+						userExecutor.editTel(newData.getId(), InfoField.VALUE,
 								phone.getValue());
 						break;
 					case TYPE:
 						phone.setType(newData.getValue());
-						contactExecutor.editTel(newData.getId(), InfoField.TYPE,
+						userExecutor.editTel(newData.getId(), InfoField.TYPE,
 								phone.getType());
 						break;
 					case PRIMARY:
@@ -160,8 +175,12 @@ public class EditHandler extends UpdateHandler{
 							phone.setPrimary(true);
 						else
 							phone.setPrimary(false);
-						contactExecutor.editTel(newData.getId(), InfoField.PRIMARY,
+						userExecutor.editTel(newData.getId(), InfoField.PRIMARY,
 							Boolean.valueOf(phone.isPrimary()));
+						break;
+					case PERMISSION:
+						userExecutor.editTel(newData.getId(), InfoField.PERMISSION
+								, Permission.value( newData.getValue()));
 						break;
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
@@ -169,18 +188,18 @@ public class EditHandler extends UpdateHandler{
 					}
 					break;
 				case URL:
-					if(contactExecutor.findURLOwner(newData.getId())!=contactId)
+					if(userExecutor.findURLOwner(newData.getId())!=userId)
 						throw new PermissionDeniedException("this is not your url info");
 					URLData url = new URLData();
 					switch (newData.getInfoField()) {
 					case VALUE:
 						url.setValue(newData.getValue());
-						contactExecutor.editURL(newData.getId(), InfoField.VALUE,
+						userExecutor.editURL(newData.getId(), InfoField.VALUE,
 								url.getValue());
 						break;
 					case TYPE:
 						url.setType(newData.getValue());
-						contactExecutor.editURL(newData.getId(), InfoField.TYPE,
+						userExecutor.editURL(newData.getId(), InfoField.TYPE,
 								url.getType());
 						break;
 					case PRIMARY:
@@ -190,8 +209,12 @@ public class EditHandler extends UpdateHandler{
 							url.setPrimary(true);
 						else
 							url.setPrimary(false);
-						contactExecutor.editURL(newData.getId(), InfoField.PRIMARY,
+						userExecutor.editURL(newData.getId(), InfoField.PRIMARY,
 							Boolean.valueOf(url.isPrimary()));
+						break;
+					case PERMISSION:
+						userExecutor.editURL(newData.getId(), InfoField.PERMISSION
+								, Permission.value( newData.getValue()));
 						break;
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
@@ -199,43 +222,69 @@ public class EditHandler extends UpdateHandler{
 					}
 					break;
 				case BASIC:
-					ContactEntity contact = new ContactEntity();
+					UserEntity user = new UserEntity();
 					switch (newData.getInfoField()) {
 					case NAME:
-						contact.setName(newData.getValue());
-						contactExecutor.editBasicInfo(contactId, InfoField.NAME,
-								contact.getName());
+						user.setName(newData.getValue());
+						userExecutor.editBasicInfo(userId, InfoField.NAME,
+								user.getName());
 						break;
 					case NICKNAME:
-						contact.setNickName(newData.getValue());
-						contactExecutor.editBasicInfo(contactId, InfoField.NICKNAME,
-								contact.getNickName());
+						user.setNickName(newData.getValue());
+						userExecutor.editBasicInfo(userId, InfoField.NICKNAME,
+								user.getNickName());
+						break;
+					case DISPLAYNAME:
+						user.setDisplayname(newData.getValue());
+						userExecutor.editBasicInfo(userId, InfoField.DISPLAYNAME,
+								user.getDisplayname());
+						break;
+					case REGISTEREMAIL:
+						user.setRegisteredEmail(newData.getValue());
+						userExecutor.editBasicInfo(userId, InfoField.REGISTEREMAIL, 
+								user.getRegisteredEmail());
+						break;
+					case PASSWORD:
+						user.setPassword(newData.getValue());
+						userExecutor.editBasicInfo(userId, InfoField.PASSWORD, 
+								user.getPassword());
 						break;
 					case BIRTHDAY:
 						if (newData.getValue() != null)
-							contact.setBirthday(new Birthdate(newData.getValue()));
-						contactExecutor.editBasicInfo(contactId, InfoField.BIRTHDAY,
-								contact.getBirthday());
+							user.setBirthday(new Birthdate(newData.getValue()));
+						userExecutor.editBasicInfo(userId, InfoField.BIRTHDAY,
+								user.getBirthday());
+						break;
+					case BIRTHDAYPERMISSION:
+						if(newData.getValue()!=null)
+						userExecutor.editBasicInfo(userId, InfoField.BIRTHDAYPERMISSION
+								, Permission.value( newData.getValue()));
+						break;
+					case BIRTHYEARPERMISSION:
+						if(newData.getValue()!=null)
+						userExecutor.editBasicInfo(userId, InfoField.BIRTHYEARPERMISSION
+								, Permission.value( newData.getValue()));
 						break;
 					case GENDER:
 						if (newData.getValue() != null)
-							contact.setGender(Gender.value(newData.getValue()));
-						contactExecutor.editBasicInfo(contactId, InfoField.GENDER,
-								contact.getGender());
+							user.setGender(Gender.value(newData.getValue()));
+						userExecutor.editBasicInfo(userId, InfoField.GENDER,
+								user.getGender());
+						break;
+					case GENDERPERMISSION:
+						if(newData.getValue()!=null)
+						userExecutor.editBasicInfo(userId, InfoField.GENDERPERMISSION
+								, Permission.value( newData.getValue()));
 						break;
 					case NOTE:
-						contact.setNotes(newData.getValue());
-						contactExecutor.editBasicInfo(contactId, InfoField.NOTE,
-								contact.getNotes());
+						user.setNotes(newData.getValue());
+						userExecutor.editBasicInfo(userId, InfoField.NOTE,
+								user.getNotes());
 						break;
-					case RELATIONSHIP:
-						contact.setRelationship(new Relationships(newData.getValue()));
-						contactExecutor.editBasicInfo(contactId, InfoField.RELATIONSHIP,
-								contact.getRelationship());
-						break;
+					
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
-								+" in ContactInfo");
+								+" in UserInfo");
 					}
 					break;
 				default:
