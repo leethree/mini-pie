@@ -6,8 +6,8 @@
 package org.net9.minipie.server.data.api;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
 
 import org.net9.minipie.server.data.entity.TagEntry;
 
@@ -39,7 +39,7 @@ public class TagXml {
 		return tag.getId();
 	}
 
-	@XmlElement
+	@XmlValue
 	public String getName() {
 		return tag.getName();
 	}

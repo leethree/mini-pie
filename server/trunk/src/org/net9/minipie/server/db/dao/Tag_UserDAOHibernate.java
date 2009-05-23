@@ -125,7 +125,7 @@ public class Tag_UserDAOHibernate extends GenericHibernateDAO<Tag2User, Id> impl
 		Iterator<Tag2User> iter = tagUsers.iterator();
 		while(iter.hasNext()){
 			Tag tag = iter.next().getTag();
-			if(tag.getOwner().getId()!=ownerId){
+			if(!tag.getOwner().getId().equals(ownerId)){
 				continue;
 			}
 			try {

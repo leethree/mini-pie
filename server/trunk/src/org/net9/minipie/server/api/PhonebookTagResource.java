@@ -13,6 +13,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -35,7 +36,6 @@ import com.sun.jersey.api.core.ResourceContext;
  * @author LeeThree
  */
 public class PhonebookTagResource {
-	@SuppressWarnings("unused")
 	@Context
 	private UriInfo uriInfo;
 	@Context
@@ -59,10 +59,11 @@ public class PhonebookTagResource {
 
 	@GET
 	@Path("user")
-	public PhonebookUserList getUser(@FormParam("userid") long userId) {
+	@Produces( { "application/xml", "application/json" })
+	public PhonebookUserList getUser() {
 		return new PhonebookUserList(
 				new Handler<Collection<PhonebookUserListEntry>>(
-						new ListTaggedUser(1L, tagId)).execute(), null);
+						new ListTaggedUser(1L, tagId)).execute(), uriInfo.getAbsolutePath());
 		// TODO uri
 	}
 
@@ -74,12 +75,12 @@ public class PhonebookTagResource {
 	}
 
 	@GET
-	@Path("user")
-	public PhonebookContactList getContact(
-			@FormParam("contactid") long contactId) {
+	@Path("contact")
+	@Produces( { "application/xml", "application/json" })
+	public PhonebookContactList getContact() {
 		return new PhonebookContactList(
 				new Handler<Collection<PhonebookContactListEntry>>(
-						new ListTaggedContact(1L, tagId)).execute(), null);
+						new ListTaggedContact(1L, tagId)).execute(), uriInfo.getAbsolutePath());
 		// TODO uri
 	}
 

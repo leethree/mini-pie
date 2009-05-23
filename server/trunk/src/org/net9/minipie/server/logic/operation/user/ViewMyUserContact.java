@@ -41,6 +41,9 @@ public class ViewMyUserContact extends Command<PhonebookCompleteUser> {
 		} catch (DataFormatException e) {
 			throw new InvalidRequestException(e);
 		}
+		if (userId == targetId) {
+			throw new InvalidRequestException("View oneself is not allow in this method.");
+		}
 	}
 
 	/**

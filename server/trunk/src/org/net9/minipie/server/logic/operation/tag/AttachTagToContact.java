@@ -14,7 +14,7 @@ import org.net9.minipie.server.exception.PermissionDeniedException;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 import org.net9.minipie.server.logic.storage.TagStorage;
-import org.net9.minipie.server.logic.storage.Tag_UserStorage;
+import org.net9.minipie.server.logic.storage.Tag_ContactStorage;
 
 /**
  * @author Seastar
@@ -50,7 +50,7 @@ public class AttachTagToContact extends Command<Void> {
 	public Void execute() {
 		ContactStorage executor=getStorageFactory().getContactStorage();
 		TagStorage executor3=getStorageFactory().getTagStorage();
-		Tag_UserStorage executor4=getStorageFactory().getTag_UserStorage();
+		Tag_ContactStorage executor4=getStorageFactory().getTag_ContactStorage();
 		ContactEntity contact=executor.selectBasicInfo(targetId).getEntity();
 		if(contact.getOwnerId()!=userId || contact.getShadowOf()!=0)
 			throw new PermissionDeniedException("Target is not your contact");
