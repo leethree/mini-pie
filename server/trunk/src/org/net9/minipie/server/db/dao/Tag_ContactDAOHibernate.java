@@ -5,9 +5,13 @@
  */
 package org.net9.minipie.server.db.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 import org.hibernate.ObjectNotFoundException;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.net9.minipie.server.data.entity.TagEntry;
 import org.net9.minipie.server.data.storage.CommonListEntry;
@@ -15,7 +19,9 @@ import org.net9.minipie.server.db.entity.Contact;
 import org.net9.minipie.server.db.entity.Tag;
 import org.net9.minipie.server.db.entity.Tag2Contact;
 import org.net9.minipie.server.db.entity.Tag2Contact.Id;
+import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.NotFoundException;
+import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.storage.Tag_ContactStorage;
 
 /**
@@ -78,16 +84,50 @@ public class Tag_ContactDAOHibernate extends GenericHibernateDAO<Tag2Contact, Id
 	 * @see org.net9.minipie.server.db.dao.Tag_ContactDAO#selectTaggedContact(java.lang.Long)
 	 */
 	public Collection<CommonListEntry> selectTaggedContact(Long tagId) {
-		// TODO Auto-generated method stub
-		return null;
+		Criterion criterion  = Restrictions.eq("id.tagId", tagId);
+		List<Tag2Contact> tagContacts = null;
+		try{
+			tagContacts = findByCriteria(criterion);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("there is no tag relationship with tagid: "+ tagId);
+		}
+		Iterator<Tag2Contact> iter = tagContacts.iterator();
+		List<CommonListEntry> result = new ArrayList<CommonListEntry>();
+		while(iter.hasNext()){
+			Tag2Contact tagContact = iter.next();
+			Contact contact = tagContact.getContact();
+			try {
+				result.add(new CommonListEntry(contact.getId(), contact.getName(),
+						contact.getImage()));
+			} catch (DataFormatException e) {
+				throw new ServerErrorException(e.getMessage());
+			}
+		}
+		return result;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.Tag_ContactDAO#selectTagsOfContact(java.lang.Long)
 	 */
 	public Collection<TagEntry> selectTagsOfContact(Long contactId) {
-		// TODO Auto-generated method stub
-		return null;
+		Criterion criterion = Restrictions.eq("contact.id", contactId);
+		Collection<Tag2Contact> tagContacts = null;
+		try{
+			tagContacts = findByCriteria(criterion);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("cannot find a tag whose contact id is "+contactId);
+		}
+		Iterator<Tag2Contact> iter = tagContacts.iterator();
+		List<TagEntry> result = new ArrayList<TagEntry>();
+		while(iter.hasNext()){
+			Tag tag = iter.next().getTag();
+			try {
+				result.add(new TagEntry(tag.getId(), tag.getTagName()));
+			} catch (DataFormatException e) {
+				throw new ServerErrorException(e.getMessage());
+			}
+		}
+		return result;
 	}
 
 
