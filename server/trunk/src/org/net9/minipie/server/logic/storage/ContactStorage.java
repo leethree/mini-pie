@@ -13,6 +13,7 @@ import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.field.InfoField;
+import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicContact;
 import org.net9.minipie.server.data.storage.CommonListEntry;
 
@@ -55,4 +56,5 @@ public interface ContactStorage {
 	Long findIMOwner(Long imId);
 	Long findTelOwner(Long telId);
 	Long findURLOwner(Long urlId);
+	Void setPermission(Permission perm,Long contactId);
 }
