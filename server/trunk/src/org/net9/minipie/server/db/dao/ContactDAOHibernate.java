@@ -300,8 +300,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			String type = (String) value;
 			contactAddr.setType(type);
 		} else if (attribute==InfoField.PRIMARY) {
-			Bool primary = (Bool) value;
-			contactAddr.setPrimary(primary);
+			boolean primary = (Boolean) value;
+			if(primary){
+				contactAddr.setPrimary(Bool.TRUE);
+			}else{
+				contactAddr.setPrimary(Bool.FALSE);
+			}
 		}
 		cadh.begin();
 		cadh.makePersistent(contactAddr);
@@ -357,8 +361,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			String type = (String) value;
 			contactEmail.setType(type);
 		} else if (attribute==InfoField.PRIMARY) {
-			Bool primary = (Bool) value;
-			contactEmail.setPrimary(primary);
+			boolean primary = (Boolean) value;
+			if(primary){
+				contactEmail.setPrimary(Bool.TRUE);
+			}else{
+				contactEmail.setPrimary(Bool.FALSE);
+			}
 		}
 		cedh.begin();
 		cedh.makePersistent(contactEmail);
@@ -381,8 +389,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			String type = (String) value;
 			contactIM.setType(type);
 		} else if (attribute==InfoField.PRIMARY) {
-			Bool primary = (Bool) value;
-			contactIM.setPrimary(primary);
+			boolean primary = (Boolean) value;
+			if(primary){
+				contactIM.setPrimary(Bool.TRUE);
+			}else{
+				contactIM.setPrimary(Bool.FALSE);
+			}
 		}
 		cidh.begin();
 		cidh.makePersistent(contactIM);
@@ -405,8 +417,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			String type = (String) value;
 			contactPhone.setType(type);
 		} else if (attribute==InfoField.PRIMARY) {
-			Bool primary = (Bool) value;
-			contactPhone.setPrimary(primary);
+			boolean primary = (Boolean) value;
+			if(primary){
+				contactPhone.setPrimary(Bool.TRUE);
+			}else {
+				contactPhone.setPrimary(Bool.FALSE);
+			}
 		}
 		cpdh.begin();
 		cpdh.makePersistent(contactPhone);
@@ -429,8 +445,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			String type = (String) value;
 			contactURL.setType(type);
 		} else if (attribute==InfoField.PRIMARY) {
-			Bool primary = (Bool) value;
-			contactURL.setPrimary(primary);
+			boolean primary = (Boolean) value;
+			if(primary){
+				contactURL.setPrimary(Bool.TRUE);
+			}else{
+				contactURL.setPrimary(Bool.FALSE);
+			}
 		}
 		cudh.begin();
 		cudh.makePersistent(contactURL);
