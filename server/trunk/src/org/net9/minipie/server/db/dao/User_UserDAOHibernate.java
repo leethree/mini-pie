@@ -16,6 +16,7 @@ import org.hibernate.criterion.Restrictions;
 import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.CommonListEntry;
+import org.net9.minipie.server.data.storage.User_User;
 import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.db.entity.User2User;
 import org.net9.minipie.server.db.entity.User2User.Id;
@@ -191,5 +192,27 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id> im
 	 */
 	public User2User findById(Id id) {
 		return super.findById(id, false);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.User_UserStorage#selectMyUserContact(java.lang.Long)
+	 */
+	public Collection<User_User> selectMyUserContact(Long id) {
+		Criterion criterion1 = Restrictions.eq("user1.id", id);
+		List<User2User> binds1 = null;
+		try{
+			binds1 = findByCriteria(criterion1);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("there is no user1 with id: "+id);
+		}
+		Criterion criterion2 = Restrictions.eq("user2.id", id);
+		List<User2User> binds2 = null;
+		try{
+			binds2 = findByCriteria(criterion2);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("there is no user2 with id: "+id);
+		}
+		
+		return null;
 	}
 }
