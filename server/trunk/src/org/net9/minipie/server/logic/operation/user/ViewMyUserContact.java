@@ -62,7 +62,8 @@ public class ViewMyUserContact extends Command<PhonebookCompleteUserInfo>{
 		Collection<AddressData> addrs=executor.selectAddr(targetId);		
 		for(AddressData t:addrs)
 			if(t.getPermission()==Permission.TO_SELF)
-				addrs.remove(t);		
+				addrs.remove(t);
+		//addrs.addAll();
 		user.setAddrs(addrs);
 		
 		Collection<EmailData> emails=executor.selectEmail(targetId);		
