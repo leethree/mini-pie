@@ -6,6 +6,7 @@
 package org.net9.minipie.server.data.storage;
 
 import org.net9.minipie.server.data.entity.ContactEntity;
+import org.net9.minipie.server.data.field.AddAsContactPermission;
 import org.net9.minipie.server.data.field.Birthdate;
 import org.net9.minipie.server.data.field.Gender;
 import org.net9.minipie.server.data.field.Permission;
@@ -21,7 +22,8 @@ public class BasicContact {
 
 	public BasicContact(long id, String name, String image, String nickName,
 			Gender gender, String birthday, String notes, String relationship,
-			long ownerId, long shadowOf, long groupId, Permission perm)
+			long ownerId, long shadowOf, long groupId, Permission perm
+			)
 			throws DataFormatException {
 		entity = new ContactEntity();
 		entity.setId(id);
@@ -39,7 +41,9 @@ public class BasicContact {
 		entity.setOwnerId(ownerId);
 		entity.setShadowOf(shadowOf);
 		entity.setGroupId(groupId);
-		entity.setPermission(perm);
+		if (perm!=null)
+			entity.setPermission(perm);
+		
 	}
 
 	/**

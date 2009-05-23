@@ -6,23 +6,43 @@
 package org.net9.minipie.server.logic.operation.user;
 
 import java.util.Collection;
+import java.util.Vector;
 
 import org.net9.minipie.server.data.api.PhonebookContactListEntry;
+import org.net9.minipie.server.data.api.PhonebookUserListEntry;
+import org.net9.minipie.server.data.entity.UserEntity;
+import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.data.storage.CommonListEntry;
+import org.net9.minipie.server.data.storage.User_User;
 import org.net9.minipie.server.logic.operation.Command;
+import org.net9.minipie.server.logic.storage.UserStorage;
+import org.net9.minipie.server.logic.storage.User_UserStorage;
 
 /**
  * @author Seastar
  *
  */
-public class ListMyUserContact extends Command<Collection<PhonebookContactListEntry>>{
-
+public class ListMyUserContact extends Command<Collection<PhonebookUserListEntry>>{
+	private long userId;
+	
+	public ListMyUserContact(long userId){
+		this.userId=userId;
+	}
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
 	@Override
-	public Collection<PhonebookContactListEntry> execute() {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<PhonebookUserListEntry> execute() {
+		UserStorage executor=getStorageFactory().getUserStorage();
+		User_UserStorage executor2=getStorageFactory().getUser_UserStorage();
+		Collection<User_User> list=executor2.selectMyUserContact(userId);
+		Collection<PhonebookUserListEntry> result=new Vector<PhonebookUserListEntry>();
+		for(User_User uu:list){
+			PhonebookUserListEntry temp;
+			UserEntity user=executor.selectBasicInfo(uu.getId()).getEntity();
+			
+		}
+		return result;
 	}
 
 }

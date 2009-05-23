@@ -6,6 +6,7 @@
 package org.net9.minipie.server.data.storage;
 
 import org.net9.minipie.server.data.entity.UserEntity;
+import org.net9.minipie.server.data.field.AddAsContactPermission;
 import org.net9.minipie.server.data.field.Birthdate;
 import org.net9.minipie.server.data.field.Gender;
 import org.net9.minipie.server.data.field.Permission;
@@ -21,7 +22,7 @@ public class BasicUser {
 	public BasicUser(long id, String name, String RegisteredEmail,
 			String password, String image, String nickName, String displayName,
 			Permission gPerm, Permission bdPerm, Permission byPerm,
-			Gender gender, String birthday, String notes)
+			Gender gender, String birthday, String notes,AddAsContactPermission contactPerm)
 			throws DataFormatException {
 		entity = new UserEntity();
 		entity.setId(id);
@@ -39,6 +40,8 @@ public class BasicUser {
 		entity.setBirthdatePermission(byPerm);
 		entity.setPassword(password);
 		entity.setRegisteredEmail(RegisteredEmail);
+		if(contactPerm!=null)
+			entity.setAddAsContactPermission(contactPerm);
 	}
 
 	/**

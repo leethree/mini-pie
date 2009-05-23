@@ -8,6 +8,7 @@ package org.net9.minipie.server.data.entity;
 import org.net9.minipie.server.data.Formatter;
 import org.net9.minipie.server.data.field.AddAsContactPermission;
 import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.data.field.Relationships;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.ServerErrorException;
 
@@ -23,8 +24,10 @@ public class UserEntity extends CommonEntity {
 	private Permission genderPermission;
 	private Permission birthDatePermission;
 	private Permission birthYearPermission;
+	private Permission permission;
 	private boolean isAdmin;
-
+	private Relationships relationship;
+	
 	/**
 	 * Constructor
 	 */
@@ -33,12 +36,18 @@ public class UserEntity extends CommonEntity {
 		genderPermission = Permission.TO_CONTACTS;
 		birthDatePermission = Permission.TO_CONTACTS;
 		birthYearPermission = Permission.TO_CONTACTS;
+		permission=Permission.TO_CONTACTS;
 		setAdmin(false);
 	}
 
 	/**
 	 * @return the registeredEmail
 	 */
+	
+	public Permission getPermission(){
+		return this.permission;
+	}
+	
 	public String getRegisteredEmail() {
 		return registeredEmail;
 	}
@@ -176,4 +185,17 @@ public class UserEntity extends CommonEntity {
 		this.isAdmin = isAdmin;
 	}
 
+	/**
+	 * @param relationship the relationship to set
+	 */
+	public void setRelationship(Relationships relationship) {
+		this.relationship = relationship;
+	}
+	
+	/**
+	 * @return the relationship
+	 */
+	public String getRelationship() {
+		return relationship.toString();
+	}
 }
