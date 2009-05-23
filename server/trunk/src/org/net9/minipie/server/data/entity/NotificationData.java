@@ -15,6 +15,7 @@ import org.net9.minipie.server.exception.ServerErrorException;
  * 
  */
 public class NotificationData {
+	private Long id;
 	private Long sendId;
 	private Long receiverId;
 	private String content;
@@ -29,8 +30,9 @@ public class NotificationData {
 	 * @param type
 	 * @throws DataFormatException
 	 */
-	public NotificationData(Long sendId, Long receiverId, String content,
+	public NotificationData(Long id,Long sendId, Long receiverId, String content,
 			NotificationType type) throws DataFormatException {
+		setId(id);
 		setSendId(sendId);
 		setReceiverId(receiverId);
 		setContent(content);
@@ -44,6 +46,9 @@ public class NotificationData {
 		return sendId;
 	}
 
+	public void setId(long id){
+		this.id=id;
+	}
 	/**
 	 * @param sendId
 	 *            the sendId to set
