@@ -796,4 +796,40 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		commit();
 		return null;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.ContactStorage#selectShadowOf(java.lang.Long, java.lang.Long)
+	 */
+	public BasicContact selectShadowOf(Long ownerId, Long shadowOf) {
+		Criterion criterion1 = Restrictions.eq("owner.id", ownerId);
+		Criterion criterion2 = Restrictions.eq("shadowOf.id", shadowOf);
+		Contact shadow = null;
+		try{
+			List<Contact> contacts = findByCriteria(criterion1, criterion2);
+			if(contacts.isEmpty()){
+				throw new NotFoundException("there is no shadow with ownerId: "+ownerId
+					+" and shadowOf: "+shadowOf);
+			}
+			Iterator<Contact> iter = contacts.iterator();
+			shadow = iter.next();
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("there is no shadow with ownerId: "+ownerId
+					+" and shadowOf: "+shadowOf);
+		}
+		BasicContact basicContact;
+		try {
+			basicContact = new BasicContact(shadow.getId().longValue(),
+					shadow.getName(), shadow.getImage(), shadow.getNickName(),
+					shadow.getGender(),
+					(shadow.getBirthday()!=null)? shadow.getBirthday().toString():null,
+					shadow.getNotes(), shadow.getRelationship(),
+					(shadow.getOwner()!=null)? shadow.getOwner().getId().longValue(): 0, 
+					(shadow.getShadowOf()!=null)? shadow.getShadowOf().getId(): 0, 
+					(shadow.getGroup()!=null)? shadow.getGroup().getId(): 0, 
+					shadow.getPermission());
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
+		}
+		return basicContact;
+	}
 }
