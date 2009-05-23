@@ -5,8 +5,15 @@
  */
 package org.net9.minipie.server.logic.operation.user;
 
+import java.util.Collection;
+
 import org.net9.minipie.server.data.Formatter;
 import org.net9.minipie.server.data.api.PhonebookCompleteUserInfo;
+import org.net9.minipie.server.data.entity.AddressData;
+import org.net9.minipie.server.data.entity.EmailData;
+import org.net9.minipie.server.data.entity.IMData;
+import org.net9.minipie.server.data.entity.PhoneNoData;
+import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.entity.UserEntity;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.field.Relationships;
@@ -51,11 +58,37 @@ public class ViewMyUserContact extends Command<PhonebookCompleteUserInfo>{
 		if(user.getBirthdatePermission()==Permission.TO_SELF)
 			user.setBirthday(null);
 		user.setRelationship(new Relationships(rel));
-		user.setAddrs(executor.selectAddr(targetId));
-		user.setEmails(executor.selectEmail(targetId));
-		user.setIms(executor.selectIM(targetId));
-		user.setTels(executor.selectTel(targetId));
-		user.setUrls(executor.selectURL(targetId));
+		
+		Collection<AddressData> addrs=executor.selectAddr(targetId);		
+		for(AddressData t:addrs)
+			if(t.getPermission()==Permission.TO_SELF)
+				addrs.remove(t);		
+		user.setAddrs(addrs);
+		
+		Collection<EmailData> emails=executor.selectEmail(targetId);		
+		for(EmailData t:emails)
+			if(t.getPermission()==Permission.TO_SELF)
+				emails.remove(t);		
+		user.setEmails(emails);
+		
+		Collection<IMData> ims=executor.selectIM(targetId);		
+		for(IMData t:ims)
+			if(t.getPermission()==Permission.TO_SELF)
+				ims.remove(t);	
+		user.setIms(ims);
+		
+		Collection<PhoneNoData> tels=executor.selectTel(targetId);		
+		for(PhoneNoData t:tels)
+			if(t.getPermission()==Permission.TO_SELF)
+				addrs.remove(t);	
+		user.setTels(tels);
+		
+		Collection<URLData> urls=executor.selectURL(targetId);		
+		for(URLData t:urls)
+			if(t.getPermission()==Permission.TO_SELF)
+				addrs.remove(t);	
+		user.setUrls(urls);
+		
 		user.setTags(executor3.selectTagsOfUser(targetId, userId));
 		return new PhonebookCompleteUserInfo(user);
 	}
