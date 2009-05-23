@@ -253,7 +253,7 @@ public class UserEditHandler extends UpdateHandler {
 						if (newData.getValue() != null)
 							user.setBirthday(new Birthdate(newData.getValue()));
 						userExecutor.editBasicInfo(userId, InfoField.BIRTHDAY,
-								user.getBirthday());
+								user.getBirthday().toString());
 						break;
 					case BIRTHDAYPERMISSION:
 						if(newData.getValue()!=null)

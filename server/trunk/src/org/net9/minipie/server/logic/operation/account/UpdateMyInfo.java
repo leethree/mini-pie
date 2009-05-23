@@ -6,15 +6,11 @@
 package org.net9.minipie.server.logic.operation.account;
 
 import org.net9.minipie.server.data.api.Update;
-import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
-import org.net9.minipie.server.exception.NotFoundException;
-import org.net9.minipie.server.exception.PermissionDeniedException;
 import org.net9.minipie.server.logic.exception.UpdateException;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.operation.util.UpdateHandler;
-import org.net9.minipie.server.logic.storage.ContactStorage;
 import org.net9.minipie.server.logic.storage.UserStorage;
 
 /**

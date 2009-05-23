@@ -5,6 +5,7 @@
  */
 package org.net9.minipie.server.logic.operation.contact;
 
+import org.net9.minipie.server.data.Formatter;
 import org.net9.minipie.server.data.api.Update;
 import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.exception.DataFormatException;
@@ -55,10 +56,11 @@ public class UpdateMyContact extends Command<Void> {
 	 *            the contactId to set
 	 */
 	public void setContactId(Long contactId) {
-		if (contactId < 0) {
-			throw new InvalidRequestException("id is illegal");
+		try {
+			this.contactId =Formatter.checkId(contactId);
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException(e);
 		}
-		this.contactId = contactId;
 	}
 
 	/**
