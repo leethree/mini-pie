@@ -23,6 +23,7 @@ import org.net9.minipie.server.db.entity.ContactEmail;
 import org.net9.minipie.server.db.entity.ContactIM;
 import org.net9.minipie.server.db.entity.ContactPhoneNo;
 import org.net9.minipie.server.db.entity.ContactURL;
+import org.net9.minipie.server.db.entity.Group;
 import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.db.entity.enums.Bool;
 import org.net9.minipie.server.exception.DataFormatException;
@@ -91,8 +92,23 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	}
 
 	public Long addGroupContact(Long groupId, String name) {
-		// TODO Auto-generated method stub
-		return null;
+		GroupDAOHibernate gdh = new GroupDAOHibernate();
+		Group group = null;
+		try{
+			group = gdh.findById(groupId);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("there is no group with groupId: "+groupId);
+		}
+		Contact contact = new Contact();
+		contact.setName(name);
+		begin();
+		makePersistent(contact);
+		commit();
+		group.getGroupContacts().add(contact);
+		gdh.begin();
+		gdh.makePersistent(group);
+		gdh.commit();
+		return contact.getId();
 	}
 
 	public Long addIM(Long contactId, IMData imData) {

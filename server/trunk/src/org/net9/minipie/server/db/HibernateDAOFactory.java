@@ -8,6 +8,8 @@ package org.net9.minipie.server.db;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.net9.minipie.server.db.dao.ContactDAOHibernate;
+import org.net9.minipie.server.db.dao.GroupDAOHibernate;
+import org.net9.minipie.server.db.dao.Group_UserDAOHibernate;
 import org.net9.minipie.server.db.dao.NotificationDAOHibernate;
 import org.net9.minipie.server.db.dao.TagDAOHibernate;
 import org.net9.minipie.server.db.dao.Tag_ContactDAOHibernate;
@@ -17,6 +19,8 @@ import org.net9.minipie.server.db.dao.User_UserDAOHibernate;
 import org.net9.minipie.server.db.util.HibernateSessionFactory;
 import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.storage.ContactStorage;
+import org.net9.minipie.server.logic.storage.GroupStorage;
+import org.net9.minipie.server.logic.storage.Group_UserStorage;
 import org.net9.minipie.server.logic.storage.NotificationStorage;
 import org.net9.minipie.server.logic.storage.StorageFactory;
 import org.net9.minipie.server.logic.storage.TagStorage;
@@ -37,6 +41,8 @@ public class HibernateDAOFactory implements StorageFactory {
 	private Tag_ContactDAOHibernate tagContactDAOHibernate;
 	private Tag_UserDAOHibernate tagUserDAOHibernate;
 	private User_UserDAOHibernate user_userDAOHibernate;
+	private GroupDAOHibernate groupDAOHibernate;
+	private Group_UserDAOHibernate groupUserDAOHibernate;
 	
 	/**
 	 * Constructor which is used for checking whether db connection has been
@@ -54,6 +60,8 @@ public class HibernateDAOFactory implements StorageFactory {
 			tagContactDAOHibernate = new Tag_ContactDAOHibernate();
 			tagUserDAOHibernate = new Tag_UserDAOHibernate();
 			user_userDAOHibernate = new User_UserDAOHibernate();
+			groupDAOHibernate = new GroupDAOHibernate();
+			groupUserDAOHibernate = new Group_UserDAOHibernate();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			throw new ServerErrorException(
@@ -135,5 +143,19 @@ public class HibernateDAOFactory implements StorageFactory {
 	 */
 	public User_UserStorage getUser_UserStorage() {
 		return user_userDAOHibernate;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.StorageFactory#getGroupStorage()
+	 */
+	public GroupStorage getGroupStorage() {
+		return groupDAOHibernate;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.StorageFactory#getGroup_UserStorage()
+	 */
+	public Group_UserStorage getGroup_UserStorage() {
+		return groupUserDAOHibernate;
 	}
 }

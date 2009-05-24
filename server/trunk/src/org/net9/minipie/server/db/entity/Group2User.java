@@ -32,13 +32,11 @@ public class Group2User {
 		}
 		@Override
 		public boolean equals(Object obj) {
-			// TODO Auto-generated method stub\
 			Id o = (Id) obj;
 			return this.groupId.equals(o.groupId) && this.memberId.equals(o.memberId);
 		}
 		@Override
 		public int hashCode() {
-			// TODO Auto-generated method stub
 			return groupId.hashCode()+memberId.hashCode();
 		}
 	}

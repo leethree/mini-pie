@@ -59,13 +59,11 @@ public class ContactAddress {
 	}
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
 		ContactAddress o = (ContactAddress) obj;
 		return this.value.equals(o.value);
 	}
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
 		return this.value.hashCode();
 	}
 

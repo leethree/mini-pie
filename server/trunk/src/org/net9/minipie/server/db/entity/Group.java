@@ -25,10 +25,14 @@ public class Group {
 	private String groupName;
 	@Column(name = "CREATOR_NAME")
 	private String creatorName;
+	@Column(name = "CREATOR_ID")
+	private Long creatorId;
 	@Column(name = "CREATED_DATE")
 	private Date createdDate = new Date();
 	@Column(name = "PERMISSION")
 	private Permission perm;
+	@Column(name = "DESCRIPTION")
+	private String description;
 	
 	@OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE)
 	@org.hibernate.annotations.Cascade(
@@ -88,5 +92,29 @@ public class Group {
 	}
 	public void setGroupNotification(Collection<Notification> groupNotification) {
 		this.groupNotification = groupNotification;
+	}
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+	/**
+	 * @param creatorId the creatorId to set
+	 */
+	public void setCreatorId(Long creatorId) {
+		this.creatorId = creatorId;
+	}
+	/**
+	 * @return the creatorId
+	 */
+	public Long getCreatorId() {
+		return creatorId;
 	}
 }

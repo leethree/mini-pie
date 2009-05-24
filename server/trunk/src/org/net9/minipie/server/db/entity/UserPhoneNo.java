@@ -67,13 +67,11 @@ public class UserPhoneNo {
 	}
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
 		UserPhoneNo o = (UserPhoneNo)obj;
 		return this.value.compareToIgnoreCase(o.value)==0;
 	}
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
 		return this.value.hashCode();
 	}
 

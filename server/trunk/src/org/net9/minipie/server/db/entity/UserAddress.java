@@ -76,13 +76,11 @@ public class UserAddress {
 	}
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
 		UserAddress o = (UserAddress)obj;
 		return this.formatted.compareToIgnoreCase(o.formatted)==0;
 	}
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
 		return this.zipcode.hashCode();
 	}
 }
