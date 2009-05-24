@@ -30,10 +30,10 @@ public class NotificationData {
 	 * @param type
 	 * @throws DataFormatException
 	 */
-	public NotificationData(Long id,Long sendId, Long receiverId, String content,
+	public NotificationData(Long id,Long senderId, Long receiverId, String content,
 			NotificationType type) throws DataFormatException {
 		setId(id);
-		setSenderId(sendId);
+		setSenderId(senderId);
 		setReceiverId(receiverId);
 		setContent(content);
 		setType(type);
