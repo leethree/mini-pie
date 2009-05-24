@@ -53,6 +53,8 @@ public class GroupDAOHibernate extends GenericHibernateDAO<Group, Long> implemen
 			throw new NotFoundException("there is no user with userId: "+ userId);
 		}
 		group.setCreatorName(user.getUserName());
+		group.setCreatorId(userId);
+		group.setPerm(Permission.TO_EVERYONE);
 		begin();
 		makePersistent(group);
 		commit();
