@@ -27,14 +27,28 @@ public class IllegalUser {
 		this.pwd = pwd;
 	}	
 	
+	public IllegalUser(String name){
+		super();
+		this.name=name;
+	}
+	
+	public String getPassword(){
+		UserStorage executor=new HibernateDAOFactory().getUserStorage();
+		try {
+			return executor.selectUserPassword(name);
+		}catch (NotFoundException e){
+			return null;
+		}
+		
+	}
 	public boolean isIllegalUser(){
 		UserStorage executor=new HibernateDAOFactory().getUserStorage();
 		try{
 			executor.selectLegalUser(name, pwd);
 		}catch (NotFoundException e){
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 }

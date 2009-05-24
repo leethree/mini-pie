@@ -84,4 +84,5 @@ public interface UserStorage {
 	//Void setPermission(Permission perm,Long userId);
 	Void setAddAsContactPermission(AddAsContactPermission perm,Long userId);
 	Long selectLegalUser(String name,String password);
+	String selectUserPassword(String name);
 }
