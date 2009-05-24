@@ -27,5 +27,6 @@
 	<classpathentry kind="lib" path="lib/JAXB with Json/jackson-asl-0.9.4.jar"/>
 	<classpathentry kind="lib" path="lib/JAXB with Json/jettison-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/JAXB with Json/jaxb-impl-2.1.11.jar"/>
+	<classpathentry kind="lib" path="lib/catalina.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
