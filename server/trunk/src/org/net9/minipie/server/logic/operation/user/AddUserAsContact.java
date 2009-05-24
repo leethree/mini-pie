@@ -100,6 +100,7 @@ public class AddUserAsContact extends Command<Void>{
 					} catch (DataFormatException e) {
 						//won't appear,ignore
 					}
+					break;
 				case EVERYONE:
 					executor2.add(userId, targetId);
 					break;

@@ -17,4 +17,6 @@ public interface StorageFactory {
 	public Tag_UserStorage getTag_UserStorage();
 	public Tag_ContactStorage getTag_ContactStorage();
 	public NotificationStorage getNotifacationStorage();
+	public Group_UserStorage getGroup_UserStorage();
+	public GroupStorage getGroupStorage();
 }
