@@ -800,4 +800,18 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.UserStorage#selectLegalUser(java.lang.String, java.lang.String)
+	 */
+	public Long selectLegalUser(String name, String password) {
+		Criterion criterion1 = Restrictions.eq("userName", name);
+		Criterion criterion2 = Restrictions.eq("password", password);
+		List<User> result = findByCriteria(criterion1, criterion2);
+		if(result.isEmpty()){
+			throw new NotFoundException("illegal userName or password");
+		}
+		Iterator<User> iter = result.iterator();
+		return iter.next().getId();
+	}
+
 }
