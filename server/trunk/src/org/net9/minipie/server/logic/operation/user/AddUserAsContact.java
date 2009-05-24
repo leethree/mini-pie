@@ -12,6 +12,7 @@ import org.net9.minipie.server.data.field.NotificationType;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
+import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.NotificationStorage;
 import org.net9.minipie.server.logic.storage.UserStorage;
@@ -45,6 +46,8 @@ public class AddUserAsContact extends Command<Void>{
 	public void setTargetId(long targetId) {
 		try {
 			this.targetId = Formatter.checkId(targetId);
+			if(this.targetId==this.userId)
+				throw new InvalidRequestException("can't add youself as contact");
 		} catch (DataFormatException e) {
 			throw new InvalidRequestException(e);
 		}
@@ -92,13 +95,13 @@ public class AddUserAsContact extends Command<Void>{
 				case CONFIRMED_ONES:
 					NotificationStorage executor3=getStorageFactory().getNotifacationStorage();
 					try {
-						executor3.add(new NotificationData(0L,userId,targetId,
+						executor3.add(new NotificationData(1L,userId,targetId,
 								"user "+userId +" want you to be his/her contact," +
 								"please confirm\r\n" +
 								"his/her message:"+message
 								,NotificationType.CONTACT_APPLICATION));
 					} catch (DataFormatException e) {
-						//won't appear,ignore
+						throw new ServerErrorException(e.getMessage());
 					}
 					break;
 				case EVERYONE:

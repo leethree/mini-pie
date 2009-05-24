@@ -12,6 +12,7 @@ import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.PermissionDeniedException;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.ContactStorage;
+import org.net9.minipie.server.logic.storage.Tag_ContactStorage;
 
 /**
  * @author Seastar
@@ -60,6 +61,7 @@ public class ViewMyContact extends Command<PhonebookCompleteContact> {
 	public PhonebookCompleteContact execute() {
 		ContactStorage executor = getStorageFactory().getContactStorage();
 		ContactEntity contact = executor.selectBasicInfo(contactId).getEntity();
+		Tag_ContactStorage executor2 = getStorageFactory().getTag_ContactStorage();
 		if (contact.getOwnerId() != userId) {
 			throw new PermissionDeniedException(
 					"This contact doesn't belong to the user");
@@ -71,8 +73,9 @@ public class ViewMyContact extends Command<PhonebookCompleteContact> {
 			contact.setIms(executor.selectIM(contactId));
 			contact.setTels(executor.selectTel(contactId));
 			contact.setUrls(executor.selectURL(contactId));
+			contact.setTags(executor2.selectTagsOfContact(contactId));
+			return new PhonebookCompleteContact(contact);
 		}
-		return new PhonebookCompleteContact(contact);
 	}
 
 }

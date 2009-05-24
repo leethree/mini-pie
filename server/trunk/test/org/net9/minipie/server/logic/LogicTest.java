@@ -13,7 +13,7 @@ import org.net9.minipie.server.logic.operation.contact.AddMyContact;
  */
 public class LogicTest {
 	public static void main(String avg[]) {
-		long i = new Handler<Long>(new AddMyContact(111111L, "oo")).excute();
+		long i = new Handler<Long>(new AddMyContact(111111L, "oo")).execute();
 		System.out.print(i);
 	}
 }

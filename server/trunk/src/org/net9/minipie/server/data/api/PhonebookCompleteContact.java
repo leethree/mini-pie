@@ -10,7 +10,6 @@ import java.util.Collection;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -226,7 +225,6 @@ public class PhonebookCompleteContact {
 	 * @return
 	 */
 	@XmlElement(name = "tag")
-	@XmlElementWrapper(name = "tags")
 	public Collection<TagXml> getTags() {
 		Collection<TagXml> tags = new ArrayList<TagXml>();
 		for (TagEntry tagEntry : entity.getTags()) {
