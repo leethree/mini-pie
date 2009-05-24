@@ -11,11 +11,11 @@ import javax.persistence.Table;
 import org.net9.minipie.server.db.entity.enums.Bool;
 
 @Entity
-@Table(name = "CONTACT_IMAGE")
+@Table(name = "CONTACT_IM")
 public class ContactIM {
 	@Id
 	@GeneratedValue
-	@Column(name = "CONTACT_IMAGE_ID")
+	@Column(name = "CONTACT_IM_ID")
 	private Long id;
 
 	@ManyToOne
@@ -59,13 +59,11 @@ public class ContactIM {
 	}
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
 		ContactIM o = (ContactIM) obj;
 		return this.value.compareToIgnoreCase(o.value)==0;
 	}
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
 		return this.value.hashCode();
 	}
 }

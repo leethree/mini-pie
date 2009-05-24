@@ -16,7 +16,7 @@ import org.net9.minipie.server.db.entity.enums.Bool;
 public class UserIM {
 	@Id
 	@GeneratedValue
-	@Column(name = "USER_IMAGE_ID")
+	@Column(name = "USER_IM_ID")
 	private Long id;
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
@@ -67,13 +67,11 @@ public class UserIM {
 	}
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
 		UserIM o = (UserIM)obj;
 		return this.value.compareToIgnoreCase(o.value)==0;
 	}
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
 		return this.value.hashCode();
 	}
 }

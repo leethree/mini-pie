@@ -40,16 +40,12 @@ public abstract class GenericHibernateDAO <T, Id extends Serializable> implement
 
 	@SuppressWarnings("unchecked")
 	public T findById(Id id, boolean lock) {
-		try{
-			T entity;
-			if (lock)
-				entity = (T) getSession().load(getPersistentClass(), id, LockMode.UPGRADE);
-			else
-				entity = (T) getSession().load(getPersistentClass(), id);
-			return entity;
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no item with this id");
-		}
+		T entity;
+		if (lock)
+			entity = (T) getSession().load(getPersistentClass(), id, LockMode.UPGRADE);
+		else
+			entity = (T) getSession().load(getPersistentClass(), id);
+		return entity;
 	}
 	public List<T> findAll() {
 		try{
