@@ -814,4 +814,17 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		return iter.next().getId();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.UserStorage#selectUserPassword(java.lang.String)
+	 */
+	public String selectUserPassword(String name) {
+		Criterion criterion = Restrictions.eq("userName", name);
+		List<User> user = findByCriteria(criterion);
+		if(user.isEmpty()){
+			throw new NotFoundException("there is no user with userName: "+name);
+		}
+		Iterator<User> iter = user.iterator();
+		return iter.next().getPassword();
+	}
+
 }
