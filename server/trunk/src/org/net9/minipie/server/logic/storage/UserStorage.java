@@ -83,4 +83,5 @@ public interface UserStorage {
 	Long findURLOwner(Long urlId);
 	//Void setPermission(Permission perm,Long userId);
 	Void setAddAsContactPermission(AddAsContactPermission perm,Long userId);
+	Long selectLegalUser(String name,String password);
 }
