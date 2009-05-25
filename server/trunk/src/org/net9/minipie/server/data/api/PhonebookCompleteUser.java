@@ -197,8 +197,7 @@ public class PhonebookCompleteUser {
 		}
 		return collection;
 	}
-
-
+	
 	/**
 	 * 
 	 * @return

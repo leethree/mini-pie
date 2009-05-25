@@ -51,5 +51,5 @@ public class UserListEntry {
 	public String getName() {
 		return entity.getName();
 	}
-
+	
 }

@@ -5,8 +5,7 @@
  */
 package org.net9.minipie.server.logic.storage;
 
-import java.util.List;
-
+import java.util.Collection;
 import org.net9.minipie.server.data.entity.AddressData;
 import org.net9.minipie.server.data.entity.EmailData;
 import org.net9.minipie.server.data.entity.IMData;
@@ -62,19 +61,19 @@ public interface UserStorage {
 
 	//List<Object[]> search(Object... criteria);
 
-	List<AddressData> selectAddr(Long userId);
+	Collection<AddressData> selectAddr(Long userId);
 
 	//List<> selectAddtional(Long userId);
 
 	BasicUser selectBasicInfo(Long userId);
 
-	List<EmailData> selectEmail(Long userId);
+	Collection<EmailData> selectEmail(Long userId);
 
-	List<IMData> selectIM(Long userId);
+	Collection<IMData> selectIM(Long userId);
 
-	List<PhoneNoData> selectTel(Long userId);
+	Collection<PhoneNoData> selectTel(Long userId);
 
-	List<URLData> selectURL(Long userId);
+	Collection<URLData> selectURL(Long userId);
 		
 	Long findAddressOwner(Long addrId);
 	Long findEmailOwner(Long emailId);
@@ -85,4 +84,5 @@ public interface UserStorage {
 	Void setAddAsContactPermission(AddAsContactPermission perm,Long userId);
 	Long selectLegalUser(String name,String password);
 	String selectUserPassword(String name);
+	//Collection<BasicUser> searchAllUser();
 }

@@ -26,9 +26,11 @@ public class ContactEntity extends CommonEntity {
 	 * Constructor
 	 */
 	public ContactEntity() {
+		super();
 		permission = Permission.TO_SELF;
 	}
 	public ContactEntity(CommonEntity ce) throws DataFormatException{
+		this();
 		setId(ce.getId());
 		setName(ce.getName());
 		setImage(ce.getImage());

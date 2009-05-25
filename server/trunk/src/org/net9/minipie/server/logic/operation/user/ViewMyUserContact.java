@@ -53,8 +53,7 @@ public class ViewMyUserContact extends Command<PhonebookCompleteUser> {
 	public PhonebookCompleteUser execute() {
 		UserStorage executor = getStorageFactory().getUserStorage();
 		User_UserStorage executor2 = getStorageFactory().getUser_UserStorage();
-		Tag_UserStorage executor3 = getStorageFactory().getTag_UserStorage();
-		
+		Tag_UserStorage executor3 = getStorageFactory().getTag_UserStorage();		
 		UserEntity user = executor.selectBasicInfo(targetId).getEntity();
 		String rel;
 		try {

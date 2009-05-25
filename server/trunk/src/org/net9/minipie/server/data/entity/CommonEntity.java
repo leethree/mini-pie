@@ -5,6 +5,7 @@
  */
 package org.net9.minipie.server.data.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.net9.minipie.server.data.Formatter;
@@ -35,6 +36,15 @@ public class CommonEntity {
 	/**
 	 * @return the id
 	 */
+	public CommonEntity(){
+		addrs=new ArrayList<AddressData>();
+		emails=new ArrayList<EmailData>();
+		ims=new ArrayList<IMData>();
+		tels=new ArrayList<PhoneNoData>();
+		urls=new ArrayList<URLData>();
+		tags=new ArrayList<TagEntry>();
+	}
+	
 	public long getId() {
 		return id;
 	}

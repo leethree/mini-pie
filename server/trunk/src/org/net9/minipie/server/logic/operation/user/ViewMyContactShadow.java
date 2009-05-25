@@ -48,7 +48,8 @@ public class ViewMyContactShadow extends Command<CompleteContact> {
 		contact.setIms(executor3.selectIM(contactId));
 		contact.setTels(executor3.selectTel(contactId));
 		contact.setUrls(executor3.selectURL(contactId));
-		return new CompleteContact(contact);
+		return new CompleteContact(contact,userId
+				,executor.selectBasicInfo(userId).getEntity().getName());
 	}
 
 }

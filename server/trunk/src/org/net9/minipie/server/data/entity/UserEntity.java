@@ -32,6 +32,7 @@ public class UserEntity extends CommonEntity {
 	 * Constructor
 	 */
 	public UserEntity() {
+		super();
 		addAsContactPermission = AddAsContactPermission.CONFIRMED_ONES;
 		genderPermission = Permission.TO_CONTACTS;
 		birthDatePermission = Permission.TO_CONTACTS;
@@ -40,7 +41,12 @@ public class UserEntity extends CommonEntity {
 		setAdmin(false);
 	}
 	
-	
+	public UserEntity(CommonEntity ce) throws DataFormatException{
+		this();
+		setId(ce.getId());
+		setName(ce.getName());
+		setImage(ce.getImage());
+	}
 	/**
 	 * @return the registeredEmail
 	 */

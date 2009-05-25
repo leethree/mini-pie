@@ -21,11 +21,17 @@ import org.net9.minipie.server.data.field.Gender;
  */
 public class CompleteUserInfo {
 	private UserEntity entity;
+	private long shareByUserId;
+	private String shareByUserName;
+	
 	/**
 	 * Constructor
 	 */
-	public CompleteUserInfo(UserEntity entity) {
+	public CompleteUserInfo(UserEntity entity,long sharedId,String sharedName) {
 		this.entity=entity;
+		this.shareByUserId=sharedId;
+		this.shareByUserName=sharedName;
+		//this.shareByUserId=entity.getId();
 	}
 	
 	public String getBirthday() {
@@ -126,4 +132,20 @@ public class CompleteUserInfo {
 		return entity.getUrls();
 	}
 
+	/**
+	 * @return the shareByUserId
+	 */
+	public long getShareByUserId() {
+		return shareByUserId;
+	}
+
+
+	/**
+	 * @return the shareByUserName
+	 */
+	public String getShareByUserName() {			
+		return shareByUserName;
+	}
+
+	
 }

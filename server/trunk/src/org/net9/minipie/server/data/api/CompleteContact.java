@@ -21,14 +21,18 @@ import org.net9.minipie.server.data.field.Gender;
  */
 public class CompleteContact {
 	private ContactEntity entity;
-
+	private long shareByUserId;
+	private String shareByUserName;
+	
 	/**
 	 * Constructor
 	 * 
 	 * @param entity
 	 */
-	public CompleteContact(ContactEntity entity) {
+	public CompleteContact(ContactEntity entity,long sharedId,String sharedName) {
 		this.entity = entity;
+		this.shareByUserId=sharedId;
+		this.shareByUserName=sharedName;
 	}
 
 	
@@ -132,5 +136,17 @@ public class CompleteContact {
 	public Collection<URLData> getUrls() {
 		return entity.getUrls();
 	}
-
+	
+	/**
+	 * @return the shareByUserId
+	 */
+	public long getShareByUserId() {
+		return shareByUserId;
+	}
+	/**
+	 * @return the shareByUserName
+	 */
+	public String getShareByUserName() {
+		return shareByUserName;
+	}
 }
