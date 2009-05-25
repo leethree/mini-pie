@@ -25,6 +25,6 @@ public interface User_UserStorage {
 	//��l��:user
 	public Collection<CommonListEntry> selectSharedUser(Long userId,Permission permission); 
 	public Collection<UserRelation> selectMyUserContact(Long id);
-	public Collection<Long> selectSameContact(Long userId1,Long userId2);
+	//public Collection<Long> selectSameContact(Long userId1,Long userId2);
 	
 }

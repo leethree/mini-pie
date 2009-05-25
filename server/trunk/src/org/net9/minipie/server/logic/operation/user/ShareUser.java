@@ -5,6 +5,9 @@
  */
 package org.net9.minipie.server.logic.operation.user;
 
+import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.logic.operation.Command;
 
 /**
@@ -12,13 +15,26 @@ import org.net9.minipie.server.logic.operation.Command;
  *
  */
 public class ShareUser extends Command<Void> {
-
+	private long userId;
+	private long targetId;
+	
+	public ShareUser(long userId, long targetId) {
+		this.userId = userId;
+		try {
+			this.targetId = Formatter.checkId(targetId);
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException(e);
+		}
+		if (userId == targetId) {
+			throw new InvalidRequestException("Share oneself is not allow in this method.");
+		}
+	}
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
 	@Override
 	public Void execute() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
