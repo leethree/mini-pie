@@ -54,6 +54,7 @@ public class ViewMyUserContact extends Command<PhonebookCompleteUser> {
 		UserStorage executor = getStorageFactory().getUserStorage();
 		User_UserStorage executor2 = getStorageFactory().getUser_UserStorage();
 		Tag_UserStorage executor3 = getStorageFactory().getTag_UserStorage();
+		
 		UserEntity user = executor.selectBasicInfo(targetId).getEntity();
 		String rel;
 		try {
@@ -62,7 +63,7 @@ public class ViewMyUserContact extends Command<PhonebookCompleteUser> {
 			throw new PermissionDeniedException("User with id " + targetId
 					+ " is not your user contact.");
 		}
-		executor.selectBasicInfo(targetId);
+				
 		if (user.getGenderPermission() == Permission.TO_SELF)
 			user.setGender(null);
 		if (user.getBirthyearPermission() == Permission.TO_SELF) {
@@ -70,16 +71,17 @@ public class ViewMyUserContact extends Command<PhonebookCompleteUser> {
 		}
 		if (user.getBirthdatePermission() == Permission.TO_SELF)
 			user.setBirthday(null);
+		
 		if (rel != null)
-			user.setRelationship(new Relationships(rel));
-
+			user.setRelationship(new Relationships(rel));		
+		user.setPermission(executor2.selectPermission(userId, targetId));
+		
 		Collection<AddressData> addrs = executor.selectAddr(targetId);
 		for (AddressData t : addrs)
 			if (t.getPermission() == Permission.TO_SELF)
-				addrs.remove(t);
-		// addrs.addAll();
+				addrs.remove(t);		
 		user.setAddrs(addrs);
-
+		
 		Collection<EmailData> emails = executor.selectEmail(targetId);
 		for (EmailData t : emails)
 			if (t.getPermission() == Permission.TO_SELF)
