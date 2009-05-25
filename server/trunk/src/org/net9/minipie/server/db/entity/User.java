@@ -22,15 +22,15 @@ public class User{
 	@GeneratedValue
 	@Column(name = "USER_ID")
 	private Long id;
-	@Column(name = "USERNAME")
+	@Column(name = "USERNAME", nullable = false, unique = true)
 	private String userName;
-	@Column(name = "PASSWORD")
+	@Column(name = "PASSWORD", nullable = false)
 	private String password;
-	@Column(name = "REG_EMAIL")
+	@Column(name = "REG_EMAIL", nullable = false)
 	private String registerEmail;
-	@Column(name = "ADD_AS_CONTACT_PERMISSION")
+	@Column(name = "ADD_AS_CONTACT_PERMISSION", nullable = false)
 	private AddAsContactPermission perm;
-	@Column(name = "NAME_TO_DISPLAY")
+	@Column(name = "NAME_TO_DISPLAY", nullable = false)
 	private String displayName;
 	@Column(name = "NICKNAME")
 	private String nickName;

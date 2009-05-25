@@ -20,7 +20,7 @@ public class ContactEmail {
 	@ManyToOne
 	@JoinColumn(name = "CONTACT_ID")
 	private Contact contact;
-	@Column(name = "EMAIL")
+	@Column(name = "EMAIL", nullable =false)
 	private String value;
 	@Column(name = "EMAIL_TYPE")
 	private String type;

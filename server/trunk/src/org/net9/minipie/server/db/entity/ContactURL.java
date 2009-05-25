@@ -21,7 +21,7 @@ public class ContactURL {
 	@ManyToOne
 	@JoinColumn(name = "CONTACT_ID")
 	private Contact contact;
-	@Column(name = "URL")
+	@Column(name = "URL", nullable = false)
 	private String value;
 	@Column(name = "URL_TYPE")
 	private String type;

@@ -21,13 +21,13 @@ public class UserIM {
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
 	private User user;
-	@Column(name = "IM_VALUE")
+	@Column(name = "IM_VALUE", nullable = false)
 	private String value;
 	@Column(name = "IM_TYPE")
 	private String type;
 	@Column(name = "IS_PRIMARY")
 	private Bool primary;
-	@Column(name = "PERM")
+	@Column(name = "PERM", nullable = false)
 	private Permission perm;
 	public Long getId() {
 		return id;

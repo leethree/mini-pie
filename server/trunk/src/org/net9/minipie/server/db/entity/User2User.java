@@ -43,9 +43,9 @@ public class User2User {
 	}
 	@EmbeddedId
 	private Id id = new Id();
-	@Column(name = "LEFT_PERM")
+	@Column(name = "LEFT_PERM", nullable = false)
 	private Permission left;
-	@Column(name = "RIGHT_PERM")
+	@Column(name = "RIGHT_PERM", nullable = false)
 	private Permission right;
 	@ManyToOne
 	@JoinColumn(name = "user1_ID",

@@ -21,13 +21,13 @@ public class UserEmail {
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
 	private User user;
-	@Column(name = "EMAIL")
+	@Column(name = "EMAIL", nullable = false)
 	private String value;
 	@Column(name = "EMAIL_TYPE")
 	private String type;
 	@Column(name = "IS_PRIMARY")
 	private Bool primary;
-	@Column(name = "PERM")
+	@Column(name = "PERM", nullable = false)
 	private Permission perm;
 	public Long getId() {
 		return id;

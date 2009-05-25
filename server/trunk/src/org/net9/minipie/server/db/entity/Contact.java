@@ -23,9 +23,9 @@ public class Contact {
 	@GeneratedValue
 	@Column(name = "CONTACT_ID")
 	private Long id;
-	@Column(name = "PERMISSION")
+	@Column(name = "PERMISSION", nullable = false)
 	private Permission permission;
-	@Column(name = "NAME")
+	@Column(name = "NAME", nullable = false)
 	private String name;
 	@Column(name = "IMAGE")
 	private String image;

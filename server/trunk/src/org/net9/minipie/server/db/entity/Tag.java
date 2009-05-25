@@ -26,7 +26,7 @@ public class Tag {
 	@JoinColumn(name = "OWNER_ID")
 	private User owner;
 	
-	@Column(name = "TAG_NAME")
+	@Column(name = "TAG_NAME", nullable = false)
 	private String tagName;
 	
 	@OneToMany(mappedBy = "tag", cascade = CascadeType.REMOVE)

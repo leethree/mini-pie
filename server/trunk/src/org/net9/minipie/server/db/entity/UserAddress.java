@@ -23,13 +23,13 @@ public class UserAddress {
 	private User user;
 	@Column(name = "ADDRESS_TYPE")
 	private String type;
-	@Column(name = "FORMATTED")
+	@Column(name = "FORMATTED", nullable = false)
 	private String formatted;
 	@Column(name = "ZIP")
 	private String zipcode;
 	@Column(name = "IS_PRIMARY")
 	private Bool primary;
-	@Column(name = "PERM")
+	@Column(name = "PERM", nullable = false)
 	private Permission perm;
 	
 	public Long getId() {

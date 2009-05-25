@@ -21,13 +21,13 @@ public class UserURL {
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
 	private User user;
-	@Column(name = "URL")
+	@Column(name = "URL", nullable = false)
 	private String value;
 	@Column(name = "URL_TYPE")
 	private String type;
 	@Column(name = "IS_PRIMARY")
 	private Bool primary;
-	@Column(name = "PERM")
+	@Column(name = "PERM", nullable = false)
 	private Permission perm;
 	public Long getId() {
 		return id;

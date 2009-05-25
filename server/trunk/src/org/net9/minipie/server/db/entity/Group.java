@@ -21,7 +21,7 @@ public class Group {
 	@GeneratedValue
 	@Column(name = "GROUP_ID")
 	private Long id;
-	@Column(name = "GROUP_NAME")
+	@Column(name = "GROUP_NAME", nullable =false)
 	private String groupName;
 	@Column(name = "CREATOR_NAME")
 	private String creatorName;
@@ -29,7 +29,7 @@ public class Group {
 	private Long creatorId;
 	@Column(name = "CREATED_DATE")
 	private Date createdDate = new Date();
-	@Column(name = "PERMISSION")
+	@Column(name = "PERMISSION", nullable = false)
 	private Permission perm;
 	@Column(name = "DESCRIPTION")
 	private String description;

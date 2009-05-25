@@ -21,13 +21,13 @@ public class UserPhoneNo {
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
 	private User user;
-	@Column(name = "PHONE_NO")
+	@Column(name = "PHONE_NO", nullable = false)
 	private String value;
 	@Column(name = "PHONE_TYPE")
 	private String type;
 	@Column(name = "IS_PRIMARY")
 	private Bool primary;
-	@Column(name = "PERM")
+	@Column(name = "PERM", nullable = false)
 	private Permission perm;
 	public Long getId() {
 		return id;

@@ -21,7 +21,7 @@ public class ContactPhoneNo {
 	@ManyToOne
 	@JoinColumn(name = "CONTACT_ID")
 	private Contact contact;
-	@Column(name = "PHONE_NO")
+	@Column(name = "PHONE_NO", nullable = false)
 	private String value;
 	@Column(name = "PHONE_TYPE")
 	private String type;
