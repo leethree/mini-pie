@@ -31,5 +31,6 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib"/>
 	<classpathentry kind="lib" path="lib/catalina.jar"/>
 	<classpathentry kind="lib" path="lib/MiniPieRealm.jar"/>
+	<classpathentry kind="lib" path="lib/MiniPieAuth.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

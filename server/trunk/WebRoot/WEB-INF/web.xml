@@ -17,8 +17,8 @@
  <security-constraint>
   <display-name>Mini-Pie Authentification</display-name>
   <web-resource-collection>
-   <web-resource-name>All resource</web-resource-name>
-   <url-pattern>/*</url-pattern>
+   <web-resource-name>All Service</web-resource-name>
+   <url-pattern>/services/*</url-pattern>
    <http-method>GET</http-method>
    <http-method>POST</http-method>
    <http-method>PUT</http-method>
@@ -35,8 +35,8 @@
   </user-data-constraint>
  </security-constraint>
  <login-config>
-  <auth-method>DIGEST</auth-method>
-  <realm-name>Mini-Pie</realm-name>
+  <auth-method>BASIC</auth-method>
+  <realm-name>MiniPie</realm-name>
  </login-config>
  <security-role>
   <role-name>admin</role-name>
