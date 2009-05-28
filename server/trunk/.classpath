@@ -27,10 +27,5 @@
 	<classpathentry kind="lib" path="lib/JAXB with Json/jackson-asl-0.9.4.jar"/>
 	<classpathentry kind="lib" path="lib/JAXB with Json/jettison-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/JAXB with Json/jaxb-impl-2.1.11.jar"/>
-	<classpathentry kind="lib" path="lib"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib"/>
-	<classpathentry kind="lib" path="lib/catalina.jar"/>
-	<classpathentry kind="lib" path="lib/MiniPieRealm.jar"/>
-	<classpathentry kind="lib" path="lib/MiniPieAuth.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
