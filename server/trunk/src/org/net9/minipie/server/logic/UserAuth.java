@@ -1,5 +1,5 @@
 /**
- * IllegalUser.java
+ * UserAuth.java
  *     in package: * org.net9.minipie.server.logic
  * by Mini-Pie Project
  */
@@ -11,44 +11,29 @@ import org.net9.minipie.server.logic.storage.UserStorage;
 
 /**
  * @author Seastar
- *
+ * 
  */
 public class UserAuth {
 	private String name;
 	private String pwd;
+
 	/**
 	 * Constructor
+	 * 
 	 * @param name
 	 * @param pwd
 	 */
 	public UserAuth(String name, String pwd) {
-		super();
 		this.name = name;
 		this.pwd = pwd;
-	}	
-	
-	public UserAuth(String name){
-		super();
-		this.name=name;
 	}
-	
-	public String getPassword(){
-		UserStorage executor=new HibernateDAOFactory().getUserStorage();
+
+	public long islegalUser() {
+		UserStorage executor = new HibernateDAOFactory().getUserStorage();
 		try {
-			return executor.selectUserPassword(name);
-		}catch (NotFoundException e){
-			return null;
-		}
-		
-	}
-	public long islegalUser(){
-		UserStorage executor=new HibernateDAOFactory().getUserStorage();
-		try{
 			return executor.selectLegalUser(name, pwd);
-		}catch (NotFoundException e){
+		} catch (NotFoundException e) {
 			return -1;
 		}
-		//return false;
 	}
-	
 }
