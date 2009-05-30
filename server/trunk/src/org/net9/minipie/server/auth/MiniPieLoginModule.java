@@ -5,24 +5,23 @@
  */
 package org.net9.minipie.server.auth;
 
-/**
- * @author ºî½Ü
- *
- */
-
 import java.util.*;
-import java.io.IOException;
+
 import javax.security.auth.*;
 import javax.security.auth.callback.*;
 import javax.security.auth.login.*;
 import javax.security.auth.spi.*;
 
-public class MiniPieLoginModule implements LoginModule{
+import org.net9.minipie.server.logic.UserAuth;
+
+/**
+ * @author SoulCircus, LeeThree
+ * 
+ */
+public class MiniPieLoginModule implements LoginModule {
 	// initial state
 	private Subject subject;
 	private CallbackHandler callbackHandler;
-	private Map sharedState;
-	private Map options;
 
 	// configurable option
 	private boolean debug = false;
@@ -34,24 +33,17 @@ public class MiniPieLoginModule implements LoginModule{
 	// username and password
 	private String username;
 	private char[] password;
+	private long id;
 
-	// testUser's MiniPieUserPrincipal
-	private MiniPieUserPrincipal userPrincipal;
+	// user's principals
+	private MiniPieUser userPrincipal;
 
-	
 	public void initialize(Subject subject, CallbackHandler callbackHandler,
-			Map sharedState, Map options) {
-
+			Map<String, ?> sharedState, Map<String, ?> options) {
 		this.subject = subject;
 		this.callbackHandler = callbackHandler;
-		this.sharedState = sharedState;
-		this.options = options;
-
-		// initialize any configured options
-		debug = "true".equalsIgnoreCase((String) options.get("debug"));
 	}
 
-	
 	public boolean login() throws LoginException {
 
 		// prompt for a user name and password
@@ -95,46 +87,24 @@ public class MiniPieLoginModule implements LoginModule{
 			System.out.println();
 		}
 
-		// verify the username/password
-		boolean usernameCorrect = false;
-		boolean passwordCorrect = false;
-		if (username.equals("testUser"))
-			usernameCorrect = true;
-		if (usernameCorrect && password.length == 12 && password[0] == 't'
-				&& password[1] == 'e' && password[2] == 's'
-				&& password[3] == 't' && password[4] == 'P'
-				&& password[5] == 'a' && password[6] == 's'
-				&& password[7] == 's' && password[8] == 'w'
-				&& password[9] == 'o' && password[10] == 'r'
-				&& password[11] == 'd') {
+		String passStr = new String(password);
 
-			// authentication succeeded!!!
-			passwordCorrect = true;
+		// verify the username/password
+		UserAuth auth = new UserAuth(username, passStr);
+		id = auth.getUserId();
+
+		if (id <= 0) {
 			if (debug)
-				System.out.println("\t\t[SampleLoginModule] "
-						+ "authentication succeeded");
+				System.out.println("\t\t[MiniPieLoginModule] "
+						+ "authentication failed");
+			clear();
+			throw new FailedLoginException("Incorrect user name or password.");
+		} else {
 			succeeded = true;
 			return true;
-		} else {
-
-			// authentication failed -- clean out state
-			if (debug)
-				System.out.println("\t\t[SampleLoginModule] "
-						+ "authentication failed");
-			succeeded = false;
-			username = null;
-			for (int i = 0; i < password.length; i++)
-				password[i] = ' ';
-			password = null;
-			if (!usernameCorrect) {
-				throw new FailedLoginException("User Name Incorrect");
-			} else {
-				throw new FailedLoginException("Password Incorrect");
-			}
 		}
 	}
 
-	
 	public boolean commit() throws LoginException {
 		if (succeeded == false) {
 			return false;
@@ -142,42 +112,33 @@ public class MiniPieLoginModule implements LoginModule{
 			// add a Principal (authenticated identity)
 			// to the Subject
 
-			// assume the user we authenticated is the MiniPieUserPrincipal
-			userPrincipal = new MiniPieUserPrincipal(username);
+			userPrincipal = new MiniPieUser(username, id);
 			if (!subject.getPrincipals().contains(userPrincipal)) {
 				subject.getPrincipals().add(userPrincipal);
-				subject.getPrincipals().add(new MiniPieRolePrincipal("admin"));
+
+			}
+			if (!subject.getPrincipals().contains(MiniPieRole.MINIPIE_USER)) {
+				subject.getPrincipals().add(MiniPieRole.MINIPIE_USER);
 			}
 			if (debug) {
-				System.out.println("\t\t[SampleLoginModule] "
-						+ "added MiniPieUserPrincipal to Subject");
+				System.out.println("\t\t[MiniPieLoginModule] "
+						+ "added MiniPieUser to Subject");
 			}
 
 			// in any case, clean out state
-			username = null;
-			for (int i = 0; i < password.length; i++)
-				password[i] = ' ';
-			password = null;
-
+			clear();
+			succeeded = true;
 			commitSucceeded = true;
 			return true;
 		}
 	}
 
-	
 	public boolean abort() throws LoginException {
 		if (succeeded == false) {
 			return false;
 		} else if (succeeded == true && commitSucceeded == false) {
 			// login succeeded but overall authentication failed
-			succeeded = false;
-			username = null;
-			if (password != null) {
-				for (int i = 0; i < password.length; i++)
-					password[i] = ' ';
-				password = null;
-			}
-			userPrincipal = null;
+			clear();
 		} else {
 			// overall authentication succeeded and commit succeeded,
 			// but someone else's commit failed
@@ -186,12 +147,16 @@ public class MiniPieLoginModule implements LoginModule{
 		return true;
 	}
 
-	
 	public boolean logout() throws LoginException {
-
 		subject.getPrincipals().remove(userPrincipal);
-		succeeded = false;
+		subject.getPrincipals().remove(MiniPieRole.MINIPIE_USER);
+		clear();
 		succeeded = commitSucceeded;
+		return true;
+	}
+
+	private void clear() {
+		succeeded = false;
 		username = null;
 		if (password != null) {
 			for (int i = 0; i < password.length; i++)
@@ -199,6 +164,5 @@ public class MiniPieLoginModule implements LoginModule{
 			password = null;
 		}
 		userPrincipal = null;
-		return true;
 	}
 }

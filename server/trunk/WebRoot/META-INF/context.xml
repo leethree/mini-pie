@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context path="/Mini-Pie" >
+	<WatchedResource>WEB-INF/web.xml</WatchedResource>
+	<Realm className="org.apache.catalina.realm.JAASRealm" appName="Mini-Pie"
+		userClassNames="org.net9.minipie.server.auth.MiniPieUser"
+		roleClassNames="org.net9.minipie.server.auth.MiniPieRole" />
+</Context>

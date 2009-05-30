@@ -28,7 +28,7 @@ public class UserAuth {
 		this.pwd = pwd;
 	}
 
-	public long islegalUser() {
+	public long getUserId() {
 		UserStorage executor = new HibernateDAOFactory().getUserStorage();
 		try {
 			return executor.selectLegalUser(name, pwd);
