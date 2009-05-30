@@ -15,7 +15,7 @@
   <welcome-file>index.jsp</welcome-file>
  </welcome-file-list>
  <security-constraint>
-  <display-name>Mini-Pie Authentication</display-name>
+  <display-name>Mini-Pie API Authentication</display-name>
   <web-resource-collection>
    <web-resource-name>Mini-Pie RESTful Services</web-resource-name>
    <url-pattern>/services/*</url-pattern>
@@ -36,7 +36,7 @@
  </security-constraint>
  <login-config>
   <auth-method>BASIC</auth-method>
-  <realm-name>JAASRealm</realm-name>
+  <realm-name>Mini-Pie API Authentication</realm-name>
  </login-config>
  <security-role>
   <role-name>MiniPieUser</role-name>

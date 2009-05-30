@@ -1,4 +1,5 @@
-Deployment:
+Mini-Pie Deployment Guide:
+update 5/30/2009
 
 要配置认证，需要将minipie-jaas.config文件复制到Tomcat安装目录的conf文件夹中，并在Tomcat启动时的JVM参数中加上：
 
@@ -41,3 +42,5 @@ password: 566753
       id: 6
 username: ajdin
 password: 1234456`
+
+如果数据库中没有上述用户，还需要执行数据库脚本db_script_new.sql。
