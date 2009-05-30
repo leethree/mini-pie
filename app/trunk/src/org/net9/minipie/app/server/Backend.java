@@ -12,10 +12,12 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.net9.minipie.app.client.data.PersonBean;
 import org.net9.minipie.app.client.exception.GenericException;
+import org.net9.minipie.app.client.exception.LoginFailedException;
 import org.net9.minipie.app.server.util.CredentialEncoder;
 import org.net9.minipie.app.server.xml.PersonBeanImpl;
 
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
@@ -37,15 +39,19 @@ public class Backend {
 		ClientConfig config = new DefaultClientConfig();
 		client = Client.create(config);
 		rootResource = client.resource(SERVICE_ROOT_URL);
-		//getProfile();
+		// getProfile();
 	}
 
-	public PersonBean getProfile() throws GenericException {
+	public PersonBean getProfile() throws GenericException, LoginFailedException {
 		try {
 			InputStream stream = getXml("profile");
 			Document doc = new SAXReader().read(stream);
 			Element ele = doc.getRootElement();
 			return new PersonBeanImpl(ele).getBean();
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
 		} catch (Exception e) {
 			throw new GenericException(e);
 		}

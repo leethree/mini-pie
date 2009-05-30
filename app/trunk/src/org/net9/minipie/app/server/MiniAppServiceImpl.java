@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.net9.minipie.app.client.MiniAppService;
 import org.net9.minipie.app.client.exception.GenericException;
+import org.net9.minipie.app.client.exception.LoginFailedException;
 import org.net9.minipie.app.client.exception.LoginRequiredException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -31,7 +32,8 @@ public class MiniAppServiceImpl extends RemoteServiceServlet implements
 		return true;
 	}
 
-	public void login(String username, String password) throws GenericException {
+	public void login(String username, String password)
+			throws LoginFailedException, GenericException {
 		if (!isLoggedIn()) {
 			getHttpSession().setAttribute(SESSION_KEY,
 					new Session(username, password));

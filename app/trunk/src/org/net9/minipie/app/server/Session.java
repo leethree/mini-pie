@@ -10,6 +10,7 @@ import java.util.Map;
 import org.net9.minipie.app.client.data.PersonBean;
 import org.net9.minipie.app.client.data.TagBean;
 import org.net9.minipie.app.client.exception.GenericException;
+import org.net9.minipie.app.client.exception.LoginFailedException;
 
 /**
  * @author LeeThree
@@ -25,7 +26,7 @@ public class Session {
 	private Collection<PersonBean> contactList;
 	private Collection<TagBean> tagList;
 
-	public Session(String username, String password) throws GenericException {
+	public Session(String username, String password) throws GenericException, LoginFailedException {
 		backend = new Backend(username, password);
 		userContacts = new HashMap<Long, PersonBean>();
 		contacts = new HashMap<Long, PersonBean>();
@@ -55,7 +56,7 @@ public class Session {
 		return user;
 	}
 
-	private void initialize() throws GenericException {
+	private void initialize() throws GenericException, LoginFailedException {
 		profile = backend.getProfile();
 		// TODO
 	}

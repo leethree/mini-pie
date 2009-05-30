@@ -7,4 +7,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface MiniAppServiceAsync {
 	void greetServer(String input, AsyncCallback<String> callback);
+
+	void isLoggedIn(AsyncCallback<Boolean> callback);
+
+	void login(String username, String password, AsyncCallback<Void> callback);
+
+	void logout(AsyncCallback<Void> callback);
 }

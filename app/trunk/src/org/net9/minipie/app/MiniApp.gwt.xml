@@ -9,5 +9,5 @@
 
   <!-- Specify the app entry point class.                         -->
 <!--  <entry-point class='org.net9.minipie.app.client.MiniApp'/>-->
-  <entry-point class='org.net9.minipie.app.client.Explorer'/>
+  <entry-point class='org.net9.minipie.app.client.MiniApp'/>
 </module>
