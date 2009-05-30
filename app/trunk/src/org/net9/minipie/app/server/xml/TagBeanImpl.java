@@ -4,8 +4,8 @@
 package org.net9.minipie.app.server.xml;
 
 import org.dom4j.Element;
-import org.net9.minipie.app.client.xml.Bean;
-import org.net9.minipie.app.client.xml.TagBean;
+import org.net9.minipie.app.client.data.Bean;
+import org.net9.minipie.app.client.data.TagBean;
 
 /**
  * @author LeeThree

@@ -7,9 +7,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.net9.minipie.app.client.data.PersonBean;
+import org.net9.minipie.app.client.data.TagBean;
 import org.net9.minipie.app.client.exception.GenericException;
-import org.net9.minipie.app.client.xml.TagBean;
-import org.net9.minipie.app.client.xml.PersonBean;
 
 /**
  * @author LeeThree

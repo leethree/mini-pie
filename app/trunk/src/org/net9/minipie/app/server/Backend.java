@@ -10,8 +10,8 @@ import javax.ws.rs.core.MediaType;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.net9.minipie.app.client.data.PersonBean;
 import org.net9.minipie.app.client.exception.GenericException;
-import org.net9.minipie.app.client.xml.PersonBean;
 import org.net9.minipie.app.server.util.CredentialEncoder;
 import org.net9.minipie.app.server.xml.PersonBeanImpl;
 

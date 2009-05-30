@@ -5,9 +5,9 @@ package org.net9.minipie.app.server;
 
 import java.util.UUID;
 
-import org.net9.minipie.app.client.xml.GenericBean;
-import org.net9.minipie.app.client.xml.TagBean;
-import org.net9.minipie.app.client.xml.PersonBean;
+import org.net9.minipie.app.client.data.GenericBean;
+import org.net9.minipie.app.client.data.PersonBean;
+import org.net9.minipie.app.client.data.TagBean;
 
 /**
  * @author LeeThree

@@ -5,7 +5,7 @@ package org.net9.minipie.app.server.xml;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
-import org.net9.minipie.app.client.xml.PersonBean;
+import org.net9.minipie.app.client.data.PersonBean;
 
 /**
  * @author LeeThree
