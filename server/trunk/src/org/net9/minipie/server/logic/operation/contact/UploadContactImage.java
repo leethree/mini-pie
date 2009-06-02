@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+
 import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.exception.InvalidRequestException;
@@ -20,25 +22,27 @@ import org.net9.minipie.server.logic.storage.ContactStorage;
 
 /**
  * @author Seastar
- *
+ * 
  */
-public class UploadContactImage extends Command<String>{
+public class UploadContactImage extends Command<String> {
 	private Long contactId;
 	private Long userId;
 	private InputStream in;
 	private String filePath;
-	private String urlPath;
+	private URI urlPath;
 	private String fileName;
 	private String exName;
-	
-	public UploadContactImage(Long userId, Long contactId,InputStream in
-			,String filePath,String urlPath,String fileName) {
+
+	public UploadContactImage(Long userId, Long contactId, InputStream in,
+			String filePath, URI urlPath, String exName) {
 		super();
 		setContactId(contactId);
 		setUserId(userId);
-		this.in=in;
-		this.filePath=filePath;
-		this.urlPath=urlPath;
+		this.in = in;
+		this.filePath = filePath;
+		this.urlPath = urlPath;
+		this.exName = exName;
+		// this.setFileName(fileName);
 	}
 
 	/**
@@ -59,16 +63,21 @@ public class UploadContactImage extends Command<String>{
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	public void setFileName(String fileName){
-		fileName=fileName.toLowerCase();
-		int i=fileName.indexOf(".");
-		if(i==-1)
+
+	public void setFileName(String fileName) {
+		fileName = fileName.toLowerCase();
+		int i = fileName.indexOf(".");
+		if (i == -1)
 			throw new InvalidRequestException("image format illegal");
-		exName=fileName.substring(i);
-		if(!exName.equals(".jpg")&&!exName.equals(".png")&&!exName.equals("gif"))
+		exName = fileName.substring(i);
+		if (!exName.equals(".jpg") && !exName.equals(".png")
+				&& !exName.equals("gif"))
 			throw new InvalidRequestException("image format illegal");
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
 	@Override
@@ -82,19 +91,20 @@ public class UploadContactImage extends Command<String>{
 			throw new NotFoundException("No contact found");
 		}
 		try {
-			fileName=userId+ "__"+contactId+exName;
-			File tempFile=new File(filePath,fileName);		
-			FileOutputStream ou=new FileOutputStream(tempFile);
+			fileName = userId + "_" + contactId + "." + exName;
+			File tempFile = new File(filePath, fileName);
+			FileOutputStream ou = new FileOutputStream(tempFile);
 			byte[] buffer = new byte[2048];
 			int byteread;
-			while ((byteread = in.read(buffer)) != -1) {				
+			while ((byteread = in.read(buffer)) != -1) {
 				ou.write(buffer, 0, byteread);
 			}
 			ou.close();
 			in.close();
-			executor.editBasicInfo(contactId, InfoField.IMAGE, urlPath+fileName);
+			executor.editBasicInfo(contactId, InfoField.IMAGE, urlPath.resolve(
+					fileName).toASCIIString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
 			throw new ServerErrorException("can't write the file");
 		}
 		return fileName;

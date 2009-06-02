@@ -22,6 +22,8 @@ import com.sun.jersey.api.core.ResourceContext;
  */
 public abstract class BaseResource {
 
+	private static final String IMAGE_FOLDER = "images/";
+
 	@Context
 	private UriInfo uriInfo;
 
@@ -43,7 +45,7 @@ public abstract class BaseResource {
 		MiniPieUser user = (MiniPieUser) security.getUserPrincipal();
 		return user.getId();
 	}
-	
+
 	protected URI getServletBaseUrl() {
 		return uriInfo.getBaseUri();
 	}
@@ -53,13 +55,17 @@ public abstract class BaseResource {
 	}
 
 	protected String getImageRealPath() {
-		return servlet.getRealPath("/images");
+		return servlet.getRealPath(IMAGE_FOLDER);
 	}
-	
+
+	protected URI getImagePathUrl() {
+		return getServerBaseUrl().resolve(IMAGE_FOLDER);
+	}
+
 	protected URI getServerBaseUrl() {
-		return getServletBaseUrl().resolve(servlet.getContextPath());
+		return getServletBaseUrl().resolve(servlet.getContextPath() + "/");
 	}
-	
+
 	public <T extends BaseResource> T getSubResource(Class<T> clazz) {
 		return resource.getResource(clazz);
 	}

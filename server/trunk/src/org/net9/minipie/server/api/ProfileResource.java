@@ -5,6 +5,9 @@
  */
 package org.net9.minipie.server.api;
 
+import java.io.InputStream;
+import java.net.URI;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -12,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import org.net9.minipie.server.api.PhonebookContactResource.ContactImageResource;
 import org.net9.minipie.server.data.api.PersonalProfile;
 import org.net9.minipie.server.data.api.StatusReportList;
 import org.net9.minipie.server.data.api.Update;
@@ -21,7 +25,9 @@ import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.Handler;
 import org.net9.minipie.server.logic.operation.MacroCommand;
 import org.net9.minipie.server.logic.operation.account.UpdateMyInfo;
+import org.net9.minipie.server.logic.operation.account.UploadMyImage;
 import org.net9.minipie.server.logic.operation.account.ViewMyInfo;
+import org.net9.minipie.server.logic.operation.contact.UploadContactImage;
 
 /**
  * @author LeeThree
@@ -70,5 +76,23 @@ public class ProfileResource extends BaseResource {
 		new Handler<Void>(new UpdateMyInfo(getUserId(), update.checkThis()))
 				.execute();
 		return Response.ok().build();
+	}
+	
+	@Path("image")
+	public ProfileImageResource getImage() {
+		ProfileImageResource resource = getSubResource(ProfileImageResource.class);
+		return resource;
+		// return new ProfileImageResource();
+	}
+
+	public class ProfileImageResource extends ImageResource {
+
+		@Override
+		public String upload(InputStream istream, String filePath, URI urlPath,
+				String contentType) {
+			return new Handler<String>(new UploadMyImage(getUserId(),
+					 istream, filePath, urlPath, contentType)).execute();
+		}
+
 	}
 }

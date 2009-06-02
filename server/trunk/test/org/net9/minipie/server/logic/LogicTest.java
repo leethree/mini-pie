@@ -5,7 +5,8 @@
  */
 package org.net9.minipie.server.logic;
 
-import org.net9.minipie.server.logic.operation.contact.AddMyContact;
+import java.net.URI;
+
 
 /**
  * @author Seastar
@@ -13,7 +14,9 @@ import org.net9.minipie.server.logic.operation.contact.AddMyContact;
  */
 public class LogicTest {
 	public static void main(String avg[]) {
-		long i = new Handler<Long>(new AddMyContact(111111L, "oo")).execute();
-		System.out.print(i);
+		//long i = new Handler<Long>(new AddMyContact(111111L, "oo")).execute();
+		//System.out.print(i);
+		
+		System.out.println(URI.create("http://localhost:8080/Mini-Pie/services/").resolve("/images"));
 	}
 }

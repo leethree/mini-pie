@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     This is my JSP page. <br>
-        <form method="post" action="services/test" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
     	<input type="file" name="fileupload"/>
     	<input type="submit" value="upload" />
     </form>
