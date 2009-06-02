@@ -379,6 +379,9 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		} else if (attribute==InfoField.RELATIONSHIP) {
 			String relationship = (String) value;
 			contact.setRelationship(relationship);
+		} else if(attribute==InfoField.IMAGE){
+			String image = (String) value;
+			contact.setImage(image);
 		}
 		cdh.begin();
 		cdh.makePersistent(contact);
