@@ -33,7 +33,7 @@ public class User{
 	@Column(name = "NAME_TO_DISPLAY", nullable = false)
 	private String displayName;
 	@Column(name = "NICKNAME")
-	private String nickName;
+	private String nickname;
 	@Column(name = "IMAGE_URL")
 	private String imageURL;
 	@Column(name = "GENDER")
@@ -47,7 +47,7 @@ public class User{
 	@Column(name = "VIEW_BIRTHDAYDAY_PERMISSION")
 	private Permission birthdayPermission;
 	@Column(name = "NOTES")
-	private String notes;
+	private String note;
 	
 	@OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@org.hibernate.annotations.Cascade(
@@ -188,16 +188,16 @@ public class User{
 		this.imageURL = imageURL;
 	}
 	public String getNickName() {
-		return nickName;
+		return nickname;
 	}
 	public void setNickName(String nickName) {
-		this.nickName = nickName;
+		this.nickname = nickName;
 	}
 	public String getNotes() {
-		return notes;
+		return note;
 	}
 	public void setNotes(String notes) {
-		this.notes = notes;
+		this.note = notes;
 	}
 	public String getPassword() {
 		return password;

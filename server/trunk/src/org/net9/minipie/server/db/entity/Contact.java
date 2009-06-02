@@ -24,19 +24,19 @@ public class Contact {
 	@Column(name = "CONTACT_ID")
 	private Long id;
 	@Column(name = "PERMISSION", nullable = false)
-	private Permission permission;
+	private Permission perm;
 	@Column(name = "NAME", nullable = false)
 	private String name;
 	@Column(name = "IMAGE")
 	private String image;
 	@Column(name = "NICKNAME")
-	private String nickName;
+	private String nickname;
 	@Column(name = "GENDER")
 	private Gender gender;
 	@Column(name = "BIRTHDAY")
 	private String birthday;
 	@Column(name = "NOTES")
-	private String notes;
+	private String note;
 	@Column(name = "RELATIONSHIP")
 	private String relationship;
 	@OneToMany(mappedBy = "contact", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -118,22 +118,22 @@ public class Contact {
 		this.name = name;
 	}
 	public String getNickName() {
-		return nickName;
+		return nickname;
 	}
 	public void setNickName(String nickName) {
-		this.nickName = nickName;
+		this.nickname = nickName;
 	}
 	public String getNotes() {
-		return notes;
+		return note;
 	}
 	public void setNotes(String notes) {
-		this.notes = notes;
+		this.note = notes;
 	}
 	public Permission getPermission() {
-		return permission;
+		return perm;
 	}
 	public void setPermission(Permission permission) {
-		this.permission = permission;
+		this.perm = permission;
 	}
 	public String getRelationship() {
 		return relationship;

@@ -1,6 +1,7 @@
 package org.net9.minipie.server.db.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,6 +19,8 @@ import org.net9.minipie.server.data.field.Gender;
 import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicUser;
+import org.net9.minipie.server.data.storage.CommonListEntry;
+import org.net9.minipie.server.data.storage.Query;
 import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.db.entity.UserAddress;
 import org.net9.minipie.server.db.entity.UserEmail;
@@ -532,6 +535,9 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			}else if(attribute==InfoField.NOTE){
 				String note = (String) value;
 				user.setNotes(note);
+			}else if(attribute==InfoField.IMAGE){
+				String imageURL = (String) value;
+				user.setImageURL(imageURL);
 			}
 			udh.begin();
 			udh.makePersistent(user);
@@ -825,6 +831,42 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		}
 		Iterator<User> iter = user.iterator();
 		return iter.next().getPassword();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.UserStorage#searchAllUser(java.util.Collection)
+	 */
+	public Collection<BasicUser> searchAllUser(Collection<Query> queries) {
+		Collection<BasicUser> searchResults = new ArrayList<BasicUser>();
+		for (Query query : queries) {
+			AllSearcher searcher = new AllSearcher(query);
+			Collection<User> users = searcher.getUsers();
+			for (User user : users) {
+				try {
+					searchResults.add(new BasicUser(user.getId().longValue(),
+							user.getUserName(), user.getRegisterEmail(), user.getPassword(),
+							user.getImageURL(), user.getNickName(), user.getDisplayName(),
+							user.getGenderPermission(), user.getBirthdayPermission(), 
+							user.getBirthyearPermission(), user.getGender(), user.getBirthday(),
+							user.getNotes(), user.getPerm()));
+				} catch (DataFormatException e) {
+					throw new ServerErrorException(e.getMessage());
+				}
+			}
+		}
+		return searchResults;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.storage.UserStorage#searchMyUserOrContact(java.lang.Long, java.util.Collection)
+	 */
+	public Collection<CommonListEntry> searchMyUserOrContact(Long userId,
+			Collection<Query> queries) {
+		Collection<CommonListEntry> searchResult = new ArrayList<CommonListEntry>();
+		for (Query query : queries) {
+			LimitedSearcher searcher = new LimitedSearcher(userId, query);
+		}
+		return null;
 	}
 
 }

@@ -6,12 +6,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.net9.minipie.server.db.dao.ContactDAOHibernate;
+import org.net9.minipie.server.db.dao.GroupDAOHibernate;
+import org.net9.minipie.server.db.dao.Group_UserDAOHibernate;
 import org.net9.minipie.server.db.dao.NotificationDAOHibernate;
 import org.net9.minipie.server.db.dao.TagDAOHibernate;
 import org.net9.minipie.server.db.dao.Tag_ContactDAOHibernate;
 import org.net9.minipie.server.db.dao.Tag_UserDAOHibernate;
 import org.net9.minipie.server.db.dao.UserDAOHibernate;
 import org.net9.minipie.server.db.dao.User_UserDAOHibernate;
+import org.net9.minipie.server.db.entity.Group;
 import org.net9.minipie.server.db.entity.Notification;
 import org.net9.minipie.server.db.entity.enums.Bool;
 import org.net9.minipie.server.data.entity.AddressData;
@@ -179,6 +182,10 @@ public class DbTest {
 				System.out.println(notif.getContent()+" "+notif.getSenderId()+" "+notif.getReceiverId());
 			}
 			System.out.println(udh.findAddressOwner(new Long(l)));
+			GroupDAOHibernate gdh = new GroupDAOHibernate();
+			Long g1Id = gdh.createGroup("firstGroup", l1);
+			Group_UserDAOHibernate gudh = new Group_UserDAOHibernate();
+			gudh.add(g1Id, l1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
