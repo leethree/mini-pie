@@ -14,6 +14,8 @@ import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.field.AddAsContactPermission;
 import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.storage.BasicUser;
+import org.net9.minipie.server.data.storage.CommonListEntry;
+import org.net9.minipie.server.data.storage.Query;
 
 
 /**
@@ -83,6 +85,7 @@ public interface UserStorage {
 	//Void setPermission(Permission perm,Long userId);
 	Void setAddAsContactPermission(AddAsContactPermission perm,Long userId);
 	Long selectLegalUser(String name,String password);
-	String selectUserPassword(String name);
-	//Collection<BasicUser> searchAllUser();
+	//String selectUserPassword(String name);
+	Collection<CommonListEntry>  searchMyUserOrContact(Long userid,Collection<Query> query);
+	Collection<BasicUser> searchAllUser(Collection<Query> query); 
 }
