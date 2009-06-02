@@ -21,6 +21,7 @@ import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicUser;
 import org.net9.minipie.server.data.storage.CommonListEntry;
 import org.net9.minipie.server.data.storage.Query;
+import org.net9.minipie.server.db.entity.Contact;
 import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.db.entity.UserAddress;
 import org.net9.minipie.server.db.entity.UserEmail;
@@ -35,7 +36,7 @@ import org.net9.minipie.server.logic.storage.UserStorage;
 
 public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		UserDAO, UserStorage {
-	
+
 	public Long add(String name, String pwd, String email) {
 		User newUser = new User();
 		newUser.setUserName(name);
@@ -48,7 +49,9 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		return id;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.db.dao.UserDAO#delAddr(java.lang.Long)
 	 */
 	public void delAddr(Long id) {
@@ -63,15 +66,19 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.db.dao.UserDAO#delAddtional(java.lang.Long)
 	 */
 	public void delAddtional(Long id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.db.dao.UserDAO#delEmail(java.lang.Long)
 	 */
 	public void delEmail(Long id) {
@@ -84,10 +91,12 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("Cannt find email item with give id");
 		}
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.db.dao.UserDAO#delIM(java.lang.Long)
 	 */
 	public void delIM(Long id) {
@@ -100,10 +109,12 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("Cannt find im item with give id");
 		}
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.db.dao.UserDAO#delTel(java.lang.Long)
 	 */
 	public void delTel(Long id) {
@@ -116,10 +127,12 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("Cannt find phone item with give id");
 		}
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.db.dao.UserDAO#delURL(java.lang.Long)
 	 */
 	public void delURL(Long id) {
@@ -132,10 +145,12 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("Cannt find url item with give id");
 		}
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.db.dao.UserDAO#selectAddr(java.lang.Long)
 	 */
 	public List<AddressData> selectAddr(Long userId) {
@@ -143,10 +158,10 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			UserAddressDAOHibernate uadh = new UserAddressDAOHibernate();
 			Criterion criterion = Restrictions.eq("user.id", userId);
 			List<UserAddress> result = uadh.findByCriteria(criterion);
-//			if(result.isEmpty()){
-//				throw new NotFoundException("There's no user with ID: "
-//						+ userId);
-//			}
+			// if(result.isEmpty()){
+			// throw new NotFoundException("There's no user with ID: "
+			// + userId);
+			// }
 			List<AddressData> selectedResult = new ArrayList<AddressData>();
 			Iterator<UserAddress> iter = result.iterator();
 			while (iter.hasNext()) {
@@ -164,34 +179,40 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			}
 			return selectedResult;
 		} catch (ObjectNotFoundException e) {
-			throw new NotFoundException("There's no user with ID: "
-					+ userId);
+			throw new NotFoundException("There's no user with ID: " + userId);
 		} catch (DataFormatException e) {
 			throw new ServerErrorException(e.getMessage());
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#selectBasicInfo(java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.db.dao.UserDAO#selectBasicInfo(java.lang.Long)
 	 */
 	public BasicUser selectBasicInfo(Long userId) {
-		try{
+		try {
 			UserDAOHibernate udh = new UserDAOHibernate();
 			User user = udh.findById(userId);
-			BasicUser result = new BasicUser(user.getId(), user.getUserName(), user.getRegisterEmail(),
-					user.getPassword(), user.getImageURL(), user.getNickName(), user.getDisplayName(),
-					user.getGenderPermission(), user.getBirthdayPermission(), user.getBirthyearPermission(),
-					user.getGender(), user.getBirthday(), user.getNotes(), user.getPerm());
+			BasicUser result = new BasicUser(user.getId(), user.getUserName(),
+					user.getRegisterEmail(), user.getPassword(), user
+							.getImageURL(), user.getNickName(), user
+							.getDisplayName(), user.getGenderPermission(), user
+							.getBirthdayPermission(), user
+							.getBirthyearPermission(), user.getGender(), user
+							.getBirthday(), user.getNotes(), user.getPerm());
 			return result;
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("There's no user with ID: "
-					+ userId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("There's no user with ID: " + userId);
 		} catch (DataFormatException e) {
 			throw new ServerErrorException(e.getMessage());
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.db.dao.UserDAO#selectEmail(java.lang.Long)
 	 */
 	public List<EmailData> selectEmail(Long userId) {
@@ -199,10 +220,11 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			UserEmailDAOHibernate uedh = new UserEmailDAOHibernate();
 			Criterion criterion = Restrictions.eq("user.id", userId);
 			List<UserEmail> result = uedh.findByCriteria(criterion);
-//			if(result.isEmpty()){
-//				throw new NotFoundException("There's no email whose owner has ID: "
-//						+ userId);
-//			}
+			// if(result.isEmpty()){
+			// throw new
+			// NotFoundException("There's no email whose owner has ID: "
+			// + userId);
+			// }
 			List<EmailData> selectedResult = new ArrayList<EmailData>();
 			Iterator<UserEmail> iter = result.iterator();
 			while (iter.hasNext()) {
@@ -220,14 +242,15 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			}
 			return selectedResult;
 		} catch (ObjectNotFoundException e) {
-			throw new NotFoundException("There's no user with ID: "
-					+ userId);
+			throw new NotFoundException("There's no user with ID: " + userId);
 		} catch (DataFormatException e) {
 			throw new ServerErrorException(e.getMessage());
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.db.dao.UserDAO#selectIM(java.lang.Long)
 	 */
 	public List<IMData> selectIM(Long userId) {
@@ -235,10 +258,10 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			UserIMDAOHibernate uidh = new UserIMDAOHibernate();
 			Criterion criterion = Restrictions.eq("user.id", userId);
 			List<UserIM> result = uidh.findByCriteria(criterion);
-//			if(result.isEmpty()){
-//				throw new NotFoundException("There's no im whose owner has ID: "
-//						+ userId);
-//			}
+			// if(result.isEmpty()){
+			// throw new NotFoundException("There's no im whose owner has ID: "
+			// + userId);
+			// }
 			List<IMData> selectedResult = new ArrayList<IMData>();
 			Iterator<UserIM> iter = result.iterator();
 			while (iter.hasNext()) {
@@ -256,14 +279,15 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			}
 			return selectedResult;
 		} catch (ObjectNotFoundException e) {
-			throw new NotFoundException("There's no user with ID: "
-					+ userId);
+			throw new NotFoundException("There's no user with ID: " + userId);
 		} catch (DataFormatException e) {
 			throw new ServerErrorException(e.getMessage());
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.db.dao.UserDAO#selectTel(java.lang.Long)
 	 */
 	public List<PhoneNoData> selectTel(Long userId) {
@@ -271,10 +295,11 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			UserPhoneDAOHibernate updh = new UserPhoneDAOHibernate();
 			Criterion criterion = Restrictions.eq("user.id", userId);
 			List<UserPhoneNo> result = updh.findByCriteria(criterion);
-//			if(result.isEmpty()){
-//				throw new NotFoundException("There's no phone whose owner has ID: "
-//						+ userId);
-//			}
+			// if(result.isEmpty()){
+			// throw new
+			// NotFoundException("There's no phone whose owner has ID: "
+			// + userId);
+			// }
 			List<PhoneNoData> selectedResult = new ArrayList<PhoneNoData>();
 			Iterator<UserPhoneNo> iter = result.iterator();
 			while (iter.hasNext()) {
@@ -292,14 +317,15 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			}
 			return selectedResult;
 		} catch (ObjectNotFoundException e) {
-			throw new NotFoundException("There's no user with ID: "
-					+ userId);
+			throw new NotFoundException("There's no user with ID: " + userId);
 		} catch (DataFormatException e) {
 			throw new ServerErrorException(e.getMessage());
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.db.dao.UserDAO#selectURL(java.lang.Long)
 	 */
 	public List<URLData> selectURL(Long userId) {
@@ -307,10 +333,10 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			UserURLDAOHibernate uudh = new UserURLDAOHibernate();
 			Criterion criterion = Restrictions.eq("user.id", userId);
 			List<UserURL> result = uudh.findByCriteria(criterion);
-//			if(result.isEmpty()){
-//				throw new NotFoundException("There's no url whose owner has ID: "
-//						+ userId);
-//			}
+			// if(result.isEmpty()){
+			// throw new NotFoundException("There's no url whose owner has ID: "
+			// + userId);
+			// }
 			List<URLData> selectedResult = new ArrayList<URLData>();
 			Iterator<UserURL> iter = result.iterator();
 			while (iter.hasNext()) {
@@ -328,15 +354,18 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			}
 			return selectedResult;
 		} catch (ObjectNotFoundException e) {
-			throw new NotFoundException("There's no contact with ID: "
-					+ userId);
+			throw new NotFoundException("There's no contact with ID: " + userId);
 		} catch (DataFormatException e) {
 			throw new ServerErrorException(e.getMessage());
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#addAddr(java.lang.Long, org.net9.minipie.server.data.entity.AddressData)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#addAddr(java.lang.Long,
+	 * org.net9.minipie.server.data.entity.AddressData)
 	 */
 	public Long addAddr(Long userId, AddressData addressData) {
 		User user = findById(userId);
@@ -360,8 +389,12 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		return id;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#addEmail(java.lang.Long, org.net9.minipie.server.data.entity.EmailData)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#addEmail(java.lang.
+	 * Long, org.net9.minipie.server.data.entity.EmailData)
 	 */
 	public Long addEmail(Long userId, EmailData emailData) {
 		User user = findById(userId);
@@ -385,8 +418,12 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		return id;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#addIM(java.lang.Long, org.net9.minipie.server.data.entity.IMData)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#addIM(java.lang.Long,
+	 * org.net9.minipie.server.data.entity.IMData)
 	 */
 	public Long addIM(Long userId, IMData imData) {
 		User user = findById(userId);
@@ -410,8 +447,12 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		return id;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#addTel(java.lang.Long, org.net9.minipie.server.data.entity.PhoneNoData)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#addTel(java.lang.Long,
+	 * org.net9.minipie.server.data.entity.PhoneNoData)
 	 */
 	public Long addTel(Long userId, PhoneNoData phoneNoData) {
 		User user = findById(userId);
@@ -435,8 +476,12 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		return id;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#addURL(java.lang.Long, org.net9.minipie.server.data.entity.URLData)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#addURL(java.lang.Long,
+	 * org.net9.minipie.server.data.entity.URLData)
 	 */
 	public Long addURL(Long userId, URLData urlData) {
 		User user = findById(userId);
@@ -464,8 +509,12 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		return id;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#editAddr(java.lang.Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#editAddr(java.lang.
+	 * Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
 	public void editAddr(Long id, InfoField attribute, Object value) {
 		UserAddressDAOHibernate uadh = new UserAddressDAOHibernate();
@@ -476,16 +525,16 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			throw new NotFoundException("Cannt find address " + attribute
 					+ " item with give id");
 		}
-		if (attribute==InfoField.VALUE) {
+		if (attribute == InfoField.VALUE) {
 			String addr = (String) value;
 			userAddr.setFormatted(addr);
-		} else if (attribute==InfoField.TYPE) {
+		} else if (attribute == InfoField.TYPE) {
 			String type = (String) value;
 			userAddr.setType(type);
-		} else if (attribute==InfoField.PRIMARY) {
+		} else if (attribute == InfoField.PRIMARY) {
 			Bool primary = (Bool) value;
 			userAddr.setPrimary(primary);
-		} else if(attribute==InfoField.PERMISSION){
+		} else if (attribute == InfoField.PERMISSION) {
 			Permission perm = (Permission) value;
 			userAddr.setPerm(perm);
 		}
@@ -494,63 +543,72 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		uadh.commit();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#editBasicInfo(java.lang.Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#editBasicInfo(java.
+	 * lang.Long, org.net9.minipie.server.data.field.InfoField,
+	 * java.lang.Object)
 	 */
 	public void editBasicInfo(Long userId, InfoField attribute, Object value) {
 		UserDAOHibernate udh = new UserDAOHibernate();
 		User user = null;
-		try{
+		try {
 			user = udh.findById(userId);
-			if(attribute==InfoField.NAME){
+			if (attribute == InfoField.NAME) {
 				String userName = (String) value;
 				user.setUserName(userName);
-			}else if(attribute==InfoField.REGISTEREMAIL){
+			} else if (attribute == InfoField.REGISTEREMAIL) {
 				String registerEmail = (String) value;
 				user.setRegisterEmail(registerEmail);
-			}else if(attribute==InfoField.PASSWORD){
+			} else if (attribute == InfoField.PASSWORD) {
 				String password = (String) value;
 				user.setPassword(password);
-			}else if(attribute==InfoField.NICKNAME){
+			} else if (attribute == InfoField.NICKNAME) {
 				String nickname = (String) value;
 				user.setNickName(nickname);
-			}else if(attribute==InfoField.DISPLAYNAME){
-				String displayName = (String)value;
+			} else if (attribute == InfoField.DISPLAYNAME) {
+				String displayName = (String) value;
 				user.setDisplayName(displayName);
-			}else if(attribute==InfoField.GENDERPERMISSION){
+			} else if (attribute == InfoField.GENDERPERMISSION) {
 				Permission gPerm = (Permission) value;
 				user.setGenderPermission(gPerm);
-			}else if(attribute==InfoField.BIRTHDAYPERMISSION){
+			} else if (attribute == InfoField.BIRTHDAYPERMISSION) {
 				Permission bdPerm = (Permission) value;
 				user.setBirthdayPermission(bdPerm);
-			}else if(attribute==InfoField.BIRTHYEARPERMISSION){
+			} else if (attribute == InfoField.BIRTHYEARPERMISSION) {
 				Permission byPerm = (Permission) value;
 				user.setBirthyearPermission(byPerm);
-			}else if(attribute==InfoField.GENDER){
+			} else if (attribute == InfoField.GENDER) {
 				Gender gender = (Gender) value;
 				user.setGender(gender);
-			}else if(attribute==InfoField.BIRTHDAY){
-				String birthday = (String)value;
+			} else if (attribute == InfoField.BIRTHDAY) {
+				String birthday = (String) value;
 				user.setBirthday(birthday);
-			}else if(attribute==InfoField.NOTE){
+			} else if (attribute == InfoField.NOTE) {
 				String note = (String) value;
 				user.setNotes(note);
-			}else if(attribute==InfoField.IMAGE){
+			} else if (attribute == InfoField.IMAGE) {
 				String imageURL = (String) value;
 				user.setImageURL(imageURL);
 			}
 			udh.begin();
 			udh.makePersistent(user);
 			udh.commit();
-		}catch(ObjectNotFoundException e){
+		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("Cannt find attribute " + attribute
 					+ " item with give id");
 		}
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#editEmail(java.lang.Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#editEmail(java.lang
+	 * .Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
 	public void editEmail(Long id, InfoField attribute, Object value) {
 		UserEmailDAOHibernate uedh = new UserEmailDAOHibernate();
@@ -561,27 +619,31 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			throw new NotFoundException("Cannt find email " + attribute
 					+ " item with give id");
 		}
-		if (attribute==InfoField.VALUE) {
+		if (attribute == InfoField.VALUE) {
 			String email = (String) value;
 			userEmail.setValue(email);
-		} else if (attribute==InfoField.TYPE) {
+		} else if (attribute == InfoField.TYPE) {
 			String type = (String) value;
 			userEmail.setType(type);
-		} else if (attribute==InfoField.PRIMARY) {
+		} else if (attribute == InfoField.PRIMARY) {
 			Bool primary = (Bool) value;
 			userEmail.setPrimary(primary);
-		} else if(attribute==InfoField.PERMISSION){
+		} else if (attribute == InfoField.PERMISSION) {
 			Permission perm = (Permission) value;
 			userEmail.setPerm(perm);
 		}
 		uedh.begin();
 		uedh.makePersistent(userEmail);
 		uedh.commit();
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#editIM(java.lang.Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#editIM(java.lang.Long,
+	 * org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
 	public void editIM(Long id, InfoField attribute, Object value) {
 		UserIMDAOHibernate uidh = new UserIMDAOHibernate();
@@ -592,27 +654,31 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			throw new NotFoundException("Cannt find im " + attribute
 					+ " item with give id");
 		}
-		if (attribute==InfoField.VALUE) {
+		if (attribute == InfoField.VALUE) {
 			String im = (String) value;
 			userIM.setValue(im);
-		} else if (attribute==InfoField.TYPE) {
+		} else if (attribute == InfoField.TYPE) {
 			String type = (String) value;
 			userIM.setType(type);
-		} else if (attribute==InfoField.PRIMARY) {
+		} else if (attribute == InfoField.PRIMARY) {
 			Bool primary = (Bool) value;
 			userIM.setPrimary(primary);
-		} else if(attribute==InfoField.PERMISSION){
+		} else if (attribute == InfoField.PERMISSION) {
 			Permission perm = (Permission) value;
 			userIM.setPerm(perm);
 		}
 		uidh.begin();
 		uidh.makePersistent(userIM);
 		uidh.commit();
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#editTel(java.lang.Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#editTel(java.lang.Long,
+	 * org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
 	public void editTel(Long id, InfoField attribute, Object value) {
 		UserPhoneDAOHibernate updh = new UserPhoneDAOHibernate();
@@ -623,27 +689,31 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			throw new NotFoundException("Cannt find tel " + attribute
 					+ " item with give id");
 		}
-		if (attribute==InfoField.VALUE) {
+		if (attribute == InfoField.VALUE) {
 			String tel = (String) value;
 			userPhone.setValue(tel);
-		} else if (attribute==InfoField.TYPE) {
+		} else if (attribute == InfoField.TYPE) {
 			String type = (String) value;
 			userPhone.setType(type);
-		} else if (attribute==InfoField.PRIMARY) {
+		} else if (attribute == InfoField.PRIMARY) {
 			Bool primary = (Bool) value;
 			userPhone.setPrimary(primary);
-		} else if(attribute==InfoField.PERMISSION){
+		} else if (attribute == InfoField.PERMISSION) {
 			Permission perm = (Permission) value;
 			userPhone.setPerm(perm);
 		}
 		updh.begin();
 		updh.makePersistent(userPhone);
 		updh.commit();
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#editURL(java.lang.Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#editURL(java.lang.Long,
+	 * org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
 	public void editURL(Long id, InfoField attribute, Object value) {
 		UserURLDAOHibernate uudh = new UserURLDAOHibernate();
@@ -654,23 +724,23 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			throw new NotFoundException("Cannt find url " + attribute
 					+ " item with give id");
 		}
-		if (attribute==InfoField.VALUE) {
+		if (attribute == InfoField.VALUE) {
 			String url = (String) value;
 			userURL.setValue(url);
-		} else if (attribute==InfoField.TYPE) {
+		} else if (attribute == InfoField.TYPE) {
 			String type = (String) value;
 			userURL.setType(type);
-		} else if (attribute==InfoField.PRIMARY) {
+		} else if (attribute == InfoField.PRIMARY) {
 			Bool primary = (Bool) value;
 			userURL.setPrimary(primary);
-		} else if(attribute==InfoField.PERMISSION){
+		} else if (attribute == InfoField.PERMISSION) {
 			Permission perm = (Permission) value;
 			userURL.setPerm(perm);
 		}
 		uudh.begin();
 		uudh.makePersistent(userURL);
 		uudh.commit();
-		
+
 	}
 
 	public void clear() {
@@ -702,102 +772,130 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		super.makeTransient(entity);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#addAddtional(java.lang.Long, java.lang.Object[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.net9.minipie.server.db.dao.UserDAO#addAddtional(java.lang.Long,
+	 * java.lang.Object[])
 	 */
 	public Long addAddtional(Long contactId, Object... value) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.UserDAO#editAdditional(java.lang.Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.db.dao.UserDAO#editAdditional(java.lang.Long,
+	 * org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
 	public void editAdditional(Long id, InfoField attribute, Object value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#findAddressOwner(long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#findAddressOwner(long)
 	 */
 	public Long findAddressOwner(Long addrId) {
 		UserAddress userAddr = null;
 		UserAddressDAOHibernate uadh = new UserAddressDAOHibernate();
-		try{
+		try {
 			userAddr = uadh.findById(addrId);
-		}catch(org.hibernate.ObjectNotFoundException e){
-			throw new NotFoundException ("there is no address with addr id: "+addrId);
+		} catch (org.hibernate.ObjectNotFoundException e) {
+			throw new NotFoundException("there is no address with addr id: "
+					+ addrId);
 		}
 		return userAddr.getUser().getId();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#findEmailOwner(long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#findEmailOwner(long)
 	 */
 	public Long findEmailOwner(Long emailId) {
 		UserEmail userEmail = null;
 		UserEmailDAOHibernate uedh = new UserEmailDAOHibernate();
-		try{
+		try {
 			userEmail = uedh.findById(emailId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException ("there is no email with email id: "+emailId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no email with email id: "
+					+ emailId);
 		}
 		return userEmail.getUser().getId();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.logic.storage.UserStorage#findIMOwner(long)
 	 */
 	public Long findIMOwner(Long imId) {
 		UserIM userIM = null;
 		UserIMDAOHibernate uidh = new UserIMDAOHibernate();
-		try{
+		try {
 			userIM = uidh.findById(imId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException ("there is no im with im id: "+imId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no im with im id: " + imId);
 		}
 		return userIM.getUser().getId();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.logic.storage.UserStorage#findTelOwner(long)
 	 */
 	public Long findTelOwner(Long telId) {
 		UserPhoneNo userPhoneNo = null;
 		UserPhoneDAOHibernate updh = new UserPhoneDAOHibernate();
-		try{
+		try {
 			userPhoneNo = updh.findById(telId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException ("there is no phone with tel id: "+telId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no phone with tel id: "
+					+ telId);
 		}
 		return userPhoneNo.getUser().getId();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.logic.storage.UserStorage#findURLOwner(long)
 	 */
 	public Long findURLOwner(Long urlId) {
 		UserURL userURL = null;
 		UserURLDAOHibernate uudh = new UserURLDAOHibernate();
-		try{
+		try {
 			userURL = uudh.findById(urlId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException ("there is no url with url id: "+urlId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no url with url id: " + urlId);
 		}
 		return userURL.getUser().getId();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#setAddAsContactPermission(org.net9.minipie.server.data.field.AddAsContactPermission, java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#setAddAsContactPermission
+	 * (org.net9.minipie.server.data.field.AddAsContactPermission,
+	 * java.lang.Long)
 	 */
 	public Void setAddAsContactPermission(AddAsContactPermission perm,
 			Long userId) {
 		User user = null;
-		try{
+		try {
 			user = findById(userId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no user with userId: "+userId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no user with userId: "
+					+ userId);
 		}
 		user.setPerm(perm);
 		begin();
@@ -806,35 +904,48 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#selectLegalUser(java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#selectLegalUser(java
+	 * .lang.String, java.lang.String)
 	 */
 	public Long selectLegalUser(String name, String password) {
 		Criterion criterion1 = Restrictions.eq("userName", name);
 		Criterion criterion2 = Restrictions.eq("password", password);
 		List<User> result = findByCriteria(criterion1, criterion2);
-		if(result.isEmpty()){
+		if (result.isEmpty()) {
 			throw new NotFoundException("illegal userName or password");
 		}
 		Iterator<User> iter = result.iterator();
 		return iter.next().getId();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#selectUserPassword(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#selectUserPassword(
+	 * java.lang.String)
 	 */
 	public String selectUserPassword(String name) {
 		Criterion criterion = Restrictions.eq("userName", name);
 		List<User> user = findByCriteria(criterion);
-		if(user.isEmpty()){
-			throw new NotFoundException("there is no user with userName: "+name);
+		if (user.isEmpty()) {
+			throw new NotFoundException("there is no user with userName: "
+					+ name);
 		}
 		Iterator<User> iter = user.iterator();
 		return iter.next().getPassword();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#searchAllUser(java.util.Collection)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#searchAllUser(java.
+	 * util.Collection)
 	 */
 	public Collection<BasicUser> searchAllUser(Collection<Query> queries) {
 		Collection<BasicUser> searchResults = new ArrayList<BasicUser>();
@@ -844,11 +955,14 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			for (User user : users) {
 				try {
 					searchResults.add(new BasicUser(user.getId().longValue(),
-							user.getUserName(), user.getRegisterEmail(), user.getPassword(),
-							user.getImageURL(), user.getNickName(), user.getDisplayName(),
-							user.getGenderPermission(), user.getBirthdayPermission(), 
-							user.getBirthyearPermission(), user.getGender(), user.getBirthday(),
-							user.getNotes(), user.getPerm()));
+							user.getUserName(), user.getRegisterEmail(), user
+									.getPassword(), user.getImageURL(), user
+									.getNickName(), user.getDisplayName(), user
+									.getGenderPermission(), user
+									.getBirthdayPermission(), user
+									.getBirthyearPermission(),
+							user.getGender(), user.getBirthday(), user
+									.getNotes(), user.getPerm()));
 				} catch (DataFormatException e) {
 					throw new ServerErrorException(e.getMessage());
 				}
@@ -857,16 +971,37 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		return searchResults;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.UserStorage#searchMyUserOrContact(java.lang.Long, java.util.Collection)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.UserStorage#searchMyUserOrContact
+	 * (java.lang.Long, java.util.Collection)
 	 */
 	public Collection<CommonListEntry> searchMyUserOrContact(Long userId,
 			Collection<Query> queries) {
 		Collection<CommonListEntry> searchResult = new ArrayList<CommonListEntry>();
 		for (Query query : queries) {
 			LimitedSearcher searcher = new LimitedSearcher(userId, query);
+			Collection<User> users = searcher.getUsers();
+			Collection<Contact> contacts = searcher.getContacts();
+			try {
+				for (User user : users) {
+					searchResult.add(new CommonListEntry(user.getId()
+							.longValue(), user.getUserName(), user
+							.getImageURL()));
+				}
+				for (Contact contact : contacts) {
+					searchResult
+							.add(new CommonListEntry(contact.getId()
+									.longValue(), contact.getName(), contact
+									.getImage()));
+				}
+			} catch (DataFormatException e) {
+				throw new ServerErrorException(e.getMessage());
+			}
 		}
-		return null;
+		return searchResult;
 	}
 
 }
