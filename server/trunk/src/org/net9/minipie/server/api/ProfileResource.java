@@ -15,7 +15,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import org.net9.minipie.server.api.PhonebookContactResource.ContactImageResource;
 import org.net9.minipie.server.data.api.PersonalProfile;
 import org.net9.minipie.server.data.api.StatusReportList;
 import org.net9.minipie.server.data.api.Update;
@@ -27,7 +26,6 @@ import org.net9.minipie.server.logic.operation.MacroCommand;
 import org.net9.minipie.server.logic.operation.account.UpdateMyInfo;
 import org.net9.minipie.server.logic.operation.account.UploadMyImage;
 import org.net9.minipie.server.logic.operation.account.ViewMyInfo;
-import org.net9.minipie.server.logic.operation.contact.UploadContactImage;
 
 /**
  * @author LeeThree

@@ -6,13 +6,19 @@
 package org.net9.minipie.server.api;
 
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import org.net9.minipie.server.data.api.PhonebookCompleteUser;
+import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.logic.Handler;
 import org.net9.minipie.server.logic.operation.user.RemoveUserContact;
+import org.net9.minipie.server.logic.operation.user.ShareUser;
 import org.net9.minipie.server.logic.operation.user.ViewMyUserContact;
 
 /**
@@ -40,8 +46,26 @@ public class PhonebookUserResource extends BaseResource {
 	@GET
 	@Produces( { "application/xml", "application/json" })
 	public PhonebookCompleteUser get() {
-		return new Handler<PhonebookCompleteUser>(new ViewMyUserContact(getUserId(),
-				userId)).execute();
+		return new Handler<PhonebookCompleteUser>(new ViewMyUserContact(
+				getUserId(), userId)).execute();
+	}
+
+	/**
+	 * change shared user permission
+	 * 
+	 * @return
+	 */
+	@PUT
+	public Response put(@FormParam("permission") String permission) {
+		try {
+			Permission perm = Permission.value(permission);
+			new Handler<Void>(new ShareUser(getUserId(), userId, perm))
+					.execute();
+			return Response.ok().build();
+		} catch (DataFormatException e) {
+			throw new InvalidRequestException("Invalid permission value");
+		}
+
 	}
 
 	@DELETE

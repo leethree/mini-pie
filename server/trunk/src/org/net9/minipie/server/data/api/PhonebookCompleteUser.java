@@ -199,6 +199,17 @@ public class PhonebookCompleteUser {
 	}
 	
 	/**
+	 * @return the perm
+	 */
+	@XmlAttribute
+	public String getPermission() {
+		if (entity.getPermission() == null)
+			return null;
+		else
+			return entity.getPermission().toString();
+	}
+	
+	/**
 	 * 
 	 * @return
 	 */

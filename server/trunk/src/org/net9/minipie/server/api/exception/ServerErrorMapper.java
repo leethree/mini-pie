@@ -25,9 +25,9 @@ public class ServerErrorMapper implements
 	 * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable)
 	 */
 	public Response toResponse(ServerErrorException ex) {
-		//return Response.serverError().entity(
-		//		"Service is Temporarily Unavailable").type(
-		//		MediaType.TEXT_PLAIN_TYPE).build();
-		return Response.serverError().build();
+		return Response.serverError().entity(
+				"Service is Temporarily Unavailable").type(
+				MediaType.TEXT_PLAIN_TYPE).build();
+		//return Response.serverError().build();
 	}
 }
