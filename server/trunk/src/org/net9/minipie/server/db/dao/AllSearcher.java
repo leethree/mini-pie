@@ -42,10 +42,10 @@ public class AllSearcher extends BaseSearcher{
 	 */
 	public void parseQueryToCriterion() {
 		String field = query.getField().toString();
-		if (!field.equals("gender")){
-			criterion = Restrictions.eq(field, query.getValue());
-		}else if(field.equals("name")){
+		if(field.equals("name")){
 			criterion = Restrictions.eq("displayName", query.getValue());
+		}else if (!field.equals("gender")){
+			criterion = Restrictions.eq(field, query.getValue());
 		}else {
 			Gender gender = null;
 			if (query.getValue().equalsIgnoreCase("male")) {
@@ -99,6 +99,8 @@ public class AllSearcher extends BaseSearcher{
 			} else if (query.getField() == InfoField.GENDER) {
 				users.addAll(udh.findByCriteria(criterion, Restrictions.eq(
 						"genderPermission", Permission.TO_EVERYONE)));
+			} else{
+				users.addAll(udh.findByCriteria(criterion));
 			}
 		} else if (type == InfoType.EMAIL) {
 			UserEmailDAOHibernate uedh = new UserEmailDAOHibernate();

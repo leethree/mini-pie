@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.net9.minipie.server.data.field.Gender;
@@ -21,11 +22,13 @@ import org.net9.minipie.server.db.entity.ContactIM;
 import org.net9.minipie.server.db.entity.ContactPhoneNo;
 import org.net9.minipie.server.db.entity.ContactURL;
 import org.net9.minipie.server.db.entity.User;
+import org.net9.minipie.server.db.entity.User2User;
 import org.net9.minipie.server.db.entity.UserAddress;
 import org.net9.minipie.server.db.entity.UserEmail;
 import org.net9.minipie.server.db.entity.UserIM;
 import org.net9.minipie.server.db.entity.UserPhoneNo;
 import org.net9.minipie.server.db.entity.UserURL;
+import org.net9.minipie.server.exception.NotFoundException;
 
 /**
  * @author Riversand
@@ -42,6 +45,7 @@ public class LimitedSearcher extends BaseSearcher {
 		parseQueryToCriterion();
 		contacts = new ArrayList<Contact>();
 		this.userId = userId;
+		doSearch();
 	}
 
 	public void setQuery(Query query) {
@@ -94,7 +98,7 @@ public class LimitedSearcher extends BaseSearcher {
 	protected void doSearch() {
 		InfoType type = query.getType();
 		UserDAOHibernate udh = new UserDAOHibernate();
-		User thisOne = udh.findById(userId);
+		User_UserDAOHibernate u_udh = new User_UserDAOHibernate();
 		if (type == InfoType.ADDRESS) {
 			UserAddressDAOHibernate uadh = new UserAddressDAOHibernate();
 			ContactAddressDAOHibernate cadh = new ContactAddressDAOHibernate();
@@ -107,8 +111,21 @@ public class LimitedSearcher extends BaseSearcher {
 				}
 			}
 			for (UserAddress userAddress : userResult) {
-				if (thisOne.getUsers1().contains(userAddress.getUser())
-						|| thisOne.getUsers2().contains(userAddress.getUser())) {
+				boolean flag = false;
+				User2User bind = null;
+				try{
+					bind = u_udh.findById(new User2User.Id(userId, userAddress.getUser().getId()));
+				}catch(ObjectNotFoundException e){
+					flag = true;
+				}
+				if(flag){
+					try{
+						bind = u_udh.findById(new User2User.Id(userAddress.getUser().getId(), userId));
+					}catch(ObjectNotFoundException e){
+						throw new NotFoundException("there is no bind between user "+userId+" and user "+userAddress.getUser().getId());
+					}
+				}
+				if(bind!=null){
 					users.add(userAddress.getUser());
 				}
 			}
@@ -117,12 +134,26 @@ public class LimitedSearcher extends BaseSearcher {
 			List<User> userResult = udh.findByCriteria(criterion);
 			List<Contact> contactResult = cdh.findByCriteria(contactCriterion);
 			for (Contact contact : contactResult) {
-				if(contact.getOwner().getId()==userId){
+				if (contact.getOwner().getId() == userId) {
 					contacts.add(contact);
 				}
 			}
 			for (User user : userResult) {
-				if(thisOne.getUsers1().contains(user) || thisOne.getUsers2().contains(user)){
+				boolean flag = false;
+				User2User bind = null;
+				try{
+					bind = u_udh.findById(new User2User.Id(userId, user.getId()));
+				}catch(ObjectNotFoundException e){
+					flag = true;
+				}
+				if(flag){
+					try{
+						bind = u_udh.findById(new User2User.Id(user.getId(), userId));
+					}catch(ObjectNotFoundException e){
+						throw new NotFoundException("there is no bind between user " + userId +" and user "+user.getId());
+					}
+				}
+				if(bind!=null){
 					users.add(user);
 				}
 			}
@@ -138,8 +169,21 @@ public class LimitedSearcher extends BaseSearcher {
 				}
 			}
 			for (UserEmail userEmail : userResult) {
-				if (thisOne.getUsers1().contains(userEmail.getUser())
-						|| thisOne.getUsers2().contains(userEmail.getUser())) {
+				boolean flag = false;
+				User2User bind = null;
+				try{
+					bind = u_udh.findById(new User2User.Id(userId, userEmail.getUser().getId()));
+				}catch(ObjectNotFoundException e){
+					flag = true;
+				}
+				if(flag){
+					try{
+						bind = u_udh.findById(new User2User.Id(userEmail.getUser().getId(), userId));
+					}catch(ObjectNotFoundException e){
+						throw new NotFoundException("there is no bind between user "+userId+" and user "+userEmail.getUser().getId());
+					}
+				}
+				if(bind!=null){
 					users.add(userEmail.getUser());
 				}
 			}
@@ -155,8 +199,21 @@ public class LimitedSearcher extends BaseSearcher {
 				}
 			}
 			for (UserIM userIM : userResult) {
-				if (thisOne.getUsers1().contains(userIM.getUser())
-						|| thisOne.getUsers2().contains(userIM.getUser())) {
+				boolean flag = false;
+				User2User bind = null;
+				try{
+					bind = u_udh.findById(new User2User.Id(userId, userIM.getUser().getId()));
+				}catch(ObjectNotFoundException e){
+					flag = true;
+				}
+				if(flag){
+					try{
+						bind = u_udh.findById(new User2User.Id(userIM.getUser().getId(), userId));
+					}catch(ObjectNotFoundException e){
+						throw new NotFoundException("there is no bind between user "+userId+" and user "+userIM.getUser().getId());
+					}
+				}
+				if(bind!=null){
 					users.add(userIM.getUser());
 				}
 			}
@@ -172,8 +229,21 @@ public class LimitedSearcher extends BaseSearcher {
 				}
 			}
 			for (UserPhoneNo userPhoneNo : userResult) {
-				if (thisOne.getUsers1().contains(userPhoneNo.getUser())
-						|| thisOne.getUsers2().contains(userPhoneNo.getUser())) {
+				boolean flag = false;
+				User2User bind = null;
+				try{
+					bind = u_udh.findById(new User2User.Id(userId, userPhoneNo.getUser().getId()));
+				}catch(ObjectNotFoundException e){
+					flag = true;
+				}
+				if(flag){
+					try{
+						bind = u_udh.findById(new User2User.Id(userPhoneNo.getUser().getId(), userId));
+					}catch(ObjectNotFoundException e){
+						throw new NotFoundException("there is no bind between user "+userId+" and user "+userPhoneNo.getUser().getId());
+					}
+				}
+				if(bind!=null){
 					users.add(userPhoneNo.getUser());
 				}
 			}
@@ -189,8 +259,21 @@ public class LimitedSearcher extends BaseSearcher {
 				}
 			}
 			for (UserURL userURL : userResult) {
-				if (thisOne.getUsers1().contains(userURL.getUser())
-						|| thisOne.getUsers2().contains(userURL.getUser())) {
+				boolean flag = false;
+				User2User bind = null;
+				try{
+					bind = u_udh.findById(new User2User.Id(userId, userURL.getUser().getId()));
+				}catch(ObjectNotFoundException e){
+					flag = true;
+				}
+				if(flag){
+					try{
+						bind = u_udh.findById(new User2User.Id(userURL.getUser().getId(), userId));
+					}catch(ObjectNotFoundException e){
+						throw new NotFoundException("there is no bind between user "+userId+" and user "+userURL.getUser().getId());
+					}
+				}
+				if(bind!=null){
 					users.add(userURL.getUser());
 				}
 			}
@@ -220,6 +303,12 @@ public class LimitedSearcher extends BaseSearcher {
 		} else if (field.equals("name")) {
 			criterion = Restrictions.eq("displayName", query.getValue());
 			contactCriterion = null;
+		} else if (field.equals("formatted")) {
+			criterion = Restrictions.eq("formatted", query.getValue());
+			contactCriterion = Restrictions.eq("value", query.getValue());
+		} else if (field.equals("value") && query.getType() == InfoType.ADDRESS) {
+			criterion = Restrictions.eq("formatted", query.getValue());
+			contactCriterion = Restrictions.eq("value", query.getValue());
 		} else {
 			criterion = Restrictions.eq(field, query.getValue());
 			contactCriterion = Restrictions.eq(field, query.getValue());
