@@ -69,7 +69,10 @@ public class PersonalProfile {
 	 */
 	@XmlElement
 	public String getGender() {
-		return entity.getGender().toString();
+		if (entity.getGender() == null)
+			return null;
+		else
+			return entity.getGender().toString();
 	}
 
 	@XmlElement(name = "gender_perm")

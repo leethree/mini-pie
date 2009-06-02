@@ -10,9 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 import org.net9.minipie.server.data.api.PersonalProfile;
 import org.net9.minipie.server.data.api.StatusReportList;
@@ -25,24 +23,18 @@ import org.net9.minipie.server.logic.operation.MacroCommand;
 import org.net9.minipie.server.logic.operation.account.UpdateMyInfo;
 import org.net9.minipie.server.logic.operation.account.ViewMyInfo;
 
-import com.sun.jersey.api.core.ResourceContext;
-
 /**
  * @author LeeThree
  * 
  */
 @Path("/profile")
-public class ProfileResource {
-	@SuppressWarnings("unused")
-	@Context
-	private UriInfo uriInfo;
-	@Context
-	protected ResourceContext resourceContext;
+public class ProfileResource extends BaseResource {
 
 	@GET
 	@Produces( { "application/xml", "application/json" })
 	public PersonalProfile get() {
-		return new Handler<PersonalProfile>(new ViewMyInfo(1L)).execute();
+		return new Handler<PersonalProfile>(new ViewMyInfo(getUserId()))
+				.execute();
 	}
 
 	@POST
@@ -59,7 +51,8 @@ public class ProfileResource {
 		} else {
 			MacroCommand macro = new MacroCommand();
 			for (Update update : updates.getUpdates()) {
-				macro.addCommand(new UpdateMyInfo(1L, update.checkThis()));
+				macro.addCommand(new UpdateMyInfo(getUserId(), update
+						.checkThis()));
 			}
 			StatusReportList statuses = new Handler<StatusReportList>(macro)
 					.execute();
@@ -74,7 +67,8 @@ public class ProfileResource {
 	 * @return
 	 */
 	public Response update(Update update) {
-		new Handler<Void>(new UpdateMyInfo(1L, update.checkThis())).execute();
+		new Handler<Void>(new UpdateMyInfo(getUserId(), update.checkThis()))
+				.execute();
 		return Response.ok().build();
 	}
 }

@@ -5,9 +5,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 import org.net9.minipie.server.data.api.PhonebookCompleteContact;
 import org.net9.minipie.server.data.api.StatusReportList;
@@ -21,10 +19,7 @@ import org.net9.minipie.server.logic.operation.contact.DeleteMyContact;
 import org.net9.minipie.server.logic.operation.contact.UpdateMyContact;
 import org.net9.minipie.server.logic.operation.contact.ViewMyContact;
 
-public class PhonebookContactResource {
-	@SuppressWarnings("unused")
-	@Context
-	private UriInfo uriInfo;
+public class PhonebookContactResource extends BaseResource{
 
 	private long contactId;
 
@@ -45,7 +40,7 @@ public class PhonebookContactResource {
 	@GET
 	@Produces( { "application/xml", "application/json" })
 	public PhonebookCompleteContact get() {
-		return new Handler<PhonebookCompleteContact>(new ViewMyContact(1L,
+		return new Handler<PhonebookCompleteContact>(new ViewMyContact(getUserId(),
 				contactId)).execute();
 	}
 
@@ -68,7 +63,7 @@ public class PhonebookContactResource {
 		} else {
 			MacroCommand macro = new MacroCommand();
 			for (Update update : updates.getUpdates()) {
-				macro.addCommand(new UpdateMyContact(1L, contactId, update
+				macro.addCommand(new UpdateMyContact(getUserId(), contactId, update
 						.checkThis()));
 			}
 			StatusReportList statuses = new Handler<StatusReportList>(macro)
@@ -85,14 +80,14 @@ public class PhonebookContactResource {
 	 */
 	public Response update(Update update) {
 		new Handler<Void>(
-				new UpdateMyContact(1L, contactId, update.checkThis()))
+				new UpdateMyContact(getUserId(), contactId, update.checkThis()))
 				.execute();
 		return Response.ok().build();
 	}
 
 	@DELETE
 	public Response delete() {
-		new Handler<Void>(new DeleteMyContact(1L, contactId)).execute();
+		new Handler<Void>(new DeleteMyContact(getUserId(), contactId)).execute();
 		return Response.ok().build();
 	}
 }

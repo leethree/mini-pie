@@ -14,9 +14,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 import org.net9.minipie.server.data.api.PhonebookContactList;
 import org.net9.minipie.server.data.api.PhonebookContactListEntry;
@@ -30,16 +28,10 @@ import org.net9.minipie.server.logic.operation.tag.EditTag;
 import org.net9.minipie.server.logic.operation.tag.ListTaggedContact;
 import org.net9.minipie.server.logic.operation.tag.ListTaggedUser;
 
-import com.sun.jersey.api.core.ResourceContext;
-
 /**
  * @author LeeThree
  */
-public class PhonebookTagResource {
-	@Context
-	private UriInfo uriInfo;
-	@Context
-	protected ResourceContext resourceContext;
+public class PhonebookTagResource extends BaseResource {
 
 	private long tagId;
 
@@ -63,14 +55,16 @@ public class PhonebookTagResource {
 	public PhonebookUserList getUser() {
 		return new PhonebookUserList(
 				new Handler<Collection<PhonebookUserListEntry>>(
-						new ListTaggedUser(1L, tagId)).execute(), uriInfo.getAbsolutePath());
+						new ListTaggedUser(getUserId(), tagId)).execute(),
+				getResourceUrl());
 		// TODO uri
 	}
 
 	@POST
 	@Path("user")
 	public Response postUser(@FormParam("userid") long userId) {
-		new Handler<Void>(new AttachTagToUser(1L, userId, tagId)).execute();
+		new Handler<Void>(new AttachTagToUser(getUserId(), userId, tagId))
+				.execute();
 		return Response.ok().build();
 	}
 
@@ -80,27 +74,28 @@ public class PhonebookTagResource {
 	public PhonebookContactList getContact() {
 		return new PhonebookContactList(
 				new Handler<Collection<PhonebookContactListEntry>>(
-						new ListTaggedContact(1L, tagId)).execute(), uriInfo.getAbsolutePath());
+						new ListTaggedContact(getUserId(), tagId)).execute(),
+				getResourceUrl());
 		// TODO uri
 	}
 
 	@POST
 	@Path("contact")
 	public Response postContact(@FormParam("contactid") long contactId) {
-		new Handler<Void>(new AttachTagToContact(1L, contactId, tagId))
+		new Handler<Void>(new AttachTagToContact(getUserId(), contactId, tagId))
 				.execute();
 		return Response.ok().build();
 	}
 
 	@PUT
 	public Response put(@FormParam("tagname") String tagName) {
-		new Handler<Void>(new EditTag(1L, tagId, tagName)).execute();
+		new Handler<Void>(new EditTag(getUserId(), tagId, tagName)).execute();
 		return Response.ok().build();
 	}
 
 	@DELETE
 	public Response delete() {
-		new Handler<Void>(new DeleteTag(1L, tagId)).execute();
+		new Handler<Void>(new DeleteTag(getUserId(), tagId)).execute();
 		return Response.ok().build();
 	}
 }

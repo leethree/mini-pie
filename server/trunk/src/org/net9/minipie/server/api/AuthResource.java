@@ -7,12 +7,9 @@ package org.net9.minipie.server.api;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 
-import org.net9.minipie.server.auth.MiniPieUser;
 import org.net9.minipie.server.exception.ServerErrorException;
 
 /**
@@ -20,18 +17,13 @@ import org.net9.minipie.server.exception.ServerErrorException;
  * 
  */
 @Path("/auth")
-public class AuthResource {
-
-	@Context
-	SecurityContext security;
+public class AuthResource extends BaseResource {
 
 	@GET
 	public Response getTest() {
 		try {
-			MiniPieUser user = (MiniPieUser) security.getUserPrincipal();
-			String welcomeMsg = "Congratulations! You've been successfully authenticated as "
-					+ user.getName() + " !\n";
-			welcomeMsg += "Your ID is: " + user.getId();
+			String welcomeMsg = "Congratulations! You've been successfully authenticated !\n";
+			welcomeMsg += "Your ID is: " + getUserId() + "\n";
 			return Response.ok().type(MediaType.TEXT_PLAIN_TYPE).entity(
 					welcomeMsg).build();
 		} catch (Exception e) {
