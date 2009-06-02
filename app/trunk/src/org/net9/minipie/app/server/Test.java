@@ -3,6 +3,7 @@
  */
 package org.net9.minipie.app.server;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.net9.minipie.app.client.data.GenericBean;
@@ -22,7 +23,12 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		try {
-			new Session("parkh", "qwerrwszds");
+			List<PersonBean> list = new Backend("Philip", "123456").listUserContacts();
+			for (PersonBean personBean : list) {
+				System.out.println(personBean.id);
+				System.out.println(personBean.beanName);
+				System.out.println(personBean.get("name"));
+			}
 		} catch (GenericException e) {
 			e.printStackTrace();
 		} catch (LoginFailedException e) {

@@ -1,93 +1,223 @@
+/* CSS Document */
+
+.ext-el-mask-msg div{font-size:12px;}
+.loading-indicator{font-size:12px;}
+
+.x-tab-strip span.x-tab-strip-text{font-size:12px;}
+
+.x-form-invalid-msg{font-size:12px;}
+.x-small-editor .x-form-field{font-size:12px;}
+.x-fieldset legend{font-size:12px;}
+
+.x-btn{font-size:12px;}
+.x-btn button{font-size:12px;}
+
+.x-toolbar td,.x-toolbar span,.x-toolbar input,.x-toolbar div,.x-toolbar select,.x-toolbar label{font-size:12px;}
+
+.x-grid3-hd-row td,.x-grid3-row td,.x-grid3-summary-row td{font-size:12px;}
+.x-grid3-topbar,.x-grid3-bottombar{font-size:12px;}
+.x-grid-group-hd div{font-size:12px;}
+.x-grid-empty{font-size:12px;}
+
+.x-dd-drag-ghost{font-size:12px;}
+
+.x-tree-node{font-size:12px;}
+
+.x-date-middle,.x-date-left,.x-date-right{font-size:12px;}
+.x-date-inner a{font-size:12px;}
+.x-date-mp td{font-size:12px;}
+.x-date-mp-btns button{font-size:12px;}
+
+.x-tip .x-tip-mc{font-size:12px;}
+.x-tip .x-tip-header-text{font-size:12px;}
+.x-tip .x-tip-body{font-size:12px;}
+
+.x-menu-list-item{font-size:12px;}
+
+#x-debug-browser .x-tree .x-tree-node a span{font-size:12px;}
+
+.x-combo-list-hd{font-size:12px;}
+.x-combo-list-small .x-combo-list-item{font-size:12px;}
+
+.x-panel-header{font-size:12px;}
+.x-panel-tl .x-panel-header{font-size:12px;}
+.x-panel-mc{font-size:12px;}
+
+.x-window-tl .x-window-header{font-size:12px;}
+.x-window-mc{font-size:12px;}
+
+.x-progress-text{font-size:12px;}
+
+.x-date-picker,.x-date-picker a{font-size:12px;}
+.x-date-left{font-size:12px;}
+
+.ext-ie .x-toolbar{font-size:12px;}
+
+.x-info-mc{font-size:12px;}
+
+.my-list-item-text{font-size:12px;}
+
+.my-tbl{font-size:12px;}
+.my-tbl-col-text{font-size:12px;}
+.my-tbl-data .my-tbl-item-cell-text{font-size:12px;}
+
+.my-tree{font-size:12px;}
+.my-treeitem,.my-treeitem table,.my-treeitem table td{font-size:12px;}
+
 /** Add css rules here for your application. */
-
-
-/** Example rules used by the template application (remove for your app) */
+	/** Example rules used by the template application (remove for your app) */
 h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
+	font-size: 2em;
+	font-weight: bold;
+	color: #777777;
+	margin: 40px 0px 70px;
+	text-align: center;
 }
 
 .sendButton {
-  display: block;
-  font-size: 16pt;
+	display: block;
+	font-size: 16pt;
 }
 
 /** Most GWT widgets already have a style name defined */
 .gwt-DialogBox {
-  width: 400px;
+	width: 400px;
 }
 
 .dialogVPanel {
-  margin: 5px;
+	margin: 5px;
 }
 
 .serverResponseLabelError {
-  color: red;
+	color: red;
 }
 
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
-  margin: 15px 6px 6px;
+	margin: 15px 6px 6px;
 }
 
 /** GXT explorer styles */
 #loading {
-  position: absolute;
-  left: 45%;
-  top: 40%;
-  margin-left: -45px;
-  padding: 2px;
-  z-index: 20001;
-  height: auto;
-  border: 1px solid #ccc;
+	position: absolute;
+	left: 45%;
+	top: 40%;
+	margin-left: -45px;
+	padding: 2px;
+	z-index: 20001;
+	height: auto;
+	border: 1px solid #ccc;
 }
 
 #loading a {
-  color: #225588;
+	color: #225588;
 }
 
 #loading .loading-indicator {
-  background: white;
-  color: #444;
-  font: bold 13px tahoma, arial, helvetica;
-  padding: 10px;
-  margin: 0;
-  height: auto;
+	background: white;
+	color: #444;
+	font: bold 13px tahoma, arial, helvetica;
+	padding: 10px;
+	margin: 0;
+	height: auto;
 }
 
 #loading .loading-indicator img {
-  margin-right:8px;
-  float:left;
-  vertical-align:top;
+	margin-right: 8px;
+	float: left;
+	vertical-align: top;
 }
 
 #loading-msg {
-  font: normal 10px arial, tahoma, sans-serif;
+	font: normal 10px arial, tahoma, sans-serif;
 }
 
 .search-item {
-    font:normal 11px tahoma, arial, helvetica, sans-serif;
-    padding:3px 10px 3px 10px;
-    border:1px solid #fff;
-    border-bottom:1px solid #eeeeee;
-    white-space:normal;
-    color:#555;
+	font: normal 11px tahoma, arial, helvetica, sans-serif;
+	padding: 3px 10px 3px 10px;
+	border: 1px solid #fff;
+	border-bottom: 1px solid #eeeeee;
+	white-space: normal;
+	color: #555;
 }
+
 .search-item h3 {
-    display:block;
-    font:inherit;
-    font-weight:bold;
-    color:#222;
+	display: block;
+	font: inherit;
+	font-weight: bold;
+	color: #222;
 }
 
 .search-item h3 span {
-    float: right;
-    font-weight:normal;
-    margin:0 0 5px 5px;
-    width:100px;
-    display:block;
-    clear:none;
+	float: right;
+	font-weight: normal;
+	margin: 0 0 5px 5px;
+	width: 100px;
+	display: block;
+	clear: none;
+}
+
+/** Mini-App styles */
+.header {
+	padding: 10px;
+	overflow: hidden;
+	background: transparent url(resources/images/bg/header-bg.png) repeat-x scroll 0 0;
+}
+
+.profile {
+	padding: 2px;
+}
+
+.header .thumb {
+	float: left;
+	margin: 10px;
+	padding: 5px;
+	background: #deefff;
+}
+
+.profile .thumb {
+	padding: 2px;
+}
+
+.header .text {
+	margin: 10px;
+	padding: 5px;
+	overflow: hidden;
+}
+
+.header .text h3 {
+	font-family: trebuchet MS;
+	font-size: 15pt;
+	margin-bottom: 5px;
+	color: #1E4176;
+}
+
+.header .text h4 {
+	font-family: verdana;
+	margin: 10px 0pt;
+	color: #777;
+}
+
+.header .text p {
+	margin: 5px 0pt;
+	color: #777;
+}
+
+.x-form-label-left label {
+	font-weight: bold;
+}
+
+.basic .x-panel-body {
+	background: white !important;
+}
+
+.basic form label {
+	font-family: verdana;
+	font-weight: bold;
+	color: #333;
+}
+
+.basic form .x-form-label {
+	color: #555;
+	text-align: right !important;
 }

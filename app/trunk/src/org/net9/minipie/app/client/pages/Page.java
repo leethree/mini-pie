@@ -7,8 +7,7 @@
  */
 package org.net9.minipie.app.client.pages;
 
-
-import org.net9.minipie.app.client.model.Entry;
+import org.net9.minipie.app.client.model.PageEntry;
 
 import com.extjs.gxt.ui.client.Style.Scroll;
 import com.extjs.gxt.ui.client.event.ComponentEvent;
@@ -21,47 +20,47 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 
 public class Page extends TabPanel {
 
-  protected Entry entry;
+	protected PageEntry entry;
 
-  public LayoutContainer getContent() {
-    return entry.getExample();
-  }
+	public LayoutContainer getContent() {
+		return entry.getExample();
+	}
 
-  public Page(final Entry entry) {
-    this.entry = entry;
+	public Page(final PageEntry entry) {
+		this.entry = entry;
 
-    setTabPosition(TabPosition.BOTTOM);
-    setBorderStyle(false);
-    setBodyBorder(false);
+		setTabPosition(TabPosition.BOTTOM);
+		setBorderStyle(false);
+		setBodyBorder(false);
 
-    addListener(Events.Adopt, new Listener<ComponentEvent>() {
-      public void handleEvent(ComponentEvent be) {
-        if(getParent() != null && getParent() instanceof TabItem) {
-          TabItem t = (TabItem) getParent();
-          t.setHideMode(entry.getHideMode());
-        }
-      }
-    });
-    
-    TabItem demo = new TabItem();
-    demo.setScrollMode(Scroll.AUTO);
-    if (entry.isFill()) {
-      demo.setLayout(new FitLayout());
-      demo.setScrollMode(Scroll.NONE);
-    }
-    
-    demo.setHideMode(entry.getHideMode());
+		addListener(Events.Adopt, new Listener<ComponentEvent>() {
+			public void handleEvent(ComponentEvent be) {
+				if (getParent() != null && getParent() instanceof TabItem) {
+					TabItem t = (TabItem) getParent();
+					t.setHideMode(entry.getHideMode());
+				}
+			}
+		});
 
-    demo.setText("Demo");
-    demo.add(entry.getExample());
-    add(demo);
-    
-    if (entry.isClosable()) {
-      TabItem source = new TabItem();
-      source.setText("Source");
-      source.setUrl(entry.getSourceUrl());
-      add(source);
-    }
-  }
+		TabItem demo = new TabItem();
+		demo.setScrollMode(Scroll.AUTO);
+		if (entry.isFill()) {
+			demo.setLayout(new FitLayout());
+			demo.setScrollMode(Scroll.NONE);
+		}
+
+		demo.setHideMode(entry.getHideMode());
+
+		demo.setText("Demo");
+		demo.add(entry.getExample());
+		add(demo);
+
+		if (entry.isClosable()) {
+			TabItem source = new TabItem();
+			source.setText("Source");
+			source.setUrl(entry.getSourceUrl());
+			add(source);
+		}
+	}
 
 }

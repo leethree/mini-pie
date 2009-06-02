@@ -15,23 +15,23 @@ import com.extjs.gxt.ui.client.mvc.Controller;
 
 public class NavigationController extends Controller {
 
-  private NavigationView view;
+	private NavigationView view;
 
-  public NavigationController() {
-    registerEventTypes(AppEvents.Init);
-    registerEventTypes(AppEvents.HidePage);
-    registerEventTypes(AppEvents.TabChange);
-  }
+	public NavigationController() {
+		registerEventTypes(AppEvents.Init, AppEvents.Login, AppEvents.HidePage,
+				AppEvents.TabChange);
+	}
 
-  public void initialize() {
-    view = new NavigationView(this);
-  }
+	public void initialize() {
+		view = new NavigationView(this);
+	}
 
-  public void handleEvent(AppEvent event) {
-    EventType t = event.getType();
-    if (t == AppEvents.Init || t == AppEvents.HidePage || t == AppEvents.TabChange) {
-      forwardToView(view, event);
-    }
-  }
+	public void handleEvent(AppEvent event) {
+		EventType t = event.getType();
+		if (t == AppEvents.Init || t == AppEvents.Login
+				|| t == AppEvents.HidePage || t == AppEvents.TabChange) {
+			forwardToView(view, event);
+		}
+	}
 
 }

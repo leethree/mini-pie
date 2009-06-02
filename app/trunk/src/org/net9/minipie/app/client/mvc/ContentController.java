@@ -17,7 +17,7 @@ public class ContentController extends Controller {
   private ContentView view;
 
   public ContentController() {
-    registerEventTypes(AppEvents.Init, AppEvents.ShowPage);
+    registerEventTypes(AppEvents.Init, AppEvents.Login, AppEvents.ShowPage);
   }
 
   public void initialize() {

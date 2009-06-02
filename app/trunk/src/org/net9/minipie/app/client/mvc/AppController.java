@@ -21,10 +21,11 @@ public class AppController extends Controller {
     appView = new AppView(this);
 
     registerEventTypes(AppEvents.Init);
+    registerEventTypes(AppEvents.Login);
   }
 
   public void handleEvent(AppEvent event) {
-    if (event.getType() == AppEvents.Init) {
+    if (event.getType() == AppEvents.Init || event.getType() == AppEvents.Login) {
       forwardToView(appView, event);
     }
   }

@@ -2,7 +2,10 @@
  * LoginForm.java
  * in Mini-App
  */
-package org.net9.minipie.app.client;
+package org.net9.minipie.app.client.widgets;
+
+import org.net9.minipie.app.client.MiniApp;
+import org.net9.minipie.app.client.MiniAppServiceAsync;
 
 import com.extjs.gxt.ui.client.Registry;
 import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
@@ -40,9 +43,14 @@ public class LoginForm extends Window {
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
-				MessageBox box = MessageBox.alert("Network Failure",
-						"Sorry, the service is temporarily unavaliable.", null);
+				MessageBox box = MessageBox
+						.alert(
+								"Network Failure",
+								"Sorry, the service is temporarily unavaliable. Please try again later.",
+								null);
 				box.setClosable(false);
+				LoginForm.this
+						.mask("Sorry, the service is temporarily unavaliable.");
 			}
 
 			@Override
@@ -59,8 +67,10 @@ public class LoginForm extends Window {
 		this.setHeading("Login");
 		this.setFrame(true);
 
+		this.setIconStyle("connect");
 		this.setShadow(true);
 		this.setClosable(false);
+		this.setBodyBorder(true);
 		this.setLayout(new FitLayout());
 		this.setSize(350, 160);
 		this.setResizable(false);
@@ -97,7 +107,7 @@ public class LoginForm extends Window {
 		this.addButton(loginButton);
 		this.add(panel);
 
-		loginButton.focus();
+		this.setFocusWidget(nameField);
 
 		loginButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
 			public void componentSelected(ButtonEvent ce) {
@@ -131,6 +141,9 @@ public class LoginForm extends Window {
 			nameField.disable();
 			passField.disable();
 			loginButton.disable();
+		} else {
+			Info.display("Invalid account information",
+					"Please check your username or password");
 		}
 	}
 }

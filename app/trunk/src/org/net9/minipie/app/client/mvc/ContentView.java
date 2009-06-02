@@ -9,6 +9,9 @@ package org.net9.minipie.app.client.mvc;
 
 import org.net9.minipie.app.client.AppEvents;
 import org.net9.minipie.app.client.model.Entry;
+import org.net9.minipie.app.client.model.PageEntry;
+import org.net9.minipie.app.client.model.PersonEntry;
+import org.net9.minipie.app.client.pages.DetailPage;
 import org.net9.minipie.app.client.pages.Page;
 
 import com.extjs.gxt.ui.client.Registry;
@@ -28,72 +31,104 @@ import com.google.gwt.user.client.History;
 
 public class ContentView extends View {
 
-  private TabPanel tabPanel;
+	private TabPanel tabPanel;
 
-  public ContentView(Controller controller) {
-    super(controller);
-  }
+	public ContentView(Controller controller) {
+		super(controller);
+	}
 
-  public void initialize() {
-    tabPanel = new TabPanel();
-    tabPanel.setCloseContextMenu(true);
-    tabPanel.setBorderStyle(false);
-    tabPanel.setBodyBorder(false);
-    tabPanel.setTabScroll(true);
-    tabPanel.setAnimScroll(true);
-    tabPanel.addListener(Events.Remove, new Listener<TabPanelEvent>() {
+	public void initialize() {
+		tabPanel = new TabPanel();
+		tabPanel.setCloseContextMenu(true);
+		tabPanel.setBorderStyle(false);
+		tabPanel.setBodyBorder(false);
+		tabPanel.setTabScroll(true);
+		tabPanel.setAnimScroll(true);
+		tabPanel.addListener(Events.Remove, new Listener<TabPanelEvent>() {
 
-      public void handleEvent(TabPanelEvent be) {
-        TabItem item = be.getItem();
-        Entry entry = (Entry) item.getData("entry");
-        Dispatcher.forwardEvent(AppEvents.HidePage, entry);
-      }
+			public void handleEvent(TabPanelEvent be) {
+				TabItem item = be.getItem();
+				Entry entry = (Entry) item.getData("entry");
+				Dispatcher.forwardEvent(AppEvents.HidePage, entry);
+			}
 
-    });
-    tabPanel.addListener(Events.Select, new Listener<TabPanelEvent>() {
-      public void handleEvent(TabPanelEvent be) {
-        String token = History.getToken();
-        Entry entry = (Entry) be.getItem().getData("entry");
-        if (token != null && (!token.equals(entry.getId()))) {
-          History.newItem(entry.getId(), false);
-        }
-        Dispatcher.forwardEvent(AppEvents.TabChange, entry);
-      }
-    });
-    ContentPanel center = (ContentPanel) Registry.get(AppView.CENTER_PANEL);
-    center.add(tabPanel);
-  }
+		});
+		tabPanel.addListener(Events.Select, new Listener<TabPanelEvent>() {
+			public void handleEvent(TabPanelEvent be) {
+				String token = History.getToken();
+				Entry entry = (Entry) be.getItem().getData("entry");
+				if (token != null && (!token.equals(entry.getKey()))) {
+					History.newItem(entry.getKey(), false);
+				}
+				Dispatcher.forwardEvent(AppEvents.TabChange, entry);
+			}
+		});
+		ContentPanel center = (ContentPanel) Registry.get(AppView.CENTER_PANEL);
+		center.add(tabPanel);
+	}
 
-  public void onShowPage(Entry entry) {
-    Page page = entry.get("page");
-    if (page == null) {
-      page = new Page(entry);
-      entry.set("page", page);
-    }
+	private void onLogin() {
+		// TODO Auto-generated method stub
+	}
+	
+	public void onShowPage(Entry entry) {
+		if (entry instanceof PersonEntry) {
+			PersonEntry user = (PersonEntry) entry;
+			DetailPage page = user.get("page");
+			if (page == null) {
+				page = new DetailPage(user);
+				user.set("page", page);
+			}
+			TabItem item = tabPanel.findItem("page__" + page.getId(), false);
+			if (item == null) {
+				item = new TabItem();
+				item.setData("entry", user);
+				item.setClosable(true);
+				item.setId("page__" + page.getId());
+				item.setText(user.getName());
+				item.setLayout(new FitLayout());
+				item.add(page);
+				tabPanel.add(item);
+			}
+			if (item != tabPanel.getSelectedItem()) {
+				tabPanel.setSelection(item);
+			}
+		}
+		if (entry instanceof PageEntry) {
+			PageEntry pe = (PageEntry) entry;
+			Page page = pe.get("page");
+			if (page == null) {
+				page = new Page(pe);
+				pe.set("page", page);
+			}
 
-    TabItem item = tabPanel.findItem("page__"+page.getId(), false);
-    if (item == null) {
-      item = new TabItem();
-      item.setData("entry", entry);
-      item.setClosable(entry.isClosable());
-      item.setId("page__"+page.getId());
-      item.setText(entry.getName());
-      item.setLayout(new FitLayout());
-      item.add(page);
-      tabPanel.add(item);
-    }
+			TabItem item = tabPanel.findItem("page__" + page.getId(), false);
+			if (item == null) {
+				item = new TabItem();
+				item.setData("entry", pe);
+				item.setClosable(pe.isClosable());
+				item.setId("page__" + page.getId());
+				item.setText(pe.getName());
+				item.setLayout(new FitLayout());
+				item.add(page);
+				tabPanel.add(item);
+			}
 
-    if (item != tabPanel.getSelectedItem()) {
-      tabPanel.setSelection(item);
-    }
-  }
+			if (item != tabPanel.getSelectedItem()) {
+				tabPanel.setSelection(item);
+			}
+		}
+	}
 
-  protected void handleEvent(AppEvent event) {
-    EventType type = event.getType();
-    if (type == AppEvents.ShowPage) {
-      Entry entry = event.getData();
-      onShowPage(entry);
-    }
-  }
+	protected void handleEvent(AppEvent event) {
+		EventType type = event.getType();
+		if (type == AppEvents.Login) {
+			onLogin();
+		} else if (type == AppEvents.ShowPage) {
+			Entry entry = event.getData();
+			onShowPage(entry);
+		}
+	}
+
 
 }

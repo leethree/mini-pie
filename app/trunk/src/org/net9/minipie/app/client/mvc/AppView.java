@@ -7,6 +7,8 @@
  */
 package org.net9.minipie.app.client.mvc;
 
+import org.net9.minipie.app.client.AppEvents;
+
 import com.extjs.gxt.themes.client.Slate;
 import com.extjs.gxt.ui.client.Registry;
 import com.extjs.gxt.ui.client.Style.LayoutRegion;
@@ -42,7 +44,8 @@ public class AppView extends View {
   }
 
   protected void handleEvent(AppEvent event) {
-
+	  if (event.getType() == AppEvents.Login)
+		  viewport.unmask();
   }
 
   protected void initialize() {
@@ -54,6 +57,7 @@ public class AppView extends View {
     createWest();
     createCenter();
     
+    viewport.mask("Loading...");
     RootPanel.get().add(viewport);
     
   }

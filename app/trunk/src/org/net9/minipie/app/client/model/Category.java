@@ -7,37 +7,50 @@
  */
 package org.net9.minipie.app.client.model;
 
-import com.extjs.gxt.ui.client.Style.HideMode;
-import com.extjs.gxt.ui.client.data.BaseTreeModel;
-import com.extjs.gxt.ui.client.widget.LayoutContainer;
+import java.util.List;
 
+import com.extjs.gxt.ui.client.data.BaseTreeModel;
+import com.extjs.gxt.ui.client.data.ModelData;
+
+@SuppressWarnings("serial")
 public class Category extends BaseTreeModel {
 
-  protected Category() {
-  }
+	protected Category() {
+	}
 
-  public Category(String name) {
-    set("name", name);
-  }
+	public Category(String name) {
+		set("name", name);
+	}
 
-  public String getName() {
-    return (String) get("name");
-  }
+	public String getName() {
+		return (String) get("name");
+	}
 
-  public String toString() {
-    return getName();
-  }
+	public String toString() {
+		return getName();
+	}
 
-  public void addEntry(String title, LayoutContainer page) {
-    add(new Entry(title, page));
-  }
+	public void addEntry(PersonEntry person) {
+		add(person);
+	}
 
-  public void addEntry(String title, LayoutContainer page, boolean fill) {
-    add(new Entry(title, page, fill));
-  }
-  
-  public void addEntry(String title, LayoutContainer page, boolean fill, boolean closable, HideMode hideMode) {
-    add(new Entry(title, page, fill, closable, hideMode));
-  }
+	public void addEntrys(List<? extends PersonEntry> people) {
+		for (PersonEntry personEntry : people) {
+			add(personEntry);
+		}
+	}
+
+	// public void setChildren(List<ModelData> persons) {
+	// setChildren(persons);
+	// }
+	//
+	// public void addEntry(String title, LayoutContainer page, boolean fill) {
+	// add(new Entry(title, page, fill));
+	// }
+	//  
+	// public void addEntry(String title, LayoutContainer page, boolean fill,
+	// boolean closable, HideMode hideMode) {
+	// add(new Entry(title, page, fill, closable, hideMode));
+	// }
 
 }

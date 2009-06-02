@@ -5,6 +5,7 @@ package org.net9.minipie.app.server;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.net9.minipie.app.client.data.PersonBean;
@@ -21,12 +22,13 @@ public class Session {
 	private Backend backend;
 	private PersonBean profile;
 	private Map<Long, PersonBean> userContacts;
-	private Collection<PersonBean> userContactList;
+	private List<PersonBean> userContactList;
 	private Map<Long, PersonBean> contacts;
-	private Collection<PersonBean> contactList;
-	private Collection<TagBean> tagList;
+	private List<PersonBean> contactList;
+	private List<TagBean> tagList;
 
-	public Session(String username, String password) throws GenericException, LoginFailedException {
+	public Session(String username, String password) throws GenericException,
+			LoginFailedException {
 		backend = new Backend(username, password);
 		userContacts = new HashMap<Long, PersonBean>();
 		contacts = new HashMap<Long, PersonBean>();
@@ -37,27 +39,40 @@ public class Session {
 		return profile;
 	}
 
-	public Collection<PersonBean> listUserContacts() {
+	public List<PersonBean> listUserContacts() {
 		return userContactList;
 	}
 
-	public Collection<PersonBean> listContacts() {
+	public List<PersonBean> listContacts() {
 		return contactList;
 	}
 
-	public Collection<TagBean> listTags() {
+	public List<TagBean> listTags() {
 		return tagList;
 	}
-	
-	public PersonBean viewUserContact(long userId){
+
+	public PersonBean viewUserContact(long userId) throws GenericException, LoginFailedException {
 		PersonBean user = userContacts.get(userId);
-		if (user == null){}
-			// TODO get user
+		if (user == null) {
+			user = backend.getUserById(userId);
+			userContacts.put(userId, user);
+		}
 		return user;
+	}
+	
+	public PersonBean viewContact(long contactId) throws GenericException, LoginFailedException {
+		PersonBean contact = contacts.get(contactId);
+		if (contact == null) {
+			contact = backend.getContactById(contactId);
+			contacts.put(contactId, contact);
+		}
+		return contact;
 	}
 
 	private void initialize() throws GenericException, LoginFailedException {
 		profile = backend.getProfile();
+		userContactList = backend.listUserContacts();
+		contactList = backend.listContacts();
 		// TODO
 	}
 }

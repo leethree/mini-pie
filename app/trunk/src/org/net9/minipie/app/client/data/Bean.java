@@ -25,18 +25,18 @@ public abstract class Bean implements Serializable {
 	public String get(String key) {
 		return properties.get(key);
 	}
-
-	/**
-	 * @return the beanName
-	 */
-	public String getBeanName() {
-		return beanName;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public long getId() {
-		return id;
-	}
+//
+//	/**
+//	 * @return the beanName
+//	 */
+//	public String getBeanName() {
+//		return beanName;
+//	}
+//
+//	/**
+//	 * @return the id
+//	 */
+//	public long getId() {
+//		return id;
+//	}
 }

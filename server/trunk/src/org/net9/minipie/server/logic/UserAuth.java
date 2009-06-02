@@ -28,6 +28,11 @@ public class UserAuth {
 		this.pwd = pwd;
 	}
 
+	/**
+	 * Return the userId of corresponding user, -1 if illegal
+	 * 
+	 * @return
+	 */
 	public long getUserId() {
 		UserStorage executor = new HibernateDAOFactory().getUserStorage();
 		try {

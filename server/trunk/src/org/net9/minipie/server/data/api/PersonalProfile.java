@@ -106,12 +106,12 @@ public class PersonalProfile {
 	/**
 	 * @return the nickname
 	 */
-	@XmlElement
+	@XmlElement(name = "nickname")
 	public String getNickName() {
 		return entity.getNickName();
 	}
 
-	@XmlElement
+	@XmlElement(name = "name")
 	public String getDisplayName() {
 		return entity.getDisplayname();
 	}

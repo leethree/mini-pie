@@ -14,75 +14,82 @@ import org.net9.minipie.app.client.mvc.ContentController;
 import org.net9.minipie.app.client.mvc.NavigationController;
 
 import com.extjs.gxt.ui.client.Registry;
+import com.extjs.gxt.ui.client.data.ChangeEvent;
+import com.extjs.gxt.ui.client.data.ChangeListener;
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.widget.Viewport;
-import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
 import com.google.gwt.user.client.Window;
+
 //import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
-public class Explorer implements EntryPoint {
+public class Explorer {
 
-  public static final String MODEL = "model";
+	public static final String MODEL = "model";
 
-  private Dispatcher dispatcher;
-  private ExplorerModel model;
+	private Dispatcher dispatcher;
+	private ExplorerModel model;
+	private String hash;
 
-  public void onModuleLoad() {
-    try {
-      GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
-        public void onUncaughtException(Throwable e) {
-          e.printStackTrace();
-        }
-      });
-//      ExampleServiceAsync service = (ExampleServiceAsync) GWT.create(ExampleService.class);
-//      ServiceDefTarget endpoint = (ServiceDefTarget) service;
-//      String moduleRelativeURL = "service";
-//      endpoint.setServiceEntryPoint(moduleRelativeURL);
-//      Registry.register(Examples.SERVICE, service);
-//
-//      FileServiceAsync fileservice = (FileServiceAsync) GWT.create(FileService.class);
-//      endpoint = (ServiceDefTarget) fileservice;
-//      moduleRelativeURL = "fileservice";
-//      endpoint.setServiceEntryPoint(moduleRelativeURL);
-//      Registry.register(Examples.FILE_SERVICE, fileservice);
+	public Explorer() {
+		try {
+			GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+				public void onUncaughtException(Throwable e) {
+					e.printStackTrace();
+				}
+			});
 
-      model = new ExplorerModel();
-      Registry.register(MODEL, model);
+			model = new ExplorerModel();
+			Registry.register(MODEL, model);
 
-      dispatcher = Dispatcher.get();
-      dispatcher.addController(new AppController());
-      dispatcher.addController(new NavigationController());
-      dispatcher.addController(new ContentController());
-      dispatcher.dispatch(AppEvents.Init);
+			dispatcher = Dispatcher.get();
+			dispatcher.addController(new AppController());
+			dispatcher.addController(new NavigationController());
+			dispatcher.addController(new ContentController());
+			dispatcher.dispatch(AppEvents.Init);
 
-      String hash = Window.Location.getHash();
+			hash = Window.Location.getHash();
 
-      showPage(model.findEntry("overview"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-      Viewport v = Registry.get(AppView.VIEWPORT);
-      v.layout(true);
+	public void onLogin() {
 
-      if (!"".equals(hash)) {
-        hash = hash.substring(1);
-        Entry entry = model.findEntry(hash);
-        if (entry != null) {
-          showPage(entry);
-        }
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+		model.addChangeListener(new ChangeListener() {
 
-  }
+			@Override
+			public void modelChanged(ChangeEvent event) {
+				if (event.getType() == ExplorerModel.READY) {
+					dispatcher.dispatch(AppEvents.Login);
+					showPage(model.findEntry("overview"));
 
-  public static void showPage(Entry entry) {
-    AppEvent appEvent = new AppEvent(AppEvents.ShowPage, entry);
-    appEvent.setHistoryEvent(true);
-    appEvent.setToken(entry.getId());
-    Dispatcher.forwardEvent(appEvent);
-  }
+					Viewport v = Registry.get(AppView.VIEWPORT);
+					v.layout(true);
+
+					if (!hash.isEmpty()) {
+						hash = hash.substring(1);
+						Entry entry = model.findEntry(hash);
+						if (entry != null) {
+							showPage(entry);
+						}
+					}
+				}
+			}
+
+		});
+		model.onLogin();
+
+	}
+
+	public static void showPage(Entry entry) {
+		AppEvent appEvent = new AppEvent(AppEvents.ShowPage, entry);
+		appEvent.setHistoryEvent(true);
+		appEvent.setToken(entry.getKey());
+		Dispatcher.forwardEvent(appEvent);
+	}
 
 }
