@@ -14,11 +14,13 @@ import javax.ws.rs.core.Response;
 
 import org.net9.minipie.server.data.api.PhonebookCompleteUser;
 import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.data.field.Relationships;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.logic.Handler;
 import org.net9.minipie.server.logic.operation.user.RemoveUserContact;
 import org.net9.minipie.server.logic.operation.user.ShareUser;
+import org.net9.minipie.server.logic.operation.user.UpdateRelationship;
 import org.net9.minipie.server.logic.operation.user.ViewMyUserContact;
 
 /**
@@ -56,16 +58,24 @@ public class PhonebookUserResource extends BaseResource {
 	 * @return
 	 */
 	@PUT
-	public Response put(@FormParam("permission") String permission) {
-		try {
-			Permission perm = Permission.value(permission);
-			new Handler<Void>(new ShareUser(getUserId(), userId, perm))
-					.execute();
+	public Response put(@FormParam("permission") String permission,
+			@FormParam("rel") String relationship) {
+		if (permission != null && !permission.isEmpty()) {
+			try {
+				Permission perm = Permission.value(permission);
+				new Handler<Void>(new ShareUser(getUserId(), userId, perm))
+						.execute();
+				return Response.ok().build();
+			} catch (DataFormatException e) {
+				throw new InvalidRequestException("Invalid permission value");
+			}
+		} else if (relationship != null && !relationship.isEmpty()) {
+			new Handler<Void>(new UpdateRelationship(getUserId(), userId,
+					relationship)).execute();
 			return Response.ok().build();
-		} catch (DataFormatException e) {
-			throw new InvalidRequestException("Invalid permission value");
 		}
-
+		throw new InvalidRequestException(
+				"No valid permission provided: permission or rel expected.");
 	}
 
 	@DELETE
