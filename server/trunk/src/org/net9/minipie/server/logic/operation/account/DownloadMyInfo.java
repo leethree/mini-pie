@@ -8,7 +8,6 @@ package org.net9.minipie.server.logic.operation.account;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Random;
 import java.util.UUID;
 
 import org.net9.minipie.server.data.entity.AddressData;
@@ -42,13 +41,13 @@ public class DownloadMyInfo extends Command<String>{
         long n=id.getLeastSignificantBits();
         long m=id.getMostSignificantBits();
         if(userId%3==0){
-        	fileName=String.valueOf(userId)+"__"+String.valueOf(Math.abs(m))+".cvx";
+        	fileName=String.valueOf((long)(userId*Math.random()))+"__"+String.valueOf(Math.abs(m))+".txt";
         }else if(userId%3==1){
-        	fileName=String.valueOf(userId+7)+"__"+String.valueOf(Math.abs(n))+".cvx";
+        	fileName=String.valueOf((long)((userId+7)*Math.random()))+"__"+String.valueOf(Math.abs(n))+".txt";
         }else if(userId%6==2){
-        	fileName="__"+String.valueOf(Math.abs(n))+String.valueOf(userId+177)+".cvx";
+        	fileName="__"+String.valueOf(Math.abs(n+77))+String.valueOf((long)((userId+777)*Math.random()))+".txt";
         }else{
-        	fileName="__"+String.valueOf(Math.abs(m))+String.valueOf(userId+777)+".cvx";
+        	fileName="__"+String.valueOf(Math.abs(m+7))+String.valueOf((long)((userId+7777)*Math.random()))+".txt";
         }
 	}
 	/* (non-Javadoc)
@@ -69,10 +68,14 @@ public class DownloadMyInfo extends Command<String>{
 			os.write("Name,RegisteredEmail,NickName,DisplayName,Notes,Birthday,BirthdayPermission" +
 					",BirthyearPermission,Gender,GenderPermission,AddAsContactPermission\r\n");
 			os.write(entity.getName()+","+entity.getRegisteredEmail()+","+entity.getNickName()+","
-					+entity.getDisplayname()+","+entity.getNotes()+","+entity.getBirthday().toString()
+					+entity.getDisplayname()+","+entity.getNotes()+",");
+			if(entity.getBirthday()!=null)
+			os.write(entity.getBirthday().toString()
 					+","+entity.getBirthdatePermission().toString()+","+entity.getBirthyearPermission()
 					+","+entity.getAddAsContactPermission().toString()+"\r\n\r\n");
-			
+			else os.write("null"
+					+","+entity.getBirthdatePermission().toString()+","+entity.getBirthyearPermission()
+					+","+entity.getAddAsContactPermission().toString()+"\r\n\r\n");
 			os.write("Address Info\r\n");
 			for(AddressData temp:entity.getAddrs()){
 				os.write("value,type,primary,permission,zipcode\r\n");
@@ -113,6 +116,7 @@ public class DownloadMyInfo extends Command<String>{
 				os.write("\r\n");
 			}
 			
+			os.close();			
 		} catch (IOException e) {
 			throw new ServerErrorException("can't write the file");
 		} catch (DataFormatException e) {

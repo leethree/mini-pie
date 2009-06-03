@@ -47,7 +47,7 @@ public class ShareUser extends Command<Void> {
 		executor2.selectBasicInfo(targetId);
 		try{
 			executor.selectRelationship(userId, targetId);
-			executor.edit(userId, targetId, InfoField.LEFTPERMISSION, perm);
+			executor.edit(userId, targetId, InfoField.PERMISSION, perm);
 		}catch (NotFoundException e){
 			throw new PermissionDeniedException("this is not your user contact");
 		}
