@@ -18,6 +18,6 @@ public class ProfileEntry extends PersonEntry{
 		set("category", "Personal Profile");
 		
 		// TODO to-be removed
-		set("name", bean.get("displayName"));
+		//set("name", bean.get("displayName"));
 	}
 }

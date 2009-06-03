@@ -76,8 +76,8 @@ public class PersonalProfile {
 	}
 
 	@XmlElement(name = "gender_perm")
-	public Permission getGenderPermission() {
-		return entity.getGenderPermission();
+	public String getGenderPermission() {
+		return entity.getGenderPermission().toString();
 	}
 
 	/**
