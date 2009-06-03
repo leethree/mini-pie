@@ -47,4 +47,8 @@ public class Query {
 	public String getValue() {
 		return value;
 	}
+	
+	public String toString(){
+		return type.toString()+" "+field.toString()+" "+value;
+	}
 }
