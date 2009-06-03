@@ -12,6 +12,7 @@ import org.net9.minipie.server.data.api.PhonebookUserListEntry;
 import org.net9.minipie.server.data.entity.UserEntity;
 import org.net9.minipie.server.data.field.Relationships;
 import org.net9.minipie.server.data.storage.UserRelation;
+import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.Tag_UserStorage;
 import org.net9.minipie.server.logic.storage.UserStorage;
@@ -35,7 +36,9 @@ public class ListMyUserContact extends Command<Collection<PhonebookUserListEntry
 		UserStorage executor=getStorageFactory().getUserStorage();
 		User_UserStorage executor2=getStorageFactory().getUser_UserStorage();
 		Tag_UserStorage executor3=getStorageFactory().getTag_UserStorage();
+		try{
 		Collection<UserRelation> list=executor2.selectMyUserContact(userId);
+		
 		Collection<PhonebookUserListEntry> result=new Vector<PhonebookUserListEntry>();
 		for(UserRelation uu:list){
 			//PhonebookUserListEntry temp;
@@ -47,6 +50,10 @@ public class ListMyUserContact extends Command<Collection<PhonebookUserListEntry
 			result.add(new PhonebookUserListEntry(user));
 		}
 		return result;
+		}catch (NotFoundException e){
+			return new Vector<PhonebookUserListEntry>();
+		}
+		
 	}
 
 }
