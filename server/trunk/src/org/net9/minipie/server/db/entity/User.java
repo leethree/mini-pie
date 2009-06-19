@@ -29,7 +29,7 @@ public class User{
 	@Column(name = "REG_EMAIL", nullable = false)
 	private String registerEmail;
 	@Column(name = "ADD_AS_CONTACT_PERMISSION", nullable = false)
-	private AddAsContactPermission perm;
+	private AddAsContactPermission perm = AddAsContactPermission.EVERYONE;
 	@Column(name = "NAME_TO_DISPLAY", nullable = false)
 	private String displayName;
 	@Column(name = "NICKNAME")

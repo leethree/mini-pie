@@ -28,7 +28,7 @@ public class UserIM {
 	@Column(name = "IS_PRIMARY")
 	private Bool primary;
 	@Column(name = "PERM", nullable = false)
-	private Permission perm;
+	private Permission perm = Permission.TO_CONTACTS;
 	public Long getId() {
 		return id;
 	}
