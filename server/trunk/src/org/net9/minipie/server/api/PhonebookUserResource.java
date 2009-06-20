@@ -14,7 +14,6 @@ import javax.ws.rs.core.Response;
 
 import org.net9.minipie.server.data.api.PhonebookCompleteUser;
 import org.net9.minipie.server.data.field.Permission;
-import org.net9.minipie.server.data.field.Relationships;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.logic.Handler;
