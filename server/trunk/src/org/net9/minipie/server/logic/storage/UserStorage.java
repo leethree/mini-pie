@@ -23,7 +23,7 @@ import org.net9.minipie.server.data.storage.Query;
  *
  */
 public interface UserStorage {
-	Long add(String name, String pwd, String email);
+	Long add(String name,String displayName ,String pwd, String email);
 
 	Long addAddr(Long userId, AddressData value);
 

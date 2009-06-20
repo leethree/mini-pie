@@ -19,11 +19,13 @@ public class SignUp extends Command<Long> {
 	private String name;
 	private String pwd;
 	private String email;
-
-	public SignUp(String name, String email, String password) {
+	private String displayName;
+	
+	public SignUp(String name,String displayNmae ,String email, String password) {
 		setName(name);
 		setEmail(email);
 		setPwd(password);
+		setDisplayName(displayName);
 	}
 
 	/**
@@ -51,6 +53,13 @@ public class SignUp extends Command<Long> {
 		this.name = Formatter.compact(name);
 	}
 
+	public void setDisplayName(String disName) {
+		if (displayName == null)
+			throw new InvalidRequestException("The displayName should not be null.");
+		this.displayName = Formatter.compact(disName);
+	}
+
+	
 	/**
 	 * @param pwd
 	 *            the pwd to set
@@ -73,7 +82,7 @@ public class SignUp extends Command<Long> {
 	 */
 	public Long execute() {
 		UserStorage executor = getStorageFactory().getUserStorage();
-		return executor.add(name, pwd, email);
+		return executor.add(name,displayName, pwd, email);
 	}
 
 }
