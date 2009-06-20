@@ -84,7 +84,7 @@ public class AddressXml implements DetailedInfoXml {
 	/**
 	 * @return the formatted
 	 */
-	@XmlElement(required = true)
+	@XmlElement(name = "value", required = true)
 	public String getFormatted() {
 		return entity.getValue();
 	}

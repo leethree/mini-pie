@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="GB18030"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,22 +9,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'index.jsp' starting page</title>
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+    <title>Mini-Pie Web Service</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
   </head>
   
   <body>
-    This is my JSP page. <br>
-        <form method="post" enctype="multipart/form-data">
-    	<input type="file" name="fileupload"/>
-    	<input type="submit" value="upload" />
-    </form>
+    <h1 id="title" ><a href="./">Mini-Pie Web Service</a></h1>
+  	<h2>Welcome to Mini-Pie Web Service homepage!</h2>
+    <hr/>
+    <ul>
+    	<li><a href="./signup/">Sign Up</a>
+    	</li>
+    	<li><a href="">Documentations</a> (not available yet)
+    	</li>
+    	<li><a href="http://code.google.com/p/mini-pie">Google Code site</a>
+    	</li>
+    	<li><a href="http://groups.google.com/group/mini-pie">Mailing List</a>
+    	</li>
+    	<li><a href="">About</a> (not available yet)
+    	</li>
+    </ul>
+
   </body>
 </html>

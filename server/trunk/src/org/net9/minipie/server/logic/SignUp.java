@@ -21,7 +21,7 @@ public class SignUp extends Command<Long> {
 	private String email;
 	private String displayName;
 	
-	public SignUp(String name,String displayNmae ,String email, String password) {
+	public SignUp(String name,String displayName ,String email, String password) {
 		setName(name);
 		setEmail(email);
 		setPwd(password);
@@ -54,7 +54,7 @@ public class SignUp extends Command<Long> {
 	}
 
 	public void setDisplayName(String disName) {
-		if (displayName == null)
+		if (disName == null)
 			throw new InvalidRequestException("The displayName should not be null.");
 		this.displayName = Formatter.compact(disName);
 	}

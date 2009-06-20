@@ -16,11 +16,12 @@ public class WebController {
 
 	public static long signUp(String username, String displayname, String email, String pass)
 			throws WebException {
+		//System.out.println(username);
 		try {
 			return new Handler<Long>(new SignUp(username, displayname, email, pass))
 					.execute();
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new WebException(e);
 		}
 	}
