@@ -6,6 +6,7 @@
 package org.net9.minipie.server.logic.storage;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.Permission;
@@ -26,5 +27,6 @@ public interface User_UserStorage {
 	public Collection<CommonListEntry> selectSharedUser(Long userId,Permission permission); 
 	public Collection<UserRelation> selectMyUserContact(Long id);
 	//public Collection<Long> selectSameContact(Long userId1,Long userId2);
+	public Map<Long, Long> getRelations();
 	
 }
