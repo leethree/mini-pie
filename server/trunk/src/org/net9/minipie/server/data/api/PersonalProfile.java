@@ -88,11 +88,6 @@ public class PersonalProfile {
 		return entity.getId();
 	}
 
-	@XmlElement
-	public String getPassword() {
-		return entity.getPassword();
-	}
-
 	@XmlElement(name = "register_email")
 	public String getRegisterEmail() {
 		return entity.getRegisteredEmail();

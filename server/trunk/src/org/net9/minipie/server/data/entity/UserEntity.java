@@ -18,7 +18,6 @@ import org.net9.minipie.server.exception.ServerErrorException;
  */
 public class UserEntity extends CommonEntity {
 	private String registeredEmail;
-	private String password;
 	private String displayname;
 	private AddAsContactPermission addAsContactPermission;
 	private Permission genderPermission;
@@ -74,24 +73,6 @@ public class UserEntity extends CommonEntity {
 			throw new ServerErrorException(
 					"The registerd email should not be null.");
 		this.registeredEmail = Formatter.formatEmail(registeredEmail);
-	}
-
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * @param password
-	 *            the password to set
-	 * @throws DataFormatException
-	 */
-	public void setPassword(String password) throws DataFormatException {
-		if (password == null)
-			throw new ServerErrorException("The password should not be null.");
-		this.password = Formatter.formatPassword(password);
 	}
 
 	/**

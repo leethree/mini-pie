@@ -13,7 +13,7 @@ import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.logic.storage.UserStorage;
 
 public interface UserDAO extends GenericDAO<User, Long>, UserStorage {
-	Long add(String name, String pwd, String email);
+	Long add(String name, String displayName, String pwd, String email);
 
 	Long addAddr(Long userId, AddressData value);
 

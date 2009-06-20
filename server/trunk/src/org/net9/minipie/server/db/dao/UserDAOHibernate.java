@@ -37,9 +37,10 @@ import org.net9.minipie.server.logic.storage.UserStorage;
 public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		UserDAO, UserStorage {
 
-	public Long add(String name, String pwd, String email) {
+	public Long add(String name, String displayName, String pwd, String email) {
 		User newUser = new User();
 		newUser.setUserName(name);
+		newUser.setDisplayName(displayName);
 		newUser.setPassword(pwd);
 		newUser.setRegisterEmail(email);
 		newUser.setPerm(AddAsContactPermission.CONFIRMED_ONES);

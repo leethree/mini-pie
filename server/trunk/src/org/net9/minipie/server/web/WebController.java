@@ -14,10 +14,10 @@ import org.net9.minipie.server.logic.SignUp;
  */
 public class WebController {
 
-	public static long signUp(String username, String email, String pass)
+	public static long signUp(String username, String displayname, String email, String pass)
 			throws WebException {
 		try {
-			return new Handler<Long>(new SignUp(username, email, pass))
+			return new Handler<Long>(new SignUp(username, displayname, email, pass))
 					.execute();
 		} catch (Exception e) {
 			e.printStackTrace();

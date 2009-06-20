@@ -244,11 +244,11 @@ public class UserEditHandler extends UpdateHandler {
 						userExecutor.editBasicInfo(userId, InfoField.REGISTEREMAIL, 
 								user.getRegisteredEmail());
 						break;
-					case PASSWORD:
-						user.setPassword(newData.getValue());
-						userExecutor.editBasicInfo(userId, InfoField.PASSWORD, 
-								user.getPassword());
-						break;
+//					case PASSWORD:
+//						user.setPassword(newData.getValue());
+//						userExecutor.editBasicInfo(userId, InfoField.PASSWORD, 
+//								user.getPassword());
+//						break;
 					case BIRTHDAY:
 						if (newData.getValue() != null)
 							user.setBirthday(new Birthdate(newData.getValue()));
