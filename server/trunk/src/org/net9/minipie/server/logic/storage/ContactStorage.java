@@ -15,9 +15,7 @@ import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicContact;
-import org.net9.minipie.server.data.storage.BasicUser;
 import org.net9.minipie.server.data.storage.CommonListEntry;
-import org.net9.minipie.server.data.storage.Query;
 
 /**
  * @author Seastar

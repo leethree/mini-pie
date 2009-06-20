@@ -29,7 +29,7 @@ public class User{
 	@Column(name = "REG_EMAIL", nullable = false)
 	private String registerEmail;
 	@Column(name = "ADD_AS_CONTACT_PERMISSION", nullable = false)
-	private AddAsContactPermission perm = AddAsContactPermission.EVERYONE;
+	private AddAsContactPermission perm = AddAsContactPermission.CONFIRMED_ONES;
 	@Column(name = "NAME_TO_DISPLAY", nullable = false)
 	private String displayName;
 	@Column(name = "NICKNAME")
@@ -38,14 +38,14 @@ public class User{
 	private String imageURL;
 	@Column(name = "GENDER")
 	private Gender gender;
-	@Column(name = "VIEW_GENDER_PERMISSION")
-	private Permission genderPermission;
+	@Column(name = "VIEW_GENDER_PERMISSION", nullable = false)
+	private Permission genderPermission = Permission.TO_CONTACTS;
 	@Column(name = "BIRTHDAY")
 	private String birthday;
-	@Column(name = "VIEW_BIRTHYEAR_PERMISSION")
-	private Permission birthyearPermission;
-	@Column(name = "VIEW_BIRTHDAYDAY_PERMISSION")
-	private Permission birthdayPermission;
+	@Column(name = "VIEW_BIRTHYEAR_PERMISSION", nullable = false)
+	private Permission birthyearPermission = Permission.TO_CONTACTS;
+	@Column(name = "VIEW_BIRTHDAYDAY_PERMISSION", nullable = false)
+	private Permission birthdayPermission = Permission.TO_CONTACTS;
 	@Column(name = "NOTES")
 	private String note;
 	

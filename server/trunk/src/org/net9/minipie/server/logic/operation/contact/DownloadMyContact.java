@@ -18,14 +18,12 @@ import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.TagEntry;
 import org.net9.minipie.server.data.entity.URLData;
-import org.net9.minipie.server.data.entity.UserEntity;
 import org.net9.minipie.server.data.storage.CommonListEntry;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 import org.net9.minipie.server.logic.storage.Tag_ContactStorage;
-import org.net9.minipie.server.logic.storage.UserStorage;
 
 /**
  * @author Seastar
