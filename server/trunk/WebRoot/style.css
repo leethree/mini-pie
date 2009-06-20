@@ -1,11 +1,16 @@
 @CHARSET "UTF-8";
 
-h1#title a {
+div#header {
 	display: block;
-	width: auto;
+	width: 100%;
 	background-color: #44a;
-	padding: 5px;
+	
 	border-bottom: medium solid #888;
+}
+
+h1#title {
+	padding: 5px;
+	margin: 0;
 }
 
 h1#title a {
@@ -19,6 +24,11 @@ h1#title a:hover{
 	text-decoration: underline;
 }
 
+div#content {
+	display: block;
+	width: auto;
+	margin: 10px;
+}
 
 li {
 	margin-top: 15px;

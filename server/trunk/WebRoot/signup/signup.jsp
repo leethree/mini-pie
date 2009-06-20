@@ -25,27 +25,31 @@ else try {
   </head>
   
   <body>
-    <h1 id="title" ><a href="./">Mini-Pie Web Service</a></h1>
-  	<h2>Welcome!</h2>
-    Congratulations! You've successfully signed up to Mini-Pie Web Service. Here's your registration information: <br>
-    <table border="0">
-        <tr>
-          <td>Username:</td>
-          <td><%=username %></td>
-        </tr>
-        <tr>
-          <td>Display name:</td>
-          <td><%=displayname %></td>
-        </tr>
-        <tr>
-          <td>Email:</td>
-          <td><%=email %></td>
-        </tr>
-        <tr>
-          <td>User ID:</td>
-          <td><%=id %></td>
-        </tr> 
-      </table>
+     <div id="header" >
+   		<h1 id="title" ><a href="./">Mini-Pie Web Service</a></h1>
+    </div>
+    <div id="content" >
+	    <h2>Welcome!</h2>
+	    Congratulations! You've successfully signed up to Mini-Pie Web Service. Here's your registration information: <br>
+	    <table border="0">
+	        <tr>
+	          <td>Username:</td>
+	          <td><%=username %></td>
+	        </tr>
+	        <tr>
+	          <td>Display name:</td>
+	          <td><%=displayname %></td>
+	        </tr>
+	        <tr>
+	          <td>Email:</td>
+	          <td><%=email %></td>
+	        </tr>
+	        <tr>
+	          <td>User ID:</td>
+	          <td><%=id %></td>
+	        </tr> 
+	      </table>
+      </div>
   </body>
 </html>
 <%
@@ -61,12 +65,16 @@ else try {
   </head>
   
   <body>
-    <h1 id="title" ><a href="./">Mini-Pie Web Service</a></h1>
-  	<h2>Sorry</h2>
-    We encountered an error with the following information:<br>
-	<p>
-		<%=e.getMessage() %>
-	</p>
+    <div id="header" >
+   		<h1 id="title" ><a href="./">Mini-Pie Web Service</a></h1>
+    </div>
+     <div id="content" >
+	    <h2>Sorry</h2>
+	    We've encountered an error with the following message:<br>
+		<p>
+			<%=e.getMessage() %>
+		</p>
+	</div>
   </body>
 </html>
 <%
