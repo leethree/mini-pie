@@ -2,6 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 <%
+request.setCharacterEncoding("UTF-8");
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 String username = request.getParameter("username");
@@ -29,8 +30,8 @@ else try {
    		<h1 id="title" ><a href="./">Mini-Pie Web Service</a></h1>
     </div>
     <div id="content" >
-	    <h2>Welcome!</h2>
-	    Congratulations! You've successfully signed up to Mini-Pie Web Service. Here's your registration information: <br>
+	    <h2>Congratulations!</h2>
+	    You've successfully signed up to Mini-Pie Web Service. Here's your registration information: <br>
 	    <table border="0">
 	        <tr>
 	          <td>Username:</td>

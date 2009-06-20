@@ -20,7 +20,17 @@ public class Birthdate {
 	private static final String DATE_PATTERN = "yyyy-M-d";
 	private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat(
 			DATE_PATTERN);
-
+	private static final String SIMPLE_DATE_PATTERN = "M-d";
+	private static final SimpleDateFormat SIMPLE_DATE_FORMATTER = new SimpleDateFormat(
+			SIMPLE_DATE_PATTERN);
+	private boolean showyear;
+	
+	/**
+	 * Constructor
+	 */
+	private Birthdate() {
+	}
+	
 	/**
 	 * Constructor
 	 * 
@@ -29,9 +39,15 @@ public class Birthdate {
 	public Birthdate(String dateStr) throws DataFormatException {
 		try {
 			date = DATE_FORMATTER.parse(dateStr);
+			showyear = true;
 		} catch (ParseException e) {
-			throw new DataFormatException("Invalid date: " + dateStr
-					+ ", pattern: " + DATE_PATTERN);
+			try {
+				date = SIMPLE_DATE_FORMATTER.parse(dateStr);
+				showyear = false;
+			} catch (ParseException e2) {
+				throw new DataFormatException("Invalid date: " + dateStr
+						+ ", pattern: " + DATE_PATTERN);
+			}
 		}
 	}
 	
@@ -40,10 +56,15 @@ public class Birthdate {
 	 */
 	@Override
 	public String toString() {
-		return DATE_FORMATTER.format(date);
+		if (showyear)
+			return DATE_FORMATTER.format(date);
+		else
+			return SIMPLE_DATE_FORMATTER.format(date);
 	}
 	public Birthdate toSimpleDate(){
-		//TODO:return the date and month format
-		return this;
+		Birthdate bd = new Birthdate();
+		bd.date = this.date;
+		bd.showyear = false;
+		return bd;
 	}
 }
