@@ -6,6 +6,7 @@
 package org.net9.minipie.server.db.dao;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.Permission;
@@ -25,4 +26,5 @@ public interface User_UserDAO extends GenericDAO<User2User, Id> {
 	public String selectRelationship(Long userId1, Long userId2);
 	public Collection<CommonListEntry> selectSharedUser(Long userId, Permission permission);
 	public Collection<UserRelation> selectMyUserContact(Long id);
+	public Map<Long, Long> getRelations();
 }
