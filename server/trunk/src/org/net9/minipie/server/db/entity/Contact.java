@@ -23,7 +23,7 @@ public class Contact {
 	@GeneratedValue
 	@Column(name = "CONTACT_ID")
 	private Long id;
-	@Column(name = "PERMISSION", nullable = false)
+	@Column(name = "PERM", nullable = false)
 	private Permission perm = Permission.TO_SELF;
 	@Column(name = "NAME", nullable = false)
 	private String name;
