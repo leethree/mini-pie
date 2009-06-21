@@ -106,7 +106,7 @@ public class AddUserAsContact extends Command<Void> {
 				NotificationStorage executor3 = getStorageFactory()
 						.getNotifacationStorage();
 				try {
-					executor3.add(new NotificationData(null, userId, targetId,
+					executor3.add(new NotificationData(0, userId, targetId,
 							"user " + userId
 									+ " want you to be his/her contact,"
 									+ "please confirm\r\n" + "his/her message:"
