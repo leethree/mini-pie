@@ -20,4 +20,5 @@ public interface Group_UserStorage {
 	//public Collection<CommonListEntry> selectAdmin(Long groupId);
 	public Collection<CommonListEntry> selectMember(Long groupId,Boolean isAdim);	//join the user table
 	public Collection<GroupEntry> selectGroup(Long userId);
+	public boolean isAdmin(Long userId,Long groupId);
 }
