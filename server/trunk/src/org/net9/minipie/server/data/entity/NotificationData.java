@@ -15,9 +15,9 @@ import org.net9.minipie.server.exception.ServerErrorException;
  * 
  */
 public class NotificationData {
-	private Long id;
-	private Long senderId;
-	private Long receiverId;
+	private long id;
+	private long senderId;
+	private long receiverId;
 	private String content;
 	private NotificationType type;
 
@@ -30,7 +30,7 @@ public class NotificationData {
 	 * @param type
 	 * @throws DataFormatException
 	 */
-	public NotificationData(Long id,Long senderId, Long receiverId, String content,
+	public NotificationData(long id,long senderId, long receiverId, String content,
 			NotificationType type) throws DataFormatException {
 		setId(id);
 		setSenderId(senderId);
@@ -42,7 +42,7 @@ public class NotificationData {
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -51,13 +51,13 @@ public class NotificationData {
 	 *            the id to set
 	 * @throws DataFormatException 
 	 */
-	public void setId(Long id) throws DataFormatException {
-		this.id = Formatter.checkId(id);
+	public void setId(long id) throws DataFormatException {
+		this.id = Formatter.checkNullableId(id);
 	}
 	/**
 	 * @return the senderId
 	 */
-	public Long getSenderId() {
+	public long getSenderId() {
 		return senderId;
 	}
 
@@ -73,7 +73,7 @@ public class NotificationData {
 	/**
 	 * @return the receiverId
 	 */
-	public Long getReceiverId() {
+	public long getReceiverId() {
 		return receiverId;
 	}
 
@@ -82,7 +82,7 @@ public class NotificationData {
 	 *            the receiverId to set
 	 * @throws DataFormatException
 	 */
-	public void setReceiverId(Long receiverId) throws DataFormatException {
+	public void setReceiverId(long receiverId) throws DataFormatException {
 		this.receiverId = Formatter.checkId(receiverId);
 	}
 
