@@ -23,34 +23,42 @@ import org.net9.minipie.server.logic.storage.Group_UserStorage;
 
 /**
  * @author Riversand
- *
+ * 
  */
 public class Group_UserDAOHibernate extends GenericHibernateDAO<Group2User, Id>
 		implements Group_UserDAO, Group_UserStorage {
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.GenericDAO#findById(java.io.Serializable)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.db.dao.GenericDAO#findById(java.io.Serializable)
 	 */
 	public Group2User findById(Id id) {
 		return super.findById(id, true);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.Group_UserDAO#add(java.lang.Long, java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.net9.minipie.server.db.dao.Group_UserDAO#add(java.lang.Long,
+	 * java.lang.Long)
 	 */
 	public void add(Long groupId, Long userId) {
 		UserDAOHibernate udh = new UserDAOHibernate();
 		User user = null;
-		try{
+		try {
 			user = udh.findById(userId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no user with useId: "+ userId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no user with useId: "
+					+ userId);
 		}
 		GroupDAOHibernate gdh = new GroupDAOHibernate();
 		Group group = null;
-		try{
+		try {
 			group = gdh.findById(groupId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException ("there is no group with groupId: "+groupId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no group with groupId: "
+					+ groupId);
 		}
 		Group2User membership = new Group2User(group, user, Bool.FALSE);
 		begin();
@@ -64,49 +72,60 @@ public class Group_UserDAOHibernate extends GenericHibernateDAO<Group2User, Id>
 		udh.begin();
 		udh.makePersistent(user);
 		udh.commit();
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.Group_UserDAO#remove(java.lang.Long, java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.net9.minipie.server.db.dao.Group_UserDAO#remove(java.lang.Long,
+	 * java.lang.Long)
 	 */
 	public void remove(Long groupId, Long userId) {
 		Group2User membership = null;
 		Id id = new Id(groupId, userId);
-		try{
+		try {
 			membership = findById(id);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("membership does not exist between group "+groupId+" and user: "+userId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException(
+					"membership does not exist between group " + groupId
+							+ " and user: " + userId);
 		}
 		begin();
 		makeTransient(membership);
 		commit();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.Group_UserDAO#selectGroup(java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.db.dao.Group_UserDAO#selectGroup(java.lang.Long)
 	 */
 	public Collection<GroupEntry> selectGroup(Long userId) {
 		UserDAOHibernate udh = new UserDAOHibernate();
 		User user = null;
-		try{
+		try {
 			user = udh.findById(userId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no user with userId: "+userId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no user with userId: "
+					+ userId);
 		}
 		GroupDAOHibernate gdh = new GroupDAOHibernate();
 		Collection<GroupEntry> groupEntries = new ArrayList<GroupEntry>();
 		for (Group2User membership : user.getGroups()) {
 			Long groupId = membership.getGroup().getId();
 			Group group = null;
-			try{
+			try {
 				group = gdh.findById(groupId);
-			}catch(ObjectNotFoundException e){
-				throw new NotFoundException("there is no group with groupId: "+groupId);
+			} catch (ObjectNotFoundException e) {
+				throw new NotFoundException("there is no group with groupId: "
+						+ groupId);
 			}
 			try {
-				groupEntries.add(new GroupEntry(group.getGroupName(), group.getDescription(),
-						group.getCreatorId().longValue(), group.getCreatorName(), group.getPerm()));
+				groupEntries.add(new GroupEntry(group.getGroupName(), group
+						.getDescription(), group.getCreatorId().longValue(),
+						group.getCreatorName(), group.getPerm()));
 			} catch (DataFormatException e) {
 				throw new ServerErrorException(e.getMessage());
 			}
@@ -114,31 +133,38 @@ public class Group_UserDAOHibernate extends GenericHibernateDAO<Group2User, Id>
 		return groupEntries;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.Group_UserDAO#selectMember(java.lang.Long, java.lang.Boolean)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.db.dao.Group_UserDAO#selectMember(java.lang.Long,
+	 * java.lang.Boolean)
 	 */
-	public Collection<CommonListEntry> selectMember(Long groupId, Boolean isAdmin) {
+	public Collection<CommonListEntry> selectMember(Long groupId,
+			Boolean isAdmin) {
 		GroupDAOHibernate gdh = new GroupDAOHibernate();
 		Group group = null;
-		try{
+		try {
 			group = gdh.findById(groupId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no group with groupId: "+groupId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no group with groupId: "
+					+ groupId);
 		}
 		Collection<CommonListEntry> members = new ArrayList<CommonListEntry>();
 		UserDAOHibernate udh = new UserDAOHibernate();
 		for (Group2User membership : group.getMembers()) {
 			Long userId = membership.getMember().getId();
 			User user = null;
-			if((isAdmin && membership.getIsAdmin()==Bool.TRUE)
-					|| (!isAdmin && membership.getIsAdmin()==Bool.FALSE)){
-				try{
+			if ((isAdmin && membership.getIsAdmin() == Bool.TRUE)
+					|| (!isAdmin && membership.getIsAdmin() == Bool.FALSE)) {
+				try {
 					user = udh.findById(userId);
-				}catch(ObjectNotFoundException e){
-					throw new NotFoundException("there is no user with userId: "+userId);
+				} catch (ObjectNotFoundException e) {
+					throw new NotFoundException(
+							"there is no user with userId: " + userId);
 				}
 				try {
-					members.add(new CommonListEntry(user.getId().longValue(), 
+					members.add(new CommonListEntry(user.getId().longValue(),
 							user.getUserName(), user.getImageURL()));
 				} catch (DataFormatException e) {
 					throw new ServerErrorException(e.getMessage());
@@ -148,21 +174,50 @@ public class Group_UserDAOHibernate extends GenericHibernateDAO<Group2User, Id>
 		return members;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.Group_UserDAO#setAdmin(java.lang.Long, java.lang.Long, java.lang.Boolean)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.db.dao.Group_UserDAO#setAdmin(java.lang.Long,
+	 * java.lang.Long, java.lang.Boolean)
 	 */
 	public void setAdmin(Long groupId, Long userId, Boolean isAdmin) {
 		Id id = new Id(groupId, userId);
 		Group2User membership = null;
-		try{
+		try {
 			membership = findById(id);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no membership between group: "+groupId+" and user: "+userId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException(
+					"there is no membership between group: " + groupId
+							+ " and user: " + userId);
 		}
-		if(isAdmin){
+		if (isAdmin) {
 			membership.setIsAdmin(Bool.TRUE);
-		}else{
+		} else {
 			membership.setIsAdmin(Bool.FALSE);
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.Group_UserStorage#isAdmin(java.
+	 * lang.Long, java.lang.Long)
+	 */
+	public boolean isAdmin(Long userId, Long groupId) {
+		Group2User.Id id = new Group2User.Id(groupId, userId);
+		Group2User membership = null;
+		try {
+			membership = findById(id);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException(
+					"There is no membership between group: " + groupId
+							+ " and user: " + userId);
+		}
+		if(membership.getIsAdmin()==Bool.TRUE)
+			return true;
+		else 
+			return false;
 	}
 }

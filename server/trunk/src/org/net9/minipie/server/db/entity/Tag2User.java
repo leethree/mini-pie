@@ -40,6 +40,20 @@ public class Tag2User {
 		public int hashCode() {
 			return tagId.hashCode()+userId.hashCode();
 		}
+		
+		/**
+		 * @return the tagId
+		 */
+		public Long getTagId() {
+			return tagId;
+		}
+		
+		/**
+		 * @return the userId
+		 */
+		public Long getUserId() {
+			return userId;
+		}
 	}
 	@EmbeddedId
 	@Column(name = "ID")

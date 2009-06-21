@@ -595,9 +595,25 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		}
 	}
 
-	public List<Object[]> selectGroupContact(Long groupId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<CommonListEntry> selectGroupContact(Long groupId) {
+		try {
+			ContactDAOHibernate cdh = new ContactDAOHibernate();
+			Criterion criterion = Restrictions.eq("group.id", groupId);
+			List<Contact> result = cdh.findByCriteria(criterion);
+			List<CommonListEntry> selectedResult = new ArrayList<CommonListEntry>();
+			Iterator<Contact> iter = result.iterator();
+			while (iter.hasNext()) {
+				Contact contact = (Contact) iter.next();
+				CommonListEntry minimalContact = new CommonListEntry(contact
+						.getId(), contact.getName(), contact.getImage());
+				selectedResult.add(minimalContact);
+			}
+			return selectedResult;
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("There's no group with ID: " + groupId);
+		} catch (DataFormatException e) {
+			throw new ServerErrorException(e.getMessage());
+		}
 	}
 
 	public List<IMData> selectIM(Long contactId) {

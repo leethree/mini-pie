@@ -81,7 +81,7 @@ public interface ContactDAO extends GenericDAO<Contact, Long>, ContactStorage {
 
 	List<CommonListEntry> selectOwnerContact(Long ownerId);
 
-	List<Object[]> selectGroupContact(Long groupId);
+	List<CommonListEntry> selectGroupContact(Long groupId);
 
 	void del(Long contactId);
 }

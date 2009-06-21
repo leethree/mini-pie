@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.NonUniqueObjectException;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -26,82 +27,100 @@ import org.net9.minipie.server.logic.storage.Tag_UserStorage;
 
 /**
  * @author Riversand
- *
+ * 
  */
-public class Tag_UserDAOHibernate extends GenericHibernateDAO<Tag2User, Id> implements
-		Tag_UserDAO, Tag_UserStorage {
+public class Tag_UserDAOHibernate extends GenericHibernateDAO<Tag2User, Id>
+		implements Tag_UserDAO, Tag_UserStorage {
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.Tag_UserDAO#add(java.lang.Long, java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.net9.minipie.server.db.dao.Tag_UserDAO#add(java.lang.Long,
+	 * java.lang.Long)
 	 */
 	public void add(Long tagId, Long userId) {
-		TagDAOHibernate tdh = new TagDAOHibernate();
-		UserDAOHibernate udh = new UserDAOHibernate();
-		Tag tag = null;
-		User user = null;
-		try{
-			tag = tdh.findById(tagId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no tag with id: "+tagId);
+		try {
+			TagDAOHibernate tdh = new TagDAOHibernate();
+			UserDAOHibernate udh = new UserDAOHibernate();
+			Tag tag = null;
+			User user = null;
+			try {
+				tag = tdh.findById(tagId);
+			} catch (ObjectNotFoundException e) {
+				throw new NotFoundException("there is no tag with id: " + tagId);
+			}
+			try {
+				user = udh.findById(userId);
+			} catch (ObjectNotFoundException e) {
+				throw new NotFoundException("there is no user with id: "
+						+ userId);
+			}
+			Tag2User tagUser = new Tag2User(tag, user);
+			begin();
+			makePersistent(tagUser);
+			commit();
+			tag.getTaggedUsers().add(tagUser);
+			tdh.begin();
+			tdh.makePersistent(tag);
+			tdh.commit();
+			user.getTags().add(tagUser);
+			udh.begin();
+			udh.makePersistent(user);
+			udh.commit();
+		} catch (NonUniqueObjectException e) {
+
 		}
-		try{
-			user = udh.findById(userId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no user with id: "+userId);
-		}
-		Tag2User tagUser = new Tag2User(tag, user);
-		begin();
-		makePersistent(tagUser);
-		commit();
-		tag.getTaggedUsers().add(tagUser);
-		tdh.begin();
-		tdh.makePersistent(tag);
-		tdh.commit();
-		user.getTags().add(tagUser);
-		udh.begin();
-		udh.makePersistent(user);
-		udh.commit();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.Tag_UserDAO#del(java.lang.Long, java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.net9.minipie.server.db.dao.Tag_UserDAO#del(java.lang.Long,
+	 * java.lang.Long)
 	 */
 	public void del(Long tagId, Long userId) {
 		Id id = new Id(tagId, userId);
 		Tag2User tagUser = null;
-		try{
+		try {
 			tagUser = findById(id);
-		}catch(ObjectNotFoundException e){
+		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("there is no tag 2 user with tag id: "
-					+tagId+" and with user id: "+userId);
+					+ tagId + " and with user id: " + userId);
 		}
 		begin();
 		makeTransient(tagUser);
 		commit();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.Tag_UserDAO#selectTaggedUser(java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.db.dao.Tag_UserDAO#selectTaggedUser(java.lang
+	 * .Long)
 	 */
 	public Collection<BasicUser> selectTaggedUser(Long tagId) {
-		Criterion criterion  = Restrictions.eq("id.tagId", tagId);
+		Criterion criterion = Restrictions.eq("id.tagId", tagId);
 		List<Tag2User> tagUsers = null;
-		try{
+		try {
 			tagUsers = findByCriteria(criterion);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no tag relationship with tagid: "+ tagId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException(
+					"there is no tag relationship with tagid: " + tagId);
 		}
 		Iterator<Tag2User> iter = tagUsers.iterator();
 		List<BasicUser> result = new ArrayList<BasicUser>();
-		while(iter.hasNext()){
+		while (iter.hasNext()) {
 			Tag2User tagUser = iter.next();
 			User user = tagUser.getUser();
 			try {
-				result.add(new BasicUser(user.getId().longValue(), user.getUserName(),
-						user.getRegisterEmail(), user.getPassword(), user.getImageURL(),
-						user.getNickName(), user.getDisplayName(), user.getGenderPermission(),
-						user.getBirthdayPermission(), user.getBirthyearPermission(),
-						user.getGender(), user.getBirthday().toString(), user.getNotes(), user.getPerm()));
+				result.add(new BasicUser(user.getId().longValue(), user
+						.getUserName(), user.getRegisterEmail(), user
+						.getPassword(), user.getImageURL(), user.getNickName(),
+						user.getDisplayName(), user.getGenderPermission(), user
+								.getBirthdayPermission(), user
+								.getBirthyearPermission(), user.getGender(),
+						user.getBirthday(), user.getNotes(), user.getPerm()));
 			} catch (DataFormatException e) {
 				throw new ServerErrorException(e.getMessage());
 			}
@@ -109,23 +128,27 @@ public class Tag_UserDAOHibernate extends GenericHibernateDAO<Tag2User, Id> impl
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.Tag_UserDAO#selectTagsOfUser(java.lang.Long, java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.db.dao.Tag_UserDAO#selectTagsOfUser(java.lang
+	 * .Long, java.lang.Long)
 	 */
 	public Collection<TagEntry> selectTagsOfUser(Long userId, Long ownerId) {
 		Criterion criterion = Restrictions.eq("user.id", userId);
 		List<TagEntry> tags = new ArrayList<TagEntry>();
 		List<Tag2User> tagUsers = null;
-		try{
+		try {
 			tagUsers = findByCriteria(criterion);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("no tag2user with userid: "+userId+" "
-					+"and with tagownerid: "+ownerId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("no tag2user with userid: " + userId
+					+ " " + "and with tagownerid: " + ownerId);
 		}
 		Iterator<Tag2User> iter = tagUsers.iterator();
-		while(iter.hasNext()){
+		while (iter.hasNext()) {
 			Tag tag = iter.next().getTag();
-			if(!tag.getOwner().getId().equals(ownerId)){
+			if (!tag.getOwner().getId().equals(ownerId)) {
 				continue;
 			}
 			try {
@@ -137,8 +160,11 @@ public class Tag_UserDAOHibernate extends GenericHibernateDAO<Tag2User, Id> impl
 		return tags;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.GenericDAO#findById(java.io.Serializable)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.db.dao.GenericDAO#findById(java.io.Serializable)
 	 */
 	public Tag2User findById(Id id) {
 		return super.findById(id, true);
