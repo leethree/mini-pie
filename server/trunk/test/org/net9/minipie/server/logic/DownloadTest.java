@@ -12,7 +12,7 @@ import org.net9.minipie.server.logic.operation.contact.AddMyContact;
  * @author Seastar
  * 
  */
-public class LogicTest2 {
+public class DownloadTest {
 	public static void main(String avg[]) {
 		String name = new Handler<String>(new DownloadMyInfo(3L,"H:/Win7_Doc/My Document/Work Data/java program/pro")).execute();
 		System.out.print(name);

@@ -11,6 +11,7 @@ import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
+import org.net9.minipie.server.exception.PermissionDeniedException;
 import org.net9.minipie.server.logic.exception.UpdateException;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.operation.util.UpdateHandler;
@@ -82,7 +83,11 @@ public class UpdateUserShadow extends Command<Void> {
 		User_UserStorage executor1 = getStorageFactory().getUser_UserStorage();
 		UserStorage executor3 = getStorageFactory().getUserStorage();
 		executor3.selectBasicInfo(targetId);
-		executor1.selectRelationship(userId, targetId);
+		try{
+			executor1.selectRelationship(userId, targetId);
+		}catch(NotFoundException e){
+			throw new PermissionDeniedException("this is not your user contact");
+		}
 		ContactEntity contact;
 		long contactId;
 		try{

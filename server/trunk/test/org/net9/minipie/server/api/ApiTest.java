@@ -80,7 +80,7 @@ public class ApiTest {
 						byte[] buffer = new byte[2048];
 						int byteread;
 						while ((byteread = istream.read(buffer)) != -1) {
-							// bytesum += byteread; // 字节数 文件大小
+							// bytesum += byteread; 
 							// System.out.println(bytesum);
 							ostream.write(buffer, 0, byteread);
 						}

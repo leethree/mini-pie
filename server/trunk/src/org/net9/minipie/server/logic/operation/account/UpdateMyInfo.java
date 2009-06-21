@@ -29,8 +29,7 @@ public class UpdateMyInfo extends Command<Void> {
 	 */
 	public UpdateMyInfo(Long userId, Update data) {
 		super();
-		setData(data);
-		
+		setData(data);		
 		setUserId(userId);
 	}
 
