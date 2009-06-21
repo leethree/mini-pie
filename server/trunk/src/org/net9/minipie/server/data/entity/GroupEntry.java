@@ -19,6 +19,7 @@ public class GroupEntry {
 	private long createrId;
 	private String createrName;
 	private Permission perm;
+	private long groupId;
 	/**
 	 * Constructor
 	 * @param groupName
@@ -28,14 +29,28 @@ public class GroupEntry {
 	 * @param perm
 	 * @throws DataFormatException 
 	 */
-	public GroupEntry(String groupName, String description, long createrId,
+	public GroupEntry(long groupId,String groupName, String description, long createrId,
 			String createrName, Permission perm) throws DataFormatException {
 		super();
+		setGroupId(groupId);
 		setGroupName(groupName);
 		setDescription(description);
 		setCreaterId(createrId);
 		setCreaterName(createrName);
 		setPermission(perm);
+	}
+	/**
+	 * @param groupId the groupId to set
+	 * @throws DataFormatException 
+	 */
+	public void setGroupId(long groupId) throws DataFormatException {
+		this.groupId = Formatter.checkId(groupId);;
+	}
+	/**
+	 * @return the groupId
+	 */
+	public long getGroupId() {
+		return groupId;
 	}
 	/**
 	 * @return the groupName

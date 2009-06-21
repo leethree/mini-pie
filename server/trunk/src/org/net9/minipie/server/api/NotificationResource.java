@@ -18,8 +18,8 @@ import javax.ws.rs.core.Response;
 import org.net9.minipie.server.data.api.NotificationList;
 import org.net9.minipie.server.data.api.NotificationXml;
 import org.net9.minipie.server.logic.Handler;
+import org.net9.minipie.server.logic.operation.account.ConfirmNotification;
 import org.net9.minipie.server.logic.operation.notification.ListAllMyNotification;
-import org.net9.minipie.server.logic.operation.user.ConfirmContactApply;
 
 /**
  * @author LeeThree
@@ -39,7 +39,7 @@ public class NotificationResource extends BaseResource{
 	@Path("{id}")
 	public Response put(@FormParam("confirmation") boolean confirm,
 			@PathParam("id") long id) {
-		new Handler<Void>(new ConfirmContactApply(getUserId(), id, confirm)).execute();
+		new Handler<Void>(new ConfirmNotification(getUserId(), id, confirm)).execute();
 		return Response.ok().build();
 	}
 }

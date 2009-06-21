@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.Vector;
 
 import org.net9.minipie.server.data.Formatter;
-import org.net9.minipie.server.data.api.CompleteUserInfo;
 import org.net9.minipie.server.data.api.PhonebookCompleteUser;
 import org.net9.minipie.server.data.entity.AddressData;
 import org.net9.minipie.server.data.entity.EmailData;

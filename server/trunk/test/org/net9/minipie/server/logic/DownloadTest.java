@@ -6,7 +6,6 @@
 package org.net9.minipie.server.logic;
 
 import org.net9.minipie.server.logic.operation.account.DownloadMyInfo;
-import org.net9.minipie.server.logic.operation.contact.AddMyContact;
 
 /**
  * @author Seastar

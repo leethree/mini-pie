@@ -21,6 +21,8 @@ public class CreateTag extends Command<Long> {
 	
 	public CreateTag(long userId,String tagName){
 		this.userId=userId;
+		if(tagName.equals(""))
+			throw new InvalidRequestException("tag name can't be empty");
 		this.tagName=Formatter.compact(tagName);
 	}
 	/* (non-Javadoc)
