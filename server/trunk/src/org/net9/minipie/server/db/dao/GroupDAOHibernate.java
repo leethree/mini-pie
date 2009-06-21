@@ -106,7 +106,7 @@ public class GroupDAOHibernate extends GenericHibernateDAO<Group, Long> implemen
 			throw new NotFoundException("there is no group with groupId: "+ groupId);
 		}
 		try {
-			return new GroupEntry(group.getGroupName(), group.getDescription(), 
+			return new GroupEntry(group.getId(), group.getGroupName(), group.getDescription(), 
 					group.getCreatorId().longValue(), group.getCreatorName(), group.getPerm());
 		} catch (DataFormatException e) {
 			throw new ServerErrorException(e.getMessage());

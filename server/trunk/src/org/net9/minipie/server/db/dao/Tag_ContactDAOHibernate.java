@@ -155,7 +155,11 @@ public class Tag_ContactDAOHibernate extends
 		Iterator<Tag2Contact> iter = tagContacts.iterator();
 		List<TagEntry> result = new ArrayList<TagEntry>();
 		while (iter.hasNext()) {
-			Tag tag = iter.next().getTag();
+			Tag2Contact tag2Contact = iter.next();
+			Tag tag = tag2Contact.getTag();
+			Contact contact = tag2Contact.getContact();
+			if(contact.getOwner().getId()!=tag.getOwner().getId())
+				continue;
 			try {
 				result.add(new TagEntry(tag.getId(), tag.getTagName()));
 			} catch (DataFormatException e) {

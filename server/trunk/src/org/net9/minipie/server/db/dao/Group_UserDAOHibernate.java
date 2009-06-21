@@ -123,7 +123,7 @@ public class Group_UserDAOHibernate extends GenericHibernateDAO<Group2User, Id>
 						+ groupId);
 			}
 			try {
-				groupEntries.add(new GroupEntry(group.getGroupName(), group
+				groupEntries.add(new GroupEntry(group.getId(), group.getGroupName(), group
 						.getDescription(), group.getCreatorId().longValue(),
 						group.getCreatorName(), group.getPerm()));
 			} catch (DataFormatException e) {
