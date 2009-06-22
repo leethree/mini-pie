@@ -19,7 +19,7 @@ public enum InfoField {
 			,BIRTHYEARPERMISSION("birthyearPermission"),REGISTEREMAIL("registerEmail")
 			,PASSWORD("password"),DISPLAYNAME("displayName")
 			,GENDERPERMISSION("genderPermission"), LEFTPERMISSION("leftPermission"),
-			RIGHTPERMISSION("rightPermission"),DESCRIPTION("discription"),IMAGE("image")
+			RIGHTPERMISSION("rightPermission"),DESCRIPTION("description"),IMAGE("image")
 			,GROUPOWNER("groupowner");
 	private String field;
 
