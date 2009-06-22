@@ -38,7 +38,7 @@ public class PhonebookUserListResource extends BaseResource {
 	@POST
 	public Response post(@FormParam("userid") long targetId,
 			@FormParam("message") String message) {
-		new Handler<Void>(new AddUserAsContact(getUserId(), targetId, message))
+		new Handler<Boolean>(new AddUserAsContact(getUserId(), targetId, message))
 				.execute();
 		return Response.ok().build();
 	}

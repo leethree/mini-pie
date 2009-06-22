@@ -22,7 +22,7 @@ import org.net9.minipie.server.logic.storage.NotificationStorage;
  * @author Seastar
  *
  */
-public class JionGroup extends Command<Void> {
+public class JionGroup extends Command<Boolean> {
 	private String message;
 	private long groupId;
 	private long userId;
@@ -40,7 +40,7 @@ public class JionGroup extends Command<Void> {
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
 	@Override
-	public Void execute() {
+	public Boolean execute() {
 		GroupStorage executor=getStorageFactory().getGroupStorage();
 		Group_UserStorage executor2=getStorageFactory().getGroup_UserStorage();
 		GroupEntry g=executor.selectGroup(groupId);
@@ -52,16 +52,18 @@ public class JionGroup extends Command<Void> {
 		}
 		if(g.getPerm()==Permission.TO_EVERYONE){
 			executor2.add(groupId, userId);
+			return true;
 		}else{
 			NotificationStorage executor3=getStorageFactory().getNotifacationStorage();
 			try {
 				executor3.add(new NotificationData(1L,userId,groupId,"user:"+userId+"want to join group," +
 						"\r\nhis/her message:"+message,NotificationType.MEMBERSHIP_APPLICATION));
+				return false;
 			} catch (DataFormatException e) {
 				//won't appear
 			}
 		}
-		return null;
+		return false;
 	}
 
 }

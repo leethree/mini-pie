@@ -83,8 +83,12 @@ public class PhonebookUserListEntry {
 			return entity.getPermission().toString();
 	}
 
+	@XmlAttribute(name = "rel")
 	public String getRelationship() {
-		return entity.getRelationship().toString();
+		if(entity.getRelationship()==null)
+			return null;
+		else
+			return entity.getRelationship().toString();
 	}
 
 	/**

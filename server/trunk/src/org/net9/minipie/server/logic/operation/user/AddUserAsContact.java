@@ -22,7 +22,7 @@ import org.net9.minipie.server.logic.storage.User_UserStorage;
  * @author Seastar
  * 
  */
-public class AddUserAsContact extends Command<Void> {
+public class AddUserAsContact extends Command<Boolean> {
 	private long userId;
 	private long targetId;
 	// private Relationships relationShip;
@@ -78,7 +78,7 @@ public class AddUserAsContact extends Command<Void> {
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
 	@Override
-	public Void execute() {
+	public Boolean execute() {
 		boolean flag = false;
 		UserStorage executor = getStorageFactory().getUserStorage();
 		UserEntity entity;
@@ -115,13 +115,13 @@ public class AddUserAsContact extends Command<Void> {
 				} catch (DataFormatException e) {
 					throw new ServerErrorException(e.getMessage());
 				}
-				break;
+				return false;
 			case EVERYONE:
 				executor2.add(userId, targetId);
-				break;
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 
 }

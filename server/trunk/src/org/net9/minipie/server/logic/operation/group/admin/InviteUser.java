@@ -24,7 +24,7 @@ import org.net9.minipie.server.logic.storage.UserStorage;
  * @author Seastar
  *
  */
-public class InviteUser extends Command<Void> {
+public class InviteUser extends Command<Boolean> {
 	private String msg;
 	private long targetId;
 	private long groupId;
@@ -51,7 +51,7 @@ public class InviteUser extends Command<Void> {
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
 	@Override
-	public Void execute() {
+	public Boolean execute() {
 		GroupStorage executor = getStorageFactory().getGroupStorage();
 		UserStorage executor3 = getStorageFactory().getUserStorage();
 		Group_UserStorage executor2 = getStorageFactory()
@@ -74,8 +74,10 @@ public class InviteUser extends Command<Void> {
 				}
 				if(user.getAddAsContactPermission()==AddAsContactPermission.NO_ONE)
 					throw new PermissionDeniedException("this user don't allow such operation");
-				else if(user.getAddAsContactPermission()==AddAsContactPermission.EVERYONE)
+				else if(user.getAddAsContactPermission()==AddAsContactPermission.EVERYONE){
 					executor2.add(groupId, targetId);
+					return true;
+				}
 				else if(user.getAddAsContactPermission()==AddAsContactPermission.CONFIRMED_ONES){
 					NotificationStorage executor4=getStorageFactory().getNotifacationStorage();
 					try {
@@ -85,6 +87,7 @@ public class InviteUser extends Command<Void> {
 					} catch (DataFormatException e) {
 						//won't happen
 					}
+					return false;
 				}
 			} else
 				throw new PermissionDeniedException(
@@ -94,7 +97,7 @@ public class InviteUser extends Command<Void> {
 					"you have not joined such group yet");
 		}
 
-		return null;
+		return false;
 	}
 
 }

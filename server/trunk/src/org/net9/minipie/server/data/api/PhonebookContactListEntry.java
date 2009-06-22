@@ -103,4 +103,12 @@ public class PhonebookContactListEntry {
 		else
 			return entity.getPermission().toString();
 	}
+	
+	@XmlAttribute(name="rel")
+	public String getRelationship(){
+		if (entity.getRelationship() == null)
+			return null;
+		else
+			return entity.getRelationship().toString();
+	}
 }

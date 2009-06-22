@@ -8,6 +8,7 @@ package org.net9.minipie.server.logic.operation.user;
 import org.net9.minipie.server.data.Formatter;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
+import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.UserStorage;
 import org.net9.minipie.server.logic.storage.User_UserStorage;
@@ -37,7 +38,11 @@ public class RemoveUserContact extends Command<Void> {
 		UserStorage executor=getStorageFactory().getUserStorage();
 		User_UserStorage executor2=getStorageFactory().getUser_UserStorage();
 		executor.selectBasicInfo(targetId);
-		executor2.selectRelationship(userId, targetId);
+		try{
+			executor2.selectRelationship(userId, targetId);
+		}catch (NotFoundException e){
+			throw new InvalidRequestException("the target user is not your user contact");
+		}
 		executor2.del(userId, targetId);
 		return null;
 	}
