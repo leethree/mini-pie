@@ -289,6 +289,7 @@ public class UserEditHandler extends UpdateHandler {
 						if(newData.getValue()!=null)
 							userExecutor.editBasicInfo(userId, InfoField.ADDASCONTACTPERMISSION
 									, AddAsContactPermission.value( newData.getValue()));
+						break;
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
 								+" in UserInfo");

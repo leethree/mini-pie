@@ -15,6 +15,7 @@ import org.net9.minipie.server.data.field.Relationships;
 import org.net9.minipie.server.data.storage.BasicUser;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
+import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.PermissionDeniedException;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.TagStorage;
@@ -48,6 +49,7 @@ public class ListTaggedUser extends Command<Collection<PhonebookUserListEntry>> 
 			throw new PermissionDeniedException("this is not your tag");
 		Tag_UserStorage executor2=getStorageFactory().getTag_UserStorage();
 		User_UserStorage executor3=getStorageFactory().getUser_UserStorage();
+		try{
 		Collection<BasicUser> users=executor2.selectTaggedUser(tagId);
 		Collection<PhonebookUserListEntry> result=new Vector<PhonebookUserListEntry>();
 		for(BasicUser entry:users){
@@ -61,6 +63,9 @@ public class ListTaggedUser extends Command<Collection<PhonebookUserListEntry>> 
 			result.add(new PhonebookUserListEntry(entity));
 		}
 		return result;
+		}catch (NotFoundException e){
+			return new Vector<PhonebookUserListEntry>();
+		}
 	}
 
 }
