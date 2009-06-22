@@ -25,7 +25,7 @@
 %>
 	  	<p>Please log in to continue:</p>
 	    <form name="login" id="login" method="post">
-	      <table border="0">
+	      <table>
 	        <tr>
 	          <td>Username:</td>
 	          <td><input type="text" name="username" id="username"/></td>
@@ -43,6 +43,11 @@
 	} else {
 		try {
 			controller.login(username, password);
+			String cont = request.getParameter("continue");
+			if (cont != null && !cont.isEmpty()) {
+				response.sendRedirect(cont);
+				return;
+			}
 		} catch(LoginFailedException e){
 %>
 		<p>Login failed.</p>
@@ -50,6 +55,7 @@
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendRedirect("error.jsp");
+			return;
 		}
 %>
 		<p>You've successfully logged in as <%=username %>.</p>

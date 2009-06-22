@@ -4,6 +4,7 @@
 package org.net9.minipie.sample;
 
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,9 @@ import org.net9.minipie.sample.exception.NotFoundException;
 import org.net9.minipie.sample.util.CredentialEncoder;
 import org.net9.minipie.sample.xml.PersonBean;
 import org.net9.minipie.sample.xml.TagBean;
+import org.net9.minipie.sample.xml.UpdateBean;
 
+import com.ociweb.xml.WAX;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
@@ -46,6 +49,10 @@ public class Backend {
 		client = Client.create(config);
 		rootResource = client.resource(SERVICE_API_URL);
 	}
+
+//	public String getServiceBaseUrl() {
+//		return SERVICE_API_URL;
+//	}
 
 	public PersonBean getProfile() throws GenericException,
 			LoginFailedException {
@@ -214,6 +221,24 @@ public class Backend {
 		throw new NotFoundException();
 	}
 
+	public void updateProfile(UpdateBean bean) throws LoginFailedException,
+			GenericException, NotFoundException {
+		try {
+			StringWriter writer = new StringWriter();
+			WAX wax = new WAX(writer);
+			wax.start("updates");
+			bean.toXML(wax);
+			wax.close();
+			postXml("profile/", writer.toString());
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		}
+	}
+
 	public static void testConnection() throws GenericException,
 			BackendConnectionException {
 		try {
@@ -230,5 +255,11 @@ public class Backend {
 		return rootResource.path(path).accept(MediaType.APPLICATION_XML_TYPE)
 				.header(AUTHENTICATION_HEADER, credential).get(
 						InputStream.class);
+	}
+
+	private void postXml(String path, String content) {
+		System.out.println(content);
+		rootResource.path(path).type(MediaType.APPLICATION_XML_TYPE).header(
+				AUTHENTICATION_HEADER, credential).entity(content).post();
 	}
 }

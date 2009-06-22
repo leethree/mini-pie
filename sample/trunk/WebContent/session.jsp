@@ -6,7 +6,7 @@
 	WebController controller = new WebController(request);
 	try {
 		if (!controller.isLoggedIn()) {
-			response.sendRedirect(request.getContextPath() + "/login.jsp");
+			response.sendRedirect(request.getContextPath() + "/login.jsp?continue=" + request.getRequestURI());
 			return;
 		}
 	} catch (Exception e) {

@@ -16,6 +16,7 @@
 	<div id="content" >
 		<h2>Profile</h2>
 	  	<hr/>
+	  	<a href="editprofile.jsp">Edit profile</a>
 <%
 	try {
 		PersonBean person = ses.getProfile();

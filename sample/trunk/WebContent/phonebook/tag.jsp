@@ -50,7 +50,7 @@
 %>
 			<tr>
 				<td><%=bean.id %></td>
-				<td><img alt="image" src=""/></td>
+				<td><img alt="<%=bean.get("image") %>" src="<%=bean.get("image") %>"/></td>
 				<td><a href="contact.jsp?id=<%=bean.id %>"><%=bean.get("name") %></a></td>
 				<td><%=bean.get("permission") %></td>
 				<td>
@@ -67,7 +67,7 @@
 	}
 %>
 		</table>
-		<h3>User Contacts with This Tag:</h3>
+		<h3>Non-user Contacts with This Tag:</h3>
 <%
 	List<PersonBean> list2 = ses.listContactsWithTagId(id);
 %>
@@ -84,7 +84,7 @@
 %>
 			<tr>
 				<td><%=bean.id %></td>
-				<td><img alt="image" src=""/></td>
+				<td><img alt="<%=bean.get("image") %>" src="<%=bean.get("image") %>"/></td>
 				<td><a href="contact.jsp?id=<%=bean.id %>"><%=bean.get("name") %></a></td>
 				<td><%=bean.get("permission") %></td>
 				<td>
