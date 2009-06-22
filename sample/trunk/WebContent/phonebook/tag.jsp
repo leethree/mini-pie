@@ -191,7 +191,7 @@
 		%>
 		<form name="addcontact" id="addcontact" method="post">
 			<input type="hidden" name="method" id="method" value="addcontact"/>
-			<span>User ID:</span>
+			<span>Contact ID:</span>
 			<input type="text" name="contactid" />
 			<input type="submit" value="Submit" />
 		</form>

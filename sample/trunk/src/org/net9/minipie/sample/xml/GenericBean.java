@@ -23,7 +23,7 @@ public class GenericBean extends Bean {
 	/**
 	 * @param ele
 	 */
-	protected GenericBean(Element ele) {
+	public GenericBean(Element ele) {
 		beanName = ele.getName();
 		id = Long.decode(ele.attributeValue("id"));
 

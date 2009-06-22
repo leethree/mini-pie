@@ -18,6 +18,7 @@ import org.net9.minipie.sample.exception.GenericException;
 import org.net9.minipie.sample.exception.LoginFailedException;
 import org.net9.minipie.sample.exception.NotFoundException;
 import org.net9.minipie.sample.util.CredentialEncoder;
+import org.net9.minipie.sample.xml.GenericBean;
 import org.net9.minipie.sample.xml.PersonBean;
 import org.net9.minipie.sample.xml.TagBean;
 import org.net9.minipie.sample.xml.UpdateBean;
@@ -54,6 +55,8 @@ public class Backend {
 		return SERVICE_ROOT_URL;
 	}
 
+	// *********************** PROFILE **************************
+
 	public PersonBean getProfile() throws GenericException,
 			LoginFailedException {
 		try {
@@ -69,6 +72,26 @@ public class Backend {
 			throw new GenericException(e);
 		}
 	}
+
+	public void updateProfile(UpdateBean bean) throws LoginFailedException,
+			GenericException, NotFoundException {
+		try {
+			StringWriter writer = new StringWriter();
+			WAX wax = new WAX(writer);
+			wax.start("updates");
+			bean.toXML(wax);
+			wax.close();
+			postXml("profile/", writer.toString());
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		}
+	}
+
+	// ******************** USER CONTACTS **************************
 
 	public List<PersonBean> listUserContacts() throws GenericException,
 			LoginFailedException {
@@ -91,10 +114,59 @@ public class Backend {
 		}
 	}
 
-	public List<PersonBean> listUserContactsWithTagId(long tagid)
-			throws GenericException, LoginFailedException {
+	public void addUser(long userid) throws GenericException,
+			LoginFailedException, NotFoundException {
 		try {
-			InputStream stream = getXml("phonebook/tag/" + tagid + "/user");
+			postForm("phonebook/user/", "userid=" + userid);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public PersonBean getUserById(long id) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			InputStream stream = getXml("phonebook/user/" + id);
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			return new PersonBean(ele);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void removeUser(long userId) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			System.out.println(userId);
+			delete("phonebook/user/" + userId + "/");
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	// *********************** CONTACTS **************************
+
+	public List<PersonBean> listContacts() throws GenericException,
+			LoginFailedException {
+		try {
+			InputStream stream = getXml("phonebook/contact");
 			Document doc = new SAXReader().read(stream);
 			Element ele = doc.getRootElement();
 			List<PersonBean> list = new ArrayList<PersonBean>();
@@ -112,10 +184,107 @@ public class Backend {
 		}
 	}
 
-	public List<PersonBean> listContacts() throws GenericException,
+	public PersonBean getContactById(long id) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			InputStream stream = getXml("phonebook/contact/" + id);
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			return new PersonBean(ele);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void createContact(String contactname) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			postForm("phonebook/contact/", "name=" + contactname);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void updateContact(long contactId, UpdateBean bean)
+			throws LoginFailedException, GenericException, NotFoundException {
+		try {
+			StringWriter writer = new StringWriter();
+			WAX wax = new WAX(writer);
+			wax.start("updates");
+			bean.toXML(wax);
+			wax.close();
+			postXml("phonebook/contact/" + contactId + "/", writer.toString());
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		}
+	}
+
+	public void deleteContact(long contactId) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			delete("phonebook/contact/" + contactId + "/");
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	// ************************* TAGS ****************************
+
+	public List<TagBean> listTags() throws GenericException,
 			LoginFailedException {
 		try {
-			InputStream stream = getXml("phonebook/contact");
+			InputStream stream = getXml("phonebook/tag");
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			List<TagBean> list = new ArrayList<TagBean>();
+			for (Object iter : ele.elements()) {
+				Element elem = (Element) iter;
+				list.add(new TagBean(elem));
+			}
+			return list;
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public TagBean getTagById(long id) throws GenericException,
+			LoginFailedException, NotFoundException {
+		List<TagBean> list = listTags();
+		for (TagBean tag : list) {
+			if (tag.id == id)
+				return tag;
+		}
+		throw new NotFoundException();
+	}
+
+	public List<PersonBean> listUserContactsWithTagId(long tagid)
+			throws GenericException, LoginFailedException {
+		try {
+			InputStream stream = getXml("phonebook/tag/" + tagid + "/user");
 			Document doc = new SAXReader().read(stream);
 			Element ele = doc.getRootElement();
 			List<PersonBean> list = new ArrayList<PersonBean>();
@@ -152,73 +321,6 @@ public class Backend {
 		} catch (Exception e) {
 			throw new GenericException(e);
 		}
-	}
-
-	public List<TagBean> listTags() throws GenericException,
-			LoginFailedException {
-		try {
-			InputStream stream = getXml("phonebook/tag");
-			Document doc = new SAXReader().read(stream);
-			Element ele = doc.getRootElement();
-			List<TagBean> list = new ArrayList<TagBean>();
-			for (Object iter : ele.elements()) {
-				Element elem = (Element) iter;
-				list.add(new TagBean(elem));
-			}
-			return list;
-		} catch (UniformInterfaceException e) {
-			if (e.getResponse().getStatus() == 401)
-				throw new LoginFailedException();
-			throw new GenericException(e);
-		} catch (Exception e) {
-			throw new GenericException(e);
-		}
-	}
-
-	public PersonBean getUserById(long id) throws GenericException,
-			LoginFailedException, NotFoundException {
-		try {
-			InputStream stream = getXml("phonebook/user/" + id);
-			Document doc = new SAXReader().read(stream);
-			Element ele = doc.getRootElement();
-			return new PersonBean(ele);
-		} catch (UniformInterfaceException e) {
-			if (e.getResponse().getStatus() == 401)
-				throw new LoginFailedException();
-			if (e.getResponse().getStatus() == 404)
-				throw new NotFoundException();
-			throw new GenericException(e);
-		} catch (Exception e) {
-			throw new GenericException(e);
-		}
-	}
-
-	public PersonBean getContactById(long id) throws GenericException,
-			LoginFailedException, NotFoundException {
-		try {
-			InputStream stream = getXml("phonebook/contact/" + id);
-			Document doc = new SAXReader().read(stream);
-			Element ele = doc.getRootElement();
-			return new PersonBean(ele);
-		} catch (UniformInterfaceException e) {
-			if (e.getResponse().getStatus() == 401)
-				throw new LoginFailedException();
-			if (e.getResponse().getStatus() == 404)
-				throw new NotFoundException();
-			throw new GenericException(e);
-		} catch (Exception e) {
-			throw new GenericException(e);
-		}
-	}
-
-	public TagBean getTagById(long id) throws GenericException,
-			LoginFailedException, NotFoundException {
-		List<TagBean> list = listTags();
-		for (TagBean tag : list) {
-			if (tag.id == id)
-				return tag;
-		}
-		throw new NotFoundException();
 	}
 
 	public void createTag(String tagname) throws GenericException,
@@ -293,41 +395,45 @@ public class Backend {
 		}
 	}
 
-	public void updateProfile(UpdateBean bean) throws LoginFailedException,
-			GenericException, NotFoundException {
+	// ******************** NOTIFICATIONS **************************
+
+	public List<GenericBean> listNotifications() throws GenericException,
+			LoginFailedException {
 		try {
-			StringWriter writer = new StringWriter();
-			WAX wax = new WAX(writer);
-			wax.start("updates");
-			bean.toXML(wax);
-			wax.close();
-			postXml("profile/", writer.toString());
+			InputStream stream = getXml("notification");
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			List<GenericBean> list = new ArrayList<GenericBean>();
+			for (Object iter : ele.elements()) {
+				Element elem = (Element) iter;
+				list.add(new GenericBean(elem));
+			}
+			return list;
 		} catch (UniformInterfaceException e) {
 			if (e.getResponse().getStatus() == 401)
 				throw new LoginFailedException();
-			if (e.getResponse().getStatus() == 404)
-				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
 			throw new GenericException(e);
 		}
 	}
 
-	public void updateContact(long contactId, UpdateBean bean)
-			throws LoginFailedException, GenericException, NotFoundException {
+	public void confirmNotification(long notifId, boolean confirm)
+			throws LoginFailedException, NotFoundException, GenericException {
 		try {
-			StringWriter writer = new StringWriter();
-			WAX wax = new WAX(writer);
-			wax.start("updates");
-			bean.toXML(wax);
-			wax.close();
-			postXml("phonebook/contact/" + contactId + "/", writer.toString());
+			putForm("notification/" + notifId, "confirmation=" + confirm);
 		} catch (UniformInterfaceException e) {
 			if (e.getResponse().getStatus() == 401)
 				throw new LoginFailedException();
 			if (e.getResponse().getStatus() == 404)
 				throw new NotFoundException();
 			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
 		}
 	}
+
+	// ************************************************************
 
 	public static void testConnection() throws GenericException,
 			BackendConnectionException {

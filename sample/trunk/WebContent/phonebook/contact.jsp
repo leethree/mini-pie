@@ -17,8 +17,29 @@
 		<h2>Phonebook Non-User Contact</h2>
 	  	<hr/>
 <%
+	String method = request.getParameter("method");
 	try {
 		long id = Long.decode(request.getParameter("id"));
+		if (method != null && method.equals("delete")) {
+			try{
+				ses.deleteContact(id);
+	%>
+		<p>Contact deleted successfully</p>
+	<%
+				return;
+			} catch (GenericException e) {
+				e.printStackTrace();
+	%>
+				<p>An error occurred while deleting the contact</p>
+	<%
+			}
+		}
+	%>
+		<form name="delete" id="delete" method="post">
+			<input type="hidden" name="method" id="method" value="delete"/>
+			<input type="submit" value="Delete" />
+		</form>
+	<%
 		try {
 			PersonBean person = ses.getContactById(id);
 %>

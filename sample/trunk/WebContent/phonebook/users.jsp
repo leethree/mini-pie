@@ -4,6 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="org.net9.minipie.sample.xml.PersonBean"%>
 <%@page import="org.net9.minipie.sample.xml.TagBean"%>
+<%@page import="org.net9.minipie.sample.exception.GenericException"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,6 +15,43 @@
 	<div id="content" >
 		<h2>Phonebook User Contacts</h2>
 	  	<hr/>
+<%
+	String method = request.getParameter("method");
+	try {
+%>
+	  	<h4>Add User to Phonebook:</h4>
+<%
+		if (method != null && method.equals("add")){
+			String useridStr = request.getParameter("userid");
+			long userid = 0;
+			try {
+				userid = Long.decode(useridStr);
+			} catch (NumberFormatException ex) {}
+			if (userid == 0) {
+	%>
+				<p>Invalid user ID</p>
+	<%
+			} else {
+				try{
+					ses.addUser(userid);
+	%>
+					<p>Request sent successfully</p>
+	<%
+				} catch (GenericException e) {
+					e.printStackTrace();
+	%>
+					<p>An error occurred. Please check your input information</p>
+	<%
+				}
+			}
+		}
+%>
+	  	<form name="add" id="add" method="post">
+	  		<input type="hidden" name="method" id="method" value="add"/>
+			<span>User ID:</span>
+			<input type="text" name="userid" />
+			<input type="submit" value="Submit" />
+	  	</form>
 <%
 	List<PersonBean> list = ses.listUserContacts();
 %>
@@ -47,6 +85,14 @@
 	}
 %>
 		</table>
+<%
+	} catch (Exception ex) {
+%>
+		<p>Sorry, an error occurred:</p>
+		<p><%=ex.getMessage() %></p>
+<%
+	}
+%>
 	</div>
 </body>
 </html>

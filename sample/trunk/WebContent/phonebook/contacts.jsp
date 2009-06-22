@@ -4,6 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="org.net9.minipie.sample.xml.PersonBean"%>
 <%@page import="org.net9.minipie.sample.xml.TagBean"%>
+<%@page import="org.net9.minipie.sample.exception.GenericException"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,6 +15,39 @@
 	<div id="content" >
 		<h2>Phonebook Non-User Contacts</h2>
 	  	<hr/>
+<%
+	String method = request.getParameter("method");
+	try {
+%>
+	  	<h4>Create New Contact:</h4>
+<%
+		if (method != null && method.equals("add")){
+			String contactname = request.getParameter("contactname");
+			if (contactname == null || contactname.isEmpty()) {
+	%>
+				<p>Contact name should not be empty</p>
+	<%
+			} else {
+				try{
+					ses.createContact(contactname);
+	%>
+					<p>Contact updated successfully</p>
+	<%
+				} catch (GenericException e) {
+					e.printStackTrace();
+	%>
+					<p>An error occurred. Please check your input information</p>
+	<%
+				}
+			}
+		}
+%>
+	  	<form name="add" id="add" method="post">
+	  		<input type="hidden" name="method" id="method" value="add"/>
+			<span>New contact name:</span>
+			<input type="text" name="contactname" />
+			<input type="submit" value="Submit" />
+	  	</form>
 <%
 	List<PersonBean> list = ses.listContacts();
 %>
@@ -47,6 +81,14 @@
 	}
 %>
 		</table>
+<%
+	} catch (Exception ex) {
+%>
+		<p>Sorry, an error occurred:</p>
+		<p><%=ex.getMessage() %></p>
+<%
+	}
+%>
 	</div>
 </body>
 </html>

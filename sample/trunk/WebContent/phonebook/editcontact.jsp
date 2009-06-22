@@ -25,7 +25,7 @@
 <%
 	String method = request.getParameter("method");
 %>
-	  	<h3>Edit</h3>
+	  	<h3>Edit information</h3>
 <%
 	if (method != null && method.equals("edit")) {
 		String type = request.getParameter("type");
@@ -113,7 +113,7 @@
 	        </tr>
 	      </table>
 	  	</form>
-	  	<h3>Add</h3>
+	  	<h3>Add information</h3>
 <%
 	if (method != null && method.equals("add")) {
 		String value = request.getParameter("value");
@@ -177,7 +177,7 @@
 	        </tr>
 	      </table>
 	  	</form>
-	  	<h3>Delete</h3>
+	  	<h3>Delete information</h3>
 <%
 	if (method != null && method.equals("delete")) {
 		String type = request.getParameter("type");

@@ -17,8 +17,30 @@
 		<h2>Phonebook User Contact</h2>
 	  	<hr/>
 <%
+	String method = request.getParameter("method");
 	try {
 		long id = Long.decode(request.getParameter("id"));
+		
+		if (method != null && method.equals("delete")) {
+			try{
+				ses.removeUser(id);
+	%>
+		<p>User contact removed successfully</p>
+	<%
+				return;
+			} catch (GenericException e) {
+				e.printStackTrace();
+	%>
+				<p>An error occurred while removing the user contact</p>
+	<%
+			}
+		}
+	%>
+		<form name="delete" id="delete" method="post">
+			<input type="hidden" name="method" id="method" value="delete"/>
+			<input type="submit" value="Remove" />
+		</form>
+	<%
 		try {
 			PersonBean person = ses.getUserById(id);
 %>
@@ -191,13 +213,18 @@
 			<p><%=ex.getMessage() %></p>
 <%	
 		}
-	} catch (Exception e) {
+	} catch (NumberFormatException e) {
 %>
 		<form method="get">
 			<span>ID:</span>
 			<input type="text" name="id" />
 			<input type="submit" value="Submit" />
 		</form>
+<%
+	} catch (Exception ex) {
+%>
+			<p>Sorry, an error occurred:</p>
+			<p><%=ex.getMessage() %></p>
 <%
 	}
 %>
