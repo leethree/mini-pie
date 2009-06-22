@@ -17,6 +17,7 @@ import org.net9.minipie.server.data.field.Birthdate;
 import org.net9.minipie.server.data.field.Gender;
 import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.data.field.AddAsContactPermission;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.PermissionDeniedException;
 import org.net9.minipie.server.logic.exception.UpdateException;
@@ -27,6 +28,7 @@ import org.net9.minipie.server.logic.storage.UserStorage;
  *
  */
 public class UserEditHandler extends UpdateHandler {
+	
 	private long userId;
 	/**
 	 * Constructor
@@ -286,7 +288,7 @@ public class UserEditHandler extends UpdateHandler {
 					case ADDASCONTACTPERMISSION:
 						if(newData.getValue()!=null)
 							userExecutor.editBasicInfo(userId, InfoField.ADDASCONTACTPERMISSION
-									, Permission.value( newData.getValue()));
+									, AddAsContactPermission.value( newData.getValue()));
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
 								+" in UserInfo");

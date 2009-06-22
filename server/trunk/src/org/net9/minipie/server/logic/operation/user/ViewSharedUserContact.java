@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Vector;
 
 import org.net9.minipie.server.data.Formatter;
-import org.net9.minipie.server.data.api.CompleteUserInfo;
+import org.net9.minipie.server.data.api.CompleteUser;
 import org.net9.minipie.server.data.entity.AddressData;
 import org.net9.minipie.server.data.entity.EmailData;
 import org.net9.minipie.server.data.entity.IMData;
@@ -21,7 +21,6 @@ import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
-import org.net9.minipie.server.exception.PermissionDeniedException;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.UserStorage;
 import org.net9.minipie.server.logic.storage.User_UserStorage;
@@ -30,7 +29,7 @@ import org.net9.minipie.server.logic.storage.User_UserStorage;
  * @author Seastar
  *
  */
-public class ViewSharedUserContact extends Command<CompleteUserInfo> {
+public class ViewSharedUserContact extends Command<CompleteUser> {
 	private long userId;
 	//private long agentId;
 	private long targetId;
@@ -52,7 +51,7 @@ public class ViewSharedUserContact extends Command<CompleteUserInfo> {
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
 	@Override
-	public CompleteUserInfo execute() {	
+	public CompleteUser execute() {	
 		boolean flag;
 		User_UserStorage executor = getStorageFactory().getUser_UserStorage();
 		UserStorage executor2 = getStorageFactory().getUserStorage();
@@ -104,7 +103,7 @@ public class ViewSharedUserContact extends Command<CompleteUserInfo> {
 					uresult.add(t);
 			user.setUrls(uresult);
 			
-			return new CompleteUserInfo(user);
+			return new CompleteUser(user);
 			
 		}catch(NotFoundException e){
 			flag=false;
@@ -153,9 +152,15 @@ public class ViewSharedUserContact extends Command<CompleteUserInfo> {
 					uresult.add(t);
 			user.setUrls(uresult);			
 						
-			return new CompleteUserInfo(user);
+			return new CompleteUser(user);
 		}
-		throw new PermissionDeniedException("You can,t see this user's info");
+		if(user.getAddAsContactPermission()==AddAsContactPermission.NO_ONE){
+			user.setGender(null);
+			user.setBirthday(null);
+			//user.set
+			return new CompleteUser(user);
+		}
+		return null;
 	}
 	
 }
