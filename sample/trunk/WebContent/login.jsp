@@ -48,6 +48,9 @@
 				response.sendRedirect(cont);
 				return;
 			}
+%>
+			<p>You've successfully logged in as <%=username %>.</p>
+<%
 		} catch(LoginFailedException e){
 %>
 		<p>Login failed.</p>
@@ -57,9 +60,6 @@
 			response.sendRedirect("error.jsp");
 			return;
 		}
-%>
-		<p>You've successfully logged in as <%=username %>.</p>
-<%
 	}
 %>
     </div>

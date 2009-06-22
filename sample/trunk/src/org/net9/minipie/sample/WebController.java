@@ -13,12 +13,12 @@ import org.net9.minipie.sample.exception.LoginRequiredException;
 
 /**
  * @author LeeThree
- *
+ * 
  */
 public class WebController {
-	
+
 	private HttpServletRequest request;
-	
+
 	public WebController(HttpServletRequest request) {
 		this.request = request;
 	}
@@ -35,8 +35,9 @@ public class WebController {
 	public void login(String username, String password)
 			throws GenericException, LoginFailedException {
 		if (!isLogged()) {
-			getHttpSession().setAttribute(SESSION_KEY,
-					new Backend(username, password));
+			Backend ses = new Backend(username, password);
+			ses.auth();
+			getHttpSession().setAttribute(SESSION_KEY, ses);
 		}
 	}
 
@@ -53,7 +54,7 @@ public class WebController {
 		}
 		throw new LoginRequiredException();
 	}
-	
+
 	private boolean isLogged() {
 		HttpSession session = getHttpSession();
 		if (session.isNew())
@@ -62,7 +63,6 @@ public class WebController {
 			return false;
 		return true;
 	}
-
 
 	private HttpSession getHttpSession() {
 		return request.getSession();

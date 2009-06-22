@@ -435,6 +435,18 @@ public class Backend {
 
 	// ************************************************************
 
+	public void auth() throws LoginFailedException, GenericException {
+		try {
+			getXml("auth");
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
 	public static void testConnection() throws GenericException,
 			BackendConnectionException {
 		try {

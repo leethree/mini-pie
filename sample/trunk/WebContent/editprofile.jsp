@@ -98,7 +98,6 @@
 		          <option value="birthyearPermission">Permission for birth year</option>
 		          <option value="birthdayPermission">Permission for birth date</option>
 		          <option value="genderPermission">Permission for gender</option>
-		          <option value="genderPermission">Permission for gender</option>
 		          <option value="addascontactpermission">Permission for adding-as-contact</option>
 	          </select></td>
 	        </tr> 
