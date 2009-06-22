@@ -57,7 +57,7 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id>
 					+ userId2);
 		}
 		User2User bind = new User2User(user1, user2, // only this constructor in
-														// user2user
+				// user2user
 				// gives a primary key. Don't simply use
 				// setUser1 or setUser2 methods, otherwise,
 				// one get strange errors.
@@ -84,12 +84,21 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id>
 	public void del(Long userId1, Long userId2) {
 		Id id = new Id(userId1, userId2);
 		User2User bind = null;
+		boolean flag = false;
 		try {
 			bind = findById(id);
 		} catch (ObjectNotFoundException e) {
-			throw new NotFoundException(
-					"cannot find bind between user1 with id: " + userId1
-							+ " user2 with id: " + userId2);
+			flag = true;
+		}
+		if (flag == true) {
+			id = new Id(userId2, userId1);
+			try {
+				bind = findById(id);
+			} catch (ObjectNotFoundException e) {
+				throw new NotFoundException(
+						"cannot find bind between user1 with id: " + userId1
+								+ " user2 with id: " + userId2);
+			}
 		}
 		begin();
 		makeTransient(bind);
@@ -129,13 +138,13 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id>
 		} else if (attribute == InfoField.RIGHTPERMISSION) {
 			Permission rPerm = (Permission) value;
 			bind.setRight(rPerm);
-		}else if(attribute==InfoField.PERMISSION){
-			if(!flag){
+		} else if (attribute == InfoField.PERMISSION) {
+			if (!flag) {
 				bind.setLeft((Permission) value);
-			}else{
-				bind.setRight((Permission)value);
+			} else {
+				bind.setRight((Permission) value);
 			}
-		}else if (attribute == InfoField.RELATIONSHIP) {
+		} else if (attribute == InfoField.RELATIONSHIP) {
 			String relation = (String) value;
 			bind.setRelationship(relation);
 		}
