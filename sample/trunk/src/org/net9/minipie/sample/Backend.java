@@ -50,9 +50,9 @@ public class Backend {
 		rootResource = client.resource(SERVICE_API_URL);
 	}
 
-//	public String getServiceBaseUrl() {
-//		return SERVICE_API_URL;
-//	}
+	public static String getServiceRootUrl() {
+		return SERVICE_ROOT_URL;
+	}
 
 	public PersonBean getProfile() throws GenericException,
 			LoginFailedException {
@@ -221,6 +221,78 @@ public class Backend {
 		throw new NotFoundException();
 	}
 
+	public void createTag(String tagname) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			postForm("phonebook/tag/", "tagname=" + tagname);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void editTag(long tagid, String tagname) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			putForm("phonebook/tag/" + tagid + "/", "tagname=" + tagname);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void deleteTag(long tagid) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			delete("phonebook/tag/" + tagid + "/");
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void addTagToUser(long tagid, long userid) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			postForm("phonebook/tag/" + tagid + "/user/", "userid=" + userid);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void addTagToContact(long tagid, long contactid)
+			throws GenericException, LoginFailedException, NotFoundException {
+		try {
+			postForm("phonebook/tag/" + tagid + "/contact/", "contactid="
+					+ contactid);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
 	public void updateProfile(UpdateBean bean) throws LoginFailedException,
 			GenericException, NotFoundException {
 		try {
@@ -230,6 +302,24 @@ public class Backend {
 			bean.toXML(wax);
 			wax.close();
 			postXml("profile/", writer.toString());
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		}
+	}
+
+	public void updateContact(long contactId, UpdateBean bean)
+			throws LoginFailedException, GenericException, NotFoundException {
+		try {
+			StringWriter writer = new StringWriter();
+			WAX wax = new WAX(writer);
+			wax.start("updates");
+			bean.toXML(wax);
+			wax.close();
+			postXml("phonebook/contact/" + contactId + "/", writer.toString());
 		} catch (UniformInterfaceException e) {
 			if (e.getResponse().getStatus() == 401)
 				throw new LoginFailedException();
@@ -261,5 +351,27 @@ public class Backend {
 		System.out.println(content);
 		rootResource.path(path).type(MediaType.APPLICATION_XML_TYPE).header(
 				AUTHENTICATION_HEADER, credential).entity(content).post();
+	}
+
+	private void postForm(String path, String content) {
+		System.out.println(content);
+		rootResource.path(path)
+				.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).header(
+						AUTHENTICATION_HEADER, credential).entity(content)
+				.post();
+	}
+
+	private void putForm(String path, String content) {
+		System.out.println(content);
+		rootResource.path(path)
+				.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).header(
+						AUTHENTICATION_HEADER, credential).entity(content)
+				.put();
+	}
+
+	private void delete(String path) {
+		rootResource.path(path)
+				.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).header(
+						AUTHENTICATION_HEADER, credential).delete();
 	}
 }

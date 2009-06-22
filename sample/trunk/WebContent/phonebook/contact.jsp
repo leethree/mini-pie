@@ -22,6 +22,7 @@
 		try {
 			PersonBean person = ses.getContactById(id);
 %>
+	  	<a href="editcontact.jsp?id=<%=id %>">Edit contact</a>
 		<h3>Basic Information:</h3>
 		<table>
 			<tr>
@@ -196,7 +197,7 @@
 		<form method="get">
 			<span>ID:</span>
 			<input type="text" name="id" />
-			<input type="submit" value="submit" />
+			<input type="submit" value="Submit" />
 		</form>
 <%
 	}

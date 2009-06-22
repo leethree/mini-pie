@@ -196,7 +196,7 @@
 		<form method="get">
 			<span>ID:</span>
 			<input type="text" name="id" />
-			<input type="submit" value="submit" />
+			<input type="submit" value="Submit" />
 		</form>
 <%
 	}
