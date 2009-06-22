@@ -19,13 +19,13 @@ import org.net9.minipie.server.data.field.Gender;
  * @author Seastar
  *
  */
-public class CompleteUserInfo {
+public class CompleteUser {
 	private UserEntity entity;
 	
 	/**
 	 * Constructor
 	 */
-	public CompleteUserInfo(UserEntity entity) {
+	public CompleteUser(UserEntity entity) {
 		this.entity=entity;
 		
 		//this.shareByUserId=entity.getId();
@@ -43,8 +43,11 @@ public class CompleteUserInfo {
 	/**
 	 * @return the gender
 	 */
-	public Gender getGender() {
-		return entity.getGender();
+	public String getGender() {
+		if (entity.getGender() == null)
+			return null;
+		else
+			return entity.getGender().toString();
 	}
 
 	/**
@@ -83,17 +86,7 @@ public class CompleteUserInfo {
 	public String getNotes() {
 		return entity.getNotes();
 	}
-
-	/**
-	 * @return the relationship
-	 */
-	public String getRelationship() {
-		if (entity.getRelationship() == null)
-			return null;
-		else
-			return entity.getRelationship().toString();
-	}
-
+	
 	/**
 	 * @return the addrs
 	 */
