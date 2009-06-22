@@ -57,6 +57,7 @@
 				<th>Image</th>
 				<th>Name</th>
 				<th>Permission</th>
+				<th>Relationships</th>
 				<th>Tags</th>
 			</tr>			
 <%
@@ -67,6 +68,7 @@
 				<td><img alt="<%=bean.get("image") %>" src="<%=bean.get("image") %>"/></td>
 				<td><a href="contact.jsp?id=<%=bean.id %>"><%=bean.get("name") %></a></td>
 				<td><%=bean.get("permission") %></td>
+				<td><%=bean.get("rel") %></td>
 				<td>
 <%
 		for (TagBean tag : bean.tags) {

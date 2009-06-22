@@ -25,12 +25,16 @@ public class Test {
 		bean.set("type", "home");
 		bean.set("value", "Chengdu");
 		bean.set("zipcode", "510000");
-		UpdateBean update = new UpdateBean("address", 24);
-		try {
-			back.updateProfile(update);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		bean.set("primary", "true");
+		UpdateBean update = new UpdateBean(bean);
+		WAX wax = new WAX();
+		update.toXML(wax);
+		wax.close();
+//		try {
+//			back.updateProfile(update);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 
 }

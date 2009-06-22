@@ -44,6 +44,10 @@ public class GenericBean extends Bean {
 	
 	public void toXML(WAX wax) {
 		wax.start(beanName);
+		if (get("primary") != null){
+			wax.attr("primary", get("primary"));
+			properties.remove("primary");
+		}
 		for (Entry<String, String> property : properties.entrySet()) {
 			wax.child(property.getKey(), property.getValue());
 		}

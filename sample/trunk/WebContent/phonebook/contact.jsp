@@ -107,6 +107,7 @@
 				<th>Type</th>
 				<th>Value</th>
 				<th>Zipcode</th>
+				<th>Primary</th>
 			</tr>
 		
 <%
@@ -117,6 +118,7 @@
 				<td><%=bean.get("type") %></td>
 				<td><%=bean.get("value") %></td>
 				<td><%=bean.get("zipcode") %></td>
+				<td><%=bean.get("primary") %></td>
 			</tr>
 <%		
 			}
@@ -128,6 +130,7 @@
 				<th>ID</th>
 				<th>Type</th>
 				<th>Value</th>
+				<th>Primary</th>
 			</tr>
 		
 <%
@@ -137,6 +140,7 @@
 				<td><%=bean.id %></td>
 				<td><%=bean.get("type") %></td>
 				<td><%=bean.get("value") %></td>
+				<td><%=bean.get("primary") %></td>
 			</tr>
 <%		
 			}
@@ -148,6 +152,7 @@
 				<th>ID</th>
 				<th>Type</th>
 				<th>Value</th>
+				<th>Primary</th>
 			</tr>
 		
 <%
@@ -157,6 +162,7 @@
 				<td><%=bean.id %></td>
 				<td><%=bean.get("type") %></td>
 				<td><a href="mailto:<%=bean.get("value") %>"><%=bean.get("value") %></a></td>
+				<td><%=bean.get("primary") %></td>
 			</tr>
 <%		
 			}
@@ -168,6 +174,7 @@
 				<th>ID</th>
 				<th>Type</th>
 				<th>Value</th>
+				<th>Primary</th>
 			</tr>
 		
 <%
@@ -177,6 +184,7 @@
 				<td><%=bean.id %></td>
 				<td><%=bean.get("type") %></td>
 				<td><%=bean.get("value") %></td>
+				<td><%=bean.get("primary") %></td>
 			</tr>
 <%		
 			}
@@ -188,6 +196,7 @@
 				<th>ID</th>
 				<th>Type</th>
 				<th>Value</th>
+				<th>Primary</th>
 			</tr>
 		
 <%
@@ -197,6 +206,7 @@
 				<td><%=bean.id %></td>
 				<td><%=bean.get("type") %></td>
 				<td><a href="<%=bean.get("value") %>"><%=bean.get("value") %></a></td>
+				<td><%=bean.get("primary") %></td>
 			</tr>
 <%		
 			}

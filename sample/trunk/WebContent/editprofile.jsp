@@ -80,7 +80,7 @@
 	        <tr>
 	          <td>ID:</td>
 	          <td><input type="text" name="id" id="id"/></td> 
-	          <td>(for detailed information only)</td>
+	          <td>(required for detailed information)</td>
 	        </tr> 
 	        <tr>
 	          <td>Field:</td>
@@ -90,7 +90,6 @@
 		          <option value="birthday">Birthday</option>
 		          <option value="gender">Gender</option>
 		          <option value="note">Notes</option>
-		          <option value="relationship">Relationships</option>
 		          <option value="value">Value</option>
 		          <option value="type">Type</option>
 		          <option value="primary">Primary</option>
@@ -121,6 +120,7 @@
 		String valueType = request.getParameter("valuetype");
 		String permission = request.getParameter("permission");
 		String zipcode = request.getParameter("zipcode");
+		String primary = request.getParameter("primary");
 		if (type == null || type.isEmpty() || value == null || value.isEmpty()) {
 %>
 			<p>Information value should not be empty</p>
@@ -132,6 +132,8 @@
 			bean.set("permission", permission);
 			if (type.equals("address"))
 				bean.set("zipcode", zipcode);
+			if (primary.equals("on"))
+				bean.set("primary", "true");
 			UpdateBean update = new UpdateBean(bean);
 			try {
 				ses.updateProfile(update);
@@ -170,6 +172,15 @@
 	          <td><input type="text" name="valuetype" id="valuetype"/></td> 
 	        </tr> 
 	        <tr>
+	          <td>ZIP code:</td>
+	          <td><input type="text" name="zipcode" id="zipcode"/></td>
+	          <td>(for addresses only)</td> 
+	        </tr> 
+	        <tr>
+	          <td></td>
+	          <td><input type="checkbox" name="primary" id="primary"/>Primary</td>
+	        </tr> 
+	        <tr>
 	          <td>Permission:</td>
 	          <td><select name="permission">
 		          <option value="to_self">Visible to myself</option>
@@ -177,11 +188,7 @@
 		          <option value="to_everyone">Visible to everyone</option>
 	          </select></td> 
 	        </tr> 
-	        <tr>
-	          <td>ZIP code:</td>
-	          <td><input type="text" name="zipcode" id="zipcode"/></td>
-	          <td>(for addresses only)</td> 
-	        </tr> 
+	        
 	        <tr>
 	          <td colspan="2" align="center"><input type="submit" value="Submit"/></td>
 	        </tr>

@@ -85,7 +85,7 @@
 	        <tr>
 	          <td>ID:</td>
 	          <td><input type="text" name="valueid" id="valueid"/></td> 
-	          <td>(for detailed information only)</td>
+	          <td>(requited for detailed information)</td>
 	        </tr> 
 	        <tr>
 	          <td>Field:</td>
@@ -120,6 +120,7 @@
 		String type = request.getParameter("type");
 		String valueType = request.getParameter("valuetype");
 		String zipcode = request.getParameter("zipcode");
+		String primary = request.getParameter("primary");
 		if (type == null || type.isEmpty() || value == null || value.isEmpty()) {
 %>
 			<p>Information value should not be empty</p>
@@ -130,6 +131,8 @@
 			bean.set("type", valueType);
 			if (type.equals("address"))
 				bean.set("zipcode", zipcode);
+			if (primary.equals("on"))
+				bean.set("primary", "true");
 			UpdateBean update = new UpdateBean(bean);
 			try {
 				ses.updateContact(id, update);
@@ -171,6 +174,10 @@
 	          <td>ZIP code:</td>
 	          <td><input type="text" name="zipcode" id="zipcode"/></td>
 	          <td>(for addresses only)</td> 
+	        </tr> 
+	        <tr>
+	          <td></td>
+	          <td><input type="checkbox" name="primary" id="primary"/>Primary</td>
 	        </tr> 
 	        <tr>
 	          <td colspan="2" align="center"><input type="submit" value="Submit"/></td>
