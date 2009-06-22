@@ -66,12 +66,14 @@ public class ViewMyUserContact extends Command<PhonebookCompleteUser> {
 				
 		if (user.getGenderPermission() == Permission.TO_SELF)
 			user.setGender(null);
-		if (user.getBirthyearPermission() == Permission.TO_SELF) {
-			user.setBirthday(user.getBirthday().toSimpleDate());
-		}
-		if (user.getBirthdatePermission() == Permission.TO_SELF)
-			user.setBirthday(null);
 		
+		if (user.getBirthday() != null) {
+			if (user.getBirthyearPermission() == Permission.TO_SELF) {
+				user.setBirthday(user.getBirthday().toSimpleDate());
+			}
+			if (user.getBirthdatePermission() == Permission.TO_SELF)
+				user.setBirthday(null);
+		}
 		if (rel != null)
 			user.setRelationship(new Relationships(rel));		
 		user.setPermission(executor2.selectPermission(userId, targetId));
