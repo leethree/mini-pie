@@ -24,7 +24,7 @@ import org.net9.minipie.server.data.field.AddAsContactPermission;
  * 
  */
 public class SearchAllUser extends Command<Collection<UserListEntry>> {
-	private long userId;
+	//private long userId;
 	private String querys;
 
 	/**
@@ -33,9 +33,9 @@ public class SearchAllUser extends Command<Collection<UserListEntry>> {
 	 * @param userId
 	 * @param querys
 	 */
-	public SearchAllUser(long userId, String querys) {
+	public SearchAllUser(String querys) {
 		super();
-		this.userId = userId;
+		//this.userId = userId;
 		this.querys = querys;
 	}
 

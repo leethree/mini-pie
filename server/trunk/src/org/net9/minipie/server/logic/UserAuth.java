@@ -5,8 +5,8 @@
  */
 package org.net9.minipie.server.logic;
 
-import org.net9.minipie.server.db.HibernateDAOFactory;
 import org.net9.minipie.server.exception.NotFoundException;
+import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.UserStorage;
 
 /**
@@ -34,11 +34,33 @@ public class UserAuth {
 	 * @return
 	 */
 	public long getUserId() {
-		UserStorage executor = new HibernateDAOFactory().getUserStorage();
-		try {
-			return executor.selectLegalUser(name, pwd);
-		} catch (NotFoundException e) {
-			return -1;
+		return new Handler<Long>(new CheckUser()).execute();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.logic.operation.Command#execute()
+	 */
+	
+	private class CheckUser extends Command<Long>{
+
+		/**
+		 * Constructor
+		 */
+		public CheckUser() {
+			
 		}
+		/* (non-Javadoc)
+		 * @see org.net9.minipie.server.logic.operation.Command#execute()
+		 */
+		@Override
+		public Long execute() {
+			UserStorage executor = getStorageFactory().getUserStorage();
+			try {
+				return executor.selectLegalUser(name, pwd);
+			} catch (NotFoundException e) {
+				return -1L;
+			}
+		}
+		
 	}
 }

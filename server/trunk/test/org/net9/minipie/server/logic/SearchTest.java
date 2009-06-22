@@ -18,7 +18,7 @@ import org.net9.minipie.server.logic.operation.user.SearchAllUser;
  */
 public class SearchTest {
 	public static void main(String avg[]) {
-		Collection<UserListEntry> user =new Handler<Collection<UserListEntry>>(new SearchAllUser(3L,"Wang Ts'ai,email:my09@sina.com,phone: 11123" +
+		Collection<UserListEntry> user =new Handler<Collection<UserListEntry>>(new SearchAllUser("Wang Ts'ai,email:my09@sina.com,phone: 11123" +
 				" ,birthday: 1993.4 ,gender:ssfds")).execute();
 		for(UserListEntry u:user)
 			System.out.println(u.getName());

@@ -223,6 +223,7 @@ public class UserEditHandler extends UpdateHandler {
 					break;
 				case BASIC:
 					UserEntity user = new UserEntity();
+					//InfoField temp=newData.getInfoField();
 					switch (newData.getInfoField()) {
 					case NAME:
 						user.setName(newData.getValue());
@@ -256,6 +257,7 @@ public class UserEditHandler extends UpdateHandler {
 								user.getBirthday().toString());
 						break;
 					case BIRTHDAYPERMISSION:
+						
 						if(newData.getValue()!=null)
 						userExecutor.editBasicInfo(userId, InfoField.BIRTHDAYPERMISSION
 								, Permission.value( newData.getValue()));
@@ -281,7 +283,10 @@ public class UserEditHandler extends UpdateHandler {
 						userExecutor.editBasicInfo(userId, InfoField.NOTE,
 								user.getNotes());
 						break;
-					
+					case ADDASCONTACTPERMISSION:
+						if(newData.getValue()!=null)
+							userExecutor.editBasicInfo(userId, InfoField.ADDASCONTACTPERMISSION
+									, Permission.value( newData.getValue()));
 					default:
 						throw new UpdateException("No Field "+newData.getInfoField().toString()
 								+" in UserInfo");

@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.UUID;
-import java.util.Vector;
 
 import org.net9.minipie.server.data.entity.AddressData;
 import org.net9.minipie.server.data.entity.ContactEntity;
@@ -19,14 +18,12 @@ import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.TagEntry;
 import org.net9.minipie.server.data.entity.URLData;
-import org.net9.minipie.server.data.entity.UserEntity;
 import org.net9.minipie.server.data.storage.CommonListEntry;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 import org.net9.minipie.server.logic.storage.Tag_ContactStorage;
-import org.net9.minipie.server.logic.storage.UserStorage;
 
 /**
  * @author Seastar
@@ -51,18 +48,18 @@ public class DownloadMyUserContact extends Command<String> {
 		long m = id.getMostSignificantBits();
 		if (userId % 3 == 0) {
 			fileName = String.valueOf((long) (userId * Math.random())) + "__"
-					+ String.valueOf(Math.abs(m)) + ".cvx";
+					+ String.valueOf(Math.abs(m)) + ".txt";
 		} else if (userId % 3 == 1) {
 			fileName = String.valueOf((long) ((userId + 7) * Math.random()))
-					+ "__" + String.valueOf(Math.abs(n)) + ".cvx";
+					+ "__" + String.valueOf(Math.abs(n)) + ".txt";
 		} else if (userId % 6 == 2) {
 			fileName = "__" + String.valueOf(Math.abs(n + 77))
 					+ String.valueOf((long) ((userId + 777) * Math.random()))
-					+ ".cvx";
+					+ ".txt";
 		} else {
 			fileName = "__" + String.valueOf(Math.abs(m + 7))
 					+ String.valueOf((long) ((userId + 7777) * Math.random()))
-					+ ".cvx";
+					+ ".txt";
 		}
 	}
 

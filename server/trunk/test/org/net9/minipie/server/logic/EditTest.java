@@ -22,21 +22,21 @@ public class EditTest {
 	public static void main(String[] args) {
 		Edit data=new Edit();
 		data.setId(3L);
-		data.setType("im");
-		data.setField("type");
-		data.setValue("bl");
-//		try{
-//			new UpdateMyInfo(3L,data).execute();
-//		}catch (Exception e){
-//			System.out.println(e.getMessage());
-//			e.printStackTrace();
-//		}
+		data.setType("basic");
+		data.setField("birthdayPermission");
+		data.setValue("to_self");
 		try{
-			new UpdateMyContact(1L,2L,data).execute();
+			new UpdateMyInfo(3L,data).execute();
 		}catch (Exception e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
+//		try{
+//			new UpdateMyContact(1L,2L,data).execute();
+//		}catch (Exception e){
+//			System.out.println(e.getMessage());
+//			e.printStackTrace();
+//		}
 
 	}
 
