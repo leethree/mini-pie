@@ -1,0 +1,65 @@
+profile=id
+%%	name	displayname	nickname	gender		birthday	register email	note
+	"jy" :: "I'm me"  :: "kate" :: "male" :: "2023-2-3" :: "abc@tt.com" :: "abcd,efg"
+	addr=3
+%%		type		isprim		zipcode	value
+		"type" :: "true" :: "000111" :: "ddfassfa"
+		"type" :: "true" :: "000111" :: "ddfassfa"
+		"type" :: "true" :: "000111" :: "ddfassfa"
+	email=2
+%%		type		isprim		value
+		"type" :: "true" ::	"ddfassfa@gmail.com"
+		"type" :: "true" ::	"ddfassfa@gmail.com"
+	im=1
+%%		type		isprim		value
+		"type" :: "true" :: "601523"
+	tel=1	  
+%%		type		isprim		value
+		"type" :: "true" ::	"3838393"
+	url=1
+%%		type		isprim		value
+		"type" :: "true" ::	"http://jin.net9.org"
+
+contacts=2
+	contactid=1
+%%		name		nickname	gender		birthday		note
+		"jy" ::	"kate" :: "male" ::	"2023-2-3" :: "abcdefg"
+		addr=3
+%%			type		isprim		zipcode	value
+			"type" :: "true" :: "000111" :: "ddfassfa"
+			"type" :: "true" :: "000111" :: "ddfassfa"
+			"type" :: "true" :: "000111" ::	"ddfassfa"
+		email=2
+%%			type		isprim		value
+			"type" :: "true" :: "ddd@gmail.com"
+			"type" :: "true" :: "ddfassfa@sogou.com"
+		im=1
+%%			type		isprim		value
+			"type" :: "true" ::	"4940403332"
+		tel=1	  
+%%			type		isprim		value
+			"type" :: "true" ::	"4934939383"
+		url=1
+%%			type		isprim		value
+			"type" :: "true" ::	"http://bbs.net9.org"
+	contactid=2
+%%		name		nickname	gender		birthday		note
+		"jy" :: "kate" :: "male" ::	"2023-2-3" :: "abcdefg"
+		addr=3
+%%			type		isprim		zipcode	value
+			"type" :: "true" :: "000111" ::	"ddfassfa"
+			"type" :: "true" :: "000111" :: "ddfassfa"
+			"type" :: "true" :: "000111" :: "ddfassfa"
+		email=2
+%%			type		isprim		value
+			"type" :: "true" ::	"ddfassfa@sohu.com"
+			"type" :: "true" :: "ddfassfa@sina.com"
+		im=1
+%%			type		isprim		value
+			"type" :: "true" :: "3393932"
+		tel=1	  
+%%			type		isprim		value
+			"type" :: "true" :: "49493a"
+		url=1
+%%			type		isprim		value
+			"type" :: "true" :: "http://science.net9.org"

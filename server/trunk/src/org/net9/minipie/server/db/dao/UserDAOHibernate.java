@@ -171,6 +171,7 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 				addressData.setId(userAddr.getId());
 				addressData.setValue(userAddr.getFormatted());
 				addressData.setType(userAddr.getType());
+				addressData.setZipcode(userAddr.getZipcode());
 				if (userAddr.getPrimary() == Bool.TRUE)
 					addressData.setPrimary(true);
 				else
@@ -373,6 +374,7 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		UserAddress userAddr = new UserAddress();
 		userAddr.setFormatted(addressData.getValue());
 		userAddr.setType(addressData.getType());
+		userAddr.setZipcode(addressData.getZipcode());
 		if (addressData.isPrimary() == true)
 			userAddr.setPrimary(Bool.TRUE);
 		else
@@ -538,6 +540,8 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		} else if (attribute == InfoField.PERMISSION) {
 			Permission perm = (Permission) value;
 			userAddr.setPerm(perm);
+		} else if(attribute==InfoField.ZIPCODE){
+			userAddr.setZipcode((String) value);
 		}
 		uadh.begin();
 		uadh.makePersistent(userAddr);

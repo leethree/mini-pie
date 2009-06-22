@@ -1,0 +1,6 @@
+6.22
+hbm2ddl.auto-update
+show_sql - true
+connection_pool_size -1
+jdbc.batch_size -1
+current_session_context_class - thread

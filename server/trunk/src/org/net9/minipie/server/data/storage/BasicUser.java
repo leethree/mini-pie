@@ -37,7 +37,7 @@ public class BasicUser {
 		entity.setDisplayname(displayName);
 		entity.setGenderPermission(gPerm);
 		entity.setBirthdatePermission(bdPerm);
-		entity.setBirthdatePermission(byPerm);
+		entity.setBirthyearPermission(byPerm);
 		entity.setRegisteredEmail(RegisteredEmail);
 		if(contactPerm!=null)
 			entity.setAddAsContactPermission(contactPerm);
