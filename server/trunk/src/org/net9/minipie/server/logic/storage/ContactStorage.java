@@ -16,6 +16,7 @@ import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicContact;
 import org.net9.minipie.server.data.storage.CommonListEntry;
+import org.net9.minipie.server.data.storage.Query;
 
 /**
  * @author Seastar
@@ -61,5 +62,7 @@ public interface ContactStorage {
 	Long findTelOwner(Long telId);
 	Long findURLOwner(Long urlId);
 	Void setPermission(Permission perm,Long contactId);
-	//Collection<BasicUser> searchAllUser(Collection<Query> query); 
+	Collection<BasicContact> searchAllContact(Collection<Query> query,Permission perm); 
+	//basic : name,note,birthday,gender,ownerId -> And Longic
+	//detail: 
 }
