@@ -20,6 +20,7 @@ import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.field.Gender;
+import org.net9.minipie.server.data.field.SharedType;
 
 /**
  * @author Seastar, LeeThree
@@ -28,6 +29,7 @@ import org.net9.minipie.server.data.field.Gender;
 @XmlRootElement(name = "contact")
 public class CompleteContact {
 	private ContactEntity entity;
+	private SharedType type;
 	private long shareByUserId;
 	private String shareByUserName;
 	
@@ -43,10 +45,11 @@ public class CompleteContact {
 	 * 
 	 * @param entity
 	 */
-	public CompleteContact(ContactEntity entity,long sharedId,String sharedName) {
+	public CompleteContact(ContactEntity entity,long sharedId,String sharedName,SharedType t) {
 		this.entity = entity;
 		this.shareByUserId=sharedId;
 		this.shareByUserName=sharedName;
+		this.type=t;
 	}
 
 	
@@ -95,7 +98,9 @@ public class CompleteContact {
 		return entity.getNickName();
 	}
 
-
+	public String getType(){
+		return this.type.toString();
+	}
 
 	/**
 	 * @return the nickName

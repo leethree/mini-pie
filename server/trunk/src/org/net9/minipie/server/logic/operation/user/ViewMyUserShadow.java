@@ -8,6 +8,7 @@ package org.net9.minipie.server.logic.operation.user;
 import org.net9.minipie.server.data.Formatter;
 import org.net9.minipie.server.data.api.CompleteContact;
 import org.net9.minipie.server.data.entity.ContactEntity;
+import org.net9.minipie.server.data.field.SharedType;
 import org.net9.minipie.server.data.storage.BasicContact;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
@@ -60,11 +61,11 @@ public class ViewMyUserShadow extends Command<CompleteContact> {
 				shadow.setIms(executor3.selectIM(contactId));
 				shadow.setTels(executor3.selectTel(contactId));
 				shadow.setUrls(executor3.selectURL(contactId));
-				return new CompleteContact(shadow, 0, null);
+				return new CompleteContact(shadow, 0, null,SharedType.SHADOW);
 			}
-			return new CompleteContact(new ContactEntity(),0,null);
+			return new CompleteContact(new ContactEntity(),0,null,SharedType.SHADOW);
 		} catch (NotFoundException e) {
-			return new CompleteContact(new ContactEntity(),0,null);
+			return new CompleteContact(new ContactEntity(),0,null,SharedType.SHADOW);
 		}
 	}
 

@@ -13,7 +13,8 @@ import org.net9.minipie.server.exception.DataFormatException;
  */
 public enum SharedType {
 	SELF("self"), USER_CONTACT("user contact"), GROUP_MEMBER("group member"), PUBLIC_USER(
-			"public user");
+			"public user"),CONTACT("contact"),SHARED_CONTACT("shared contact")
+			,GROUP_CONTACT("group contact"),SHADOW("shadow");
 	private String value;
 
 	private SharedType(String value) {

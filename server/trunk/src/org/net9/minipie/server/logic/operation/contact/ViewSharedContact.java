@@ -9,6 +9,7 @@ import org.net9.minipie.server.data.Formatter;
 import org.net9.minipie.server.data.api.CompleteContact;
 import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.data.field.SharedType;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
@@ -56,7 +57,8 @@ public class ViewSharedContact extends Command<CompleteContact> {
 			contact.setTels(executor.selectTel(targetId));
 			contact.setUrls(executor.selectURL(targetId));
 			return new CompleteContact(contact,userId,
-					executor2.selectBasicInfo(userId).getEntity().getDisplayname());
+					executor2.selectBasicInfo(userId).getEntity().getDisplayname()
+					,SharedType.CONTACT);
 		}else{
 			if(contact.getPermission()==Permission.TO_SELF)
 				throw new PermissionDeniedException("this contact is private,can't be viewed");
@@ -67,7 +69,7 @@ public class ViewSharedContact extends Command<CompleteContact> {
 				contact.setIms(executor.selectIM(targetId));
 				contact.setTels(executor.selectTel(targetId));
 				contact.setUrls(executor.selectURL(targetId));
-				return new CompleteContact(contact,id,name);								
+				return new CompleteContact(contact,id,name,SharedType.SHARED_CONTACT);								
 			}catch(NotFoundException e){
 				Long gid=contact.getGroupId();
 				if(gid!=null){
@@ -78,7 +80,7 @@ public class ViewSharedContact extends Command<CompleteContact> {
 					contact.setIms(executor.selectIM(targetId));
 					contact.setTels(executor.selectTel(targetId));
 					contact.setUrls(executor.selectURL(targetId));
-					return new CompleteContact(contact,id,name);
+					return new CompleteContact(contact,id,name,SharedType.GROUP_CONTACT);
 					
 				} catch (NotFoundException e1){
 					
@@ -92,7 +94,7 @@ public class ViewSharedContact extends Command<CompleteContact> {
 					contact.setIms(executor.selectIM(targetId));
 					contact.setTels(executor.selectTel(targetId));
 					contact.setUrls(executor.selectURL(targetId));
-					return new CompleteContact(contact,id,name);
+					return new CompleteContact(contact,id,name,SharedType.SHARED_CONTACT);
 					
 				}
 			}
