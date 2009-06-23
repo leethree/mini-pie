@@ -48,7 +48,7 @@ public class ViewSharedContact extends Command<CompleteContact> {
 		
 		ContactEntity contact=executor.selectBasicInfo(targetId).getEntity();
 		long id=contact.getOwnerId();
-		String name=executor2.selectBasicInfo(userId).getEntity().getDisplayname();
+		String name=executor2.selectBasicInfo(id).getEntity().getDisplayname();
 		if(contact.getOwnerId()==userId){
 			contact.setEmails(executor.selectEmail(targetId));
 			contact.setAddrs(executor.selectAddr(targetId));
