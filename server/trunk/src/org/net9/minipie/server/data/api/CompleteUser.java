@@ -33,6 +33,7 @@ public class CompleteUser {
 	 * Constructor
 	 */
 	public CompleteUser() {
+		type = SharedType.USER_CONTACT;
 	}
 	
 	/**
@@ -80,9 +81,11 @@ public class CompleteUser {
 		return entity.getImage();
 	}
 	
+	@XmlAttribute(name = "type")
 	public String getType(){
 		return this.type.toString();
 	}
+	
 	/**
 	 * @return the name
 	 */

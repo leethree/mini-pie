@@ -37,7 +37,7 @@ public class CompleteContact {
 	 * Constructor
 	 */
 	public CompleteContact() {
-		
+		type = SharedType.SHARED_CONTACT;
 	}
 	
 	/**
@@ -98,6 +98,7 @@ public class CompleteContact {
 		return entity.getNickName();
 	}
 
+	@XmlAttribute(name = "type")
 	public String getType(){
 		return this.type.toString();
 	}
