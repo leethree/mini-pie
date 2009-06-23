@@ -24,46 +24,55 @@ import org.net9.minipie.server.logic.storage.User_UserStorage;
 
 /**
  * @author Seastar
- *
+ * 
  */
 public class ListTaggedUser extends Command<Collection<PhonebookUserListEntry>> {
 
 	private long userId;
 	private long tagId;
-	
-	public ListTaggedUser(long userId,long tagId){
-		this.userId=userId;
+
+	public ListTaggedUser(long userId, long tagId) {
+		this.userId = userId;
 		try {
-			this.tagId=Formatter.checkId(tagId);
+			this.tagId = Formatter.checkId(tagId);
 		} catch (DataFormatException e) {
 			throw new InvalidRequestException(e);
 		}
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
 	@Override
 	public Collection<PhonebookUserListEntry> execute() {
-		TagStorage executor=getStorageFactory().getTagStorage();
-		if(executor.selectTag(tagId).getOwnerId()!=userId)
+		TagStorage executor = getStorageFactory().getTagStorage();
+		if (executor.selectTag(tagId).getOwnerId() != userId)
 			throw new PermissionDeniedException("this is not your tag");
-		Tag_UserStorage executor2=getStorageFactory().getTag_UserStorage();
-		User_UserStorage executor3=getStorageFactory().getUser_UserStorage();
-		try{
-		Collection<BasicUser> users=executor2.selectTaggedUser(tagId);
-		Collection<PhonebookUserListEntry> result=new Vector<PhonebookUserListEntry>();
-		for(BasicUser entry:users){
-			UserEntity entity=entry.getEntity();
-			long id=entity.getId();
-			entity.setTags(executor2.selectTagsOfUser(id,userId));
-			String rel = executor3.selectRelationship(userId, id);
-			if (rel != null)
-				entity.setRelationship(new Relationships(rel));
-			entity.setPermission(executor3.selectPermission(userId, id));
-			result.add(new PhonebookUserListEntry(entity));
-		}
-		return result;
-		}catch (NotFoundException e){
+		Tag_UserStorage executor2 = getStorageFactory().getTag_UserStorage();
+		User_UserStorage executor3 = getStorageFactory().getUser_UserStorage();
+		try {
+			Collection<BasicUser> users = executor2.selectTaggedUser(tagId);
+		
+			Collection<PhonebookUserListEntry> result = new Vector<PhonebookUserListEntry>();
+			for (BasicUser entry : users) {
+				UserEntity entity = entry.getEntity();
+				long id = entity.getId();
+				String rel =null;
+				try{
+					entity.setTags(executor2.selectTagsOfUser(id, userId));
+					rel = executor3.selectRelationship(userId, id);
+					entity.setPermission(executor3.selectPermission(userId, id));
+				} catch (NotFoundException e){
+					//ignore
+				}				
+				if (rel != null)
+					entity.setRelationship(new Relationships(rel));				
+				result.add(new PhonebookUserListEntry(entity));
+			}
+			return result;
+		} catch (NotFoundException e) {
 			return new Vector<PhonebookUserListEntry>();
 		}
 	}
