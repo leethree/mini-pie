@@ -228,7 +228,7 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id>
 				User user2 = iter1.next().getuser2();
 				try {
 					result.add(new CommonListEntry(user2.getId(), user2
-							.getUserName(), user2.getImageURL()));
+							.getDisplayName(), user2.getImageURL()));
 				} catch (DataFormatException e) {
 					throw new ServerErrorException(e.getMessage());
 				}
@@ -240,7 +240,7 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id>
 				User user1 = iter2.next().getUser1();
 				try {
 					result.add(new CommonListEntry(user1.getId(), user1
-							.getUserName(), user1.getImageURL()));
+							.getDisplayName(), user1.getImageURL()));
 				} catch (DataFormatException e) {
 					throw new ServerErrorException(e.getMessage());
 				}
