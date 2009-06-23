@@ -20,7 +20,7 @@ import org.net9.minipie.server.logic.storage.User_UserStorage;
 
 /**
  * @author Seastar
- *
+ * 
  */
 
 public class ListSharedUserContact extends Command<Collection<UserListEntry>> {
@@ -35,40 +35,61 @@ public class ListSharedUserContact extends Command<Collection<UserListEntry>> {
 			throw new InvalidRequestException(e);
 		}
 		if (userId == targetId) {
-			throw new InvalidRequestException("View oneself is not allow in this method.");
+			throw new InvalidRequestException(
+					"View oneself is not allow in this method.");
 		}
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
-	
+
 	@Override
 	public Collection<UserListEntry> execute() {
 		boolean relationFlag;
-		Collection<UserListEntry> result=new ArrayList<UserListEntry>();
+		Collection<UserListEntry> result = new ArrayList<UserListEntry>();
 		User_UserStorage executor2 = getStorageFactory().getUser_UserStorage();
-		try{
-			executor2.selectPermission(targetId,userId);
-			relationFlag=true;			
-		}catch (NotFoundException e){			
-			relationFlag=false;
+		try {
+			executor2.selectPermission(targetId, userId);
+			relationFlag = true;
+		} catch (NotFoundException e) {
+			relationFlag = false;
 		}
 		Collection<CommonListEntry> temp;
-		if(relationFlag){			
-			temp=executor2.selectSharedUser(targetId, Permission.TO_CONTACTS);
-			for(CommonListEntry ce:temp){				
-				result.add(new UserListEntry(ce.getEntity()));				
+
+		if (relationFlag) {
+			try {
+				temp = executor2.selectSharedUser(targetId,
+						Permission.TO_CONTACTS);
+				for (CommonListEntry ce : temp) {
+					result.add(new UserListEntry(ce.getEntity()));
+				}
+			} catch (NotFoundException e) {
+
 			}
-			temp=executor2.selectSharedUser(targetId, Permission.TO_EVERYONE);
-			for(CommonListEntry ce:temp){				
-				result.add(new UserListEntry(ce.getEntity()));				
+			try {
+				temp = executor2.selectSharedUser(targetId,
+						Permission.TO_EVERYONE);
+				for (CommonListEntry ce : temp) {
+					result.add(new UserListEntry(ce.getEntity()));
+				}
+			} catch (NotFoundException e) {
+
 			}
-		}else{
-			temp=executor2.selectSharedUser(targetId, Permission.TO_EVERYONE);
-			for(CommonListEntry ce:temp){				
-				result.add(new UserListEntry(ce.getEntity()));				
+		} else {
+			try {
+				temp = executor2.selectSharedUser(targetId,
+						Permission.TO_EVERYONE);
+				for (CommonListEntry ce : temp) {
+					result.add(new UserListEntry(ce.getEntity()));
+				}
+			} catch (NotFoundException e) {
+
 			}
 		}
+
 		return result;
 	}
 
