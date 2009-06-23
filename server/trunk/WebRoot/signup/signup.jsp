@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*, org.net9.minipie.server.web.WebController" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-
+<html>
 <%
 request.setCharacterEncoding("UTF-8");
 String path = request.getContextPath();
@@ -17,14 +17,12 @@ if (username == null || username.isEmpty() ||
 else try {
 	long id = WebController.signUp(username, displayname, email, password);
 %>
-
-<html>
   <head>
     <base href="<%=basePath%>">
     <title>Welcome - Mini-Pie Web Service</title>
 	<link rel="stylesheet" type="text/css" href="./style.css">
   </head>
-  
+
   <body>
      <div id="header" >
    		<h1 id="title" ><a href="./">Mini-Pie Web Service</a></h1>
@@ -52,19 +50,16 @@ else try {
 	      </table>
       </div>
   </body>
-</html>
 <%
 } catch (Exception e) {
 	e.printStackTrace();
 %>
-
-<html>
   <head>
     <base href="<%=basePath%>">
     <title>Error - Mini-Pie Web Service</title>
 	<link rel="stylesheet" type="text/css" href="./style.css">
   </head>
-  
+ 
   <body>
     <div id="header" >
    		<h1 id="title" ><a href="./">Mini-Pie Web Service</a></h1>
@@ -77,8 +72,8 @@ else try {
 		</p>
 	</div>
   </body>
-</html>
 <%
 	//response.sendRedirect("error.jsp");
 }
 %>
+</html>
