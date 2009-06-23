@@ -53,7 +53,8 @@ public class ListAllSharedContact extends Command<Collection<ContactListEntry>> 
 				Collection<CommonListEntry> ces=executor.selectOwnerContact(ur.getId());
 				for(CommonListEntry ce:ces){
 					if(executor.selectBasicInfo(
-						ce.getEntity().getId()).getEntity().getPermission()!=Permission.TO_SELF)
+						ce.getEntity().getId()).getEntity()
+						.getPermission()!=Permission.TO_SELF)
 						result.add(new ContactListEntry(ce.getEntity()));
 				}
 			}
@@ -63,8 +64,9 @@ public class ListAllSharedContact extends Command<Collection<ContactListEntry>> 
 				Collection<CommonListEntry> ces=executor.selectGroupContact(ge.getGroupId());
 				for(CommonListEntry ce:ces){
 					if(executor.selectBasicInfo(
-							ce.getEntity().getId()).getEntity().getPermission()!=Permission.TO_SELF)
-					result.add(new ContactListEntry(ce.getEntity()));
+						ce.getEntity().getId()).getEntity()
+						.getPermission()!=Permission.TO_SELF)
+						result.add(new ContactListEntry(ce.getEntity()));
 				}
 			}
 		}

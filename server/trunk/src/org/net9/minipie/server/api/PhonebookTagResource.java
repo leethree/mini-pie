@@ -29,7 +29,7 @@ import org.net9.minipie.server.logic.operation.tag.EditTag;
 import org.net9.minipie.server.logic.operation.tag.ListTaggedContact;
 import org.net9.minipie.server.logic.operation.tag.ListTaggedUser;
 import org.net9.minipie.server.logic.operation.tag.RemoveTagFromContact;
-import org.net9.minipie.server.logic.operation.tag.RemoveTagOfUser;
+import org.net9.minipie.server.logic.operation.tag.RemoveTagFromUser;
 
 /**
  * @author LeeThree
@@ -112,7 +112,7 @@ public class PhonebookTagResource extends BaseResource {
 	@DELETE
 	@Path("user/{id}")
 	public Response removeUser(@PathParam("id") long userId) {
-		new Handler<Void>(new RemoveTagOfUser(getUserId(), userId, tagId)).execute();
+		new Handler<Void>(new RemoveTagFromUser(getUserId(), userId, tagId)).execute();
 		return Response.ok().build();
 	}
 }

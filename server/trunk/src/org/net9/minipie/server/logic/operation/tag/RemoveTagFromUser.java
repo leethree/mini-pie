@@ -21,7 +21,7 @@ import org.net9.minipie.server.logic.storage.User_UserStorage;
  * @author Seastar
  *
  */
-public class RemoveTagOfUser extends Command<Void> {
+public class RemoveTagFromUser extends Command<Void> {
 
 	private long tagId;
 	private long userId;
@@ -34,7 +34,7 @@ public class RemoveTagOfUser extends Command<Void> {
 	 * @param userId
 	 * @param targetId
 	 */
-	public RemoveTagOfUser(long userId, long targetId, long tagId) {
+	public RemoveTagFromUser(long userId, long targetId, long tagId) {
 		this.userId = userId;
 		try {
 			this.tagId = Formatter.checkId(tagId);

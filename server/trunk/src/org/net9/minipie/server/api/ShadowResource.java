@@ -20,7 +20,7 @@ import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.Handler;
 import org.net9.minipie.server.logic.operation.MacroCommand;
 import org.net9.minipie.server.logic.operation.user.UpdateUserShadow;
-import org.net9.minipie.server.logic.operation.user.ViewMyContactShadow;
+import org.net9.minipie.server.logic.operation.user.ViewMyUserShadow;
 
 /**
  * @author LeeThree
@@ -46,7 +46,7 @@ public class ShadowResource extends BaseResource {
 	@GET
 	@Produces( { "application/xml", "application/json" })
 	public CompleteContact get() {
-		return new Handler<CompleteContact>(new ViewMyContactShadow(
+		return new Handler<CompleteContact>(new ViewMyUserShadow(
 				getUserId(), userId)).execute();
 	}
 	
