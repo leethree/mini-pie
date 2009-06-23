@@ -62,9 +62,9 @@ public class ViewMyUserShadow extends Command<CompleteContact> {
 				shadow.setUrls(executor3.selectURL(contactId));
 				return new CompleteContact(shadow, 0, null);
 			}
-			return new CompleteContact();
+			return new CompleteContact(new ContactEntity(),0,null);
 		} catch (NotFoundException e) {
-			return new CompleteContact();
+			return new CompleteContact(new ContactEntity(),0,null);
 		}
 	}
 
