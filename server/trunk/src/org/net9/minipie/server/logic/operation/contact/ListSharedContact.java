@@ -64,7 +64,7 @@ public class ListSharedContact extends Command<Collection<ContactListEntry>>{
 					result.add(new ContactListEntry(ce.getEntity()));
 			}
 		}
-		return null;
+		return result;
 	}
 
 }
