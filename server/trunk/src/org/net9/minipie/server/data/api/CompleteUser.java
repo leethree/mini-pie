@@ -13,7 +13,6 @@ import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.entity.UserEntity;
-import org.net9.minipie.server.data.field.Gender;
 
 /**
  * @author Seastar

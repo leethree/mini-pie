@@ -5,7 +5,13 @@
  */
 package org.net9.minipie.server.data.api;
 
+import java.util.ArrayList;
 import java.util.Collection;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.net9.minipie.server.data.entity.AddressData;
 import org.net9.minipie.server.data.entity.ContactEntity;
@@ -19,10 +25,17 @@ import org.net9.minipie.server.data.field.Gender;
  * @author Seastar, LeeThree
  * TODO
  */
+@XmlRootElement(name = "contact")
 public class CompleteContact {
 	private ContactEntity entity;
 	private long shareByUserId;
 	private String shareByUserName;
+	
+	/**
+	 * Constructor
+	 */
+	public CompleteContact() {
+	}
 	
 	/**
 	 * Constructor
@@ -39,6 +52,7 @@ public class CompleteContact {
 	/**
 	 * @return the birthday
 	 */
+	@XmlElement
 	public String getBirthday() {
 		if (entity.getBirthday() == null)
 			return null;
@@ -51,6 +65,7 @@ public class CompleteContact {
 	/**
 	 * @return the gender
 	 */
+	@XmlElement
 	public Gender getGender() {
 		return entity.getGender();
 	}
@@ -58,6 +73,7 @@ public class CompleteContact {
 	/**
 	 * @return the id
 	 */
+	@XmlAttribute
 	public long getId() {
 		return entity.getId();
 	}
@@ -65,6 +81,7 @@ public class CompleteContact {
 	/**
 	 * @return the image
 	 */
+	@XmlElement
 	public String getImage() {
 		return entity.getImage();
 	}
@@ -72,6 +89,7 @@ public class CompleteContact {
 	/**
 	 * @return the name
 	 */
+	@XmlElement(name = "nickname")
 	public String getNickName() {
 		return entity.getNickName();
 	}
@@ -81,6 +99,7 @@ public class CompleteContact {
 	/**
 	 * @return the nickName
 	 */
+	@XmlElement
 	public String getName() {
 		return entity.getName();
 	}
@@ -88,54 +107,50 @@ public class CompleteContact {
 	/**
 	 * @return the notes
 	 */
+	@XmlElement(name = "note")
 	public String getNotes() {
 		return entity.getNotes();
 	}
 
 	/**
-	 * @return the addrs
+	 * @return the detailed information
 	 */
-	public Collection<AddressData> getAddrs() {
-		return entity.getAddrs();
-	}
-
-	/**
-	 * @return the emails
-	 */
-	public Collection<EmailData> getEmails() {
-		return entity.getEmails();
-	}
-
-	/**
-	 * @return the ims
-	 */
-	public Collection<IMData> getIms() {
-		return entity.getIms();
-	}
-
-	/**
-	 * @return the phoneNos
-	 */
-	public Collection<PhoneNoData> getTels() {
-		return entity.getTels();
-	}
-
-	/**
-	 * @return the urls
-	 */
-	public Collection<URLData> getUrls() {
-		return entity.getUrls();
+	@XmlElements( { @XmlElement(name = "address", type = AddressXml.class),
+			@XmlElement(name = "email", type = EmailXml.class),
+			@XmlElement(name = "im", type = IMXml.class),
+			@XmlElement(name = "phone", type = PhoneXml.class),
+			@XmlElement(name = "url", type = UrlXml.class) })
+	public Collection<DetailedInfoXml> getDetails() {
+		Collection<DetailedInfoXml> collection = new ArrayList<DetailedInfoXml>();
+		for (AddressData address : entity.getAddrs()) {
+			collection.add(new AddressXml(address));
+		}
+		for (EmailData email : entity.getEmails()) {
+			collection.add(new EmailXml(email));
+		}
+		for (IMData im : entity.getIms()) {
+			collection.add(new IMXml(im));
+		}
+		for (PhoneNoData phone : entity.getTels()) {
+			collection.add(new PhoneXml(phone));
+		}
+		for (URLData url : entity.getUrls()) {
+			collection.add(new UrlXml(url));
+		}
+		return collection;
 	}
 	
 	/**
 	 * @return the shareByUserId
 	 */
+	@XmlAttribute(name = "ownerid")
 	public long getShareByUserId() {
 		return shareByUserId;
 	}
 	/**
 	 * @return the shareByUserName
 	 */
+	@XmlElement(name = "owner")
 	public String getShareByUserName() {
 		return shareByUserName;
 	}

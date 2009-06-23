@@ -13,5 +13,14 @@ import javax.ws.rs.Path;
  */
 @Path("/")
 public class BrowseResources extends BaseResource {
-
+	
+	@Path("contact")
+	public BrowseContactListResource getContacts() {
+		return getSubResource(BrowseContactListResource.class);
+	}
+	
+	@Path("user")
+	public BrowseUserListResource getUsers() {
+		return getSubResource(BrowseUserListResource.class);
+	}
 }

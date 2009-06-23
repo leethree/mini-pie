@@ -14,6 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.net9.minipie.server.data.api.PhonebookUserList;
 import org.net9.minipie.server.data.api.PhonebookUserListEntry;
@@ -38,9 +39,12 @@ public class PhonebookUserListResource extends BaseResource {
 	@POST
 	public Response post(@FormParam("userid") long targetId,
 			@FormParam("message") String message) {
-		new Handler<Boolean>(new AddUserAsContact(getUserId(), targetId, message))
+		boolean ret = new Handler<Boolean>(new AddUserAsContact(getUserId(), targetId, message))
 				.execute();
-		return Response.ok().build();
+		if (ret)
+			return Response.ok().build();
+		else
+			return Response.status(Status.ACCEPTED).build();
 	}
 
 	@Path("{id}")
