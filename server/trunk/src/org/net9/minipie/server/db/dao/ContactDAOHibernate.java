@@ -668,6 +668,9 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			Iterator<Contact> iter = result.iterator();
 			while (iter.hasNext()) {
 				Contact contact = (Contact) iter.next();
+				if(contact.getShadowOf()!=null){
+					continue;
+				}
 				CommonListEntry minimalContact = new CommonListEntry(contact
 						.getId(), contact.getName(), contact.getImage());
 				selectedResult.add(minimalContact);

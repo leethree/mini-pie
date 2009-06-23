@@ -44,6 +44,7 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id>
 		UserDAOHibernate udh = new UserDAOHibernate();
 		User2User.Id id = new User2User.Id(userId1, userId2);
 		boolean flag = false;
+		@SuppressWarnings("unused")
 		User2User relation = null;
 		try {
 			relation = findById(id);
@@ -267,36 +268,50 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id>
 	 * (java.lang.Long)
 	 */
 	public Collection<UserRelation> selectMyUserContact(Long id) {
-		Criterion criterion1 = Restrictions.eq("user1.id", id);
-		List<User2User> binds1 = null;
-		try {
-			binds1 = findByCriteria(criterion1);
-		} catch (ObjectNotFoundException e) {
-			throw new NotFoundException("there is no user1 with id: " + id);
+		UserDAOHibernate udh = new UserDAOHibernate();
+		User user = null;
+		try{
+			user = udh.findById(id);
+		}catch(ObjectNotFoundException e){
+			throw new NotFoundException("There is no user with id "+id);
 		}
-		Criterion criterion2 = Restrictions.eq("user2.id", id);
-		List<User2User> binds2 = null;
-		try {
-			binds2 = findByCriteria(criterion2);
-		} catch (ObjectNotFoundException e) {
-			throw new NotFoundException("there is no user2 with id: " + id);
-		}
-		if (binds1.isEmpty() && binds2.isEmpty()) {
-			throw new NotFoundException(
-					"there is no relationship between user with id: " + id);
-		}
+//		Criterion criterion1 = Restrictions.eq("user1.id", id);
+//		List<User2User> binds1 = null;
+//		try {
+//			binds1 = findByCriteria(criterion1);
+//		} catch (ObjectNotFoundException e) {
+//			throw new NotFoundException("there is no user1 with id: " + id);
+//		}
+//		Criterion criterion2 = Restrictions.eq("user2.id", id);
+//		List<User2User> binds2 = null;
+//		try {
+//			binds2 = findByCriteria(criterion2);
+//		} catch (ObjectNotFoundException e) {
+//			throw new NotFoundException("there is no user2 with id: " + id);
+//		}
+//		if (binds1.isEmpty() && binds2.isEmpty()) {
+//			throw new NotFoundException(
+//					"there is no relationship between user with id: " + id);
+//		}
+//		List<UserRelation> result = new ArrayList<UserRelation>();
+//		Iterator<User2User> iter1 = binds1.iterator();
+//		while (iter1.hasNext()) {
+//			User2User bind = iter1.next();
+//			result.add(new UserRelation(bind.getuser2().getId(), bind
+//					.getRelationship(), bind.getRight()));
+//		}
+//		Iterator<User2User> iter2 = binds2.iterator();
+//		while (iter2.hasNext()) {
+//			User2User bind = iter2.next();
+//			result.add(new UserRelation(bind.getUser1().getId(), bind
+//					.getRelationship(), bind.getRight()));
+//		}
 		List<UserRelation> result = new ArrayList<UserRelation>();
-		Iterator<User2User> iter1 = binds1.iterator();
-		while (iter1.hasNext()) {
-			User2User bind = iter1.next();
-			result.add(new UserRelation(bind.getuser2().getId(), bind
-					.getRelationship(), bind.getRight()));
+		for(User2User bind : user.getUsers2()){
+			result.add(new UserRelation(bind.getUser1().getId(), bind.getRelationship(), bind.getRight()));
 		}
-		Iterator<User2User> iter2 = binds2.iterator();
-		while (iter2.hasNext()) {
-			User2User bind = iter2.next();
-			result.add(new UserRelation(bind.getUser1().getId(), bind
-					.getRelationship(), bind.getRight()));
+		for(User2User bind : user.getUsers1()){
+			result.add(new UserRelation(bind.getuser2().getId(), bind.getRelationship(), bind.getLeft()));
 		}
 		return result;
 	}
