@@ -10,6 +10,8 @@ import java.util.Collection;
 
 import org.hibernate.criterion.Criterion;
 import org.net9.minipie.server.data.storage.Query;
+import org.net9.minipie.server.db.entity.Contact;
+import org.net9.minipie.server.db.entity.Group;
 import org.net9.minipie.server.db.entity.User;
 
 /**
@@ -20,9 +22,14 @@ public abstract class BaseSearcher {
 	Collection<User> users;
 	Criterion criterion;
 	Query query;
+	Collection<Contact> contacts;
+	Criterion contactCriterion;
+	Collection<Group> groups;
 	
 	protected BaseSearcher(Query query){
 		users = new ArrayList<User>();
+		contacts = new ArrayList<Contact>();
+		groups = new ArrayList<Group>();
 		this.query = query;
 	}
 	
@@ -47,5 +54,19 @@ public abstract class BaseSearcher {
 	 */
 	public Criterion getCriterion() {
 		return criterion;
+	}
+	
+	/**
+	 * @return the contacts
+	 */
+	public Collection<Contact> getContacts() {
+		return contacts;
+	}
+	
+	/**
+	 * @return the groups
+	 */
+	public Collection<Group> getGroups() {
+		return groups;
 	}
 }

@@ -5,10 +5,14 @@
  */
 package org.net9.minipie.server.db.dao;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.hibernate.ObjectNotFoundException;
 import org.net9.minipie.server.data.entity.GroupEntry;
 import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.data.storage.Query;
 import org.net9.minipie.server.db.entity.Group;
 import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.exception.DataFormatException;
@@ -79,7 +83,7 @@ public class GroupDAOHibernate extends GenericHibernateDAO<Group, Long> implemen
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.GroupDAO#editGroup(java.lang.Long, org.net9.minipie.server.data.field.InfoField, java.lang.String)
 	 */
-	public void editGroup(Long groupId, InfoField attr, String value) {
+	public void editGroup(Long groupId, InfoField attr, Object value) {
 		Group group = null;
 		try{
 			group = findById(groupId);
@@ -92,6 +96,9 @@ public class GroupDAOHibernate extends GenericHibernateDAO<Group, Long> implemen
 		}else if(attr==InfoField.DESCRIPTION){
 			String description = (String)value;
 			group.setDescription(description);
+		}else if(attr==InfoField.PERMISSION){
+			Permission perm = (Permission) value;
+			group.setPerm(perm);
 		}
 	}
 
@@ -118,6 +125,27 @@ public class GroupDAOHibernate extends GenericHibernateDAO<Group, Long> implemen
 	 */
 	public Group findById(Long id) {
 		return super.findById(id, true);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.net9.minipie.server.db.dao.GroupDAO#searchGroup(java.util.Collection)
+	 */
+	public Collection<GroupEntry> searchGroup(Collection<Query> queries) {
+		Collection<GroupEntry> searchResult = new ArrayList<GroupEntry>();
+		for (Query query : queries) {
+			GroupSearcher searcher = new GroupSearcher(query);
+			Collection<Group> groups = searcher.getGroups();
+			for (Group group : groups) {
+				try {
+					searchResult.add(new GroupEntry(group.getId().longValue(), group.getGroupName(),
+							group.getDescription(), group.getCreatorId(), group.getCreatorName(),
+							group.getPerm()));
+				} catch (DataFormatException e) {
+					throw new ServerErrorException(e.getMessage());
+				}
+			}
+		}
+		return null;
 	}
 
 }

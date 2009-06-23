@@ -36,8 +36,6 @@ import org.net9.minipie.server.exception.NotFoundException;
  */
 public class LimitedSearcher extends BaseSearcher {
 
-	private Collection<Contact> contacts;
-	private Criterion contactCriterion;
 	private Long userId;
 
 	public LimitedSearcher(Long userId, Query query) {

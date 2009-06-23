@@ -1,6 +1,7 @@
 package org.net9.minipie.server.db.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,9 +15,11 @@ import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.field.Gender;
 import org.net9.minipie.server.data.field.InfoField;
+import org.net9.minipie.server.data.field.InfoType;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicContact;
 import org.net9.minipie.server.data.storage.CommonListEntry;
+import org.net9.minipie.server.data.storage.Query;
 import org.net9.minipie.server.db.entity.Contact;
 import org.net9.minipie.server.db.entity.ContactAddress;
 import org.net9.minipie.server.db.entity.ContactEmail;
@@ -36,10 +39,11 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 
 	public Long addAddr(Long contactId, AddressData addressData) {
 		Contact contact = null;
-		try{
+		try {
 			contact = findById(contactId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no contact with contactId: "+contactId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no contact with contactId: "
+					+ contactId);
 		}
 		ContactAddress contactAddr = new ContactAddress();
 		contactAddr.setValue(addressData.getValue());
@@ -67,10 +71,11 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 
 	public Long addEmail(Long contactId, EmailData emailData) {
 		Contact contact = null;
-		try{
+		try {
 			contact = findById(contactId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no contact with contactId: "+contactId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no contact with contactId: "
+					+ contactId);
 		}
 		ContactEmail contactEmail = new ContactEmail();
 		contactEmail.setValue(emailData.getValue());
@@ -94,10 +99,11 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	public Long addGroupContact(Long groupId, String name) {
 		GroupDAOHibernate gdh = new GroupDAOHibernate();
 		Group group = null;
-		try{
+		try {
 			group = gdh.findById(groupId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no group with groupId: "+groupId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no group with groupId: "
+					+ groupId);
 		}
 		Contact contact = new Contact();
 		contact.setName(name);
@@ -113,10 +119,11 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 
 	public Long addIM(Long contactId, IMData imData) {
 		Contact contact = null;
-		try{
+		try {
 			contact = findById(contactId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no contact with contactId: "+contactId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no contact with contactId: "
+					+ contactId);
 		}
 		ContactIM contactIM = new ContactIM();
 		contactIM.setValue(imData.getValue());
@@ -139,10 +146,11 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 
 	public Long addTel(Long contactId, PhoneNoData phoneNoData) {
 		Contact contact = null;
-		try{
+		try {
 			contact = findById(contactId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no contact with contactId: "+contactId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no contact with contactId: "
+					+ contactId);
 		}
 		ContactPhoneNo contactPhone = new ContactPhoneNo();
 		contactPhone.setValue(phoneNoData.getValue());
@@ -165,10 +173,11 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 
 	public Long addURL(Long contactId, URLData urlData) {
 		Contact contact = null;
-		try{
+		try {
 			contact = findById(contactId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no contact with contactId: "+contactId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no contact with contactId: "
+					+ contactId);
 		}
 		ContactURL contactURL = new ContactURL();
 		try {
@@ -198,10 +207,11 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		newContact.setName(name);
 		UserDAOHibernate udh = new UserDAOHibernate();
 		User user = null;
-		try{
+		try {
 			user = udh.findById(userId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no user with userId: "+userId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no user with userId: "
+					+ userId);
 		}
 		user.getContacts().add(newContact);
 		newContact.setOwner(user);
@@ -220,15 +230,17 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		UserDAOHibernate udh = new UserDAOHibernate();
 		User owner = null;
 		User target = null;
-		try{
+		try {
 			owner = udh.findById(userId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no user with userId: "+userId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no user with userId: "
+					+ userId);
 		}
-		try{
+		try {
 			target = udh.findById(targetId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no user with userId: "+targetId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no user with userId: "
+					+ targetId);
 		}
 		shadow.setOwner(owner);
 		shadow.setShadowOf(target);
@@ -332,24 +344,24 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			throw new NotFoundException("Cannt find address " + attribute
 					+ " item with give id");
 		}
-		if (attribute==InfoField.VALUE) {
+		if (attribute == InfoField.VALUE) {
 			String addr = (String) value;
 			contactAddr.setValue(addr);
-		} else if (attribute==InfoField.TYPE) {
+		} else if (attribute == InfoField.TYPE) {
 			String type = (String) value;
 			contactAddr.setType(type);
-		} else if (attribute==InfoField.PRIMARY) {
+		} else if (attribute == InfoField.PRIMARY) {
 			boolean primary = (Boolean) value;
-			if(primary){
+			if (primary) {
 				contactAddr.setPrimary(Bool.TRUE);
-			}else{
+			} else {
 				contactAddr.setPrimary(Bool.FALSE);
 			}
 		}
 		cadh.begin();
 		cadh.makePersistent(contactAddr);
 		cadh.commit();
-		
+
 	}
 
 	public void editBasicInfo(Long id, InfoField attribute, Object value) {
@@ -361,25 +373,25 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			throw new NotFoundException("Cannt find basic info " + attribute
 					+ " item with give id");
 		}
-		if (attribute==InfoField.NAME) {
+		if (attribute == InfoField.NAME) {
 			String name = (String) value;
 			contact.setName(name);
-		} else if (attribute==InfoField.NICKNAME) {
+		} else if (attribute == InfoField.NICKNAME) {
 			String nickName = (String) value;
 			contact.setNickName(nickName);
-		} else if (attribute==InfoField.GENDER) {
+		} else if (attribute == InfoField.GENDER) {
 			Gender gender = (Gender) value;
 			contact.setGender(gender);
-		} else if (attribute==InfoField.BIRTHDAY) {
+		} else if (attribute == InfoField.BIRTHDAY) {
 			String birthday = (String) value;
 			contact.setBirthday(birthday);
-		} else if (attribute==InfoField.NOTE) {
+		} else if (attribute == InfoField.NOTE) {
 			String notes = (String) value;
 			contact.setNotes(notes);
-		} else if (attribute==InfoField.RELATIONSHIP) {
+		} else if (attribute == InfoField.RELATIONSHIP) {
 			String relationship = (String) value;
 			contact.setRelationship(relationship);
-		} else if(attribute==InfoField.IMAGE){
+		} else if (attribute == InfoField.IMAGE) {
 			String image = (String) value;
 			contact.setImage(image);
 		}
@@ -397,17 +409,17 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			throw new NotFoundException("Cannt find email " + attribute
 					+ " item with give id");
 		}
-		if (attribute==InfoField.VALUE) {
+		if (attribute == InfoField.VALUE) {
 			String email = (String) value;
 			contactEmail.setValue(email);
-		} else if (attribute==InfoField.TYPE) {
+		} else if (attribute == InfoField.TYPE) {
 			String type = (String) value;
 			contactEmail.setType(type);
-		} else if (attribute==InfoField.PRIMARY) {
+		} else if (attribute == InfoField.PRIMARY) {
 			boolean primary = (Boolean) value;
-			if(primary){
+			if (primary) {
 				contactEmail.setPrimary(Bool.TRUE);
-			}else{
+			} else {
 				contactEmail.setPrimary(Bool.FALSE);
 			}
 		}
@@ -425,17 +437,17 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			throw new NotFoundException("Cannt find im " + attribute
 					+ " item with give id");
 		}
-		if (attribute==InfoField.VALUE) {
+		if (attribute == InfoField.VALUE) {
 			String im = (String) value;
 			contactIM.setValue(im);
-		} else if (attribute==InfoField.TYPE) {
+		} else if (attribute == InfoField.TYPE) {
 			String type = (String) value;
 			contactIM.setType(type);
-		} else if (attribute==InfoField.PRIMARY) {
+		} else if (attribute == InfoField.PRIMARY) {
 			boolean primary = (Boolean) value;
-			if(primary){
+			if (primary) {
 				contactIM.setPrimary(Bool.TRUE);
-			}else{
+			} else {
 				contactIM.setPrimary(Bool.FALSE);
 			}
 		}
@@ -453,17 +465,17 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			throw new NotFoundException("Cannt find tel " + attribute
 					+ " item with give id");
 		}
-		if (attribute==InfoField.VALUE) {
+		if (attribute == InfoField.VALUE) {
 			String tel = (String) value;
 			contactPhone.setValue(tel);
-		} else if (attribute==InfoField.TYPE) {
+		} else if (attribute == InfoField.TYPE) {
 			String type = (String) value;
 			contactPhone.setType(type);
-		} else if (attribute==InfoField.PRIMARY) {
+		} else if (attribute == InfoField.PRIMARY) {
 			boolean primary = (Boolean) value;
-			if(primary){
+			if (primary) {
 				contactPhone.setPrimary(Bool.TRUE);
-			}else {
+			} else {
 				contactPhone.setPrimary(Bool.FALSE);
 			}
 		}
@@ -481,17 +493,17 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 			throw new NotFoundException("Cannt find url " + attribute
 					+ " item with give id");
 		}
-		if (attribute==InfoField.VALUE) {
+		if (attribute == InfoField.VALUE) {
 			String url = (String) value;
 			contactURL.setValue(url);
-		} else if (attribute==InfoField.TYPE) {
+		} else if (attribute == InfoField.TYPE) {
 			String type = (String) value;
 			contactURL.setType(type);
-		} else if (attribute==InfoField.PRIMARY) {
+		} else if (attribute == InfoField.PRIMARY) {
 			boolean primary = (Boolean) value;
-			if(primary){
+			if (primary) {
 				contactURL.setPrimary(Bool.TRUE);
-			}else{
+			} else {
 				contactURL.setPrimary(Bool.FALSE);
 			}
 		}
@@ -524,7 +536,10 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 							.getShadowOf().getId() : 0,
 					(contact.getGroup() != null) ? contact.getGroup().getId()
 							: 0, (contact.getPermission() != null) ? contact
-							.getPermission() : Permission.TO_CONTACTS);  // to contact is default
+							.getPermission() : Permission.TO_CONTACTS); // to
+			// contact
+			// is
+			// default
 			return basicContact;
 		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("There's no contact with ID: "
@@ -669,29 +684,29 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		Criterion criterion1 = Restrictions.eq("owner.id", ownerId);
 		Criterion criterion2 = Restrictions.eq("shadowOf.id", shadowOf);
 		Contact shadow = null;
-		try{
+		try {
 			List<Contact> contacts = findByCriteria(criterion1, criterion2);
-			if(contacts.isEmpty()){
-				throw new NotFoundException("there is no shadow with ownerId: "+ownerId
-					+" and shadowOf: "+shadowOf);
+			if (contacts.isEmpty()) {
+				throw new NotFoundException("there is no shadow with ownerId: "
+						+ ownerId + " and shadowOf: " + shadowOf);
 			}
 			Iterator<Contact> iter = contacts.iterator();
 			shadow = iter.next();
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no shadow with ownerId: "+ownerId
-					+" and shadowOf: "+shadowOf);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no shadow with ownerId: "
+					+ ownerId + " and shadowOf: " + shadowOf);
 		}
 		BasicContact basicContact;
 		try {
-			basicContact = new BasicContact(shadow.getId().longValue(),
-					shadow.getName(), shadow.getImage(), shadow.getNickName(),
-					shadow.getGender(),
-					(shadow.getBirthday()!=null)? shadow.getBirthday().toString():null,
-					shadow.getNotes(), shadow.getRelationship(),
-					(shadow.getOwner()!=null)? shadow.getOwner().getId().longValue(): 0, 
-					(shadow.getShadowOf()!=null)? shadow.getShadowOf().getId(): 0, 
-					(shadow.getGroup()!=null)? shadow.getGroup().getId(): 0, 
-					shadow.getPermission());
+			basicContact = new BasicContact(shadow.getId().longValue(), shadow
+					.getName(), shadow.getImage(), shadow.getNickName(), shadow
+					.getGender(), (shadow.getBirthday() != null) ? shadow
+					.getBirthday().toString() : null, shadow.getNotes(), shadow
+					.getRelationship(), (shadow.getOwner() != null) ? shadow
+					.getOwner().getId().longValue() : 0,
+					(shadow.getShadowOf() != null) ? shadow.getShadowOf()
+							.getId() : 0, (shadow.getGroup() != null) ? shadow
+							.getGroup().getId() : 0, shadow.getPermission());
 		} catch (DataFormatException e) {
 			throw new ServerErrorException(e.getMessage());
 		}
@@ -788,93 +803,121 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		super.makeTransient(entity);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.db.dao.ContactDAO#editAdditional(java.lang.Long, org.net9.minipie.server.data.field.InfoField, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.db.dao.ContactDAO#editAdditional(java.lang.Long,
+	 * org.net9.minipie.server.data.field.InfoField, java.lang.Object)
 	 */
 	public void editAdditional(Long id, InfoField attribute, Object value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.ContactStorage#findAddressOwner(long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#findAddressOwner
+	 * (long)
 	 */
 	public Long findAddressOwner(Long addrId) {
 		ContactAddress contactAddr = null;
 		ContactAddressDAOHibernate cadh = new ContactAddressDAOHibernate();
-		try{
+		try {
 			contactAddr = cadh.findById(addrId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException ("there is no address with addr id: "+addrId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no address with addr id: "
+					+ addrId);
 		}
 		return contactAddr.getContact().getId();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.ContactStorage#findEmailOwner(long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#findEmailOwner(long)
 	 */
 	public Long findEmailOwner(Long emailId) {
 		ContactEmail contactEmail = null;
 		ContactEmailDAOHibernate cedh = new ContactEmailDAOHibernate();
-		try{
+		try {
 			contactEmail = cedh.findById(emailId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException ("there is no email with email id: "+emailId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no email with email id: "
+					+ emailId);
 		}
 		return contactEmail.getContact().getId();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.ContactStorage#findIMOwner(long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#findIMOwner(long)
 	 */
 	public Long findIMOwner(Long imId) {
 		ContactIM contactIM = null;
 		ContactIMDAOHibernate cidh = new ContactIMDAOHibernate();
-		try{
+		try {
 			contactIM = cidh.findById(imId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException ("there is no im with im id: "+imId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no im with im id: " + imId);
 		}
 		return contactIM.getContact().getId();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.ContactStorage#findTelOwner(long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#findTelOwner(long)
 	 */
 	public Long findTelOwner(Long telId) {
 		ContactPhoneNo contactPhoneNo = null;
 		ContactPhoneDAOHibernate cpdh = new ContactPhoneDAOHibernate();
-		try{
+		try {
 			contactPhoneNo = cpdh.findById(telId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException ("there is no phone with phone id: "+telId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no phone with phone id: "
+					+ telId);
 		}
 		return contactPhoneNo.getContact().getId();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.ContactStorage#findURLOwner(long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#findURLOwner(long)
 	 */
 	public Long findURLOwner(Long urlId) {
 		ContactURL contactURL = null;
 		ContactURLDAOHibernate cudh = new ContactURLDAOHibernate();
-		try{
+		try {
 			contactURL = cudh.findById(urlId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException ("there is no url with url id: "+urlId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no url with url id: " + urlId);
 		}
 		return contactURL.getContact().getId();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.ContactStorage#setPermission(org.net9.minipie.server.data.field.Permission, java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#setPermission(org
+	 * .net9.minipie.server.data.field.Permission, java.lang.Long)
 	 */
 	public Void setPermission(Permission perm, Long contactId) {
 		Contact contact = null;
-		try{
+		try {
 			contact = findById(contactId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no contact with contactId: "+contactId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no contact with contactId: "
+					+ contactId);
 		}
 		contact.setPermission(perm);
 		begin();
@@ -883,44 +926,52 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.ContactStorage#selectShadowOf(java.lang.Long, java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#selectShadowOf(java
+	 * .lang.Long, java.lang.Long)
 	 */
 	public BasicContact selectShadowOf(Long ownerId, Long shadowOf) {
 		Criterion criterion1 = Restrictions.eq("owner.id", ownerId);
 		Criterion criterion2 = Restrictions.eq("shadowOf.id", shadowOf);
 		Contact shadow = null;
-		try{
+		try {
 			List<Contact> contacts = findByCriteria(criterion1, criterion2);
-			if(contacts.isEmpty()){
-				throw new NotFoundException("there is no shadow with ownerId: "+ownerId
-					+" and shadowOf: "+shadowOf);
+			if (contacts.isEmpty()) {
+				throw new NotFoundException("there is no shadow with ownerId: "
+						+ ownerId + " and shadowOf: " + shadowOf);
 			}
 			Iterator<Contact> iter = contacts.iterator();
 			shadow = iter.next();
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no shadow with ownerId: "+ownerId
-					+" and shadowOf: "+shadowOf);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no shadow with ownerId: "
+					+ ownerId + " and shadowOf: " + shadowOf);
 		}
 		BasicContact basicContact;
 		try {
-			basicContact = new BasicContact(shadow.getId().longValue(),
-					shadow.getName(), shadow.getImage(), shadow.getNickName(),
-					shadow.getGender(),
-					(shadow.getBirthday()!=null)? shadow.getBirthday().toString():null,
-					shadow.getNotes(), shadow.getRelationship(),
-					(shadow.getOwner()!=null)? shadow.getOwner().getId().longValue(): 0, 
-					(shadow.getShadowOf()!=null)? shadow.getShadowOf().getId(): 0, 
-					(shadow.getGroup()!=null)? shadow.getGroup().getId(): 0, 
-					shadow.getPermission());
+			basicContact = new BasicContact(shadow.getId().longValue(), shadow
+					.getName(), shadow.getImage(), shadow.getNickName(), shadow
+					.getGender(), (shadow.getBirthday() != null) ? shadow
+					.getBirthday().toString() : null, shadow.getNotes(), shadow
+					.getRelationship(), (shadow.getOwner() != null) ? shadow
+					.getOwner().getId().longValue() : 0,
+					(shadow.getShadowOf() != null) ? shadow.getShadowOf()
+							.getId() : 0, (shadow.getGroup() != null) ? shadow
+							.getGroup().getId() : 0, shadow.getPermission());
 		} catch (DataFormatException e) {
 			throw new ServerErrorException(e.getMessage());
 		}
 		return basicContact;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.ContactStorage#addShadow(java.lang.Long, java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#addShadow(java.lang
+	 * .Long, java.lang.Long)
 	 */
 	public Long addShadow(Long userId, Long targetId) {
 		Contact shadow = new Contact();
@@ -928,15 +979,17 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		UserDAOHibernate udh = new UserDAOHibernate();
 		User owner = null;
 		User target = null;
-		try{
+		try {
 			owner = udh.findById(userId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no user with userId: "+userId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no user with userId: "
+					+ userId);
 		}
-		try{
+		try {
 			target = udh.findById(targetId);
-		}catch(ObjectNotFoundException e){
-			throw new NotFoundException("there is no user with userId: "+targetId);
+		} catch (ObjectNotFoundException e) {
+			throw new NotFoundException("there is no user with userId: "
+					+ targetId);
 		}
 		shadow.setOwner(owner);
 		shadow.setShadowOf(target);
@@ -948,5 +1001,60 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		udh.makePersistent(owner);
 		udh.commit();
 		return shadow.getId();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.net9.minipie.server.logic.storage.ContactStorage#searchAllContact
+	 * (java.util.Collection, org.net9.minipie.server.data.field.Permission)
+	 */
+	public Collection<BasicContact> searchAllContact(Collection<Query> queries,
+			Permission perm) {
+		Collection<BasicContact> searchResult = new ArrayList<BasicContact>();
+		for (Query query : queries) {
+			ContactSearcher searcher = new ContactSearcher(query);
+			Collection<Contact> contacts = searcher.getContacts();
+			try {
+				for (Contact contact : contacts) {
+					if (query.getType() == InfoType.BASIC) {
+						Collection<BasicContact> temp = new ArrayList<BasicContact>();
+						temp.add(new BasicContact(contact.getId().longValue(),
+								contact.getName(), contact.getImage(), contact
+										.getNickName(), contact.getGender(),
+								contact.getBirthday(), contact.getNotes(),
+								contact.getRelationship(),
+								(contact.getOwner() != null) ? contact
+										.getOwner().getId() : 0, (contact
+										.getShadowOf() != null) ? contact
+										.getShadowOf().getId() : 0, (contact
+										.getGroup() != null) ? contact
+										.getGroup().getId() : 0, (contact
+										.getPermission() != null) ? contact
+										.getPermission()
+										: Permission.TO_CONTACTS));
+					} else {
+						searchResult.add(new BasicContact(contact.getId()
+								.longValue(), contact.getName(), contact
+								.getImage(), contact.getNickName(), contact
+								.getGender(), contact.getBirthday(), contact
+								.getNotes(), contact.getRelationship(),
+								(contact.getOwner() != null) ? contact
+										.getOwner().getId() : 0, (contact
+										.getShadowOf() != null) ? contact
+										.getShadowOf().getId() : 0, (contact
+										.getGroup() != null) ? contact
+										.getGroup().getId() : 0, (contact
+										.getPermission() != null) ? contact
+										.getPermission()
+										: Permission.TO_CONTACTS));
+					}
+				}
+			} catch (DataFormatException e) {
+				throw new ServerErrorException(e.getMessage());
+			}
+		}
+		return searchResult;
 	}
 }

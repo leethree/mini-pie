@@ -17,6 +17,7 @@ import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.field.AddAsContactPermission;
 import org.net9.minipie.server.data.field.Gender;
 import org.net9.minipie.server.data.field.InfoField;
+import org.net9.minipie.server.data.field.InfoType;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicUser;
 import org.net9.minipie.server.data.storage.CommonListEntry;
@@ -536,14 +537,14 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			userAddr.setType(type);
 		} else if (attribute == InfoField.PRIMARY) {
 			Boolean primary = (Boolean) value;
-			if(primary)
+			if (primary)
 				userAddr.setPrimary(Bool.TRUE);
 			else
 				userAddr.setPrimary(Bool.FALSE);
 		} else if (attribute == InfoField.PERMISSION) {
 			Permission perm = (Permission) value;
 			userAddr.setPerm(perm);
-		} else if(attribute==InfoField.ZIPCODE){
+		} else if (attribute == InfoField.ZIPCODE) {
 			userAddr.setZipcode((String) value);
 		}
 		uadh.begin();
@@ -998,9 +999,17 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			Collection<Contact> contacts = searcher.getContacts();
 			try {
 				for (User user : users) {
-					searchResult.add(new CommonListEntry(user.getId()
-							.longValue(), user.getUserName(), user
-							.getImageURL()));
+					if (query.getType() == InfoType.BASIC) { // for basic info,
+																// intersect.
+						Collection<CommonListEntry> temp = new ArrayList<CommonListEntry>();
+						temp.add(new CommonListEntry(user.getId().longValue(),
+								user.getUserName(), user.getImageURL()));
+						searchResult.retainAll(temp);
+					} else { // for other detailed info, union
+						searchResult.add(new CommonListEntry(user.getId()
+								.longValue(), user.getUserName(), user
+								.getImageURL()));
+					}
 				}
 				for (Contact contact : contacts) {
 					searchResult

@@ -42,37 +42,54 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id>
 	 */
 	public void add(Long userId1, Long userId2) {
 		UserDAOHibernate udh = new UserDAOHibernate();
-		User user1 = null;
-		User user2 = null;
+		User2User.Id id = new User2User.Id(userId1, userId2);
+		boolean flag = false;
+		User2User relation = null;
 		try {
-			user1 = udh.findById(userId1);
+			relation = findById(id);
 		} catch (ObjectNotFoundException e) {
-			throw new NotFoundException("Cannt find user with give id "
-					+ userId1);
+			flag = true;
 		}
-		try {
-			user2 = udh.findById(userId2);
-		} catch (ObjectNotFoundException e) {
-			throw new NotFoundException("Cannt find user with given id "
-					+ userId2);
+		if (flag == true) {
+			id = new User2User.Id(userId2, userId1);
+			try {
+				relation = findById(id);
+			} catch (ObjectNotFoundException e) {
+				User user1 = null;
+				User user2 = null;
+				try {
+					user1 = udh.findById(userId1);
+				} catch (ObjectNotFoundException e1) {
+					throw new NotFoundException("Cannt find user with give id "
+							+ userId1);
+				}
+				try {
+					user2 = udh.findById(userId2);
+				} catch (ObjectNotFoundException e1) {
+					throw new NotFoundException(
+							"Cannt find user with given id " + userId2);
+				}
+				User2User bind = new User2User(user1, user2, // only this
+																// constructor
+																// in
+						// user2user
+						// gives a primary key. Don't simply use
+						// setUser1 or setUser2 methods, otherwise,
+						// one get strange errors.
+						Permission.TO_CONTACTS, Permission.TO_CONTACTS);
+				begin();
+				getSession().save(bind);
+				commit();
+				user1.getUsers2().add(bind);
+				user2.getUsers1().add(bind);
+				udh.begin();
+				udh.makePersistent(user1);
+				udh.commit();
+				udh.begin();
+				udh.makePersistent(user2);
+				udh.commit();
+			}
 		}
-		User2User bind = new User2User(user1, user2, // only this constructor in
-				// user2user
-				// gives a primary key. Don't simply use
-				// setUser1 or setUser2 methods, otherwise,
-				// one get strange errors.
-				Permission.TO_CONTACTS, Permission.TO_CONTACTS);
-		begin();
-		getSession().save(bind);
-		commit();
-		user1.getUsers2().add(bind);
-		user2.getUsers1().add(bind);
-		udh.begin();
-		udh.makePersistent(user1);
-		udh.commit();
-		udh.begin();
-		udh.makePersistent(user2);
-		udh.commit();
 	}
 
 	/*

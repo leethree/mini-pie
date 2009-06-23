@@ -63,6 +63,6 @@ public interface ContactStorage {
 	Long findURLOwner(Long urlId);
 	Void setPermission(Permission perm,Long contactId);
 	Collection<BasicContact> searchAllContact(Collection<Query> query,Permission perm); 
-	//basic : name,note,birthday,gender,ownerId -> And Longic
+	//basic : name,note,birthday,gender,ownerId -> And Logic
 	//detail: 
 }

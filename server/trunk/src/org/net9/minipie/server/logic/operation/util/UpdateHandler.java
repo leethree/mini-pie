@@ -20,7 +20,7 @@ public class UpdateHandler{
 	protected Update dt;
 	protected ContactStorage contactExecutor;
 	protected UserStorage userExecutor;
-	protected Long contactId;
+	protected long contactId;
 	//protected long userId;
 	/**
 	 * Constructor

@@ -18,9 +18,9 @@ import org.net9.minipie.server.data.storage.Query;
  */
 public interface GroupStorage {
 	public Long createGroup(String name,Long userId);
-	public void editGroup(Long groupId,InfoField attr,String value); //two item: name and description
+	public void editGroup(Long groupId,InfoField attr,Object value); //two item: name and description
 	public void changePermission(Long groupId,Permission Perm);
 	public void disband(Long groupId);
 	public GroupEntry selectGroup(Long groupId);
-	public void searchGroup(Collection<Query> query);
+	public Collection<GroupEntry> searchGroup(Collection<Query> query);
 }
