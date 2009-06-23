@@ -6,6 +6,7 @@
 package org.net9.minipie.server.api;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
@@ -19,6 +20,7 @@ import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.Handler;
 import org.net9.minipie.server.logic.operation.MacroCommand;
+import org.net9.minipie.server.logic.operation.user.DeleteUserShadow;
 import org.net9.minipie.server.logic.operation.user.UpdateUserShadow;
 import org.net9.minipie.server.logic.operation.user.ViewMyUserShadow;
 
@@ -46,10 +48,10 @@ public class ShadowResource extends BaseResource {
 	@GET
 	@Produces( { "application/xml", "application/json" })
 	public CompleteContact get() {
-		return new Handler<CompleteContact>(new ViewMyUserShadow(
-				getUserId(), userId)).execute();
+		return new Handler<CompleteContact>(new ViewMyUserShadow(getUserId(),
+				userId)).execute();
 	}
-	
+
 	/**
 	 * 
 	 * @param updates
@@ -87,6 +89,12 @@ public class ShadowResource extends BaseResource {
 	public Response update(Update update) {
 		new Handler<Void>(new UpdateUserShadow(getUserId(), userId, update
 				.checkThis())).execute();
+		return Response.ok().build();
+	}
+
+	@DELETE
+	public Response delete() {
+		new Handler<Void>(new DeleteUserShadow(getUserId(), userId)).execute();
 		return Response.ok().build();
 	}
 }

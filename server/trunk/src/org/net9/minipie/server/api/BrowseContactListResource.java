@@ -5,14 +5,12 @@
  */
 package org.net9.minipie.server.api;
 
-import java.util.Collection;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.net9.minipie.server.data.api.ContactListEntry;
+import org.net9.minipie.server.data.api.ContactList;
 
 /**
  * @author LeeThree
@@ -23,7 +21,7 @@ public class BrowseContactListResource extends BaseResource {
 	@GET
 	@Path("search")
 	@Produces( { "application/xml", "application/json" })
-	public Collection<ContactListEntry> search() {
+	public ContactList search() {
 		// TODO
 		return null;
 	}

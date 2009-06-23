@@ -17,7 +17,7 @@ import org.net9.minipie.server.data.api.ContactListEntry;
 import org.net9.minipie.server.data.api.UserList;
 import org.net9.minipie.server.data.api.UserListEntry;
 import org.net9.minipie.server.logic.Handler;
-import org.net9.minipie.server.logic.operation.contact.ListUserSharedContact;
+import org.net9.minipie.server.logic.operation.contact.ListSharedContact;
 import org.net9.minipie.server.logic.operation.user.ListSharedUserContact;
 import org.net9.minipie.server.logic.operation.user.ViewSharedUserContact;
 
@@ -65,7 +65,7 @@ public class BrowseUserResource extends BaseResource {
 	@Produces( { "application/xml", "application/json" })
 	public ContactList getSharedContacts() {
 		return new ContactList(new Handler<Collection<ContactListEntry>>(
-				new ListUserSharedContact(getUserId(), userId)).execute(),
+				new ListSharedContact(getUserId(), userId)).execute(),
 				getResourceUrl());
 		// TODO uri
 	}
