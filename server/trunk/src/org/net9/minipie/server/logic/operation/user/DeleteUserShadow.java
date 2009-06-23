@@ -6,8 +6,6 @@
 package org.net9.minipie.server.logic.operation.user;
 
 import org.net9.minipie.server.data.Formatter;
-import org.net9.minipie.server.data.api.CompleteContact;
-import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
