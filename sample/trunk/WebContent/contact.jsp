@@ -22,6 +22,21 @@
 		long id = Long.decode(request.getParameter("id"));
 		try {
 			PersonBean person = ses.browseContact(id);
+			if (person.get("type") != null ) {
+				if (person.get("type").equals("contact")) {
+%>
+		<a href="phonebook/contact.jsp?id=<%=id %>">View in your phonebook</a>
+<%
+				} else if (person.get("type").equals("shared_contact")) {
+%>
+		<span>This contact is shared by <a href="user.jsp?id=<%=person.get("ownerid") %>"><%=person.get("owner") %></a></span>
+<%
+				} else if (person.get("type").equals("shared_contact")) {
+%>
+		<span>This contact is shared by a group that you joined</span>
+<%
+				}
+			}
 %>
 		<h3>Basic Information:</h3>
 		<table>
@@ -54,7 +69,6 @@
 				<td><%=person.get("note") %></td>
 			</tr>
 		</table>
-		<span>This contact is shared by <a href="user.jsp?id=<%=person.get("ownerid") %>"><%=person.get("owner") %></a></span>
 		<h3>Detailed Information:</h3>
 		<h4>Addresses:</h4>
 		<table>

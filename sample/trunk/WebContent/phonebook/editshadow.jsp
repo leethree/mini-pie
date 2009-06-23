@@ -10,18 +10,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Edit Phonebook Non-User Contact - Mini-Pie Sample</title>
+<title>Edit Phonebook Non-User Contact Shadow - Mini-Pie Sample</title>
 </head>
 <body>
   	<div id="content" >
-	  	<h2>Edit Phonebook Non-User Contact</h2>
+	  	<h2>Edit Phonebook Non-User Contact Shadow</h2>
 	  	<hr/>
 <%
 	try {
 		long id = Long.decode(request.getParameter("id"));
 		try {
 %>
-	  	<a href="contact.jsp?id=<%=id %>">View contact</a>
+	  	<a href="user.jsp?id=<%=id %>">Return to user contact</a>
+	  	<a href="shadow.jsp?id=<%=id %>">View shadow</a>
 <%
 	String method = request.getParameter("method");
 %>
@@ -50,7 +51,7 @@
 		} else {
 			UpdateBean update = new UpdateBean(type, field, idval, value);
 			try {
-				ses.updateContact(id, update);
+				ses.updateShadow(id, update);
 %>
 				<p>Information updated successfully</p>
 <%
@@ -100,7 +101,6 @@
 		          <option value="type">Type</option>
 		          <option value="primary">Primary</option>
 		          <option value="zipcode">ZIP code</option>
-		          <option value="permission">Permission</option>
 	          </select></td>
 	        </tr> 
 	        <tr>
@@ -135,7 +135,7 @@
 				bean.set("primary", "true");
 			UpdateBean update = new UpdateBean(bean);
 			try {
-				ses.updateContact(id, update);
+				ses.updateShadow(id, update);
 %>
 				<p>Information updated successfully</p>
 <%
@@ -205,7 +205,7 @@
 		} else {
 			UpdateBean update = new UpdateBean(type, idval);
 			try {
-				ses.updateContact(id, update);
+				ses.updateShadow(id, update);
 %>
 				<p>Information updated successfully</p>
 <%

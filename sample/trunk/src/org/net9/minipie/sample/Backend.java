@@ -149,8 +149,90 @@ public class Backend {
 	public void removeUser(long userId) throws GenericException,
 			LoginFailedException, NotFoundException {
 		try {
-			System.out.println(userId);
 			delete("phonebook/user/" + userId + "/");
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void editUserRelationships(long userId, String rel)
+			throws GenericException, LoginFailedException, NotFoundException {
+		try {
+			putForm("phonebook/user/" + userId + "/", "rel=" + rel);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void editUserPermission(long userId, String perm)
+			throws GenericException, LoginFailedException, NotFoundException {
+		try {
+			putForm("phonebook/user/" + userId + "/", "permission=" + perm);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	// ************************ SHADOW ***************************
+
+	public PersonBean getShadow(long userid) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			InputStream stream = getXml("phonebook/user/" + userid + "/shadow");
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			return new PersonBean(ele);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void updateShadow(long userid, UpdateBean bean)
+			throws LoginFailedException, GenericException, NotFoundException {
+		try {
+			StringWriter writer = new StringWriter();
+			WAX wax = new WAX(writer);
+			wax.start("updates");
+			bean.toXML(wax);
+			wax.close();
+			postXml("phonebook/user/" + userid + "/shadow", writer.toString());
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		}
+	}
+
+	public void deleteShadow(long userId) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			delete("phonebook/user/" + userId + "/shadow");
 		} catch (UniformInterfaceException e) {
 			if (e.getResponse().getStatus() == 401)
 				throw new LoginFailedException();

@@ -23,6 +23,29 @@
 		long id = Long.decode(request.getParameter("id"));
 		try {
 			PersonBean person = ses.browseUser(id);
+			if (person.get("type") != null ) {
+				if (person.get("type").equals("user_contact")) {
+%>
+		<a href="phonebook/user.jsp?id=<%=id %>">View in your phonebook</a>
+<%
+				} else if (person.get("type").equals("self")) {
+%>
+		<a href="profile.jsp">View your profile</a>
+<%
+				} else if (person.get("type").equals("group_member")) {
+%>
+		<span>This user is a member of a group that you joined</span>
+<%
+				} else if (person.get("type").equals("public_user")) {
+%>
+					<form name="add" id="add" action="phonebook/users.jsp" method="post">
+						<input type="hidden" name="method" id="method" value="add"/>
+						<input type="hidden" name="userid" value="<%=id %>"/>
+						<input type="submit" value="Add as contact" />
+					</form>
+<%
+				}
+			}
 %>
 		<h3>Basic Information:</h3>
 		<table>

@@ -10,31 +10,30 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Phonebook User Contact - Mini-Pie Sample</title>
+<title>Phonebook Non-User Contact Shadow - Mini-Pie Sample</title>
 </head>
 <body>
 	<div id="content" >
-		<h2>Phonebook User Contact</h2>
+		<h2>Phonebook Non-User Contact Shadow</h2>
 	  	<hr/>
 <%
 	String method = request.getParameter("method");
 	try {
 		long id = Long.decode(request.getParameter("id"));
 %>
-		<a href="../user.jsp?id=<%=id %>" >Switch to browse mode</a>
-		<a href="shadow.jsp?id=<%=id %>" >View shadow</a>
+		<a href="user.jsp?id=<%=id %>">Return to user contact</a>
 <%
 		if (method != null && method.equals("delete")) {
 			try{
-				ses.removeUser(id);
+				ses.deleteShadow(id);
 	%>
-		<p>User contact removed successfully</p>
+			<p>User contact shadow removed successfully</p>
 	<%
 				return;
 			} catch (GenericException e) {
 				e.printStackTrace();
 	%>
-				<p>An error occurred while removing the user contact</p>
+			<p>An error occurred while removing the shadow</p>
 	<%
 			}
 		}
@@ -43,82 +42,26 @@
 			<input type="hidden" name="method" id="method" value="delete"/>
 			<input type="submit" value="Remove" />
 		</form>
-		<h4>Edit relationships</h4>
-<%
-		if (method != null && method.equals("rel")){
-			String rel = request.getParameter("rel");
-			if (rel != null && !rel.isEmpty()) {
-				try{
-					ses.editUserRelationships(id, rel);
-%>
-		<p>Relationship update request sent successfully</p>
-<%
-				} catch (GenericException e) {
-					e.printStackTrace();
-%>
-		<p>An error occurred while updating the user contact</p>
-<%
-				}
-			}
-		}
-%>
-		<form name="rel" id="rel" method="post">
-			<input type="hidden" name="method" id="method" value="rel"/>
-			<input type="text" name="rel" />
-			<input type="submit" value="Submit" />
-		</form>
-		<h4>Edit user-sharing permission</h4>
-<%
-		if (method != null && method.equals("perm")){
-			String perm = request.getParameter("perm");
-			if (perm != null && !perm.isEmpty()) {
-				try{
-					ses.editUserPermission(id, perm);
-%>
-		<p>Permission updated successfully</p>
-<%
-				} catch (GenericException e) {
-					e.printStackTrace();
-%>
-		<p>An error occurred while updating the user contact</p>
-<%
-				}
-			}
-		}
-%>
-		<form name="perm" id="perm" method="post">
-			<input type="hidden" name="method" id="method" value="perm"/>
-			<select name="perm">
-		          <option value="to_self">Visible to myself</option>
-		          <option value="to_contacts">Visible to contacts</option>
-		          <option value="to_everyone">Visible to everyone</option>
-	        </select>
-			<input type="submit" value="Submit" />
-		</form>
-<%
-	
+	<%
 		try {
-			PersonBean person = ses.getUserById(id);
+			PersonBean person = ses.getShadow(id);
 %>
+	  	<a href="editshadow.jsp?id=<%=id %>">Edit shadow</a>
 		<h3>Basic Information:</h3>
-		<table>
+		<table><!--
 			<tr>
 				<th>ID</th>
 				<td><%=person.id %></td>
 			</tr>
-			<tr>
+			--><tr>
 				<th>Name</th>
 				<td><%=person.get("name") %></td>
 			</tr>
-			<tr>
-				<th>Username</th>
-				<td><%=person.get("username") %></td>
-			</tr>
-			<tr>
+			<!--<tr>
 				<th>Image</th>
-				<td><img alt="<%=person.get("image") %>" src="<%=person.get("image") %>"></td>
+				<td></td>
 			</tr>
-			<tr>
+			--><tr>
 				<th>Gender</th>
 				<td><%=person.get("gender") %></td>
 			</tr>
@@ -133,26 +76,6 @@
 			<tr>
 				<th>Notes</th>
 				<td><%=person.get("note") %></td>
-			</tr>
-			<tr>
-				<th>Relationship</th>
-				<td><%=person.get("rel") %></td>
-			</tr>
-			<tr>
-				<th>Permission</th>
-				<td><%=person.get("permission") %></td>
-			</tr>
-			<tr>
-				<th>Tags</th>
-				<td>
-<%
-		for (TagBean tag : person.tags) {
-%>
-				<span><a href="tag.jsp?id=<%=tag.id %>"><%=tag.tagName %></a> </span>
-<%
-		}
-%>
-				</td>
 			</tr>
 		</table>
 		<h3>Detailed Information:</h3>
@@ -271,7 +194,7 @@
 <%
 		} catch (NotFoundException ex) {
 %>
-		<p>The requested user contact with ID = <%=id %> does not exist.</p>
+		<p>The requested non-user contact with ID = <%=id %> does not exist.</p>
 <%
 		} catch (GenericException ex) {
 %>
@@ -279,17 +202,8 @@
 			<p><%=ex.getMessage() %></p>
 <%	
 		}
-	} catch (NumberFormatException e) {
+	} catch (Exception e) {
 %>
-		<form method="get">
-			<span>ID:</span>
-			<input type="text" name="id" />
-			<input type="submit" value="Submit" />
-		</form>
-<%
-	} catch (Exception ex) {
-%>
-		<p>Please input an ID to continue:</p>
 		<form method="get">
 			<span>ID:</span>
 			<input type="text" name="id" />
