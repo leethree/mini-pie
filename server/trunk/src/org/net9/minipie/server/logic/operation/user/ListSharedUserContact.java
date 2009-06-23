@@ -34,10 +34,10 @@ public class ListSharedUserContact extends Command<Collection<UserListEntry>> {
 		} catch (DataFormatException e) {
 			throw new InvalidRequestException(e);
 		}
-		if (userId == targetId) {
-			throw new InvalidRequestException(
-					"View oneself is not allow in this method.");
-		}
+//		if (userId == targetId) {
+//			throw new InvalidRequestException(
+//					"View oneself is not allow in this method.");
+//		}
 	}
 
 	/*
@@ -51,13 +51,43 @@ public class ListSharedUserContact extends Command<Collection<UserListEntry>> {
 		boolean relationFlag;
 		Collection<UserListEntry> result = new ArrayList<UserListEntry>();
 		User_UserStorage executor2 = getStorageFactory().getUser_UserStorage();
+		Collection<CommonListEntry> temp;
+		if(userId==targetId){
+			try {
+				temp = executor2.selectSharedUser(targetId,
+						Permission.TO_CONTACTS);
+				for (CommonListEntry ce : temp) {
+					result.add(new UserListEntry(ce.getEntity()));
+				}
+			} catch (NotFoundException e) {
+
+			}
+			try {
+				temp = executor2.selectSharedUser(targetId,
+						Permission.TO_EVERYONE);
+				for (CommonListEntry ce : temp) {
+					result.add(new UserListEntry(ce.getEntity()));
+				}
+			} catch (NotFoundException e) {
+
+			}
+			try {
+				temp = executor2.selectSharedUser(targetId,
+						Permission.TO_SELF);
+				for (CommonListEntry ce : temp) {
+					result.add(new UserListEntry(ce.getEntity()));
+				}
+			} catch (NotFoundException e) {
+
+			}
+		}
 		try {
 			executor2.selectPermission(targetId, userId);
 			relationFlag = true;
 		} catch (NotFoundException e) {
 			relationFlag = false;
 		}
-		Collection<CommonListEntry> temp;
+		
 
 		if (relationFlag) {
 			try {

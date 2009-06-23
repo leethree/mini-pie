@@ -5,11 +5,16 @@
  */
 package org.net9.minipie.server.logic.operation.user;
 
+import java.util.Collection;
+
 import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.data.entity.TagEntry;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.logic.operation.Command;
+import org.net9.minipie.server.logic.storage.ContactStorage;
+import org.net9.minipie.server.logic.storage.Tag_UserStorage;
 import org.net9.minipie.server.logic.storage.UserStorage;
 import org.net9.minipie.server.logic.storage.User_UserStorage;
 
@@ -40,10 +45,21 @@ public class RemoveUserContact extends Command<Void> {
 		executor.selectBasicInfo(targetId);
 		try{
 			executor2.selectRelationship(userId, targetId);
+			executor2.del(userId, targetId);
+			Tag_UserStorage executor3 = getStorageFactory().getTag_UserStorage();
+			ContactStorage executor4=getStorageFactory().getContactStorage();
+			Collection<TagEntry> ts=executor3.selectTagsOfUser(targetId, userId);
+			for(TagEntry t:ts)
+				executor3.del(t.getId(), targetId);
+			try{
+				executor4.del(executor4.selectShadowOf(userId, targetId).getEntity().getId());
+			}catch (NotFoundException e){
+				//ignore
+			}
 		}catch (NotFoundException e){
 			throw new InvalidRequestException("the target user is not your user contact");
 		}
-		executor2.del(userId, targetId);
+		
 		return null;
 	}
 
