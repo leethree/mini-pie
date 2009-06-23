@@ -535,8 +535,11 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			String type = (String) value;
 			userAddr.setType(type);
 		} else if (attribute == InfoField.PRIMARY) {
-			Bool primary = (Bool) value;
-			userAddr.setPrimary(primary);
+			Boolean primary = (Boolean) value;
+			if(primary)
+				userAddr.setPrimary(Bool.TRUE);
+			else
+				userAddr.setPrimary(Bool.FALSE);
 		} else if (attribute == InfoField.PERMISSION) {
 			Permission perm = (Permission) value;
 			userAddr.setPerm(perm);
@@ -585,6 +588,9 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 			} else if (attribute == InfoField.BIRTHYEARPERMISSION) {
 				Permission byPerm = (Permission) value;
 				user.setBirthyearPermission(byPerm);
+			} else if (attribute == InfoField.ADDASCONTACTPERMISSION) {
+				AddAsContactPermission aacPerm = (AddAsContactPermission) value;
+				user.setPerm(aacPerm);
 			} else if (attribute == InfoField.GENDER) {
 				Gender gender = (Gender) value;
 				user.setGender(gender);
