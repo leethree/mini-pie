@@ -6,6 +6,7 @@
 package org.net9.minipie.server.logic;
 
 import org.net9.minipie.server.logic.operation.contact.AddMyContact;
+import org.net9.minipie.server.logic.operation.user.AddUserAsContact;
 import org.net9.minipie.server.logic.operation.user.RemoveUserContact;
 
 /**
@@ -19,8 +20,14 @@ public class UserContactTest {
 	 */
 	public static void main(String[] args) {
 		//long id=0;
+//		try{
+//			new RemoveUserContact(2L,6L).execute();
+//		}catch (Exception e){
+//			System.out.println(e.getMessage());
+//			e.printStackTrace();
+//		}
 		try{
-			new RemoveUserContact(2L,6L).execute();
+			new AddUserAsContact(1L,4L,"test").execute();
 		}catch (Exception e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();

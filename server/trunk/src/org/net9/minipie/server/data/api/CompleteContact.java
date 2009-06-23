@@ -93,16 +93,6 @@ public class CompleteContact {
 	}
 
 	/**
-	 * @return the relationship
-	 */
-	public String getRelationship() {
-		if (entity.getRelationship() == null)
-			return null;
-		else
-			return entity.getRelationship().toString();
-	}
-
-	/**
 	 * @return the addrs
 	 */
 	public Collection<AddressData> getAddrs() {
