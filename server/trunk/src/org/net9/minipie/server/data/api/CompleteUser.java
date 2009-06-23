@@ -19,6 +19,7 @@ import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.entity.UserEntity;
+import org.net9.minipie.server.data.field.SharedType;
 
 /**
  * @author Seastar
@@ -27,7 +28,7 @@ import org.net9.minipie.server.data.entity.UserEntity;
 @XmlRootElement(name = "user")
 public class CompleteUser {
 	private UserEntity entity;
-	
+	private SharedType type;
 	/**
 	 * Constructor
 	 */
@@ -37,8 +38,9 @@ public class CompleteUser {
 	/**
 	 * Constructor
 	 */
-	public CompleteUser(UserEntity entity) {
+	public CompleteUser(UserEntity entity,SharedType t) {
 		this.entity=entity;
+		this.type=t;
 	}
 	
 	@XmlElement
@@ -77,7 +79,10 @@ public class CompleteUser {
 	public String getImage() {
 		return entity.getImage();
 	}
-
+	
+	public String getType(){
+		return this.type.toString();
+	}
 	/**
 	 * @return the name
 	 */
