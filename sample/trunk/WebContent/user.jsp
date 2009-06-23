@@ -1,52 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/session.jsp"%>
+<%@page import="java.util.List"%>
 <%@page import="org.net9.minipie.sample.xml.PersonBean"%>
 <%@page import="org.net9.minipie.sample.exception.NotFoundException"%>
 <%@page import="org.net9.minipie.sample.exception.GenericException"%>
 <%@page import="org.net9.minipie.sample.xml.GenericBean"%>
 <%@page import="org.net9.minipie.sample.xml.TagBean"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Phonebook Non-User Contact - Mini-Pie Sample</title>
+<title>Browse User - Mini-Pie Sample</title>
 </head>
 <body>
 	<div id="content" >
-		<h2>Phonebook Non-User Contact</h2>
+		<h2>Browse User</h2>
 	  	<hr/>
 <%
-	String method = request.getParameter("method");
 	try {
 		long id = Long.decode(request.getParameter("id"));
-%>
-		<a href="../contact.jsp?id=<%=id %>">Switch to browse mode</a>
-<%
-		if (method != null && method.equals("delete")) {
-			try{
-				ses.deleteContact(id);
-	%>
-		<p>Contact deleted successfully</p>
-	<%
-				return;
-			} catch (GenericException e) {
-				e.printStackTrace();
-	%>
-				<p>An error occurred while deleting the contact</p>
-	<%
-			}
-		}
-	%>
-		<form name="delete" id="delete" method="post">
-			<input type="hidden" name="method" id="method" value="delete"/>
-			<input type="submit" value="Delete" />
-		</form>
-	<%
 		try {
-			PersonBean person = ses.getContactById(id);
+			PersonBean person = ses.browseUser(id);
 %>
-	  	<a href="editcontact.jsp?id=<%=id %>">Edit contact</a>
 		<h3>Basic Information:</h3>
 		<table>
 			<tr>
@@ -56,6 +33,10 @@
 			<tr>
 				<th>Name</th>
 				<td><%=person.get("name") %></td>
+			</tr>
+			<tr>
+				<th>Username</th>
+				<td><%=person.get("username") %></td>
 			</tr>
 			<tr>
 				<th>Image</th>
@@ -76,26 +57,6 @@
 			<tr>
 				<th>Notes</th>
 				<td><%=person.get("note") %></td>
-			</tr>
-			<tr>
-				<th>Relationship</th>
-				<td><%=person.get("rel") %></td>
-			</tr>
-			<tr>
-				<th>Permission</th>
-				<td><%=person.get("permission") %></td>
-			</tr>
-			<tr>
-				<th>Tags</th>
-				<td>
-<%
-		for (TagBean tag : person.tags) {
-%>
-				<span><a href="tag.jsp?id=<%=tag.id %>"><%=tag.tagName %></a> </span>
-<%
-		}
-%>
-				</td>
 			</tr>
 		</table>
 		<h3>Detailed Information:</h3>
@@ -211,10 +172,54 @@
 			}
 %>
 		</table>
+		<h3>Contacts shared by this user</h3>
+<%
+	List<PersonBean> list = ses.listContactsSharedBy(id);
+%>
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Image</th>
+				<th>Name</th>
+			</tr>			
+<%
+	for (PersonBean bean : list) {
+%>
+			<tr>
+				<td><%=bean.id %></td>
+				<td><img alt="<%=bean.get("image") %>" src="<%=bean.get("image") %>"/></td>
+				<td><a href="contact.jsp?id=<%=bean.id %>"><%=bean.get("name") %></a></td>
+			</tr>
+<%
+	}
+%>
+		</table>
+		<h3>User Contacts shared by this user</h3>
+<%
+	List<PersonBean> list2 = ses.listUsersSharedBy(id);
+%>
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Image</th>
+				<th>Name</th>
+			</tr>			
+<%
+	for (PersonBean bean : list2) {
+%>
+			<tr>
+				<td><%=bean.id %></td>
+				<td><img alt="<%=bean.get("image") %>" src="<%=bean.get("image") %>"/></td>
+				<td><a href="user.jsp?id=<%=bean.id %>"><%=bean.get("name") %></a></td>
+			</tr>
+<%
+	}
+%>
+		</table>
 <%
 		} catch (NotFoundException ex) {
 %>
-		<p>The requested non-user contact with ID = <%=id %> does not exist.</p>
+		<p>The requested user with ID = <%=id %> does not exist.</p>
 <%
 		} catch (GenericException ex) {
 %>
@@ -222,8 +227,9 @@
 			<p><%=ex.getMessage() %></p>
 <%	
 		}
-	} catch (Exception e) {
+	} catch (Exception ex) {
 %>
+		<p>Please input an ID to continue:</p>
 		<form method="get">
 			<span>ID:</span>
 			<input type="text" name="id" />

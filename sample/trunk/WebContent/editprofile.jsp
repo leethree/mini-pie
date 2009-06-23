@@ -129,9 +129,9 @@
 			bean.set("value", value);
 			bean.set("type", valueType);
 			bean.set("permission", permission);
-			if (type.equals("address"))
+			if (type != null && type.equals("address"))
 				bean.set("zipcode", zipcode);
-			if (primary.equals("on"))
+			if (primary != null && primary.equals("on"))
 				bean.set("primary", "true");
 			UpdateBean update = new UpdateBean(bean);
 			try {

@@ -14,6 +14,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.net9.minipie.sample.exception.BackendConnectionException;
+import org.net9.minipie.sample.exception.ForbiddenException;
 import org.net9.minipie.sample.exception.GenericException;
 import org.net9.minipie.sample.exception.LoginFailedException;
 import org.net9.minipie.sample.exception.NotFoundException;
@@ -389,6 +390,99 @@ public class Backend {
 				throw new LoginFailedException();
 			if (e.getResponse().getStatus() == 404)
 				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	// ************************ SHARING ****************************
+
+	public PersonBean browseContact(long id) throws GenericException,
+			LoginFailedException, NotFoundException, ForbiddenException {
+		try {
+			InputStream stream = getXml("contact/" + id);
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			return new PersonBean(ele);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			if (e.getResponse().getStatus() == 403)
+				throw new ForbiddenException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public PersonBean browseUser(long id) throws GenericException,
+			LoginFailedException, NotFoundException, ForbiddenException {
+		try {
+			InputStream stream = getXml("user/" + id);
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			return new PersonBean(ele);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			if (e.getResponse().getStatus() == 403)
+				throw new ForbiddenException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public List<PersonBean> listContactsSharedBy(long id)
+			throws GenericException, LoginFailedException, NotFoundException,
+			ForbiddenException {
+		try {
+			InputStream stream = getXml("user/" + id + "/contact/");
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			List<PersonBean> list = new ArrayList<PersonBean>();
+			for (Object iter : ele.elements()) {
+				Element elem = (Element) iter;
+				list.add(new PersonBean(elem));
+			}
+			return list;
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			if (e.getResponse().getStatus() == 403)
+				throw new ForbiddenException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public List<PersonBean> listUsersSharedBy(long id) throws GenericException,
+			LoginFailedException, NotFoundException, ForbiddenException {
+		try {
+			InputStream stream = getXml("user/" + id + "/user/");
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			List<PersonBean> list = new ArrayList<PersonBean>();
+			for (Object iter : ele.elements()) {
+				Element elem = (Element) iter;
+				list.add(new PersonBean(elem));
+			}
+			return list;
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			if (e.getResponse().getStatus() == 403)
+				throw new ForbiddenException();
 			throw new GenericException(e);
 		} catch (Exception e) {
 			throw new GenericException(e);

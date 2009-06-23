@@ -21,6 +21,9 @@
 	try {
 		PersonBean person = ses.getProfile();
 %>
+		<a href="user.jsp?id=<%=person.id %>">Switch to browse mode</a>
+<%
+%>
 		<h3>Basic Information:</h3>
 		<table>
 			<tr>

@@ -20,7 +20,9 @@
 	String method = request.getParameter("method");
 	try {
 		long id = Long.decode(request.getParameter("id"));
-		
+%>
+		<a href="../user.jsp?id=<%=id %>" >Switch to browse mode</a>
+<%
 		if (method != null && method.equals("delete")) {
 			try{
 				ses.removeUser(id);
@@ -233,8 +235,12 @@
 <%
 	} catch (Exception ex) {
 %>
-			<p>Sorry, an error occurred:</p>
-			<p><%=ex.getMessage() %></p>
+		<p>Please input an ID to continue:</p>
+		<form method="get">
+			<span>ID:</span>
+			<input type="text" name="id" />
+			<input type="submit" value="Submit" />
+		</form>
 <%
 	}
 %>

@@ -48,6 +48,10 @@ public class GenericBean extends Bean {
 			wax.attr("primary", get("primary"));
 			properties.remove("primary");
 		}
+		if (get("permission") != null){
+			wax.attr("permission", get("permission"));
+			properties.remove("permission");
+		}
 		for (Entry<String, String> property : properties.entrySet()) {
 			wax.child(property.getKey(), property.getValue());
 		}
