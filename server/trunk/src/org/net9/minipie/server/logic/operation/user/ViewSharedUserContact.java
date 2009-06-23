@@ -27,14 +27,15 @@ import org.net9.minipie.server.logic.storage.User_UserStorage;
 
 /**
  * @author Seastar
- *
+ * 
  */
 public class ViewSharedUserContact extends Command<CompleteUser> {
 	private long userId;
-	//private long agentId;
+	// private long agentId;
 	private long targetId;
-	//private CompleteUserInfo result;
-	
+
+	// private CompleteUserInfo result;
+
 	public ViewSharedUserContact(long userId, long targetId) {
 		this.userId = userId;
 		try {
@@ -43,124 +44,133 @@ public class ViewSharedUserContact extends Command<CompleteUser> {
 			throw new InvalidRequestException(e);
 		}
 		if (userId == targetId) {
-			throw new InvalidRequestException("View oneself is not allow in this method.");
+			throw new InvalidRequestException(
+					"View oneself is not allow in this method.");
 		}
 	}
-	//public 
-	/* (non-Javadoc)
+
+	// public
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
 	@Override
-	public CompleteUser execute() {	
-		boolean flag;
+	public CompleteUser execute() {
+		// boolean flag;
 		User_UserStorage executor = getStorageFactory().getUser_UserStorage();
 		UserStorage executor2 = getStorageFactory().getUserStorage();
 		UserEntity user = executor2.selectBasicInfo(targetId).getEntity();
-		//UserEntity result;
-		try{
+		// UserEntity result;
+		try {
 			executor.selectRelationship(userId, targetId);
-			flag=true;
-			if (user.getGenderPermission() == Permission.TO_SELF)
+			if (user.getAddAsContactPermission() != AddAsContactPermission.NO_ONE) {
+				if (user.getGenderPermission() == Permission.TO_SELF)
+					user.setGender(null);
+				if (user.getBirthday() != null) {
+					if (user.getBirthyearPermission() == Permission.TO_SELF) {
+						user.setBirthday(user.getBirthday().toSimpleDate());
+					}
+					if (user.getBirthdatePermission() == Permission.TO_SELF)
+						user.setBirthday(null);
+				}
+				Collection<AddressData> result = new Vector<AddressData>();
+				Collection<AddressData> addrs = executor2.selectAddr(targetId);
+				for (AddressData t : addrs)
+					if (t.getPermission() != Permission.TO_SELF)
+						result.add(t);
+				user.setAddrs(result);
+
+				Collection<EmailData> eresult = new Vector<EmailData>();
+				Collection<EmailData> emails = executor2.selectEmail(targetId);
+				for (EmailData t : emails)
+					if (t.getPermission() != Permission.TO_SELF)
+						eresult.add(t);
+				user.setEmails(eresult);
+
+				Collection<IMData> iresult = new Vector<IMData>();
+				Collection<IMData> ims = executor2.selectIM(targetId);
+				for (IMData t : ims)
+					if (t.getPermission() != Permission.TO_SELF)
+						iresult.add(t);
+				user.setIms(iresult);
+
+				Collection<PhoneNoData> tresult = new Vector<PhoneNoData>();
+				Collection<PhoneNoData> tels = executor2.selectTel(targetId);
+				for (PhoneNoData t : tels)
+					if (t.getPermission() != Permission.TO_SELF)
+						tresult.add(t);
+				user.setTels(tresult);
+
+				Collection<URLData> uresult = new Vector<URLData>();
+				Collection<URLData> urls = executor2.selectURL(targetId);
+				for (URLData t : urls)
+					if (t.getPermission() != Permission.TO_SELF)
+						uresult.add(t);
+				user.setUrls(uresult);
+
+				return new CompleteUser(user);
+			} else {
 				user.setGender(null);
-			if (user.getBirthyearPermission() == Permission.TO_SELF) {
-				user.setBirthday(user.getBirthday().toSimpleDate());
-			}
-			if (user.getBirthdatePermission() == Permission.TO_SELF)
 				user.setBirthday(null);
-			
-			Collection<AddressData> result=new Vector<AddressData>();
-			Collection<AddressData> addrs = executor2.selectAddr(targetId);
-			for (AddressData t : addrs)
-				if (t.getPermission() != Permission.TO_SELF)
-					result.add(t);		
-			user.setAddrs(result);
-			
-			Collection<EmailData> eresult=new Vector<EmailData>();
-			Collection<EmailData> emails = executor2.selectEmail(targetId);
-			for (EmailData t : emails)
-				if (t.getPermission() != Permission.TO_SELF)
-					eresult.add(t);
-			user.setEmails(eresult);
+				user.setNotes(null);
+				return new CompleteUser(user);
+			}
+		} catch (NotFoundException e) {
+			if (user.getAddAsContactPermission() == AddAsContactPermission.EVERYONE) {
+				if (user.getGenderPermission() != Permission.TO_EVERYONE)
+					user.setGender(null);
+				if (user.getBirthday() != null) {
+					if (user.getBirthyearPermission() == Permission.TO_SELF) {
+						user.setBirthday(user.getBirthday().toSimpleDate());
+					}
+					if (user.getBirthdatePermission() == Permission.TO_SELF)
+						user.setBirthday(null);
+				}
+				Collection<AddressData> result = new Vector<AddressData>();
+				Collection<AddressData> addrs = executor2.selectAddr(targetId);
+				for (AddressData t : addrs)
+					if (t.getPermission() == Permission.TO_EVERYONE)
+						result.add(t);
+				user.setAddrs(result);
 
-			Collection<IMData> iresult=new Vector<IMData>();
-			Collection<IMData> ims = executor2.selectIM(targetId);
-			for (IMData t : ims)
-				if (t.getPermission() != Permission.TO_SELF)
-					iresult.add(t);
-			user.setIms(iresult);
+				Collection<EmailData> eresult = new Vector<EmailData>();
+				Collection<EmailData> emails = executor2.selectEmail(targetId);
+				for (EmailData t : emails)
+					if (t.getPermission() == Permission.TO_EVERYONE)
+						eresult.add(t);
+				user.setEmails(eresult);
 
-			Collection<PhoneNoData> tresult=new Vector<PhoneNoData>();
-			Collection<PhoneNoData> tels = executor2.selectTel(targetId);
-			for (PhoneNoData t : tels)
-				if (t.getPermission() != Permission.TO_SELF)
-					tresult.add(t);
-			user.setTels(tresult);
+				Collection<IMData> iresult = new Vector<IMData>();
+				Collection<IMData> ims = executor2.selectIM(targetId);
+				for (IMData t : ims)
+					if (t.getPermission() == Permission.TO_EVERYONE)
+						iresult.add(t);
+				user.setIms(iresult);
 
-			Collection<URLData> uresult=new Vector<URLData>();
-			Collection<URLData> urls = executor2.selectURL(targetId);
-			for (URLData t : urls)
-				if (t.getPermission() != Permission.TO_SELF)
-					uresult.add(t);
-			user.setUrls(uresult);
-			
-			return new CompleteUser(user);
-			
-		}catch(NotFoundException e){
-			flag=false;
-		}
-		if(!flag && user.getAddAsContactPermission()==AddAsContactPermission.EVERYONE){
-			if (user.getGenderPermission() != Permission.TO_EVERYONE)
+				Collection<PhoneNoData> tresult = new Vector<PhoneNoData>();
+				Collection<PhoneNoData> tels = executor2.selectTel(targetId);
+				for (PhoneNoData t : tels)
+					if (t.getPermission() == Permission.TO_EVERYONE)
+						tresult.add(t);
+				user.setTels(tresult);
+
+				Collection<URLData> uresult = new Vector<URLData>();
+				Collection<URLData> urls = executor2.selectURL(targetId);
+				for (URLData t : urls)
+					if (t.getPermission() == Permission.TO_EVERYONE)
+						uresult.add(t);
+				user.setUrls(uresult);
+
+				return new CompleteUser(user);
+			} else {
 				user.setGender(null);
-			if (user.getBirthyearPermission() != Permission.TO_EVERYONE) {
-				user.setBirthday(user.getBirthday().toSimpleDate());
-			}
-			if (user.getBirthdatePermission() != Permission.TO_EVERYONE)
 				user.setBirthday(null);
-			
-			Collection<AddressData> result=new Vector<AddressData>();
-			Collection<AddressData> addrs = executor2.selectAddr(targetId);
-			for (AddressData t : addrs)
-				if (t.getPermission() == Permission.TO_EVERYONE)
-					result.add(t);		
-			user.setAddrs(result);
-			
-			Collection<EmailData> eresult=new Vector<EmailData>();
-			Collection<EmailData> emails = executor2.selectEmail(targetId);
-			for (EmailData t : emails)
-				if (t.getPermission() == Permission.TO_EVERYONE)
-					eresult.add(t);
-			user.setEmails(eresult);
+				user.setNotes(null);
+				return new CompleteUser(user);
+			}
 
-			Collection<IMData> iresult=new Vector<IMData>();
-			Collection<IMData> ims = executor2.selectIM(targetId);
-			for (IMData t : ims)
-				if (t.getPermission() == Permission.TO_EVERYONE)
-					iresult.add(t);
-			user.setIms(iresult);
-
-			Collection<PhoneNoData> tresult=new Vector<PhoneNoData>();
-			Collection<PhoneNoData> tels = executor2.selectTel(targetId);
-			for (PhoneNoData t : tels)
-				if (t.getPermission() == Permission.TO_EVERYONE)
-					tresult.add(t);
-			user.setTels(tresult);
-
-			Collection<URLData> uresult=new Vector<URLData>();
-			Collection<URLData> urls = executor2.selectURL(targetId);
-			for (URLData t : urls)
-				if (t.getPermission() == Permission.TO_EVERYONE)
-					uresult.add(t);
-			user.setUrls(uresult);			
-						
-			return new CompleteUser(user);
+			// return null;
 		}
-		if(user.getAddAsContactPermission()==AddAsContactPermission.NO_ONE){
-			user.setGender(null);
-			user.setBirthday(null);
-			//user.set
-			return new CompleteUser(user);
-		}
-		return null;
 	}
-	
 }
