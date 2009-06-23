@@ -13,6 +13,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
@@ -27,6 +28,8 @@ import org.net9.minipie.server.logic.operation.tag.DeleteTag;
 import org.net9.minipie.server.logic.operation.tag.EditTag;
 import org.net9.minipie.server.logic.operation.tag.ListTaggedContact;
 import org.net9.minipie.server.logic.operation.tag.ListTaggedUser;
+import org.net9.minipie.server.logic.operation.tag.RemoveTagFromContact;
+import org.net9.minipie.server.logic.operation.tag.RemoveTagOfUser;
 
 /**
  * @author LeeThree
@@ -96,6 +99,20 @@ public class PhonebookTagResource extends BaseResource {
 	@DELETE
 	public Response delete() {
 		new Handler<Void>(new DeleteTag(getUserId(), tagId)).execute();
+		return Response.ok().build();
+	}
+	
+	@DELETE
+	@Path("contact/{id}")
+	public Response removeContact(@PathParam("id") long contactId) {
+		new Handler<Void>(new RemoveTagFromContact(getUserId(), contactId, tagId)).execute();
+		return Response.ok().build();
+	}
+	
+	@DELETE
+	@Path("user/{id}")
+	public Response removeUser(@PathParam("id") long userId) {
+		new Handler<Void>(new RemoveTagOfUser(getUserId(), userId, tagId)).execute();
 		return Response.ok().build();
 	}
 }
