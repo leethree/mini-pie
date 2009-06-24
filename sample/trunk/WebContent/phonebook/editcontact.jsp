@@ -11,6 +11,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Edit Phonebook Non-User Contact - Mini-Pie Sample</title>
+<script type="text/javascript" src="../script.js"></script>
 </head>
 <body>
   	<div id="content" >
@@ -73,7 +74,7 @@
 	  		<table>
 	        <tr>
 	          <td>Type:</td>
-	          <td><select name="type">
+	          <td><select name="type" id="edit_type" onchange="minipie.onEditTypeChange(2)">
 		          <option value="basic">Basic Information</option>
 		          <option value="address">Addresses</option>
 		          <option value="phone">Phone Numbers</option>
@@ -82,25 +83,20 @@
 		          <option value="url">URLs</option>
 	          </select></td>
 	        </tr>
-	        <tr>
+	        <tr id="edit_id" style="display: none;">
 	          <td>ID:</td>
 	          <td><input type="text" name="valueid" id="valueid"/></td> 
 	          <td>(requited for detailed information)</td>
 	        </tr> 
 	        <tr>
 	          <td>Field:</td>
-	          <td><select name="field">
+	          <td><select name="field" id="edit_field">
 		          <option value="name">Name</option>
 		          <option value="nickname">Nickname</option>
 		          <option value="birthday">Birthday</option>
 		          <option value="gender">Gender</option>
 		          <option value="note">Notes</option>
 		          <option value="relationship">Relationships</option>
-		          <option value="value">Value</option>
-		          <option value="type">Type</option>
-		          <option value="primary">Primary</option>
-		          <option value="zipcode">ZIP code</option>
-		          <option value="permission">Permission</option>
 	          </select></td>
 	        </tr> 
 	        <tr>
@@ -153,7 +149,7 @@
 	  		<table>
 	        <tr>
 	          <td>Type:</td>
-	          <td><select name="type">
+	          <td><select name="type" id="add_type" onchange="minipie.onAddTypeChange()">
 		          <option value="address">Addresses</option>
 		          <option value="phone">Phone Numbers</option>
 		          <option value="email">Emails</option>
@@ -170,7 +166,7 @@
 	          <td>Value type:</td>
 	          <td><input type="text" name="valuetype" id="valuetype"/></td> 
 	        </tr> 
-	        <tr>
+	        <tr id="add_zipcode">
 	          <td>ZIP code:</td>
 	          <td><input type="text" name="zipcode" id="zipcode"/></td>
 	          <td>(for addresses only)</td> 

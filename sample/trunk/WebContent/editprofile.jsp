@@ -11,6 +11,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Edit Profile - Mini-Pie Sample</title>
+<script type="text/javascript" src="script.js"></script>
 </head>
 <body>
   	<div id="content" >
@@ -27,6 +28,10 @@
 		String idStr = request.getParameter("id");
 		String field = request.getParameter("field");
 		String value = request.getParameter("value");
+		if (value==null || value.isEmpty())
+			value = request.getParameter("perm");
+		if (field!=null && field.equals("addascontactpermission"))
+			value = request.getParameter("addperm");
 		long id = 0;
 		if (idStr != null && !idStr.isEmpty())
 			try {
@@ -68,7 +73,7 @@
 	  		<table>
 	        <tr>
 	          <td>Type:</td>
-	          <td><select name="type">
+	          <td><select name="type" id="edit_type" onchange="minipie.onEditTypeChange(1)">
 		          <option value="basic">Basic Information</option>
 		          <option value="address">Addresses</option>
 		          <option value="phone">Phone Numbers</option>
@@ -77,24 +82,19 @@
 		          <option value="url">URLs</option>
 	          </select></td>
 	        </tr>
-	        <tr>
+	        <tr id="edit_id" style="display: none;">
 	          <td>ID:</td>
 	          <td><input type="text" name="id" id="id"/></td> 
 	          <td>(required for detailed information)</td>
 	        </tr> 
 	        <tr>
 	          <td>Field:</td>
-	          <td><select name="field">
+	          <td><select name="field" id="edit_field" onchange="minipie.onEditFieldChange()">
 		          <option value="displayName">Name</option>
 		          <option value="nickname">Nickname</option>
 		          <option value="birthday">Birthday</option>
 		          <option value="gender">Gender</option>
 		          <option value="note">Notes</option>
-		          <option value="value">Value</option>
-		          <option value="type">Type</option>
-		          <option value="primary">Primary</option>
-		          <option value="zipcode">ZIP code</option>
-		          <option value="permission">Permission</option>
 		          <option value="birthyearPermission">Permission for birth year</option>
 		          <option value="birthdayPermission">Permission for birth date</option>
 		          <option value="genderPermission">Permission for gender</option>
@@ -103,7 +103,16 @@
 	        </tr> 
 	        <tr>
 	          <td>New value:</td>
-	          <td><input type="text" name="value" id="value"/></td>
+	          <td><input type="text" name="value" id="edit_value"/>
+	          <select name="perm" id="edit_value_perm" style="display: none;">
+		          <option value="to_self">Visible to myself</option>
+		          <option value="to_contacts">Visible to contacts</option>
+		          <option value="to_everyone">Visible to everyone</option>
+	          </select><select name="addperm" id="edit_value_addperm" style="display: none;">
+		          <option value="confirmed_ones">Confirmation needed</option>
+		          <option value="everyone">Without confirmation</option>
+		          <option value="no_one">Forbidden</option>
+	          </select></td>
 	          <td>(*required)</td>
 	        </tr> 
 	        <tr>
@@ -153,7 +162,7 @@
 	  		<table>
 	        <tr>
 	          <td>Type:</td>
-	          <td><select name="type">
+	          <td><select name="type" id="add_type" onchange="minipie.onAddTypeChange()">
 		          <option value="address">Addresses</option>
 		          <option value="phone">Phone Numbers</option>
 		          <option value="email">Emails</option>
@@ -170,7 +179,7 @@
 	          <td>Value type:</td>
 	          <td><input type="text" name="valuetype" id="valuetype"/></td> 
 	        </tr> 
-	        <tr>
+	        <tr id="add_zipcode">
 	          <td>ZIP code:</td>
 	          <td><input type="text" name="zipcode" id="zipcode"/></td>
 	          <td>(for addresses only)</td> 
