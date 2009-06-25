@@ -41,7 +41,7 @@ public class SearchMyContact extends Command<Collection<ContactListEntry>>{
 		qu.add(new Query(InfoField,));
 		Collection<BasicContact> contacts;
 		try {
-			contacts=executor.searchAllContact(qu, null);
+			contacts=executor.searchAllContact(qu);
 			for(BasicContact contact:contacts){
 				
 			}

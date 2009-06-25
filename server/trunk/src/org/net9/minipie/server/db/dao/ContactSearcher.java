@@ -103,7 +103,9 @@ public class ContactSearcher extends BaseSearcher {
 		} else if(field.equals("value") && query.getType()!=InfoType.ADDRESS){
 			criterion = Restrictions.eq("value", query.getValue());
 		} else if(field.equals("type")){
-			criterion = Restrictions.eq("type", query.getType());
+			criterion = Restrictions.eq("type", query.getValue());
+		} else if(field.equals("ownerId")){
+			criterion = Restrictions.eq("owner.id", Long.valueOf(query.getValue()));
 		}
 	}
 
