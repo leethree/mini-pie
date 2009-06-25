@@ -1,5 +1,5 @@
 /**
- * CancelSharedContact.java
+ * UnshareContact.java
  *     in package: * org.net9.minipie.server.logic.operation.group
  * by Mini-Pie Project
  */
@@ -21,12 +21,12 @@ import org.net9.minipie.server.logic.storage.Group_UserStorage;
  * @author Seastar
  * 
  */
-public class CancelSharedContact extends Command<Void> {
+public class UnshareContact extends Command<Void> {
 	private long groupId;
 	private long userId;
 	private long targetId;
 
-	public CancelSharedContact(long userId, long groupId, long targetId) {
+	public UnshareContact(long userId, long groupId, long targetId) {
 		this.userId = userId;
 		try {
 			this.groupId = Formatter.checkId(groupId);

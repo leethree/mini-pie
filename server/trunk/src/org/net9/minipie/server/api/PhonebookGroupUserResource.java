@@ -7,6 +7,7 @@ package org.net9.minipie.server.api;
 
 import java.util.Collection;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -23,6 +24,7 @@ import org.net9.minipie.server.logic.Handler;
 import org.net9.minipie.server.logic.operation.group.ListGroupMember;
 import org.net9.minipie.server.logic.operation.group.admin.AppointAdmin;
 import org.net9.minipie.server.logic.operation.group.admin.InviteUser;
+import org.net9.minipie.server.logic.operation.group.admin.RemoveUser;
 
 /**
  * @author LeeThree
@@ -68,6 +70,14 @@ public class PhonebookGroupUserResource extends BaseResource {
 	@Path("{id}")
 	public Response put(@PathParam("id") long userId) {
 		new Handler<Void>(new AppointAdmin(getUserId(), groupId, userId))
+				.execute();
+		return Response.ok().build();
+	}
+	
+	@DELETE
+	@Path("{id}")
+	public Response delete(@PathParam("id") long userId) {
+		new Handler<Void>(new RemoveUser(getUserId(), groupId, userId))
 				.execute();
 		return Response.ok().build();
 	}
