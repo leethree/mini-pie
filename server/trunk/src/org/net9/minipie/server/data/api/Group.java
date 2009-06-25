@@ -59,19 +59,19 @@ public class Group {
 	}
 	
 	/**
-	 * @return the createrId
+	 * @return the creatorId
 	 */
-	@XmlAttribute(name = "createrid")
-	public long getCreaterId() {
-		return entity.getCreaterId();
+	@XmlAttribute(name = "creatorid")
+	public long getCreatorId() {
+		return entity.getCreatorId();
 	}
 	
 	/**
-	 * @return the createrName
+	 * @return the creatorName
 	 */
-	@XmlElement(name = "creater")
-	public String getCreaterName() {
-		return entity.getCreaterName();
+	@XmlElement(name = "creator")
+	public String getCreatorName() {
+		return entity.getCreatorName();
 	}
 	
 	/**

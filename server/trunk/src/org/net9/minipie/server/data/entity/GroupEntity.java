@@ -16,27 +16,27 @@ import org.net9.minipie.server.exception.DataFormatException;
 public class GroupEntity {
 	private String groupName;
 	private String description;
-	private long createrId;
-	private String createrName;
+	private long creatorId;
+	private String creatorName;
 	private Permission perm;
 	private long groupId;
 	/**
 	 * Constructor
 	 * @param groupName
 	 * @param description
-	 * @param createrId
-	 * @param createrName
+	 * @param creatorId
+	 * @param creatorName
 	 * @param perm
 	 * @throws DataFormatException 
 	 */
-	public GroupEntity(long groupId,String groupName, String description, long createrId,
-			String createrName, Permission perm) throws DataFormatException {
+	public GroupEntity(long groupId,String groupName, String description, long creatorId,
+			String creatorName, Permission perm) throws DataFormatException {
 		super();
 		setGroupId(groupId);
 		setGroupName(groupName);
 		setDescription(description);
-		setCreaterId(createrId);
-		setCreaterName(createrName);
+		setCreatorId(creatorId);
+		setCreatorName(creatorName);
 		setPermission(perm);
 	}
 	/**
@@ -77,29 +77,29 @@ public class GroupEntity {
 		this.description = description;
 	}
 	/**
-	 * @return the createrId
+	 * @return the creatorId
 	 */
-	public long getCreaterId() {
-		return createrId;
+	public long getCreatorId() {
+		return creatorId;
 	}
 	/**
-	 * @param createrId the createrId to set
+	 * @param creatorId the creatorId to set
 	 * @throws DataFormatException 
 	 */
-	public void setCreaterId(long createrId) throws DataFormatException {
-		this.createrId = Formatter.checkId(createrId);
+	public void setCreatorId(long creatorId) throws DataFormatException {
+		this.creatorId = Formatter.checkId(creatorId);
 	}
 	/**
-	 * @return the createrName
+	 * @return the creatorName
 	 */
-	public String getCreaterName() {
-		return createrName;
+	public String getCreatorName() {
+		return creatorName;
 	}
 	/**
-	 * @param createrName the createrName to set
+	 * @param creatorName the creatorName to set
 	 */
-	public void setCreaterName(String createrName) {
-		this.createrName = createrName;
+	public void setCreatorName(String creatorName) {
+		this.creatorName = creatorName;
 	}
 	/**
 	 * @return the perm
