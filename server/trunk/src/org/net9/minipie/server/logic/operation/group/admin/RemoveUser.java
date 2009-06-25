@@ -35,6 +35,9 @@ public class RemoveUser extends Command<Void> {
 		} catch (DataFormatException e) {
 			throw new InvalidRequestException(e);
 		}
+		if(userId==targetId){
+			throw new InvalidRequestException("Remove oneself is not allowed");
+		}
 	} /*
 		 * (non-Javadoc) *
 		 * 
