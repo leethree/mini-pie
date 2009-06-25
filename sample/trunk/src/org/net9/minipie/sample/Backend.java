@@ -37,7 +37,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
  */
 public class Backend {
 	private static final String AUTHENTICATION_HEADER = "Authorization";
-	private static final String SERVICE_ROOT_URL = "http://59.66.131.116:8088/Mini-Pie/";
+	private static final String SERVICE_ROOT_URL = "http://minipie.net9.org:8088/Mini-Pie/";
 	private static final String SERVICE_API_URL = SERVICE_ROOT_URL
 			+ "services/";
 	private Client client;
