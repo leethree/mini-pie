@@ -6,7 +6,9 @@
 package org.net9.minipie.server.logic.operation.group;
 
 import org.net9.minipie.server.data.Formatter;
+import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.data.field.InfoField;
+import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
@@ -47,8 +49,12 @@ public class ShareContactToGroup extends Command<Void> {
 		Group_UserStorage executor2=getStorageFactory().getGroup_UserStorage();
 		ContactStorage executor3=getStorageFactory().getContactStorage();
 		executor.selectGroup(groupId);
-		if(executor3.selectBasicInfo(targetId).getEntity().getOwnerId()!=userId)
-			throw new PermissionDeniedException("not your contact");		
+		
+			ContactEntity contact=executor3.selectBasicInfo(targetId).getEntity();
+		if(contact.getOwnerId()!=userId)
+			throw new PermissionDeniedException("not your contact");
+		if(contact.getPermission()==Permission.TO_SELF)
+			throw new InvalidRequestException("to_self contacts can not share");				
 		try{
 			executor2.isAdmin(userId, groupId);
 			executor3.editBasicInfo(targetId, InfoField.GROUPOWNER,String.valueOf(groupId));	
