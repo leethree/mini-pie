@@ -1,5 +1,5 @@
 /**
- * JionGroup.java
+ * JoinGroup.java
  *     in package: * org.net9.minipie.server.logic.operation.group
  * by Mini-Pie Project
  */
@@ -22,12 +22,12 @@ import org.net9.minipie.server.logic.storage.NotificationStorage;
  * @author Seastar
  *
  */
-public class JionGroup extends Command<Boolean> {
+public class JoinGroup extends Command<Boolean> {
 	private String message;
 	private long groupId;
 	private long userId;
 	
-	public JionGroup(long userId,long groupId,String msg){
+	public JoinGroup(long userId,long groupId,String msg){
 		this.userId=userId;		
 		this.message=msg;
 		try {

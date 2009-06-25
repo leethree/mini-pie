@@ -1,5 +1,5 @@
 /**
- * DispandGroup.java
+ * DisbandGroup.java
  *     in package: * org.net9.minipie.server.logic.operation.group
  * by Mini-Pie Project
  */
@@ -18,11 +18,11 @@ import org.net9.minipie.server.logic.storage.Group_UserStorage;
  * @author Seastar
  *
  */
-public class DispandGroup extends Command<Void> {
+public class DisbandGroup extends Command<Void> {
 	private long groupId;
 	private long userId;
 	
-	public DispandGroup(long userId,long groupId){
+	public DisbandGroup(long userId,long groupId){
 		this.userId=userId;		
 		try {
 			this.groupId=Formatter.checkId(groupId);

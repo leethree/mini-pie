@@ -23,4 +23,9 @@ public class BrowseResources extends BaseResource {
 	public BrowseUserListResource getUsers() {
 		return getSubResource(BrowseUserListResource.class);
 	}
+	
+	@Path("group")
+	public BrowseGroupListResource getGroups() {
+		return getSubResource(BrowseGroupListResource.class);
+	}
 }
