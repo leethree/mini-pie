@@ -51,17 +51,17 @@ public class ListAllMyNotification extends Command<Collection<NotificationXml>> 
 				newList.add(new NotificationXml(notification));
 			}
 		}
-		if(ges!=null){
-			for(GroupEntity g:ges){
-				long id=g.getGroupId();
-				if(executor2.isAdmin(userId, id)){
-					Collection<NotificationData> l = executor.selectReceiver(id);
-					for(NotificationData n:l){
-						newList.add(new NotificationXml(n));
-					}
-				}
-			}
-		}
+//		if(ges!=null){
+//			for(GroupEntity g:ges){
+//				long id=g.getGroupId();
+//				if(executor2.isAdmin(userId, id)){
+//					Collection<NotificationData> l = executor.selectReceiver(id);
+//					for(NotificationData n:l){
+//						newList.add(new NotificationXml(n));
+//					}
+//				}
+//			}
+//		}
 		return newList;
 	}
 

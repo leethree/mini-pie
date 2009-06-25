@@ -5,11 +5,14 @@
  */
 package org.net9.minipie.server.logic.operation.group;
 
+import java.util.Collection;
+
 import org.net9.minipie.server.data.Formatter;
 import org.net9.minipie.server.data.entity.GroupEntity;
 import org.net9.minipie.server.data.entity.NotificationData;
-import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.field.NotificationType;
+import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.data.storage.CommonListEntry;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
@@ -55,12 +58,15 @@ public class JoinGroup extends Command<Boolean> {
 			return true;
 		}else{
 			NotificationStorage executor3=getStorageFactory().getNotifacationStorage();
+			Collection<CommonListEntry> cl=executor2.selectMember(groupId, true);
+			for(CommonListEntry cle:cl){
 			try {
-				executor3.add(new NotificationData(1L,userId,groupId,"user:"+userId+"want to join group," +
+				executor3.add(new NotificationData(1L,userId,cle.getEntity().getId(),0,"user:"+userId+"want to join group," +
 						"\r\nhis/her message:"+message,NotificationType.MEMBERSHIP_APPLICATION));
 				return false;
 			} catch (DataFormatException e) {
 				//won't appear
+			}
 			}
 		}
 		return false;
