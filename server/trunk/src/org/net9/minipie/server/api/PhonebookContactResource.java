@@ -5,8 +5,10 @@ import java.net.URI;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
@@ -15,14 +17,19 @@ import org.net9.minipie.server.data.api.PhonebookCompleteContact;
 import org.net9.minipie.server.data.api.StatusReportList;
 import org.net9.minipie.server.data.api.Update;
 import org.net9.minipie.server.data.api.UpdateList;
+import org.net9.minipie.server.data.field.Permission;
+import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.Handler;
 import org.net9.minipie.server.logic.operation.MacroCommand;
 import org.net9.minipie.server.logic.operation.contact.DeleteMyContact;
+import org.net9.minipie.server.logic.operation.contact.ShareContact;
 import org.net9.minipie.server.logic.operation.contact.UpdateMyContact;
 import org.net9.minipie.server.logic.operation.contact.UploadContactImage;
 import org.net9.minipie.server.logic.operation.contact.ViewMyContact;
+import org.net9.minipie.server.logic.operation.user.ShareUser;
+import org.net9.minipie.server.logic.operation.user.UpdateRelationship;
 
 public class PhonebookContactResource extends BaseResource {
 
@@ -47,6 +54,28 @@ public class PhonebookContactResource extends BaseResource {
 	public PhonebookCompleteContact get() {
 		return new Handler<PhonebookCompleteContact>(new ViewMyContact(
 				getUserId(), contactId)).execute();
+	}
+
+	/**
+	 * change shared contact permission
+	 * 
+	 * @return
+	 */
+	@PUT
+	public Response put(@FormParam("permission") String permission) {
+		if (permission != null && !permission.isEmpty()) {
+			try {
+				Permission perm = Permission.value(permission);
+				new Handler<Void>(
+						new ShareContact(getUserId(), contactId, perm))
+						.execute();
+				return Response.ok().build();
+			} catch (DataFormatException e) {
+				throw new InvalidRequestException("Invalid permission value");
+			}
+		}
+		throw new InvalidRequestException(
+				"No valid parameter provided: permission expected.");
 	}
 
 	/**
@@ -119,7 +148,8 @@ public class PhonebookContactResource extends BaseResource {
 		public String upload(InputStream istream, String filePath, URI urlPath,
 				String contentType) {
 			return new Handler<String>(new UploadContactImage(getUserId(),
-					contactId, istream, filePath, urlPath, contentType)).execute();
+					contactId, istream, filePath, urlPath, contentType))
+					.execute();
 		}
 
 	}

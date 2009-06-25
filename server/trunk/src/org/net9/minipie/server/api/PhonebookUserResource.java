@@ -75,7 +75,7 @@ public class PhonebookUserResource extends BaseResource {
 			return Response.ok().build();
 		}
 		throw new InvalidRequestException(
-				"No valid permission provided: permission or rel expected.");
+				"No valid parameter provided: permission or rel expected.");
 	}
 
 	@DELETE
