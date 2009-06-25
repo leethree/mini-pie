@@ -7,7 +7,7 @@ package org.net9.minipie.server.data.api;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.net9.minipie.server.data.entity.GroupEntity;
 
@@ -15,7 +15,7 @@ import org.net9.minipie.server.data.entity.GroupEntity;
  * @author LeeThree
  *
  */
-@XmlType(name = "group")
+@XmlRootElement(name = "group")
 public class Group {
 	private GroupEntity entity;
 	

@@ -18,6 +18,6 @@ public interface NotificationStorage {
 	public void del(Long notifacationId);
 	public Collection<NotificationData> selectReceiver(Long receiverId);
 	public NotificationData selectNotification(Long notificationId);
-	//public Collection<NotificationData> selectAdminNotification(Long groupId,Long userId);
+	public Collection<NotificationData> selectAdminNotification(Long groupId);
 	//find the notification which belong to the group administor userId
 }

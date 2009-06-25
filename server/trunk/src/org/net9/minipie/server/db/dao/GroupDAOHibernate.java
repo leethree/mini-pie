@@ -78,6 +78,7 @@ public class GroupDAOHibernate extends GenericHibernateDAO<Group, Long> implemen
 		begin();
 		makeTransient(group);
 		commit();
+		
 	}
 
 	/* (non-Javadoc)

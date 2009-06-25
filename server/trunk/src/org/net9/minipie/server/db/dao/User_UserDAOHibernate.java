@@ -198,6 +198,7 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id>
 			}
 		}
 		String relationship = bind.getRelationship();
+		System.out.println("here : "+relationship);
 		return relationship;
 	}
 
@@ -309,9 +310,11 @@ public class User_UserDAOHibernate extends GenericHibernateDAO<User2User, Id>
 		List<UserRelation> result = new ArrayList<UserRelation>();
 		for(User2User bind : user.getUsers2()){
 			result.add(new UserRelation(bind.getUser1().getId(), bind.getRelationship(), bind.getRight()));
+			System.out.println(bind.getRelationship());
 		}
 		for(User2User bind : user.getUsers1()){
 			result.add(new UserRelation(bind.getuser2().getId(), bind.getRelationship(), bind.getLeft()));
+			System.out.println(bind.getRelationship());
 		}
 		return result;
 	}

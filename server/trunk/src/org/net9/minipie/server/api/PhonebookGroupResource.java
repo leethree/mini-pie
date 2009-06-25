@@ -7,7 +7,6 @@ package org.net9.minipie.server.api;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
@@ -63,7 +62,6 @@ public class PhonebookGroupResource extends BaseResource {
 		return Response.ok().build();
 	}
 
-	@GET
 	@Path("user")
 	public PhonebookGroupUserResource getGroupUsers() {
 		PhonebookGroupUserResource user = getSubResource(PhonebookGroupUserResource.class);
@@ -71,7 +69,6 @@ public class PhonebookGroupResource extends BaseResource {
 		return user;
 	}
 
-	@GET
 	@Path("contact")
 	public PhonebookGroupContactResource getGroupContacts() {
 		PhonebookGroupContactResource contact = getSubResource(PhonebookGroupContactResource.class);

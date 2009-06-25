@@ -22,6 +22,12 @@ public class GroupUserListEntry {
 
 	/**
 	 * Constructor
+	 */
+	public GroupUserListEntry() {
+	}
+
+	/**
+	 * Constructor
 	 * 
 	 * @param entity
 	 */
@@ -63,7 +69,7 @@ public class GroupUserListEntry {
 		return entity.getName();
 	}
 
-	@XmlAttribute
+	@XmlAttribute(name = "admin")
 	public boolean getIsAdmin() {
 		return entity.isAdmin();
 	}

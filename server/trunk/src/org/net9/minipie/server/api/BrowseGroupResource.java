@@ -40,7 +40,7 @@ public class BrowseGroupResource extends BaseResource {
 	@GET
 	@Produces( { "application/xml", "application/json" })
 	public Group get() {
-		return new Handler<Group>(new ViewGroupInfo(getUserId())).execute();
+		return new Handler<Group>(new ViewGroupInfo(groupId)).execute();
 	}
 
 	@DELETE
@@ -49,7 +49,6 @@ public class BrowseGroupResource extends BaseResource {
 		return Response.ok().build();
 	}
 
-	@GET
 	@Path("user")
 	public PhonebookGroupUserResource getGroupUsers() {
 		PhonebookGroupUserResource user = getSubResource(PhonebookGroupUserResource.class);
@@ -57,7 +56,6 @@ public class BrowseGroupResource extends BaseResource {
 		return user;
 	}
 
-	@GET
 	@Path("contact")
 	public PhonebookGroupContactResource getGroupContacts() {
 		PhonebookGroupContactResource contact = getSubResource(PhonebookGroupContactResource.class);

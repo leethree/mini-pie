@@ -45,6 +45,7 @@ public class Group {
 	
 	@OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE)
 	private Collection<Notification> groupNotification = new ArrayList<Notification>();
+	
 	public Date getCreatedDate() {
 		return createdDate;
 	}

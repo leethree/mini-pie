@@ -60,7 +60,7 @@ public class Group_UserDAOHibernate extends GenericHibernateDAO<Group2User, Id>
 			throw new NotFoundException("there is no group with groupId: "
 					+ groupId);
 		}
-		Group2User membership = new Group2User(group, user, Bool.FALSE);
+		Group2User membership = new Group2User(group, user, Bool.TRUE);
 		begin();
 		makePersistent(membership);
 		commit();
