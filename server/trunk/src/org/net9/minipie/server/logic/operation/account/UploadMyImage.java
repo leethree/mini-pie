@@ -66,7 +66,7 @@ public class UploadMyImage extends Command<String> {
 	@Override
 	public String execute() {
 		UserStorage executor = getStorageFactory().getUserStorage();
-		executor.selectBasicInfo(userId);
+		//executor.selectBasicInfo(userId);
 		try {
 			fileName = userId + "__." + exName;
 			File tempFile = new File(filePath, fileName);

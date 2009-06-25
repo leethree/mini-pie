@@ -18,6 +18,7 @@ public class NotificationData {
 	private long id;
 	private long senderId;
 	private long receiverId;
+	private long groupId;
 	private String content;
 	private NotificationType type;
 
@@ -30,15 +31,17 @@ public class NotificationData {
 	 * @param type
 	 * @throws DataFormatException
 	 */
-	public NotificationData(long id,long senderId, long receiverId, String content,
+	public NotificationData(long id,long senderId, long receiverId,long groupId, String content,
 			NotificationType type) throws DataFormatException {
 		setId(id);
 		setSenderId(senderId);
 		setReceiverId(receiverId);
+		
 		setContent(content);
 		setType(type);
 	}
 
+	
 	/**
 	 * @return the id
 	 */
@@ -69,7 +72,19 @@ public class NotificationData {
 	public void setSenderId(long sendId) throws DataFormatException {
 		this.senderId = Formatter.checkId(sendId);
 	}
-
+	/**
+	 * @return the groupId
+	 */
+	public long getGroupId() {
+		return groupId;
+	}
+	/**
+	 * @param groupId the groupId to set
+	 * @throws DataFormatException 
+	 */
+	public void setGroupId(long groupId) throws DataFormatException {
+		this.groupId = Formatter.checkId(groupId);
+	}
 	/**
 	 * @return the receiverId
 	 */

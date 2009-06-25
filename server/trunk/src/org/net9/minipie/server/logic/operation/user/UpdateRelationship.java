@@ -56,7 +56,7 @@ public class UpdateRelationship extends Command<Void> {
 					"the target is not your user contact");
 		}
 		try {
-			executor1.add(new NotificationData(0L, userId, targetId, rel
+			executor1.add(new NotificationData(1L, userId, targetId,0L, rel
 					.toString(), NotificationType.RELATIONSHIP));
 		} catch (DataFormatException e) {
 

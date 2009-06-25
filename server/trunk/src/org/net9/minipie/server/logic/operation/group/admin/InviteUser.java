@@ -81,7 +81,7 @@ public class InviteUser extends Command<Boolean> {
 				else if(user.getAddAsContactPermission()==AddAsContactPermission.CONFIRMED_ONES){
 					NotificationStorage executor4=getStorageFactory().getNotifacationStorage();
 					try {
-						executor4.add(new NotificationData(1L,groupId,targetId,
+						executor4.add(new NotificationData(1L,0,groupId,targetId,
 								"group "+groupId+" want you to be its member, massage:"+msg
 								,NotificationType.MEMBERSHIP_INVITATION));
 					} catch (DataFormatException e) {

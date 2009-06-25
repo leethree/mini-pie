@@ -29,15 +29,16 @@ import org.net9.minipie.server.exception.DataFormatException;
 
 /**
  * @author Riversand
- *
+ * 
  */
 public class UploadWizard {
-	
-	private static class LineProperty{
+
+	private static class LineProperty {
 		int lineNumber;
 		boolean isMyProfile;
 		int contactId;
 		InfoType infoType;
+
 		/**
 		 * Constructor
 		 */
@@ -47,28 +48,28 @@ public class UploadWizard {
 			this.contactId = contactId;
 			this.isMyProfile = b;
 		}
-		
+
 		/**
 		 * @return the infoType
 		 */
 		public InfoType getInfoType() {
 			return infoType;
 		}
-		
+
 		/**
 		 * @return the contactId
 		 */
 		public int getContactId() {
 			return contactId;
 		}
-		
+
 		/**
 		 * @return the isMyProfile
 		 */
 		public boolean isMyProfile() {
 			return isMyProfile;
 		}
-		
+
 		/**
 		 * @return the lineNumber
 		 */
@@ -76,47 +77,51 @@ public class UploadWizard {
 			return lineNumber;
 		}
 	}
-	
+
 	private Scanner scanner;
 	private Map<Integer, ContactEntity> importedContacts = new HashMap<Integer, ContactEntity>();
 	private UserEntity myProfile = new UserEntity();
+
 	/**
 	 * Constructor
 	 */
 	public UploadWizard() {
 	}
-	
+
 	/**
 	 * Constructor
 	 */
-	public UploadWizard(Scanner scanner){
+	public UploadWizard(Scanner scanner) {
 		this.scanner = scanner;
 	}
+
 	/**
 	 * @return the scanner
 	 */
 	public Scanner getScanner() {
 		return scanner;
 	}
-	
+
 	/**
 	 * @return the importedContacts
 	 */
 	public Collection<ContactEntity> getImportedContacts() {
 		Set<ContactEntity> result = new HashSet<ContactEntity>();
-		for (Map.Entry<Integer, ContactEntity> contactEntity : importedContacts.entrySet()) {
+		for (Map.Entry<Integer, ContactEntity> contactEntity : importedContacts
+				.entrySet()) {
 			result.add(contactEntity.getValue());
 		}
 		return result;
 	}
+
 	/**
 	 * @return the myProfile
 	 */
 	public UserEntity getMyProfile() {
 		return myProfile;
 	}
-	
-	public void upload(File f){
+
+	public void upload(File f) {
 		Map<LineProperty, String> lines = new HashMap<LineProperty, String>();
 		LineProperty lineProperty = null;
 		String text = null;
@@ -125,381 +130,408 @@ public class UploadWizard {
 		try {
 			scanner = new Scanner(f).useDelimiter("\n");
 			int lineNum = 0;
-			while(scanner.hasNextLine()){
+			while (scanner.hasNextLine()) {
 				lineNum++;
 				String line = scanner.nextLine().trim();
 				line = line.replace("\\s+", " ");
-				//System.out.println(line);
-				if(line.startsWith("%%"))
+				// System.out.println(line);
+				if (line.startsWith("%%"))
 					continue;
-				else if(line.startsWith("profile=")){
+				else if (line.startsWith("profile=")) {
 					isMyProfile = true;
 					scanner.nextLine();
 					lineNum++;
 					String temp = scanner.nextLine().trim();
-					//System.out.println(temp);
+					// System.out.println(temp);
 					lineNum++;
-					lines.put(new LineProperty(lineNum, isMyProfile, 0, InfoType.BASIC), temp);
-				}else if(line.startsWith("contactid=")){
+					lines.put(new LineProperty(lineNum, isMyProfile, 0,
+							InfoType.BASIC), temp);
+				} else if (line.startsWith("contactid=")) {
 					isMyProfile = false;
 					currentContactId = Integer.parseInt(line.substring(line
 							.indexOf('=') + 1), 10);
 					scanner.nextLine();
 					lineNum++;
 					String temp = scanner.nextLine().trim();
-					//System.out.println(temp);
+					// System.out.println(temp);
 					lineNum++;
-					lines.put(new LineProperty(lineNum, isMyProfile, currentContactId, InfoType.BASIC), temp);
-				}else if(line.startsWith("addr=")){
-					int num = Integer.parseInt(line.substring(line
-							.indexOf('=') + 1), 10);
+					lines.put(new LineProperty(lineNum, isMyProfile,
+							currentContactId, InfoType.BASIC), temp);
+				} else if (line.startsWith("addr=")) {
+					int num = Integer.parseInt(line
+							.substring(line.indexOf('=') + 1), 10);
 					int k = 0;
 					scanner.nextLine();
 					lineNum++;
-					while(scanner.hasNextLine() && k<num){
+					while (scanner.hasNextLine() && k < num) {
 						String temp = scanner.nextLine().trim();
-						//System.out.println(temp);
+						// System.out.println(temp);
 						lineNum++;
-						lines.put(new LineProperty(lineNum, isMyProfile, currentContactId, InfoType.ADDRESS), temp);
+						lines.put(new LineProperty(lineNum, isMyProfile,
+								currentContactId, InfoType.ADDRESS), temp);
 						k++;
 					}
-				}else if(line.startsWith("email=")){
-					int num = Integer.parseInt(line.substring(line
-							.indexOf('=') + 1), 10);
+				} else if (line.startsWith("email=")) {
+					int num = Integer.parseInt(line
+							.substring(line.indexOf('=') + 1), 10);
 					int k = 0;
 					scanner.nextLine();
 					lineNum++;
-					while(scanner.hasNextLine() && k<num){
+					while (scanner.hasNextLine() && k < num) {
 						String temp = scanner.nextLine().trim();
-						//System.out.println(temp);
+						// System.out.println(temp);
 						lineNum++;
-						lines.put(new LineProperty(lineNum, isMyProfile, currentContactId, InfoType.EMAIL), temp);
+						lines.put(new LineProperty(lineNum, isMyProfile,
+								currentContactId, InfoType.EMAIL), temp);
 						k++;
 					}
-				}else if(line.startsWith("im=")){
-					int num = Integer.parseInt(line.substring(line
-							.indexOf('=') + 1), 10);
+				} else if (line.startsWith("im=")) {
+					int num = Integer.parseInt(line
+							.substring(line.indexOf('=') + 1), 10);
 					int k = 0;
 					scanner.nextLine();
 					lineNum++;
-					while(scanner.hasNextLine() && k<num){
+					while (scanner.hasNextLine() && k < num) {
 						String temp = scanner.nextLine().trim();
-						//System.out.println(temp);
+						// System.out.println(temp);
 						lineNum++;
-						lines.put(new LineProperty(lineNum, isMyProfile, currentContactId, InfoType.IM), temp);
+						lines.put(new LineProperty(lineNum, isMyProfile,
+								currentContactId, InfoType.IM), temp);
 						k++;
 					}
-				}else if(line.startsWith("tel=")){
-					int num = Integer.parseInt(line.substring(line
-							.indexOf('=') + 1), 10);
+				} else if (line.startsWith("tel=")) {
+					int num = Integer.parseInt(line
+							.substring(line.indexOf('=') + 1), 10);
 					int k = 0;
 					scanner.nextLine();
 					lineNum++;
-					while(scanner.hasNextLine() && k<num){
+					while (scanner.hasNextLine() && k < num) {
 						String temp = scanner.nextLine().trim();
-						//System.out.println(temp);
+						// System.out.println(temp);
 						lineNum++;
-						lines.put(new LineProperty(lineNum, isMyProfile, currentContactId, InfoType.PHONE), temp);
+						lines.put(new LineProperty(lineNum, isMyProfile,
+								currentContactId, InfoType.PHONE), temp);
 						k++;
 					}
-				}else if(line.startsWith("url=")){
-					int num = Integer.parseInt(line.substring(line
-							.indexOf('=') + 1), 10);
+				} else if (line.startsWith("url=")) {
+					int num = Integer.parseInt(line
+							.substring(line.indexOf('=') + 1), 10);
 					int k = 0;
 					scanner.nextLine();
 					lineNum++;
-					while(scanner.hasNextLine() && k<num){
+					while (scanner.hasNextLine() && k < num) {
 						String temp = scanner.nextLine().trim();
-						//System.out.println(temp);
+						// System.out.println(temp);
 						lineNum++;
-						lines.put(new LineProperty(lineNum, isMyProfile, currentContactId, InfoType.URL), temp);
+						lines.put(new LineProperty(lineNum, isMyProfile,
+								currentContactId, InfoType.URL), temp);
 						k++;
 					}
 				}
 			}
-			for(Map.Entry<LineProperty, String> entry: lines.entrySet()){
+			for (Map.Entry<LineProperty, String> entry : lines.entrySet()) {
 				Scanner subScanner = null;
 				lineProperty = entry.getKey();
 				text = entry.getValue();
-				//System.out.println(entry.getKey().getLineNumber()+" "+entry.getValue());
-				if(lineProperty.isMyProfile && lineProperty.infoType==InfoType.BASIC){
+				// System.out.println(entry.getKey().getLineNumber()+"
+				// "+entry.getValue());
+				if (lineProperty.isMyProfile
+						&& lineProperty.infoType == InfoType.BASIC) {
 					parseMyProfileInfo(entry, subScanner);
-				}else if(lineProperty.isMyProfile && lineProperty.infoType==InfoType.ADDRESS){
+				} else if (lineProperty.isMyProfile
+						&& lineProperty.infoType == InfoType.ADDRESS) {
 					parseMyAddress(entry, subScanner);
-				}else if(lineProperty.isMyProfile && lineProperty.infoType==InfoType.EMAIL){
+				} else if (lineProperty.isMyProfile
+						&& lineProperty.infoType == InfoType.EMAIL) {
 					parseMyEmail(entry, subScanner);
-				}else if(lineProperty.isMyProfile && lineProperty.infoType==InfoType.IM){
+				} else if (lineProperty.isMyProfile
+						&& lineProperty.infoType == InfoType.IM) {
 					parseMyIM(entry, subScanner);
-				}else if(lineProperty.isMyProfile && lineProperty.infoType==InfoType.PHONE){
+				} else if (lineProperty.isMyProfile
+						&& lineProperty.infoType == InfoType.PHONE) {
 					parseMyPhone(entry, subScanner);
-				}else if(lineProperty.isMyProfile && lineProperty.infoType==InfoType.URL){
+				} else if (lineProperty.isMyProfile
+						&& lineProperty.infoType == InfoType.URL) {
 					parseMyURL(entry, subScanner);
-				}else if(!lineProperty.isMyProfile && lineProperty.infoType==InfoType.BASIC){
+				} else if (!lineProperty.isMyProfile
+						&& lineProperty.infoType == InfoType.BASIC) {
 					parseContactBasic(entry, subScanner);
-				}else if(!lineProperty.isMyProfile && lineProperty.infoType==InfoType.ADDRESS){
+				} else if (!lineProperty.isMyProfile
+						&& lineProperty.infoType == InfoType.ADDRESS) {
 					parseContactAddress(entry, subScanner);
-				}else if(!lineProperty.isMyProfile && lineProperty.infoType==InfoType.EMAIL){
+				} else if (!lineProperty.isMyProfile
+						&& lineProperty.infoType == InfoType.EMAIL) {
 					parseContactEmail(entry, subScanner);
-				}else if(!lineProperty.isMyProfile && lineProperty.infoType==InfoType.IM){
+				} else if (!lineProperty.isMyProfile
+						&& lineProperty.infoType == InfoType.IM) {
 					parseContactIM(entry, subScanner);
-				}else if(!lineProperty.isMyProfile && lineProperty.infoType==InfoType.PHONE){
+				} else if (!lineProperty.isMyProfile
+						&& lineProperty.infoType == InfoType.PHONE) {
 					parseContactPhone(entry, subScanner);
-				}else if(!lineProperty.isMyProfile && lineProperty.infoType==InfoType.URL){
+				} else if (!lineProperty.isMyProfile
+						&& lineProperty.infoType == InfoType.URL) {
 					parseContactURL(entry, subScanner);
 				}
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("there is no such file.");
 		} catch (DataFormatException e) {
-			System.out.println("there is a data format error in line "+lineProperty.getLineNumber());
+			System.out.println("there is a data format error in line "
+					+ lineProperty.getLineNumber());
 			System.out.println(text);
 		}
 	}
-	
+
 	/**
 	 * @param entry
 	 * @param subScanner
-	 * @throws DataFormatException 
+	 * @throws DataFormatException
 	 */
 	private void parseContactURL(Entry<LineProperty, String> entry,
 			Scanner scanner) throws DataFormatException {
 		URLData url = new URLData();
 		scanner = new Scanner(entry.getValue()).useDelimiter("::");
 		String field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//type
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// type
 			field = field.replace("\"", "").trim();
 			url.setType(field);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//prime
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// prime
 			field = field.replace("\"", "").trim();
-			if(field.equalsIgnoreCase("true"))
+			if (field.equalsIgnoreCase("true"))
 				url.setPrimary(true);
-			else if(field.equalsIgnoreCase("false"))
+			else if (field.equalsIgnoreCase("false"))
 				url.setPrimary(false);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//value
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// value
 			field = field.replace("\"", "").trim();
 			url.setValue(field);
 		}
 		int contactId = entry.getKey().getContactId();
 		ContactEntity contact = importedContacts.get(new Integer(contactId));
-		if(contact!=null){
+		if (contact != null) {
 			contact.getUrls().add(url);
-		}else{
+		} else {
 			contact = new ContactEntity();
 			contact.getUrls().add(url);
-			importedContacts.put(new Integer(entry.getKey().getContactId()), contact);
+			importedContacts.put(new Integer(entry.getKey().getContactId()),
+					contact);
 		}
 	}
 
 	/**
 	 * @param entry
 	 * @param subScanner
-	 * @throws DataFormatException 
+	 * @throws DataFormatException
 	 */
 	private void parseContactPhone(Entry<LineProperty, String> entry,
 			Scanner subScanner) throws DataFormatException {
 		PhoneNoData tel = new PhoneNoData();
 		scanner = new Scanner(entry.getValue()).useDelimiter("::");
 		String field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//type
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// type
 			field = field.replace("\"", "").trim();
 			tel.setType(field);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//prime
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// prime
 			field = field.replace("\"", "").trim();
-			if(field.equalsIgnoreCase("true"))
+			if (field.equalsIgnoreCase("true"))
 				tel.setPrimary(true);
-			else if(field.equalsIgnoreCase("false"))
+			else if (field.equalsIgnoreCase("false"))
 				tel.setPrimary(false);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//value
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// value
 			field = field.replace("\"", "").trim();
 			tel.setValue(field);
 		}
 		int contactId = entry.getKey().getContactId();
 		ContactEntity contact = importedContacts.get(new Integer(contactId));
-		if(contact!=null){
+		if (contact != null) {
 			contact.getTels().add(tel);
-		}else{
+		} else {
 			contact = new ContactEntity();
 			contact.getTels().add(tel);
-			importedContacts.put(new Integer(entry.getKey().getContactId()), contact);
+			importedContacts.put(new Integer(entry.getKey().getContactId()),
+					contact);
 		}
 	}
 
 	/**
 	 * @param entry
 	 * @param subScanner
-	 * @throws DataFormatException 
+	 * @throws DataFormatException
 	 */
 	private void parseContactIM(Entry<LineProperty, String> entry,
 			Scanner subScanner) throws DataFormatException {
 		IMData im = new IMData();
 		scanner = new Scanner(entry.getValue()).useDelimiter("::");
 		String field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//type
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// type
 			field = field.replace("\"", "").trim();
 			im.setType(field);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//prime
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// prime
 			field = field.replace("\"", "").trim();
-			if(field.equalsIgnoreCase("true"))
+			if (field.equalsIgnoreCase("true"))
 				im.setPrimary(true);
-			else if(field.equalsIgnoreCase("false"))
+			else if (field.equalsIgnoreCase("false"))
 				im.setPrimary(false);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//value
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// value
 			field = field.replace("\"", "").trim();
 			im.setValue(field);
 		}
 		int contactId = entry.getKey().getContactId();
 		ContactEntity contact = importedContacts.get(new Integer(contactId));
-		if(contact!=null){
+		if (contact != null) {
 			contact.getIms().add(im);
-		}else{
+		} else {
 			contact = new ContactEntity();
 			contact.getIms().add(im);
-			importedContacts.put(new Integer(entry.getKey().getContactId()), contact);
+			importedContacts.put(new Integer(entry.getKey().getContactId()),
+					contact);
 		}
 	}
 
 	/**
 	 * @param entry
 	 * @param subScanner
-	 * @throws DataFormatException 
+	 * @throws DataFormatException
 	 */
 	private void parseContactEmail(Entry<LineProperty, String> entry,
 			Scanner subScanner) throws DataFormatException {
 		EmailData email = new EmailData();
 		scanner = new Scanner(entry.getValue()).useDelimiter("::");
 		String field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//type
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// type
 			field = field.replace("\"", "").trim();
 			email.setType(field);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//prime
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// prime
 			field = field.replace("\"", "").trim();
-			if(field.equalsIgnoreCase("true"))
+			if (field.equalsIgnoreCase("true"))
 				email.setPrimary(true);
-			else if(field.equalsIgnoreCase("false"))
+			else if (field.equalsIgnoreCase("false"))
 				email.setPrimary(false);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//value
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// value
 			field = field.replace("\"", "").trim();
 			email.setValue(field);
 		}
 		int contactId = entry.getKey().getContactId();
 		ContactEntity contact = importedContacts.get(new Integer(contactId));
-		if(contact!=null){
+		if (contact != null) {
 			contact.getEmails().add(email);
-		}else{
+		} else {
 			contact = new ContactEntity();
 			contact.getEmails().add(email);
-			importedContacts.put(new Integer(entry.getKey().getContactId()), contact);
+			importedContacts.put(new Integer(entry.getKey().getContactId()),
+					contact);
 		}
 	}
 
 	/**
 	 * @param entry
 	 * @param subScanner
-	 * @throws DataFormatException 
+	 * @throws DataFormatException
 	 */
 	private void parseContactAddress(Entry<LineProperty, String> entry,
 			Scanner subScanner) throws DataFormatException {
 		AddressData addr = new AddressData();
 		scanner = new Scanner(entry.getValue()).useDelimiter("::");
 		String field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//type
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// type
 			field = field.replace("\"", "").trim();
 			addr.setType(field);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//prime
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// prime
 			field = field.replace("\"", "").trim();
-			if(field.equalsIgnoreCase("true"))
+			if (field.equalsIgnoreCase("true"))
 				addr.setPrimary(true);
-			else if(field.equalsIgnoreCase("false"))
+			else if (field.equalsIgnoreCase("false"))
 				addr.setPrimary(false);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//value
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// value
 			field = field.replace("\"", "").trim();
 			addr.setValue(field);
 		}
 		int contactId = entry.getKey().getContactId();
 		ContactEntity contact = importedContacts.get(new Integer(contactId));
-		if(contact!=null){
+		if (contact != null) {
 			contact.getAddrs().add(addr);
-		}else{
+		} else {
 			contact = new ContactEntity();
 			contact.getAddrs().add(addr);
-			importedContacts.put(new Integer(entry.getKey().getContactId()), contact);
+			importedContacts.put(new Integer(entry.getKey().getContactId()),
+					contact);
 		}
 	}
 
 	/**
 	 * @param entry
 	 * @param subScanner
-	 * @throws DataFormatException 
+	 * @throws DataFormatException
 	 */
 	private void parseContactBasic(Entry<LineProperty, String> entry,
 			Scanner subScanner) throws DataFormatException {
 		int contactId = entry.getKey().getContactId();
 		ContactEntity contact = importedContacts.get(new Integer(contactId));
-		if(contact==null){
+		if (contact == null) {
 			contact = new ContactEntity();
-			importedContacts.put(new Integer(entry.getKey().getContactId()), contact);
+			importedContacts.put(new Integer(entry.getKey().getContactId()),
+					contact);
 		}
 		scanner = new Scanner(entry.getValue()).useDelimiter("::");
 		String field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
+		if (field.matches("\\s*\".*\"\\s*")) {
 			field = field.replace("\"", "").trim();
 			contact.setName(field);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
+		if (field.matches("\\s*\".*\"\\s*")) {
 			field = field.replace("\"", "").trim();
 			contact.setNickName(field);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
+		if (field.matches("\\s*\".*\"\\s*")) {
 			field = field.replace("\"", "").trim();
-			if(field.equalsIgnoreCase("male"))
+			if (field.equalsIgnoreCase("male"))
 				contact.setGender(Gender.MALE);
-			else if(field.equalsIgnoreCase("female"))
+			else if (field.equalsIgnoreCase("female"))
 				contact.setGender(Gender.FEMALE);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
+		if (field.matches("\\s*\".*\"\\s*")) {
 			field = field.replace("\"", "").trim();
 			contact.setBirthday(new Birthdate(field));
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
+		if (field.matches("\\s*\".*\"\\s*")) {
 			field = field.replace("\"", "").trim();
 			contact.setNotes(field);
 		}
@@ -508,30 +540,30 @@ public class UploadWizard {
 	/**
 	 * @param entry
 	 * @param subScanner
-	 * @throws DataFormatException 
+	 * @throws DataFormatException
 	 */
 	private void parseMyURL(Entry<LineProperty, String> entry,
 			Scanner subScanner) throws DataFormatException {
 		URLData url = new URLData();
 		scanner = new Scanner(entry.getValue()).useDelimiter("::");
 		String field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//type
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// type
 			field = field.replace("\"", "").trim();
 			url.setType(field);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//prime
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// prime
 			field = field.replace("\"", "").trim();
-			if(field.equalsIgnoreCase("true"))
+			if (field.equalsIgnoreCase("true"))
 				url.setPrimary(true);
-			else if(field.equalsIgnoreCase("false"))
+			else if (field.equalsIgnoreCase("false"))
 				url.setPrimary(false);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//value
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// value
 			field = field.replace("\"", "").trim();
 			url.setValue(field);
 		}
@@ -541,30 +573,30 @@ public class UploadWizard {
 	/**
 	 * @param entry
 	 * @param subScanner
-	 * @throws DataFormatException 
+	 * @throws DataFormatException
 	 */
 	private void parseMyPhone(Entry<LineProperty, String> entry,
 			Scanner subScanner) throws DataFormatException {
 		PhoneNoData tel = new PhoneNoData();
 		scanner = new Scanner(entry.getValue()).useDelimiter("::");
 		String field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//type
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// type
 			field = field.replace("\"", "").trim();
 			tel.setType(field);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//prime
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// prime
 			field = field.replace("\"", "").trim();
-			if(field.equalsIgnoreCase("true"))
+			if (field.equalsIgnoreCase("true"))
 				tel.setPrimary(true);
-			else if(field.equalsIgnoreCase("false"))
+			else if (field.equalsIgnoreCase("false"))
 				tel.setPrimary(false);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//value
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// value
 			field = field.replace("\"", "").trim();
 			tel.setValue(field);
 		}
@@ -574,29 +606,30 @@ public class UploadWizard {
 	/**
 	 * @param entry
 	 * @param subScanner
-	 * @throws DataFormatException 
+	 * @throws DataFormatException
 	 */
-	private void parseMyIM(Entry<LineProperty, String> entry, Scanner subScanner) throws DataFormatException {
+	private void parseMyIM(Entry<LineProperty, String> entry, Scanner subScanner)
+			throws DataFormatException {
 		IMData im = new IMData();
 		scanner = new Scanner(entry.getValue()).useDelimiter("::");
 		String field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//type
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// type
 			field = field.replace("\"", "").trim();
 			im.setType(field);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//prime
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// prime
 			field = field.replace("\"", "").trim();
-			if(field.equalsIgnoreCase("true"))
+			if (field.equalsIgnoreCase("true"))
 				im.setPrimary(true);
-			else if(field.equalsIgnoreCase("false"))
+			else if (field.equalsIgnoreCase("false"))
 				im.setPrimary(false);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//value
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// value
 			field = field.replace("\"", "").trim();
 			im.setValue(field);
 		}
@@ -606,30 +639,30 @@ public class UploadWizard {
 	/**
 	 * @param entry
 	 * @param subScanner
-	 * @throws DataFormatException 
+	 * @throws DataFormatException
 	 */
 	private void parseMyEmail(Entry<LineProperty, String> entry,
 			Scanner subScanner) throws DataFormatException {
 		EmailData email = new EmailData();
 		scanner = new Scanner(entry.getValue()).useDelimiter("::");
 		String field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//type
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// type
 			field = field.replace("\"", "").trim();
 			email.setType(field);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//prime
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// prime
 			field = field.replace("\"", "").trim();
-			if(field.equalsIgnoreCase("true"))
+			if (field.equalsIgnoreCase("true"))
 				email.setPrimary(true);
-			else if(field.equalsIgnoreCase("false"))
+			else if (field.equalsIgnoreCase("false"))
 				email.setPrimary(false);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//value
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// value
 			field = field.replace("\"", "").trim();
 			email.setValue(field);
 		}
@@ -639,80 +672,81 @@ public class UploadWizard {
 	/**
 	 * @param entry
 	 * @param subScanner
-	 * @throws DataFormatException 
+	 * @throws DataFormatException
 	 */
 	private void parseMyAddress(Entry<LineProperty, String> entry,
 			Scanner subScanner) throws DataFormatException {
 		AddressData addr = new AddressData();
 		scanner = new Scanner(entry.getValue()).useDelimiter("::");
 		String field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//type
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// type
 			field = field.replace("\"", "").trim();
 			addr.setType(field);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//prime
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// prime
 			field = field.replace("\"", "").trim();
-			if(field.equalsIgnoreCase("true"))
+			if (field.equalsIgnoreCase("true"))
 				addr.setPrimary(true);
-			else if(field.equalsIgnoreCase("false"))
+			else if (field.equalsIgnoreCase("false"))
 				addr.setPrimary(false);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
+		if (field.matches("\\s*\".*\"\\s*")) {
 			field = field.replace("\"", "").trim();
 			addr.setZipcode(field);
 		}
 		field = scanner.next();
-		if(field.matches("\\s*\".*\"\\s*")){
-			//value
+		if (field.matches("\\s*\".*\"\\s*")) {
+			// value
 			field = field.replace("\"", "").trim();
 			addr.setValue(field);
 		}
 		myProfile.getAddrs().add(addr);
-		
+
 	}
 
-	void parseMyProfileInfo(Map.Entry<LineProperty, String> entry, Scanner scanner) throws DataFormatException{
+	void parseMyProfileInfo(Map.Entry<LineProperty, String> entry,
+			Scanner scanner) throws DataFormatException {
 		scanner = new Scanner(entry.getValue()).useDelimiter("::");
 		String item = scanner.next();
-		if(item.matches("\".*\".*")){
+		if (item.matches("\".*\".*")) {
 			item = item.replace("\"", "").trim();
 			myProfile.setName(item);
 		}
 		item = scanner.next();
-		if(item.matches("\\s*\".*\"\\s*")){
+		if (item.matches("\\s*\".*\"\\s*")) {
 			item = item.replace("\"", "").trim();
 			myProfile.setDisplayname(item);
 		}
 		item = scanner.next();
-		if(item.matches("\\s*\".*\"\\s*")){
+		if (item.matches("\\s*\".*\"\\s*")) {
 			item = item.replace("\"", "").trim();
 			myProfile.setNickName(item);
 		}
 		item = scanner.next();
-		if(item.matches("\\s*\".*\"\\s*")){
+		if (item.matches("\\s*\".*\"\\s*")) {
 			item = item.replace("\"", "").trim();
-			if(item.equalsIgnoreCase("male")){
+			if (item.equalsIgnoreCase("male")) {
 				myProfile.setGender(Gender.MALE);
-			}else if(item.equalsIgnoreCase("female")){
+			} else if (item.equalsIgnoreCase("female")) {
 				myProfile.setGender(Gender.FEMALE);
 			}
 		}
 		item = scanner.next();
-		if(item.matches("\\s*\".*\"\\s*")){
+		if (item.matches("\\s*\".*\"\\s*")) {
 			item = item.replace("\"", "").trim();
 			myProfile.setBirthday(new Birthdate(item));
 		}
 		item = scanner.next();
-		if(item.matches("\\s*\".*\"\\s*")){
+		if (item.matches("\\s*\".*\"\\s*")) {
 			item = item.replace("\"", "").trim();
 			myProfile.setRegisteredEmail(item);
 		}
 		item = scanner.next();
-		if(item.matches("\\s*\".*\"\\s*")){
+		if (item.matches("\\s*\".*\"\\s*")) {
 			item = item.replace("\"", "").trim();
 			myProfile.setNotes(item);
 		}
