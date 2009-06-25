@@ -1,5 +1,6 @@
 package org.net9.minipie.server.db.dao;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.net9.minipie.server.data.entity.AddressData;
@@ -11,6 +12,7 @@ import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicContact;
 import org.net9.minipie.server.data.storage.CommonListEntry;
+import org.net9.minipie.server.data.storage.Query;
 import org.net9.minipie.server.db.entity.Contact;
 import org.net9.minipie.server.logic.storage.ContactStorage;
 
@@ -82,6 +84,8 @@ public interface ContactDAO extends GenericDAO<Contact, Long>, ContactStorage {
 	List<CommonListEntry> selectOwnerContact(Long ownerId);
 
 	List<CommonListEntry> selectGroupContact(Long groupId);
+	
+	Collection<BasicContact> searchAllContact(Collection<Query> query);
 
 	void del(Long contactId);
 }

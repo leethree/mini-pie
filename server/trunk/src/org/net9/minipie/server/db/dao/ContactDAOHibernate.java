@@ -394,6 +394,9 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		} else if (attribute == InfoField.IMAGE) {
 			String image = (String) value;
 			contact.setImage(image);
+		} else if(attribute==InfoField.PERMISSION){
+			Permission perm = (Permission) value;
+			contact.setPermission(perm);
 		}
 		cdh.begin();
 		cdh.makePersistent(contact);
@@ -1013,16 +1016,15 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 	 * org.net9.minipie.server.logic.storage.ContactStorage#searchAllContact
 	 * (java.util.Collection, org.net9.minipie.server.data.field.Permission)
 	 */
-	public Collection<BasicContact> searchAllContact(Collection<Query> queries,
-			Permission perm) {
+	public Collection<BasicContact> searchAllContact(Collection<Query> queries) {
 		Collection<BasicContact> searchResult = new ArrayList<BasicContact>();
 		for (Query query : queries) {
 			ContactSearcher searcher = new ContactSearcher(query);
 			Collection<Contact> contacts = searcher.getContacts();
+			Collection<BasicContact> temp = new ArrayList<BasicContact>();
 			try {
 				for (Contact contact : contacts) {
 					if (query.getType() == InfoType.BASIC) {
-						Collection<BasicContact> temp = new ArrayList<BasicContact>();
 						temp.add(new BasicContact(contact.getId().longValue(),
 								contact.getName(), contact.getImage(), contact
 										.getNickName(), contact.getGender(),
@@ -1053,6 +1055,12 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 										.getPermission()
 										: Permission.TO_CONTACTS));
 					}
+				}
+				if(query.getType()==InfoType.BASIC){
+					if(!searchResult.isEmpty())
+						searchResult.retainAll(temp);
+					else
+						searchResult.addAll(temp);
 				}
 			} catch (DataFormatException e) {
 				throw new ServerErrorException(e.getMessage());

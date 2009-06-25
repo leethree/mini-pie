@@ -47,8 +47,7 @@ public class ShareContact extends Command<Void> {
 			if (executor.selectBasicInfo(targetId).getEntity().getOwnerId() != userId) {
 				throw new PermissionDeniedException("not your contact");
 			} else {
-				executor.editBasicInfo(targetId, InfoField.PERMISSION, perm
-						.toString());
+				executor.editBasicInfo(targetId, InfoField.PERMISSION, perm);
 			}
 		} catch (NotFoundException e) {
 			throw new InvalidRequestException("no such contact");

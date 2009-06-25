@@ -93,14 +93,18 @@ public class ContactSearcher extends BaseSearcher {
 		} else if (field.equals("zipcode")) {
 			criterion = Restrictions.eq(field, query.getValue());
 		} else if (field.equals("name")) {
-			criterion = Restrictions.eq("displayName", query.getValue());
+			criterion = Restrictions.eq("name", query.getValue());
 		} else if (field.equals("formatted")) {
 			criterion = Restrictions.eq("formatted", query.getValue());
 		} else if (field.equals("value") && query.getType() == InfoType.ADDRESS) {
 			criterion = Restrictions.eq("formatted", query.getValue());
 		} else if (field.equals("perm")){
 			criterion = Restrictions.ge(field, query.getValue());
-		} 
+		} else if(field.equals("value") && query.getType()!=InfoType.ADDRESS){
+			criterion = Restrictions.eq("value", query.getValue());
+		} else if(field.equals("type")){
+			criterion = Restrictions.eq("type", query.getType());
+		}
 	}
 
 }
