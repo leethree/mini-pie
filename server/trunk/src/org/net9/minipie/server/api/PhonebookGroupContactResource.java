@@ -55,6 +55,4 @@ public class PhonebookGroupContactResource extends BaseResource {
 				.execute();
 		return Response.ok().build();
 	}
-	
-	
 }

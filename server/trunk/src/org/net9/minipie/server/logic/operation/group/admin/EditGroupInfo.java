@@ -17,7 +17,7 @@ import org.net9.minipie.server.logic.storage.Group_UserStorage;
 
 /**
  * @author Seastar
- *
+ * 
  */
 public class EditGroupInfo extends Command<Void> {
 
@@ -25,40 +25,41 @@ public class EditGroupInfo extends Command<Void> {
 	private InfoField field;
 	private long groupId;
 	private long userId;
-	
-	public EditGroupInfo(long userId,long groupId,String value,String field){
-		this.userId=userId;		
-		this.value=value;
+
+	public EditGroupInfo(long userId, long groupId, String value,
+			InfoField field) {
+		this.userId = userId;
+		this.value = value;
+		this.field = field;
 		try {
-			this.field=InfoField.value(field);
-		} catch (DataFormatException e1) {
-			throw new InvalidRequestException(e1);
-		}
-		try {
-			this.groupId=Formatter.checkId(groupId);
+			this.groupId = Formatter.checkId(groupId);
 		} catch (DataFormatException e) {
 			throw new InvalidRequestException(e);
 		}
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
 	@Override
 	public Void execute() {
-		GroupStorage executor=getStorageFactory().getGroupStorage();
-		Group_UserStorage executor2=getStorageFactory().getGroup_UserStorage();
+		GroupStorage executor = getStorageFactory().getGroupStorage();
+		Group_UserStorage executor2 = getStorageFactory()
+				.getGroup_UserStorage();
 		executor.selectGroup(groupId);
-		try{
-			if(executor2.isAdmin(userId, groupId))
-				executor.editGroup(groupId, field, value);			
+		try {
+			if (executor2.isAdmin(userId, groupId))
+				executor.editGroup(groupId, field, value);
 			else
 				throw new PermissionDeniedException(
-				"you are not group administor");
-		}catch(NotFoundException e){
+						"you are not group administor");
+		} catch (NotFoundException e) {
 			throw new InvalidRequestException(
-				"you have not joined such group yet");
+					"you have not joined such group yet");
 		}
-		
+
 		return null;
 	}
 
