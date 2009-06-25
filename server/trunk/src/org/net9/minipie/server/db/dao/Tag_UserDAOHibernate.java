@@ -14,7 +14,7 @@ import org.hibernate.NonUniqueObjectException;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
-import org.net9.minipie.server.data.entity.TagEntry;
+import org.net9.minipie.server.data.entity.TagEntity;
 import org.net9.minipie.server.data.storage.BasicUser;
 import org.net9.minipie.server.db.entity.Tag;
 import org.net9.minipie.server.db.entity.Tag2User;
@@ -135,9 +135,9 @@ public class Tag_UserDAOHibernate extends GenericHibernateDAO<Tag2User, Id>
 	 * org.net9.minipie.server.db.dao.Tag_UserDAO#selectTagsOfUser(java.lang
 	 * .Long, java.lang.Long)
 	 */
-	public Collection<TagEntry> selectTagsOfUser(Long userId, Long ownerId) {
+	public Collection<TagEntity> selectTagsOfUser(Long userId, Long ownerId) {
 		Criterion criterion = Restrictions.eq("user.id", userId);
-		List<TagEntry> tags = new ArrayList<TagEntry>();
+		List<TagEntity> tags = new ArrayList<TagEntity>();
 		List<Tag2User> tagUsers = null;
 		try {
 			tagUsers = findByCriteria(criterion);
@@ -152,7 +152,7 @@ public class Tag_UserDAOHibernate extends GenericHibernateDAO<Tag2User, Id>
 				continue;
 			}
 			try {
-				tags.add(new TagEntry(tag.getId(), tag.getTagName()));
+				tags.add(new TagEntity(tag.getId(), tag.getTagName()));
 			} catch (DataFormatException e) {
 				throw new ServerErrorException(e.getMessage());
 			}

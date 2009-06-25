@@ -12,7 +12,7 @@ import org.net9.minipie.server.data.Formatter;
 import org.net9.minipie.server.data.api.CompleteUser;
 import org.net9.minipie.server.data.entity.AddressData;
 import org.net9.minipie.server.data.entity.EmailData;
-import org.net9.minipie.server.data.entity.GroupEntry;
+import org.net9.minipie.server.data.entity.GroupEntity;
 import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
 import org.net9.minipie.server.data.entity.URLData;
@@ -75,8 +75,8 @@ public class ViewSharedUserContact extends Command<CompleteUser> {
 			executor.selectRelationship(userId, targetId);
 			return getContactResult(user, executor2, true);
 		} catch (NotFoundException e) {
-			Collection<GroupEntry> grs = executor3.selectGroup(userId);
-			for (GroupEntry ge : grs) {
+			Collection<GroupEntity> grs = executor3.selectGroup(userId);
+			for (GroupEntity ge : grs) {
 				try {
 					executor3.isAdmin(targetId, ge.getGroupId());
 					return getContactResult(user, executor2, false);

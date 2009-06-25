@@ -14,7 +14,7 @@ import org.hibernate.NonUniqueObjectException;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
-import org.net9.minipie.server.data.entity.TagEntry;
+import org.net9.minipie.server.data.entity.TagEntity;
 import org.net9.minipie.server.data.storage.BasicContact;
 import org.net9.minipie.server.db.entity.Contact;
 import org.net9.minipie.server.db.entity.Tag;
@@ -143,7 +143,7 @@ public class Tag_ContactDAOHibernate extends
 	 * org.net9.minipie.server.db.dao.Tag_ContactDAO#selectTagsOfContact(java
 	 * .lang.Long)
 	 */
-	public Collection<TagEntry> selectTagsOfContact(Long contactId) {
+	public Collection<TagEntity> selectTagsOfContact(Long contactId) {
 		Criterion criterion = Restrictions.eq("contact.id", contactId);
 		Collection<Tag2Contact> tagContacts = null;
 		try {
@@ -153,7 +153,7 @@ public class Tag_ContactDAOHibernate extends
 					"cannot find a tag whose contact id is " + contactId);
 		}
 		Iterator<Tag2Contact> iter = tagContacts.iterator();
-		List<TagEntry> result = new ArrayList<TagEntry>();
+		List<TagEntity> result = new ArrayList<TagEntity>();
 		while (iter.hasNext()) {
 			Tag2Contact tag2Contact = iter.next();
 			Tag tag = tag2Contact.getTag();
@@ -161,7 +161,7 @@ public class Tag_ContactDAOHibernate extends
 			if(contact.getOwner().getId()!=tag.getOwner().getId())
 				continue;
 			try {
-				result.add(new TagEntry(tag.getId(), tag.getTagName()));
+				result.add(new TagEntity(tag.getId(), tag.getTagName()));
 			} catch (DataFormatException e) {
 				throw new ServerErrorException(e.getMessage());
 			}

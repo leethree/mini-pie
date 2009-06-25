@@ -8,14 +8,14 @@ package org.net9.minipie.server.logic.operation.group;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.GroupStorage;
 import org.net9.minipie.server.data.Formatter;
-import org.net9.minipie.server.data.entity.GroupEntry;
+import org.net9.minipie.server.data.entity.GroupEntity;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 /**
  * @author Seastar
  *
  */
-public class ViewGroupInfo extends Command<GroupEntry> {
+public class ViewGroupInfo extends Command<GroupEntity> {
 	private long groupId;
 	
 	public ViewGroupInfo(long groupId){
@@ -29,7 +29,7 @@ public class ViewGroupInfo extends Command<GroupEntry> {
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
 	@Override
-	public GroupEntry execute() {
+	public GroupEntity execute() {
 		GroupStorage executor=getStorageFactory().getGroupStorage();
 		return executor.selectGroup(groupId);
 	}

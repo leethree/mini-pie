@@ -10,7 +10,7 @@ import java.util.Vector;
 
 import org.net9.minipie.server.data.Formatter;
 import org.net9.minipie.server.data.api.ContactListEntry;
-import org.net9.minipie.server.data.entity.GroupEntry;
+import org.net9.minipie.server.data.entity.GroupEntity;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.CommonListEntry;
 import org.net9.minipie.server.exception.DataFormatException;
@@ -48,7 +48,7 @@ public class ListGroupContact extends Command<Collection<ContactListEntry>> {
 		Group_UserStorage executor2=getStorageFactory().getGroup_UserStorage();
 		ContactStorage executor3=getStorageFactory().getContactStorage();
 		Vector<ContactListEntry> result=new Vector<ContactListEntry>();
-		GroupEntry g=executor.selectGroup(groupId);
+		GroupEntity g=executor.selectGroup(groupId);
 		if(g.getPerm()==Permission.TO_EVERYONE){
 			getResult(result,executor3);
 		}else{

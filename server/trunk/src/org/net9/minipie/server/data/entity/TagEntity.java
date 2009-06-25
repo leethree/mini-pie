@@ -12,17 +12,17 @@ import org.net9.minipie.server.exception.DataFormatException;
  * @author Seastar
  * 
  */
-public class TagEntry {
+public class TagEntity {
 	private long id;
 	private String name;
 
 	/**
 	 * Constructor
 	 */
-	public TagEntry() {
+	public TagEntity() {
 	}
 
-	public TagEntry(long id, String name) throws DataFormatException {
+	public TagEntity(long id, String name) throws DataFormatException {
 		setId(id);
 		setName(name);
 	}

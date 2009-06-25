@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.net9.minipie.server.data.api.NotificationXml;
-import org.net9.minipie.server.data.entity.GroupEntry;
+import org.net9.minipie.server.data.entity.GroupEntity;
 import org.net9.minipie.server.data.entity.NotificationData;
 import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.logic.operation.Command;
@@ -33,7 +33,7 @@ public class ListAllMyNotification extends Command<Collection<NotificationXml>> 
 	public Collection<NotificationXml> execute() {		
 		NotificationStorage executor=getStorageFactory().getNotifacationStorage();
 		Group_UserStorage executor2=getStorageFactory().getGroup_UserStorage();
-		Collection<GroupEntry> ges=null;
+		Collection<GroupEntity> ges=null;
 		try{
 			ges=executor2.selectGroup(userId);
 		}catch (NotFoundException e){
@@ -52,7 +52,7 @@ public class ListAllMyNotification extends Command<Collection<NotificationXml>> 
 			}
 		}
 		if(ges!=null){
-			for(GroupEntry g:ges){
+			for(GroupEntity g:ges){
 				long id=g.getGroupId();
 				if(executor2.isAdmin(userId, id)){
 					Collection<NotificationData> l = executor.selectReceiver(id);

@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.net9.minipie.server.data.entity.ContactEntity;
-import org.net9.minipie.server.data.entity.TagEntry;
+import org.net9.minipie.server.data.entity.TagEntity;
 
 /**
  * @author Seastar
@@ -87,7 +87,7 @@ public class PhonebookContactListEntry {
 	@XmlElement(name = "tag")
 	public Collection<TagXml> getTags() {
 		Collection<TagXml> tags = new ArrayList<TagXml>();
-		for (TagEntry tagEntry : entity.getTags()) {
+		for (TagEntity tagEntry : entity.getTags()) {
 			tags.add(new TagXml(tagEntry));
 		}
 		return tags;

@@ -23,7 +23,7 @@ import org.net9.minipie.server.data.entity.EmailData;
 import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.NotificationData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
-import org.net9.minipie.server.data.entity.TagEntry;
+import org.net9.minipie.server.data.entity.TagEntity;
 import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.field.Gender;
 import org.net9.minipie.server.data.field.InfoField;
@@ -153,10 +153,10 @@ public class DbTest {
 //				BasicContact basicContact = iter2.next();
 //				System.out.println(basicContact.getEntity().getId()+" "+basicContact.getEntity().getName());
 //			}
-//			Collection<TagEntry> tags = tcdh.selectTagsOfContact(contact1Id);
-//			Iterator<TagEntry> iter3 = tags.iterator();
+//			Collection<TagEntity> tags = tcdh.selectTagsOfContact(contact1Id);
+//			Iterator<TagEntity> iter3 = tags.iterator();
 //			while(iter3.hasNext()){
-//				TagEntry tag = iter3.next();
+//				TagEntity tag = iter3.next();
 //				System.out.println(tag.getId()+" "+tag.getName());
 //			}
 //			//tcdh.del(tagId1, contact1Id);
@@ -164,10 +164,10 @@ public class DbTest {
 //			Tag_UserDAOHibernate tudh = new Tag_UserDAOHibernate();
 //			tudh.add(tagId1, l2);
 //			//tdh.removeTag(tagId1);
-//			Collection<TagEntry> tagsOfUser = tudh.selectTagsOfUser(l2, l);
-//			Iterator<TagEntry> iter4 = tagsOfUser.iterator();
+//			Collection<TagEntity> tagsOfUser = tudh.selectTagsOfUser(l2, l);
+//			Iterator<TagEntity> iter4 = tagsOfUser.iterator();
 //			while(iter4.hasNext()){
-//				TagEntry tag = iter4.next();
+//				TagEntity tag = iter4.next();
 //				System.out.println("haha"+tag.getId()+" "+tag.getName());
 //			}
 //			//tudh.del(tagId1, l2);

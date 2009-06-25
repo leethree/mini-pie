@@ -19,4 +19,9 @@ public class PhonebookResources extends BaseResource{
 	public PhonebookTagListResource getTags() {
 		return getSubResource(PhonebookTagListResource.class);
 	}
+	
+	@Path("group")
+	public PhonebookGroupListResource getGroups() {
+		return getSubResource(PhonebookGroupListResource.class);
+	}
 }

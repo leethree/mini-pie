@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-import org.net9.minipie.server.data.entity.TagEntry;
+import org.net9.minipie.server.data.entity.TagEntity;
 
 /**
  * @author LeeThree
@@ -17,7 +17,7 @@ import org.net9.minipie.server.data.entity.TagEntry;
  */
 @XmlType(name = "tag")
 public class TagXml {
-	private TagEntry tag;
+	private TagEntity tag;
 
 	/**
 	 * Constructor
@@ -30,7 +30,7 @@ public class TagXml {
 	 * Constructor
 	 * @param tag
 	 */
-	public TagXml(TagEntry tag) {
+	public TagXml(TagEntity tag) {
 		this.tag = tag;
 	}
 

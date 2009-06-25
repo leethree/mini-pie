@@ -31,7 +31,7 @@ public class CommonEntity {
 	private Collection<IMData> ims;
 	private Collection<PhoneNoData> tels;
 	private Collection<URLData> urls;
-	private Collection<TagEntry> tags;
+	private Collection<TagEntity> tags;
 
 	/**
 	 * @return the id
@@ -42,7 +42,7 @@ public class CommonEntity {
 		ims=new ArrayList<IMData>();
 		tels=new ArrayList<PhoneNoData>();
 		urls=new ArrayList<URLData>();
-		tags=new ArrayList<TagEntry>();
+		tags=new ArrayList<TagEntity>();
 	}
 	
 	public long getId() {
@@ -235,7 +235,7 @@ public class CommonEntity {
 	/**
 	 * @return the tags
 	 */
-	public Collection<TagEntry> getTags() {
+	public Collection<TagEntity> getTags() {
 		return tags;
 	}
 
@@ -243,7 +243,7 @@ public class CommonEntity {
 	 * @param tags
 	 *            the tags to set (nullable)
 	 */
-	public void setTags(Collection<TagEntry> tags) {
+	public void setTags(Collection<TagEntity> tags) {
 		this.tags = tags;
 	}
 }

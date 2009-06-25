@@ -28,8 +28,6 @@ import org.net9.minipie.server.logic.operation.contact.ShareContact;
 import org.net9.minipie.server.logic.operation.contact.UpdateMyContact;
 import org.net9.minipie.server.logic.operation.contact.UploadContactImage;
 import org.net9.minipie.server.logic.operation.contact.ViewMyContact;
-import org.net9.minipie.server.logic.operation.user.ShareUser;
-import org.net9.minipie.server.logic.operation.user.UpdateRelationship;
 
 public class PhonebookContactResource extends BaseResource {
 

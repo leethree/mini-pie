@@ -6,7 +6,7 @@
 package org.net9.minipie.server.logic.operation.group;
 
 import org.net9.minipie.server.data.Formatter;
-import org.net9.minipie.server.data.entity.GroupEntry;
+import org.net9.minipie.server.data.entity.GroupEntity;
 import org.net9.minipie.server.data.entity.NotificationData;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.field.NotificationType;
@@ -43,7 +43,7 @@ public class JionGroup extends Command<Boolean> {
 	public Boolean execute() {
 		GroupStorage executor=getStorageFactory().getGroupStorage();
 		Group_UserStorage executor2=getStorageFactory().getGroup_UserStorage();
-		GroupEntry g=executor.selectGroup(groupId);
+		GroupEntity g=executor.selectGroup(groupId);
 		try{
 			executor2.isAdmin(userId, groupId);
 			throw new InvalidRequestException("you have already joined such group");

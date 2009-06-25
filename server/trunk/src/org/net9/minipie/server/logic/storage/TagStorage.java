@@ -7,7 +7,7 @@ package org.net9.minipie.server.logic.storage;
 
 import java.util.Collection;
 
-import org.net9.minipie.server.data.entity.TagEntry;
+import org.net9.minipie.server.data.entity.TagEntity;
 import org.net9.minipie.server.data.storage.TagData;
 
 /**
@@ -20,5 +20,5 @@ public interface TagStorage {
 	public void removeTag(Long tagId);
 	public Long selectId(Long userId,String tagName);
 	public TagData selectTag(Long tagId);
-	public Collection<TagEntry> selectAllTags(Long userId);
+	public Collection<TagEntity> selectAllTags(Long userId);
 }

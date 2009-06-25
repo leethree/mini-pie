@@ -8,7 +8,7 @@ package org.net9.minipie.server.logic.operation.user;
 import java.util.Collection;
 
 import org.net9.minipie.server.data.Formatter;
-import org.net9.minipie.server.data.entity.TagEntry;
+import org.net9.minipie.server.data.entity.TagEntity;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
@@ -48,8 +48,8 @@ public class RemoveUserContact extends Command<Void> {
 			executor2.del(userId, targetId);
 			Tag_UserStorage executor3 = getStorageFactory().getTag_UserStorage();
 			ContactStorage executor4=getStorageFactory().getContactStorage();
-			Collection<TagEntry> ts=executor3.selectTagsOfUser(targetId, userId);
-			for(TagEntry t:ts)
+			Collection<TagEntity> ts=executor3.selectTagsOfUser(targetId, userId);
+			for(TagEntity t:ts)
 				executor3.del(t.getId(), targetId);
 			try{
 				executor4.del(executor4.selectShadowOf(userId, targetId).getEntity().getId());

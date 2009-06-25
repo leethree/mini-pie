@@ -13,7 +13,7 @@ import java.util.List;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
-import org.net9.minipie.server.data.entity.TagEntry;
+import org.net9.minipie.server.data.entity.TagEntity;
 import org.net9.minipie.server.data.storage.TagData;
 import org.net9.minipie.server.db.entity.Tag;
 import org.net9.minipie.server.db.entity.User;
@@ -88,18 +88,18 @@ public class TagDAOHibernate extends GenericHibernateDAO<Tag, Long> implements
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.db.dao.TagDAO#selectAllTags(java.lang.Long)
 	 */
-	public Collection<TagEntry> selectAllTags(Long userId) {
+	public Collection<TagEntity> selectAllTags(Long userId) {
 		Criterion criterion  = Restrictions.eq("owner.id", userId);
 		List<Tag> tags = findByCriteria(criterion);
 		if(tags.isEmpty()){
 			throw new NotFoundException("user with userId: "+userId+" does not have tags");
 		}
 		Iterator<Tag> iter = tags.iterator();
-		List<TagEntry> result = new ArrayList<TagEntry>();
+		List<TagEntity> result = new ArrayList<TagEntity>();
 		while(iter.hasNext()){
 			Tag tag = iter.next();
 			try {
-				result.add(new TagEntry(tag.getId(), tag.getTagName()));
+				result.add(new TagEntity(tag.getId(), tag.getTagName()));
 			} catch (DataFormatException e) {
 				throw new ServerErrorException(e.getMessage());
 			}

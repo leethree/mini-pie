@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.hibernate.ObjectNotFoundException;
-import org.net9.minipie.server.data.entity.GroupEntry;
+import org.net9.minipie.server.data.entity.GroupEntity;
 import org.net9.minipie.server.data.storage.CommonListEntry;
 import org.net9.minipie.server.db.entity.Group;
 import org.net9.minipie.server.db.entity.Group2User;
@@ -102,7 +102,7 @@ public class Group_UserDAOHibernate extends GenericHibernateDAO<Group2User, Id>
 	 * @see
 	 * org.net9.minipie.server.db.dao.Group_UserDAO#selectGroup(java.lang.Long)
 	 */
-	public Collection<GroupEntry> selectGroup(Long userId) {
+	public Collection<GroupEntity> selectGroup(Long userId) {
 		UserDAOHibernate udh = new UserDAOHibernate();
 		User user = null;
 		try {
@@ -112,7 +112,7 @@ public class Group_UserDAOHibernate extends GenericHibernateDAO<Group2User, Id>
 					+ userId);
 		}
 		GroupDAOHibernate gdh = new GroupDAOHibernate();
-		Collection<GroupEntry> groupEntries = new ArrayList<GroupEntry>();
+		Collection<GroupEntity> groupEntries = new ArrayList<GroupEntity>();
 		for (Group2User membership : user.getGroups()) {
 			Long groupId = membership.getGroup().getId();
 			Group group = null;
@@ -123,7 +123,7 @@ public class Group_UserDAOHibernate extends GenericHibernateDAO<Group2User, Id>
 						+ groupId);
 			}
 			try {
-				groupEntries.add(new GroupEntry(group.getId(), group.getGroupName(), group
+				groupEntries.add(new GroupEntity(group.getId(), group.getGroupName(), group
 						.getDescription(), group.getCreatorId().longValue(),
 						group.getCreatorName(), group.getPerm()));
 			} catch (DataFormatException e) {

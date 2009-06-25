@@ -16,7 +16,7 @@ import org.net9.minipie.server.data.entity.ContactEntity;
 import org.net9.minipie.server.data.entity.EmailData;
 import org.net9.minipie.server.data.entity.IMData;
 import org.net9.minipie.server.data.entity.PhoneNoData;
-import org.net9.minipie.server.data.entity.TagEntry;
+import org.net9.minipie.server.data.entity.TagEntity;
 import org.net9.minipie.server.data.entity.URLData;
 import org.net9.minipie.server.data.storage.CommonListEntry;
 import org.net9.minipie.server.exception.DataFormatException;
@@ -141,7 +141,7 @@ public class DownloadMyUserContact extends Command<String> {
 				}
 
 				os.write("Tag of " + ce.getEntity().getName()+ "\r\n");
-				for (TagEntry temp : entity.getTags()) {					
+				for (TagEntity temp : entity.getTags()) {					
 					os.write(temp.getName()+",");					
 				}
 				os.write("\r\n");

@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Vector;
 
 import org.net9.minipie.server.data.api.ContactListEntry;
-import org.net9.minipie.server.data.entity.GroupEntry;
+import org.net9.minipie.server.data.entity.GroupEntity;
 import org.net9.minipie.server.data.storage.CommonListEntry;
 import org.net9.minipie.server.data.storage.UserRelation;
 import org.net9.minipie.server.exception.NotFoundException;
@@ -39,7 +39,7 @@ public class ListAllSharedContact extends Command<Collection<ContactListEntry>> 
 		//GroupStorage executor5=getStorageFactory().getGroupStorage();		
 		Group_UserStorage executor4=getStorageFactory().getGroup_UserStorage();
 		
-		Collection<GroupEntry> grs=null;
+		Collection<GroupEntity> grs=null;
 		Collection<UserRelation> urs=null;
 		try{
 			grs=executor4.selectGroup(userId);
@@ -60,7 +60,7 @@ public class ListAllSharedContact extends Command<Collection<ContactListEntry>> 
 			}
 		}
 		if(grs!=null){
-			for(GroupEntry ge:grs){
+			for(GroupEntity ge:grs){
 				Collection<CommonListEntry> ces=executor.selectGroupContact(ge.getGroupId());
 				for(CommonListEntry ce:ces){
 					if(executor.selectBasicInfo(

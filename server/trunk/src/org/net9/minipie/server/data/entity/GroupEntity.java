@@ -1,5 +1,5 @@
 /**
- * GroupEntry.java
+ * GroupEntity.java
  *     in package: * org.net9.minipie.server.data.entity
  * by Mini-Pie Project
  */
@@ -13,7 +13,7 @@ import org.net9.minipie.server.exception.DataFormatException;
  * @author Seastar
  *
  */
-public class GroupEntry {
+public class GroupEntity {
 	private String groupName;
 	private String description;
 	private long createrId;
@@ -29,7 +29,7 @@ public class GroupEntry {
 	 * @param perm
 	 * @throws DataFormatException 
 	 */
-	public GroupEntry(long groupId,String groupName, String description, long createrId,
+	public GroupEntity(long groupId,String groupName, String description, long createrId,
 			String createrName, Permission perm) throws DataFormatException {
 		super();
 		setGroupId(groupId);
