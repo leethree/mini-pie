@@ -36,7 +36,7 @@ public class NotificationData {
 		setId(id);
 		setSenderId(senderId);
 		setReceiverId(receiverId);
-		
+		setGroupId(groupId);
 		setContent(content);
 		setType(type);
 	}
