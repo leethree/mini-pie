@@ -61,12 +61,12 @@ public class ConfirmNotification extends Command<Void> {
 		User_UserStorage executor = getStorageFactory().getUser_UserStorage();
 		NotificationStorage executor1 = getStorageFactory()
 				.getNotifacationStorage();
-		UserStorage executor2 = getStorageFactory().getUserStorage();		
+		UserStorage executor2 = getStorageFactory().getUserStorage();
 		NotificationData noti = executor1.selectNotification(notificationId);
 		if (noti.getType() == NotificationType.CONTACT_APPLICATION) {
 			if (confirm) {
 				if (noti.getReceiverId() == userId) {
-					long id=noti.getSenderId();
+					long id = noti.getSenderId();
 					executor2.selectBasicInfo(id);
 					executor.add(userId, id);
 					executor1.del(notificationId);
@@ -94,33 +94,31 @@ public class ConfirmNotification extends Command<Void> {
 				executor1.del(notificationId);
 			} else {
 				if (noti.getReceiverId() != userId)
-					throw new PermissionDeniedException(
-							"not your notification");
+					throw new PermissionDeniedException("not your notification");
 				else
 					executor1.del(notificationId);
 			}
 		} else if (noti.getType() == NotificationType.MEMBERSHIP_APPLICATION) {
-			Group_UserStorage executor4=getStorageFactory().getGroup_UserStorage();							
-			try{
-				long gid=noti.getGroupId();				
-					if(this.confirm)
-						executor4.add(gid, userId);						
-					executor1.del(notificationId);				
-			}catch(NotFoundException e){
-				throw new InvalidRequestException("you are not the group administor");
-			}			
-		} else if (noti.getType() == NotificationType.MEMBERSHIP_INVITATION) {
-			GroupStorage executor3=getStorageFactory().getGroupStorage();
-			Group_UserStorage executor4=getStorageFactory().getGroup_UserStorage();
-			if (noti.getReceiverId() != userId)
-				throw new PermissionDeniedException(
-						"not your notification ");
+			Group_UserStorage executor4 = getStorageFactory()
+					.getGroup_UserStorage();
+
 			long gid = noti.getGroupId();
-			executor3.selectGroup(gid);
-			if(this.confirm)
+			if (this.confirm)
 				executor4.add(gid, userId);
 			executor1.del(notificationId);
-		} 
+
+		} else if (noti.getType() == NotificationType.MEMBERSHIP_INVITATION) {
+			GroupStorage executor3 = getStorageFactory().getGroupStorage();
+			Group_UserStorage executor4 = getStorageFactory()
+					.getGroup_UserStorage();
+			if (noti.getReceiverId() != userId)
+				throw new PermissionDeniedException("not your notification ");
+			long gid = noti.getGroupId();
+			executor3.selectGroup(gid);
+			if (this.confirm)
+				executor4.add(gid, userId);
+			executor1.del(notificationId);
+		}
 		return null;
 
 	}

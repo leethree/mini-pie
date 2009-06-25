@@ -14,6 +14,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.net9.minipie.server.data.entity.NotificationData;
+import org.net9.minipie.server.db.entity.Group;
 import org.net9.minipie.server.db.entity.Notification;
 import org.net9.minipie.server.db.entity.User;
 import org.net9.minipie.server.exception.DataFormatException;
@@ -70,6 +71,17 @@ public class NotificationDAOHibernate extends
 		udh.begin();
 		udh.makePersistent(receiver);
 		udh.commit();
+		if (notificationData.getGroupId() != 0L) {
+			GroupDAOHibernate gdh = new GroupDAOHibernate();
+			try {
+				Group group = gdh.findById(new Long(notificationData
+						.getGroupId()));
+				notification.setGroup(group);
+			} catch (ObjectNotFoundException e) {
+				throw new NotFoundException("there is no group with id"
+						+ notificationData.getGroupId());
+			}
+		}
 		return id;
 	}
 
@@ -169,8 +181,11 @@ public class NotificationDAOHibernate extends
 		return super.findById(id, true);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.net9.minipie.server.logic.storage.NotificationStorage#selectAdminNotification(java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.net9.minipie.server.logic.storage.NotificationStorage#
+	 * selectAdminNotification(java.lang.Long)
 	 */
 	public Collection<NotificationData> selectAdminNotification(Long groupId) {
 		// TODO Auto-generated method stub

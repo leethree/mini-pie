@@ -60,7 +60,7 @@ public class Group_UserDAOHibernate extends GenericHibernateDAO<Group2User, Id>
 			throw new NotFoundException("there is no group with groupId: "
 					+ groupId);
 		}
-		Group2User membership = new Group2User(group, user, Bool.TRUE);
+		Group2User membership = new Group2User(group, user, Bool.FALSE);
 		begin();
 		makePersistent(membership);
 		commit();
@@ -215,6 +215,7 @@ public class Group_UserDAOHibernate extends GenericHibernateDAO<Group2User, Id>
 					"There is no membership between group: " + groupId
 							+ " and user: " + userId);
 		}
+		System.out.println(membership.getIsAdmin()+" here ");
 		if(membership.getIsAdmin()==Bool.TRUE)
 			return true;
 		else 
