@@ -21,7 +21,7 @@ public enum InfoField {
 			,GENDERPERMISSION("genderPermission"), LEFTPERMISSION("leftPermission"),
 			RIGHTPERMISSION("rightPermission"),DESCRIPTION("description"),IMAGE("image")
 			,GROUPOWNER("groupOwner"),ADDASCONTACTPERMISSION("addAsContactPermission")
-			,CREATOR_NAME("creatorName"),CREATOR_ID("creatorId");
+			,CREATOR_NAME("creatorName"),CREATOR_ID("creatorId"),OWNER_ID("ownerId");
 	private String field;
 
 	/**

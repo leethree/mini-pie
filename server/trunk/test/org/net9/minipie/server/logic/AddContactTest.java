@@ -17,7 +17,7 @@ public class AddContactTest {
 	public static void main(String avg[]) {
 		long id=0;
 		try{
-			id=new AddMyContact(1L,"tets").execute();
+			id=new AddMyContact(1L,"hou%%jie").execute();
 		}catch (Exception e){
 			System.out.println(e.getMessage());
 			e.printStackTrace();
