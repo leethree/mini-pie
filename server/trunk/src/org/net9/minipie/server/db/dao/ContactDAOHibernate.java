@@ -1021,11 +1021,10 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 		for (Query query : queries) {
 			ContactSearcher searcher = new ContactSearcher(query);
 			Collection<Contact> contacts = searcher.getContacts();
-			Collection<BasicContact> temp = new ArrayList<BasicContact>();
 			try {
 				for (Contact contact : contacts) {
 					if (query.getType() == InfoType.BASIC) {
-						temp.add(new BasicContact(contact.getId().longValue(),
+						searchResult.add(new BasicContact(contact.getId().longValue(),
 								contact.getName(), contact.getImage(), contact
 										.getNickName(), contact.getGender(),
 								contact.getBirthday(), contact.getNotes(),
@@ -1055,12 +1054,6 @@ public class ContactDAOHibernate extends GenericHibernateDAO<Contact, Long>
 										.getPermission()
 										: Permission.TO_CONTACTS));
 					}
-				}
-				if(query.getType()==InfoType.BASIC){
-					if(!searchResult.isEmpty())
-						searchResult.retainAll(temp);
-					else
-						searchResult.addAll(temp);
 				}
 			} catch (DataFormatException e) {
 				throw new ServerErrorException(e.getMessage());
