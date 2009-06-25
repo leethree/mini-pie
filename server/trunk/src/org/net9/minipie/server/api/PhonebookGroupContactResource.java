@@ -50,7 +50,7 @@ public class PhonebookGroupContactResource extends BaseResource {
 	}
 	
 	@POST
-	public Response post(@FormParam("contact") long contactId) {
+	public Response post(@FormParam("contactid") long contactId) {
 		new Handler<Void>(new ShareContactToGroup(getUserId(), groupId, contactId))
 				.execute();
 		return Response.ok().build();
