@@ -61,7 +61,7 @@ public class JoinGroup extends Command<Boolean> {
 			Collection<CommonListEntry> cl=executor2.selectMember(groupId, true);
 			for(CommonListEntry cle:cl){
 			try {
-				executor3.add(new NotificationData(1L,userId,cle.getEntity().getId(),0,"user:"+userId+"want to join group," +
+				executor3.add(new NotificationData(1L,userId,cle.getEntity().getId(),groupId,"user:"+userId+"want to join group," +
 						"\r\nhis/her message:"+message,NotificationType.MEMBERSHIP_APPLICATION));
 				return false;
 			} catch (DataFormatException e) {

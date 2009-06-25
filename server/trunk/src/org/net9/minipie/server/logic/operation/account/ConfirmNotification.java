@@ -102,13 +102,10 @@ public class ConfirmNotification extends Command<Void> {
 		} else if (noti.getType() == NotificationType.MEMBERSHIP_APPLICATION) {
 			Group_UserStorage executor4=getStorageFactory().getGroup_UserStorage();							
 			try{
-				long gid=noti.getReceiverId();
-				if(executor4.isAdmin(userId, gid)){
+				long gid=noti.getGroupId();				
 					if(this.confirm)
 						executor4.add(gid, userId);						
-					executor1.del(notificationId);
-				}else
-					throw new InvalidRequestException("you are not the group administor");
+					executor1.del(notificationId);				
 			}catch(NotFoundException e){
 				throw new InvalidRequestException("you are not the group administor");
 			}			
@@ -118,7 +115,7 @@ public class ConfirmNotification extends Command<Void> {
 			if (noti.getReceiverId() != userId)
 				throw new PermissionDeniedException(
 						"not your notification ");
-			long gid = noti.getSenderId();
+			long gid = noti.getGroupId();
 			executor3.selectGroup(gid);
 			if(this.confirm)
 				executor4.add(gid, userId);
