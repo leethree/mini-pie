@@ -29,7 +29,8 @@ public class UploadTest {
 	 */
 	public static void main(String[] args) {
 		UploadWizard uploader = new UploadWizard();
-		uploader.upload(new File(args[0]));
+		uploader.upload(new File("H:/Win7_Doc/My Document/Work Data/java program/test.txt"));
+		//uploader.upload(new File("H:/Win7_Doc/My Document/Work Data/java program/soft/pro/doc/test_import.txt"));
 		UserEntity user = uploader.getMyProfile();
 		System.out.println("*******************************my profile*********************************");
 		System.out.println(user.getName());

@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.util.Collection;
 
 import org.net9.minipie.server.data.entity.AddressData;
@@ -73,15 +72,17 @@ public class UploadMyInfo extends Command<String> {
 		UploadWizard up = new UploadWizard();
 		up.upload(tempFile);
 		UserEntity pf = up.getMyProfile();
+		System.out.println(pf.getName());
 		if (pf != null) {
 			if (pf.getBirthday() != null) {
 				executor.editBasicInfo(userId, InfoField.BIRTHDAY, pf
 						.getBirthday().toString());
 				result = result + "user birthday updated\r\n";
+				System.out.println(result);
 			}
 			if (pf.getGender() != null) {
-				executor.editBasicInfo(userId, InfoField.GENDER, pf.getGender()
-						.toString());
+				executor
+						.editBasicInfo(userId, InfoField.GENDER, pf.getGender());
 				result = result + "user gender updated\r\n";
 			}
 			if (pf.getDisplayname() != null) {
@@ -107,6 +108,7 @@ public class UploadMyInfo extends Command<String> {
 				result = result + "user address info updated: " + temp1.size()
 						+ " address imported\r\n";
 			}
+			System.out.println(result);
 			Collection<EmailData> temp5 = pf.getEmails();
 			if (temp5 != null && temp5.size() != 0) {
 				for (EmailData addr : temp5) {
@@ -115,6 +117,7 @@ public class UploadMyInfo extends Command<String> {
 				result = result + "user email info updated: " + temp5.size()
 						+ " email imported\r\n";
 			}
+			System.out.println(result);
 			Collection<IMData> temp2 = pf.getIms();
 			if (temp2 != null && temp2.size() != 0) {
 				for (IMData addr : temp2) {
@@ -123,6 +126,7 @@ public class UploadMyInfo extends Command<String> {
 				result = result + "user im info updated: " + temp2.size()
 						+ " im imported\r\n";
 			}
+			System.out.println(result);
 			Collection<PhoneNoData> temp3 = pf.getTels();
 			if (temp3 != null && temp3.size() != 0) {
 				for (PhoneNoData addr : temp3) {
@@ -131,6 +135,7 @@ public class UploadMyInfo extends Command<String> {
 				result = result + "user phone info updated: " + temp3.size()
 						+ " phones imported\r\n";
 			}
+			System.out.println(result);
 			Collection<URLData> temp4 = pf.getUrls();
 			if (temp4 != null && temp4.size() != 0) {
 				for (URLData addr : temp4) {
@@ -139,7 +144,7 @@ public class UploadMyInfo extends Command<String> {
 				result = result + "user url info updated: " + temp4.size()
 						+ " url imported\r\n";
 			}
-
+			System.out.println(result);
 		}
 		// ***************************************************************************//
 		Collection<ContactEntity> contacts = up.getImportedContacts();
@@ -151,7 +156,7 @@ public class UploadMyInfo extends Command<String> {
 							.getBirthday().toString());
 				if (ce.getGender() != null)
 					executor2.editBasicInfo(id, InfoField.GENDER, ce
-							.getGender().toString());
+							.getGender());
 				if (ce.getNickName() != null)
 					executor2.editBasicInfo(id, InfoField.NICKNAME, ce
 							.getNickName());
@@ -163,6 +168,7 @@ public class UploadMyInfo extends Command<String> {
 						executor2.addAddr(id, addr);
 					}
 				}
+
 				Collection<EmailData> tmp5 = ce.getEmails();
 				if (tmp5 != null && tmp5.size() != 0) {
 					for (EmailData addr : tmp5) {
@@ -187,7 +193,8 @@ public class UploadMyInfo extends Command<String> {
 						executor2.addURL(id, addr);
 					}
 				}
-				result = result + "user contact added: id " + id;
+				result = result + "user contact added: id " + id+"\r\n";
+				System.out.println(result);
 			}
 		}
 		tempFile.delete();

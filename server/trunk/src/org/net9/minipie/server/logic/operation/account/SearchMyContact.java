@@ -27,6 +27,10 @@ public class SearchMyContact extends Command<Collection<ContactListEntry>>{
 	private long userId;
 	private String querys;
 	
+	public SearchMyContact(long userId,String querys){
+		this.userId=userId;
+		this.querys=querys;
+	}
 	/* (non-Javadoc)
 	 * @see org.net9.minipie.server.logic.operation.Command#execute()
 	 */
