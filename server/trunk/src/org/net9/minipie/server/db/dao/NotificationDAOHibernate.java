@@ -76,6 +76,7 @@ public class NotificationDAOHibernate extends
 			try {
 				Group group = gdh.findById(new Long(notificationData
 						.getGroupId()));
+				System.out.println(notificationData.getGroupId());
 				notification.setGroup(group);
 			} catch (ObjectNotFoundException e) {
 				throw new NotFoundException("there is no group with id"

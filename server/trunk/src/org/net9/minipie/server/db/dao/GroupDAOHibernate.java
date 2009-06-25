@@ -98,7 +98,12 @@ public class GroupDAOHibernate extends GenericHibernateDAO<Group, Long> implemen
 			String description = (String)value;
 			group.setDescription(description);
 		}else if(attr==InfoField.PERMISSION){
-			Permission perm = (Permission) value;
+			Permission perm=Permission.TO_EVERYONE;
+			try {
+				perm = Permission.value( value.toString());
+			} catch (DataFormatException e) {
+				
+			}
 			group.setPerm(perm);
 		}
 	}
