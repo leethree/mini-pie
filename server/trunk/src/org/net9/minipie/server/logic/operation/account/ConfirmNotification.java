@@ -11,7 +11,6 @@ import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.NotificationType;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
-import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.PermissionDeniedException;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.GroupStorage;

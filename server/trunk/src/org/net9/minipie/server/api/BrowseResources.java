@@ -9,21 +9,21 @@ import javax.ws.rs.Path;
 
 /**
  * @author LeeThree
- *
+ * 
  */
 @Path("/")
 public class BrowseResources extends BaseResource {
-	
+
 	@Path("contact")
 	public BrowseContactListResource getContacts() {
 		return getSubResource(BrowseContactListResource.class);
 	}
-	
+
 	@Path("user")
 	public BrowseUserListResource getUsers() {
 		return getSubResource(BrowseUserListResource.class);
 	}
-	
+
 	@Path("group")
 	public BrowseGroupListResource getGroups() {
 		return getSubResource(BrowseGroupListResource.class);

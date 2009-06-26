@@ -23,6 +23,7 @@ import com.sun.jersey.api.core.ResourceContext;
 public abstract class BaseResource {
 
 	private static final String IMAGE_FOLDER = "images/";
+	private static final String DOWNLOAD_FOLDER = "download/";
 
 	@Context
 	private UriInfo uriInfo;
@@ -60,6 +61,14 @@ public abstract class BaseResource {
 
 	protected URI getImagePathUrl() {
 		return getServerBaseUrl().resolve(IMAGE_FOLDER);
+	}
+	
+	protected String getDownloadRealPath() {
+		return servlet.getRealPath(DOWNLOAD_FOLDER);
+	}
+
+	protected URI getDownloadPathUrl() {
+		return getServerBaseUrl().resolve(DOWNLOAD_FOLDER);
 	}
 
 	protected URI getServerBaseUrl() {

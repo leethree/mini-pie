@@ -9,8 +9,6 @@ import java.util.Collection;
 import java.util.Vector;
 
 import org.net9.minipie.server.data.api.ContactListEntry;
-import org.net9.minipie.server.data.field.InfoField;
-import org.net9.minipie.server.data.field.InfoType;
 import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicContact;
 import org.net9.minipie.server.data.storage.Query;
