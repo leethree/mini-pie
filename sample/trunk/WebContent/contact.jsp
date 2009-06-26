@@ -20,6 +20,10 @@
 <%
 	try {
 		long id = Long.decode(request.getParameter("id"));
+%>
+	  	<span>&gt; <a href="contact.jsp">Contacts</a> &gt; <%=id %></span>
+	  	<hr/>
+<%
 		try {
 			PersonBean person = ses.browseContact(id);
 			if (person.get("type") != null ) {

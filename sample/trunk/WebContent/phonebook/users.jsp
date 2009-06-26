@@ -15,6 +15,8 @@
 	<div id="content" >
 		<h2>Phonebook User Contacts</h2>
 	  	<hr/>
+	  	<span>&gt; <a href="index.jsp">Phonebook</a> &gt; Users</span>
+	  	<hr/>
 <%
 	String method = request.getParameter("method");
 	try {

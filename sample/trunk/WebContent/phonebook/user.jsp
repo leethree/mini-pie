@@ -21,6 +21,8 @@
 	try {
 		long id = Long.decode(request.getParameter("id"));
 %>
+	  	<span>&gt; <a href="index.jsp">Phonebook</a> &gt; <a href="users.jsp">Users</a> &gt; <%=id %></span>
+	  	<hr/>
 		<a href="../user.jsp?id=<%=id %>" >Switch to browse mode</a>
 		<a href="shadow.jsp?id=<%=id %>" >View shadow</a>
 <%

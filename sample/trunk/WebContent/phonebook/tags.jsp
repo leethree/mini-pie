@@ -14,6 +14,8 @@
 	<div id="content" >
 		<h2>Phonebook Tags</h2>
 	  	<hr/>
+	  	<span>&gt; <a href="index.jsp">Phonebook</a> &gt; <a href="tags.jsp">Tags</a></span>
+	  	<hr/>
 <%
 	String method = request.getParameter("method");
 	try {

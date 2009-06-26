@@ -14,6 +14,8 @@
 <body>
 	<div id="content" >
 		<h2>Notifications</h2>
+		<hr/>
+		<span>&gt; Notifications</span>
 	  	<hr/>
 <%
 	String confirm = request.getParameter("confirm");

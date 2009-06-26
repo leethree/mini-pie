@@ -331,6 +331,22 @@ public class Backend {
 		}
 	}
 
+	public void editContactPermission(long contactId, String perm)
+			throws GenericException, LoginFailedException, NotFoundException {
+		try {
+			putForm("phonebook/contact/" + contactId + "/", "permission="
+					+ perm);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
 	// ************************* TAGS ****************************
 
 	public List<TagBean> listTags() throws GenericException,
@@ -462,11 +478,41 @@ public class Backend {
 		}
 	}
 
+	public void removeTagFromUser(long tagid, long userid)
+			throws GenericException, LoginFailedException, NotFoundException {
+		try {
+			delete("phonebook/tag/" + tagid + "/user/" + userid);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
 	public void addTagToContact(long tagid, long contactid)
 			throws GenericException, LoginFailedException, NotFoundException {
 		try {
 			postForm("phonebook/tag/" + tagid + "/contact/", "contactid="
 					+ contactid);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void removeTagFromContact(long tagid, long contactid)
+			throws GenericException, LoginFailedException, NotFoundException {
+		try {
+			delete("phonebook/tag/" + tagid + "/contact/" + contactid);
 		} catch (UniformInterfaceException e) {
 			if (e.getResponse().getStatus() == 401)
 				throw new LoginFailedException();
@@ -601,6 +647,255 @@ public class Backend {
 		} catch (UniformInterfaceException e) {
 			if (e.getResponse().getStatus() == 401)
 				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	// ************************ GROUPS ****************************
+
+	public List<GenericBean> listGroups() throws GenericException,
+			LoginFailedException {
+		try {
+			InputStream stream = getXml("phonebook/group");
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			List<GenericBean> list = new ArrayList<GenericBean>();
+			for (Object iter : ele.elements()) {
+				Element elem = (Element) iter;
+				list.add(new GenericBean(elem));
+			}
+			return list;
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public GenericBean getGroupById(long id) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			InputStream stream = getXml("group/" + id);
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			return new GenericBean(ele);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void joinGroup(long groupid) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			postForm("phonebook/group/", "groupid=" + groupid);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void createGroup(String groupName) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			postForm("group/", "groupname=" + groupName);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public List<PersonBean> listGroupUsers(long groupid)
+			throws GenericException, LoginFailedException {
+		try {
+			InputStream stream = getXml("group/" + groupid + "/user");
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			List<PersonBean> list = new ArrayList<PersonBean>();
+			for (Object iter : ele.elements()) {
+				Element elem = (Element) iter;
+				list.add(new PersonBean(elem));
+			}
+			return list;
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public List<PersonBean> listGroupContacts(long groupid)
+			throws GenericException, LoginFailedException {
+		try {
+			InputStream stream = getXml("group/" + groupid + "/contact");
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			List<PersonBean> list = new ArrayList<PersonBean>();
+			for (Object iter : ele.elements()) {
+				Element elem = (Element) iter;
+				list.add(new PersonBean(elem));
+			}
+			return list;
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void shareContactToGroup(long groupid, long contactid)
+			throws GenericException, LoginFailedException, NotFoundException {
+		try {
+			postForm("phonebook/group/" + groupid + "/contact/", "contactid="
+					+ contactid);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void unshareContactFromGroup(long groupid, long contactid)
+			throws GenericException, LoginFailedException, NotFoundException,
+			ForbiddenException {
+		try {
+			delete("phonebook/group/" + groupid + "/contact/" + contactid);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 403)
+				throw new ForbiddenException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void inviteUserToGroup(long groupid, long userid)
+			throws GenericException, LoginFailedException, NotFoundException,
+			ForbiddenException {
+		try {
+			postForm("phonebook/group/" + groupid + "/user/", "userid="
+					+ userid);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 403)
+				throw new ForbiddenException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void removeUserFromGroup(long groupid, long userid)
+			throws GenericException, LoginFailedException, NotFoundException,
+			ForbiddenException {
+		try {
+			delete("phonebook/group/" + groupid + "/user/" + userid);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 403)
+				throw new ForbiddenException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void editGroup(long groupid, String field, String value)
+			throws GenericException, LoginFailedException, NotFoundException,
+			ForbiddenException {
+		try {
+			putForm("phonebook/group/" + groupid + "/", "field=" + field
+					+ "&value=" + value);
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 403)
+				throw new ForbiddenException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void appointAdmin(long groupid, long userid)
+			throws GenericException, LoginFailedException, NotFoundException,
+			ForbiddenException {
+		try {
+			putForm("phonebook/group/" + groupid + "/user/" + userid, "");
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 403)
+				throw new ForbiddenException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void quitGroup(long groupid) throws GenericException,
+			LoginFailedException, NotFoundException {
+		try {
+			delete("phonebook/group/" + groupid + "/");
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 404)
+				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public void disbandGroup(long groupid) throws GenericException,
+			LoginFailedException, NotFoundException, ForbiddenException {
+		try {
+			delete("group/" + groupid + "/");
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			if (e.getResponse().getStatus() == 403)
+				throw new ForbiddenException();
 			if (e.getResponse().getStatus() == 404)
 				throw new NotFoundException();
 			throw new GenericException(e);

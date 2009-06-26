@@ -20,6 +20,10 @@
 <%
 	try {
 		long id = Long.decode(request.getParameter("id"));
+%>
+	  	<span>&gt; <a href="index.jsp">Phonebook</a> &gt; <a href="contacts.jsp">Contacts</a> &gt; <a href="contact.jsp?id=<%=id %>"><%=id %></a> &gt; edit</span>
+	  	<hr/>
+<%
 		try {
 %>
 	  	<a href="contact.jsp?id=<%=id %>">View contact</a>

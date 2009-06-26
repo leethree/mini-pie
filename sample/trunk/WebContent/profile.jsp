@@ -15,6 +15,8 @@
 <body>
 	<div id="content" >
 		<h2>Profile</h2>
+		<hr/>
+	  	<span>&gt; Profile</span>
 	  	<hr/>
 	  	<a href="editprofile.jsp">Edit profile</a>
 <%

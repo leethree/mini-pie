@@ -17,6 +17,8 @@
   	<div id="content" >
 	  	<h2>Edit Profile</h2>
 	  	<hr/>
+	  	<span>&gt; <a href="profile.jsp">Profile</a> &gt; edit</span>
+	  	<hr/>
 	  	<a href="profile.jsp">View profile</a>
 <%
 	String method = request.getParameter("method");

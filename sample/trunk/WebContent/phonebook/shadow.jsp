@@ -21,6 +21,8 @@
 	try {
 		long id = Long.decode(request.getParameter("id"));
 %>
+	  	<span>&gt; <a href="index.jsp">Phonebook</a> &gt; <a href="users.jsp">Users</a> &gt; <a href="user.jsp?id=<%=id %>"><%=id %></a> &gt; Shadow</span>
+	  	<hr/>
 		<a href="user.jsp?id=<%=id %>">Return to user contact</a>
 <%
 		if (method != null && method.equals("delete")) {

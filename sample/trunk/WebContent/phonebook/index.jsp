@@ -11,9 +11,12 @@
 	<div id="content" >
 		<h2>Phonebook</h2>
 	  	<hr/>
+	  	<span>&gt; <a href="index.jsp">Phonebook</a></span>
+	  	<hr/>
 		<ul>
 			<li><a href="users.jsp">View my user contacts</a></li>
 			<li><a href="contacts.jsp">View my non-user contacts</a></li>
+			<li><a href="groups.jsp">View my groups</a></li>
 			<li><a href="tags.jsp">View my tags</a></li>
 		</ul>
 	</div>
