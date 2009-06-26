@@ -22,7 +22,7 @@
 	try {
 		long id = Long.decode(request.getParameter("id"));
 %>
-	  	<span>&gt; <a href="user.jsp">Users</a> &gt; <%=id %></span>
+	  	<span>&gt; <a href="users.jsp">Users</a> &gt; <%=id %></span>
 	  	<hr/>
 <%
 		try {

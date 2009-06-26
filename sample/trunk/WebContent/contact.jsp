@@ -21,7 +21,7 @@
 	try {
 		long id = Long.decode(request.getParameter("id"));
 %>
-	  	<span>&gt; <a href="contact.jsp">Contacts</a> &gt; <%=id %></span>
+	  	<span>&gt; <a href="contacts.jsp">Contacts</a> &gt; <%=id %></span>
 	  	<hr/>
 <%
 		try {

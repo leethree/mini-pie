@@ -191,6 +191,27 @@ public class Backend {
 		}
 	}
 
+	public List<PersonBean> searchUser(String query) throws GenericException,
+			LoginFailedException {
+		try {
+			InputStream stream = getXml("user/search", query);
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			List<PersonBean> list = new ArrayList<PersonBean>();
+			for (Object iter : ele.elements()) {
+				Element elem = (Element) iter;
+				list.add(new PersonBean(elem));
+			}
+			return list;
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
 	// ************************ SHADOW ***************************
 
 	public PersonBean getShadow(long userid) throws GenericException,
@@ -341,6 +362,27 @@ public class Backend {
 				throw new LoginFailedException();
 			if (e.getResponse().getStatus() == 404)
 				throw new NotFoundException();
+			throw new GenericException(e);
+		} catch (Exception e) {
+			throw new GenericException(e);
+		}
+	}
+
+	public List<PersonBean> searchContact(String query)
+			throws GenericException, LoginFailedException {
+		try {
+			InputStream stream = getXml("contact/search", query);
+			Document doc = new SAXReader().read(stream);
+			Element ele = doc.getRootElement();
+			List<PersonBean> list = new ArrayList<PersonBean>();
+			for (Object iter : ele.elements()) {
+				Element elem = (Element) iter;
+				list.add(new PersonBean(elem));
+			}
+			return list;
+		} catch (UniformInterfaceException e) {
+			if (e.getResponse().getStatus() == 401)
+				throw new LoginFailedException();
 			throw new GenericException(e);
 		} catch (Exception e) {
 			throw new GenericException(e);
@@ -932,6 +974,12 @@ public class Backend {
 
 	private InputStream getXml(String path) {
 		return rootResource.path(path).accept(MediaType.APPLICATION_XML_TYPE)
+				.header(AUTHENTICATION_HEADER, credential).get(
+						InputStream.class);
+	}
+	
+	private InputStream getXml(String path, String query) {
+		return rootResource.path(path).queryParam("q", query).accept(MediaType.APPLICATION_XML_TYPE)
 				.header(AUTHENTICATION_HEADER, credential).get(
 						InputStream.class);
 	}
