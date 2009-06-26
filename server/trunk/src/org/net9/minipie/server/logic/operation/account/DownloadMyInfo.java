@@ -153,16 +153,21 @@ public class DownloadMyInfo extends Command<String> {
 								+ "\r\n");
 				os.write("\r\n");
 			}
-			
-		
-		ContactStorage executor2 = getStorageFactory().getContactStorage();
-		Collection<CommonListEntry> contacts = executor2
-				.selectOwnerContact(userId);
-		os.write("contacts="+contacts.size());
-		for (CommonListEntry ce : contacts) {
-			ContactEntity contact;
-			os.write(" \t\tcontact="+ce.getEntity().getId());
-				contact = new ContactEntity(executor2.selectBasicInfo(ce.getEntity().getId()).getEntity());				
+			os
+					.write("%%************************************************************************************************%%\r\n\r\n");
+			os.flush();
+			// os.close();
+
+			// os = new FileWriter(new File(filePath, fileName),true);
+			ContactStorage executor2 = getStorageFactory().getContactStorage();
+			Collection<CommonListEntry> contacts = executor2
+					.selectOwnerContact(userId);
+			os.write("contacts=" + contacts.size() + "\r\n");
+			for (CommonListEntry ce : contacts) {
+				ContactEntity contact;
+				os.write(" \t\tcontact=" + ce.getEntity().getId() + "\r\n");
+				contact = new ContactEntity(executor2.selectBasicInfo(
+						ce.getEntity().getId()).getEntity());
 				contact.setAddrs(executor2.selectAddr(contact.getId()));
 				contact.setEmails(executor2.selectEmail(contact.getId()));
 				contact.setIms(executor2.selectIM(contact.getId()));
@@ -170,28 +175,29 @@ public class DownloadMyInfo extends Command<String> {
 				contact.setUrls(executor2.selectURL(contact.getId()));
 				// System.out.println(contact.getName());
 
-				
-				os
-						.write("%%\t\tName\t\t\tNickName\t\t\tGender\t\t\t"
-								+ "Birthday\t\t\tNotes\r\n");
+				os.write("%%\t\tName\t\t\tNickName\t\t\tGender\t\t\t"
+						+ "Birthday\t\t\tNotes\r\n");
 				os.write("  \t\t" + "\"" + contact.getName() + "\"\t::\t\t"
-						 + "\""
-						+ contact.getNickName() + "\"\t::\t\t" + "\""
+						+ "\"" + contact.getNickName() + "\"\t::\t\t" + "\""
 						+ contact.getGender() + "\"\t::\t\t");
-				os.write("\"" + contact.getBirthday() == null ? "null" : contact
-						.getBirthday().toString()
-						+ "\"\t::\t\t"						
-						 +"\""+ contact.getNotes() + "\"\r\n");
+				if (contact.getBirthday() != null)
+					os.write("\"" + contact.getBirthday().toString()
+							+ "\"\t::\t\t" + "\"" + contact.getNotes()
+							+ "\"\r\n");
+				else
+					os.write("\"" + "null" + "\"\t::\t\t" + "\""
+							+ contact.getNotes() + "\"\r\n");
 				Collection<AddressData> cdetails = contact.getAddrs();
 				os.write("  \t\t\taddr=" + cdetails.size() + "\r\n");
 				for (AddressData temp : cdetails) {
 					os
 							.write("%%\t\t\ttype\t\t\tisPrimary\t\t\tzipcode\t\t\tvalue\r\n");
+
 					os.write("  \t\t\t" + "\"" + temp.getType() + "\"\t::\t\t"
 							+ "\"" + String.valueOf(temp.isPrimary())
-							+ "\"\t::\t\t" + "\""
-							+ temp.getZipcode().toString() + "\"\t::\t\t"
-							+ "\"" + temp.getValue() + "\"\t\t" + "\r\n");
+							+ "\"\t::\t\t" + "\"" + temp.getZipcode()
+							+ "\"\t::\t\t" + "\"" + temp.getValue() + "\"\t\t"
+							+ "\r\n");
 					os.write("\r\n");
 				}
 				Collection<EmailData> cdetail1 = contact.getEmails();
@@ -237,9 +243,10 @@ public class DownloadMyInfo extends Command<String> {
 							+ "\r\n");
 					os.write("\r\n");
 				}
-				os.close();
-			} 
-		}catch (IOException e) {
+
+			}
+			os.close();
+		} catch (IOException e) {
 			throw new ServerErrorException("can't write the file");
 		} catch (DataFormatException e) {
 
