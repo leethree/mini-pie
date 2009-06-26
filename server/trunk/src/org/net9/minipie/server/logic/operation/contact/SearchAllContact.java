@@ -3,7 +3,7 @@
  *     in package: * org.net9.minipie.server.logic.operation.account
  * by Mini-Pie Project
  */
-package org.net9.minipie.server.logic.operation.account;
+package org.net9.minipie.server.logic.operation.contact;
 
 import java.util.Collection;
 import java.util.Vector;
@@ -11,6 +11,7 @@ import java.util.Vector;
 import org.net9.minipie.server.data.api.ContactListEntry;
 import org.net9.minipie.server.data.field.InfoField;
 import org.net9.minipie.server.data.field.InfoType;
+import org.net9.minipie.server.data.field.Permission;
 import org.net9.minipie.server.data.storage.BasicContact;
 import org.net9.minipie.server.data.storage.Query;
 import org.net9.minipie.server.exception.NotFoundException;
@@ -22,12 +23,12 @@ import org.net9.minipie.server.logic.storage.ContactStorage;
  * @author Seastar
  *
  */
-public class SearchMyContact extends Command<Collection<ContactListEntry>>{
+public class SearchAllContact extends Command<Collection<ContactListEntry>>{
 	
 	private long userId;
 	private String querys;
 	
-	public SearchMyContact(long userId,String querys){
+	public SearchAllContact(long userId,String querys){
 		this.userId=userId;
 		this.querys=querys;
 	}
@@ -39,13 +40,14 @@ public class SearchMyContact extends Command<Collection<ContactListEntry>>{
 		Collection<ContactListEntry> result = new Vector<ContactListEntry>();
 		ContactStorage executor = getStorageFactory().getContactStorage();
 		Collection<Query> qu = QueryAnalyze.analyzeQuary(querys);
-		qu.add(new Query(InfoType.BASIC,InfoField.OWNER_ID,String.valueOf(userId)));
+		//qu.add(new Query(InfoType.BASIC,InfoField.OWNER_ID,String.valueOf(userId)));
 		//qu.add(e);
 		Collection<BasicContact> contacts;
 		try {
 			contacts=executor.searchAllContact(qu);
 			for(BasicContact contact:contacts){
-				result.add(new ContactListEntry(contact.getEntity()));				
+				if(contact.getEntity().getPermission()==Permission.TO_EVERYONE)
+					result.add(new ContactListEntry(contact.getEntity()));				
 			}
 		} catch (NotFoundException e) {
 			
