@@ -8,6 +8,7 @@ package org.net9.minipie.server.logic;
 import org.net9.minipie.server.data.Formatter;
 import org.net9.minipie.server.exception.DataFormatException;
 import org.net9.minipie.server.exception.InvalidRequestException;
+import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.logic.operation.Command;
 import org.net9.minipie.server.logic.storage.UserStorage;
 
@@ -82,7 +83,12 @@ public class SignUp extends Command<Long> {
 	 */
 	public Long execute() {
 		UserStorage executor = getStorageFactory().getUserStorage();
-		return executor.add(name,displayName, pwd, email);
+		try {
+			executor.findIdByUsername(name);
+		} catch (NotFoundException e) {
+			return executor.add(name,displayName, pwd, email);
+		}
+		return 0L;
 	}
 
 }

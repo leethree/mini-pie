@@ -33,7 +33,7 @@ import org.net9.minipie.server.logic.operation.account.UploadMyInfo;
  * @author LeeThree
  * 
  */
-@Path("/")
+//TODO @Path("/")
 public class ImportExportResource extends BaseResource {
 
 	private static final int SIZE_LIMIT = 524288;

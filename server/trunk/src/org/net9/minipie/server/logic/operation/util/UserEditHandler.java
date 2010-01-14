@@ -225,9 +225,14 @@ public class UserEditHandler extends UpdateHandler {
 					break;
 				case BASIC:
 					UserEntity user = new UserEntity();
+					if (newData.getValue() == null)
+						throw new UpdateException("Invalid edit format: value missing.");
 					//InfoField temp=newData.getInfoField();
 					switch (newData.getInfoField()) {
+					// usernames are not modifiable
 					case NAME:
+						if (newData.getValue().isEmpty())
+							throw new UpdateException("Name should not be empty.");
 						user.setName(newData.getValue());
 						userExecutor.editBasicInfo(userId, InfoField.NAME,
 								user.getName());

@@ -110,6 +110,8 @@ public class Edit extends Update {
 			throw new InvalidRequestException("Invalid edit format: type missing.");
 		if (getInfoField() == null)
 			throw new InvalidRequestException("Invalid edit format: field missing.");
+		if (getType() == InfoType.BASIC && getValue() == null)
+			throw new InvalidRequestException("Invalid edit format: value missing.");
 		/**
 		 * value == null means clear a nullable field, like type
 		 */

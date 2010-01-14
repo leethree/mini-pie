@@ -83,6 +83,13 @@ public abstract class GenericHibernateDAO <T, Id extends Serializable> implement
 	public void commit(){
 		getSession().getTransaction().commit();
 	}
+	public void rollback(){
+		getSession().getTransaction().rollback();
+	}
+	public void refresh(Object o){
+		getSession().refresh(o);
+	}
+
 	/**
 	* Use this inside subclasses as a convenience method.
 	*/

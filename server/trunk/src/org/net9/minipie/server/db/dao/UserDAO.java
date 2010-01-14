@@ -60,6 +60,8 @@ public interface UserDAO extends GenericDAO<User, Long>, UserStorage {
 	//List<Object[]> selectAddtional(Long contactId);
 
 	BasicUser selectBasicInfo(Long userId);
+	
+	Long findIdByUsername(String name);
 
 	List<EmailData> selectEmail(Long userId);
 

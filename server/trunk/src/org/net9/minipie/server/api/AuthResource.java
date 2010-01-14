@@ -22,10 +22,9 @@ public class AuthResource extends BaseResource {
 	@GET
 	public Response getTest() {
 		try {
-			String welcomeMsg = "Congratulations! You've been successfully authenticated !\n";
-			welcomeMsg += "Your ID is: " + getUserId() + "\n";
-			return Response.ok().type(MediaType.TEXT_PLAIN_TYPE).entity(
-					welcomeMsg).build();
+			//String welcomeMsg = "Congratulations! You've been successfully authenticated !\n";
+			//welcomeMsg += "Your ID is: " + getUserId() + "\n";
+			return Response.ok().type(MediaType.TEXT_PLAIN_TYPE).entity("" + getUserId()).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ServerErrorException(e.getMessage());

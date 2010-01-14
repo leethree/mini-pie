@@ -58,7 +58,7 @@ public class GroupDAOHibernate extends GenericHibernateDAO<Group, Long> implemen
 		}
 		group.setCreatorName(user.getUserName());
 		group.setCreatorId(userId);
-		group.setPerm(Permission.TO_EVERYONE);
+		group.setPerm(Permission.TO_CONTACTS);
 		begin();
 		makePersistent(group);
 		commit();

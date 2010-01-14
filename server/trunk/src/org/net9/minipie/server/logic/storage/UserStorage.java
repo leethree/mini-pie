@@ -85,6 +85,7 @@ public interface UserStorage {
 	//Void setPermission(Permission perm,Long userId);
 	Void setAddAsContactPermission(AddAsContactPermission perm,Long userId);
 	Long selectLegalUser(String name,String password);
+	Long findIdByUsername(String name);
 	//String selectUserPassword(String name);
 	Collection<CommonListEntry>  searchMyUserOrContact(Long userid,Collection<Query> query);
 	Collection<BasicUser> searchAllUser(Collection<Query> query); 

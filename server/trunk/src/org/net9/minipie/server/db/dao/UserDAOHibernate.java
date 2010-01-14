@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.JDBCException;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -31,6 +32,7 @@ import org.net9.minipie.server.db.entity.UserPhoneNo;
 import org.net9.minipie.server.db.entity.UserURL;
 import org.net9.minipie.server.db.entity.enums.Bool;
 import org.net9.minipie.server.exception.DataFormatException;
+import org.net9.minipie.server.exception.InvalidRequestException;
 import org.net9.minipie.server.exception.NotFoundException;
 import org.net9.minipie.server.exception.ServerErrorException;
 import org.net9.minipie.server.logic.storage.UserStorage;
@@ -45,10 +47,15 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		newUser.setPassword(pwd);
 		newUser.setRegisterEmail(email);
 		newUser.setPerm(AddAsContactPermission.CONFIRMED_ONES);
-		begin();
-		Long id = makePersistent(newUser).getId();
-		commit();
-		return id;
+		try{
+			begin();
+			User u = makePersistent(newUser);
+			commit();
+			return u.getId();
+		} catch (JDBCException ex) {
+			flush();
+			throw new InvalidRequestException("Duplicated Username");
+		}
 	}
 
 	/*
@@ -611,6 +618,9 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 		} catch (ObjectNotFoundException e) {
 			throw new NotFoundException("Cannt find attribute " + attribute
 					+ " item with give id");
+		} catch (JDBCException ex) {
+			udh.refresh(user);
+			throw new InvalidRequestException("Duplicated Username");
 		}
 
 	}
@@ -941,7 +951,7 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 	 * org.net9.minipie.server.logic.storage.UserStorage#selectUserPassword(
 	 * java.lang.String)
 	 */
-	public String selectUserPassword(String name) {
+	public Long findIdByUsername(String name) {
 		Criterion criterion = Restrictions.eq("userName", name);
 		List<User> user = findByCriteria(criterion);
 		if (user.isEmpty()) {
@@ -949,7 +959,7 @@ public class UserDAOHibernate extends GenericHibernateDAO<User, Long> implements
 					+ name);
 		}
 		Iterator<User> iter = user.iterator();
-		return iter.next().getPassword();
+		return iter.next().getId();
 	}
 
 	/*
